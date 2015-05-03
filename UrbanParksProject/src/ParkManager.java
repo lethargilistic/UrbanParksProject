@@ -134,7 +134,7 @@ public class ParkManager {
 	public void viewUpcomingJobs() {
 		System.out.println("\nViewing Jobs...");
 		
-		ArrayList<Job> myJobList = Schedule.getManagerJobs(myManagedParks);
+		ArrayList<Job> myJobList = DataPollster.getManagerJobs(myManagedParks);
 		
 		for(Job job : myJobList) {
 			System.out.println("\n" + job.jobID + " " + job.myPark + "\n    Begins:" + 
@@ -163,7 +163,7 @@ public class ParkManager {
 			return;
 		}
 		
-		ArrayList<Volunteer> myVolunteerList = Schedule.getVolunteerList(myJobID);
+		ArrayList<Volunteer> myVolunteerList = DataPollster.getVolunteerList(myJobID);
 		
 		for(Volunteer volunteer : myVolunteerList) {
 			System.out.println(volunteer.firstName + " " + volunteer.lastName);
@@ -176,10 +176,7 @@ public class ParkManager {
 	 * @return True if valid, false if not.
 	 */
 	private boolean checkPark(int theJobID) {
-		for (Park park : myManagedParks) {
-			if(park.jobID == theJobID) return true;
-		}		
-		return false;		
+		return true; //Unsure of how to implement this at the moment. Will it be done through DataPollster?	
 	}	
 	
 }
