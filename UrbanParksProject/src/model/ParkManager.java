@@ -11,97 +11,83 @@ public class ParkManager {
 	 */
 	private ArrayList<Park> myManagedParks;
 	
-	/**
-	 * The first name of the park manager.
-	 */
 	private String myFirstName;
-	/**
-	 * The last name of the park manager.
-	 */
 	private String myLastName;
 	
-	private Schedule mySchedule = new Schedule();
-	private DataPollster myPollster = new DataPollster();
+	private ParkManagerUI myUI;	
+	private Schedule mySchedule;
+	private DataPollster myPollster;
+	
 	
 	/**
-	 * Give control of the program to the Park Manager user. Called upon login.
+	 * Constructor for ParkManager, which requires a Schedule and DataPollster to be passed to it.
 	 */
-	public void startManager() {
-		System.out.println("Hello " + myFirstName + " " + myLastName);
-		pollManager();
+	public ParkManager(Schedule theSchedule, DataPollster thePollster) {
+		this.mySchedule = theSchedule;
+		this.myPollster = thePollster;
+	}
+
+	
+	/**
+	 * The main loop for Park Manager.<br>
+	 * Lists possible commands, prompts the user for one, and then acts on it.<br>
+	 * If the user chooses to quit, or inputs an invalid command, then the loop terminates.
+	 */
+	public void commandLoop() {
+		myUI.listCommands();
+		String command = myUI.getCommand();
+		if(parseCommand(command)) {
+			commandLoop();
+		}
 	}
 	
 	/**
-	 * Display possible commands to the user, and then handle any subsequent input. Acts as a control loop.
+	 * Parse a command, and call other methods to execute the command.
 	 */
-	private void pollManager() {
-		System.out.println("\nnew job    view jobs    view job volunteers"); //Possible commands.
-		Scanner in = new Scanner(System.in);
-		
-		String command = in.nextLine().toLowerCase();
-		
-		//Handle inputed command
+	private boolean parseCommand(String command) {
 		switch(command) { 
 			case "new job":
 			case "new":				
 				createJob(); 
-			break;
+				return true;
 			
 			case "view jobs":
 			case "view job":
 				viewUpcomingJobs();
-			break;
+				return true;
 			
 			case "view job volunteers":
 			case "view job volunteer":
 			case "view volunteers":
 				viewJobVolunteers();
-			break;
+				return true;
 			
-			default: System.out.println("Sorry, but your command was not recognized.");
+			case "exit":
+			case "close":
+			case "quit":
+			default: 
+				return false;
 		}
-		
-		in.close();
-		pollManager();		
 	}
-	
-	
-	
-	
-	/**
-	 * Create a new job by sequentially asking the ParkManager for the details, and then submit it to
-	 * Schedule for approval.
-	 */
-	public void createJob() {
-		System.out.println("\nCreating Job...");
 
-		Park myPark = selectPark();
-		Job myJob = constructJob(myPark);
-		
-		if(mySchedule.receiveJob(myJob)){
-			System.out.println("Job successfully added!");
-		} else {
-			System.out.println("Sorry, but the job could not be added.");
-		}
-		
-	}
 	
 	/**
-	 * Print a list of parks for the ParkManager, then prompt them to select one.
-	 * @return The Park that the ParkManager has selected.
+	 * Create a new job by:<p>
+	 * 
+	 * 1. Display all managed parks.<br>
+	 * 2. Ask the user for the desired park number.<br>
+	 * 3. Ask the user for all other details about the job.<br>
+	 * 4. Pass the Job to Schedule.<br>
+	 * 5. Tell the user if the new job was successfully added.
 	 */
-	private Park selectPark() {
-		Scanner in = new Scanner(System.in);
+	public void createJob() {	
+		myUI.displayParks(myManagedParks);
+		int parkNum = myUI.selectParkNum();
+		Park myPark = myManagedParks.get(parkNum);
 		
-		for(int i = 0; i < myManagedParks.size(); i++) {
-			System.out.println(i + "    " + myManagedParks.get(i).getName());
-		}
-		
-		System.out.println("\nPlease select the number preceding the park where the job is located.");
-		int myParkNum = in.nextInt();
-		in.close();
-		
-		return myManagedParks.get(myParkNum);		
+		Job myJob = constructJob(myPark);		
+		boolean added = mySchedule.receiveJob(myJob);
+		myUI.displayJobStatus(added);
 	}
 	
 	/**
@@ -110,28 +96,19 @@ public class ParkManager {
 	 * @return The constructed Job
 	 */
 	private Job constructJob(Park thePark) {
-		Scanner in = new Scanner(System.in);
 		
-		System.out.println("\nHow many volunteers do you want for light grade work?");
-		int myLight = in.nextInt();
+		int myLight = myUI.getLightSlots();
+		int myMedium = myUI.getMediumSlots();
+		int myHeavy = myUI.getHeavySlots();	
+		String myStartString = myUI.getStartDate();
+		String myEndString = myUI.getEndDate();		
 		
-		System.out.println("How many volunteers do you want for medium grade work?");
-		int myMedium = in.nextInt();
-		
-		System.out.println("How many volunteers do you want for heavy grade work?");
-		int myHeavy = in.nextInt();		
-		
-		
-		System.out.println("Please enter the start date of the job in the following format: mmddyyyy");
-		String myStringStartDate = in.nextLine();
-		GregorianCalendar myStartDate = parseDate(myStringStartDate);
-		
-		System.out.println("Please enter the end date of the job in the following format: mmddyyyy");
-		String myStringEndDate = in.nextLine();		
-		GregorianCalendar myEndDate = parseDate(myStringEndDate);
+		GregorianCalendar myStartDate = parseDate(myStartString);
+		GregorianCalendar myEndDate = parseDate(myEndString);
 		
 		return new Job(thePark, myLight, myMedium, myHeavy, myStartDate, myEndDate);		
 	}
+	
 	
 	/**
 	 * Convert a date string to a Gregorian Calendar object.
@@ -153,44 +130,27 @@ public class ParkManager {
 	 * Print a list of all upcoming jobs for every Park that the ParkManager manages.
 	 */
 	public void viewUpcomingJobs() {
-		System.out.println("\nViewing Jobs...");
-		
 		ArrayList<Job> myJobList = (ArrayList<Job>) myPollster.getManagerJobs(this);
-		
-		for(Job job : myJobList) {
-			System.out.println("\n" + job.getJobID() + " " + job.getPark() + "\n    Begins:" + 
-					job.getStartDate() + " , Ends:" + job.getEndDate() + "\n    Light Slots:" +
-					job.getLightCurrent() + "/" + job.getLightMax() + "   Medium Slots:" +
-					job.getMediumCurrent() + "/" + job.getMediumMax() +
-					"   Heavy Slots:" + job.getHeavyCurrent() + "/" + job.getHeavyMax());
-		}		
+		myUI.displayJobs(myJobList);	
 	}
 	
 	
-	
-	
+
 	/**
 	 * Print a list of every Volunteer for a selected Job.
 	 */
 	public void viewJobVolunteers() {
-		System.out.println("\nViewing Volunteers For A Job...");
-		Scanner in = new Scanner(System.in);
-		
-		System.out.println("Please input the ID of the job whose volunteers you would like to view.");
-		int myJobID = in.nextInt();
+		int myJobID = myUI.getJobID();
 		
 		if(!checkPark(myJobID)) {
-			System.out.println("Sorry, but the Job ID was not recognized.");
+			myUI.showJobIDError();
 			return;
 		}
 		
 		ArrayList<Volunteer> myVolunteerList = (ArrayList<Volunteer>) myPollster.getVolunteerList(myJobID);
-		
-		for(Volunteer volunteer : myVolunteerList) {
-			System.out.println(volunteer.firstName + " " + volunteer.lastName);
-		}
-		
+		myUI.displayVolunteers(myVolunteerList);		
 	}
+
 	
 	/**
 	 * Check to make sure that the Job ID is valid.
