@@ -194,7 +194,7 @@ public class Job {
     }
 
 	public int getJobID() {
-		return jobID;
+		return myJobID;
 	}
 
 	public List<Volunteer> getVolunteerList() {

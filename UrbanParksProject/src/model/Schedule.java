@@ -42,7 +42,7 @@ public class Schedule {
 		boolean okToAdd = true;
 		
 		// checks if date range is valid
-		if (theJob.myStartDate.after(theJob.myEndDate)) {
+		if (theJob.getStartDate().after(theJob.getEndDate())) {
 			okToAdd = false;
 		}
 		

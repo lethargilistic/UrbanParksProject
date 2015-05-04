@@ -115,7 +115,7 @@ public class DataPollster {
 		//managed by the PM.
 		for (Job j : myJobList)
 		{
-			if (theManager.myManagedParks.contains(j.myPark))
+			if (theManager.getManagedParks().contains(j.myPark))
 			{
 				jobsManaging.add(j);
 			}
