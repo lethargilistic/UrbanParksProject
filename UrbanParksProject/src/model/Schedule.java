@@ -25,8 +25,8 @@ public class Schedule {
 	/**
 	 * Constructs a Schedule object.
 	 */
-	public Schedule() {
-		myJobList = new JobList(MAX_TOTAL_NUM_JOBS);
+	public Schedule(JobList theJobList) {
+		myJobList = theJobList;
 	}
 
 	/**
@@ -132,17 +132,17 @@ public class Schedule {
 		boolean openGrade = false;
 		switch (theWorkGrade) {
 			case 1:
-				if (j.getLightCurrent() < j.getLightMax()) {
+				if (j.hasLightRoom()) {
 					openGrade = true;
 				}
 				break;
 			case 2:
-				if (j.getMediumCurrent() < j.getMediumMax()) {
+				if (j.hasMediumRoom()) {
 					openGrade = true;
 				}
 				break;
 			case 3:
-				if (j.getHeavyCurrent() < j.getHeavyMax()) {
+				if (j.hasHeavyRoom()) {
 					openGrade = true;
 				}
 				break;

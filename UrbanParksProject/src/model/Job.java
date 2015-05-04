@@ -15,7 +15,7 @@ public class Job {
 	/**
 	 * This value is the identification number of a job.
 	 */
-	public int jobID;
+	public int myJobID;
 
 	/**
 	 * This is the list which holds the volunteers that have signed up to participate in this job.
@@ -158,6 +158,33 @@ public class Job {
     	}
     }
 
+    /**
+     * This method is called when someone needs the current number of light volunteers.
+     * @return the number of light volunteers.
+     */
+    public boolean hasLightRoom()
+    {
+    	return (myLightMax - myLightCurrent) > 0;
+    }
+    
+    /**
+     * This method is called when someone needs the current number of medium volunteers.
+     * @return the number of medium volunteers.
+     */
+    public boolean hasMediumRoom()
+    {
+    	return (myMediumMax - myMediumCurrent) > 0;
+    }
+    
+
+    /**
+     * This method is called when someone needs the current number of heavy volunteers.
+     * @return the number of heavy volunteers.
+     */public boolean hasHeavyRoom()
+    {
+     	return (myHeavyMax - myHeavyCurrent) > 0;
+    }
+    
     /**
      * This method is called when someone wants to know if there is room for another volunteer in the job.
      */

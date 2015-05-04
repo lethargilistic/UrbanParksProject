@@ -1,7 +1,10 @@
 package model;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Scanner;
+
 
 
 public class ParkManager {
@@ -158,6 +161,12 @@ public class ParkManager {
 	 */
 	private boolean checkPark(int theJobID) {
 		return true; //Unsure of how to implement this at the moment. Will it be done through DataPollster?	
+	}
+
+	List<Park> getManagedParks() {
+		List<Park> retList = new ArrayList<>();
+		Collections.copy(retList, myManagedParks);
+		return retList;
 	}	
 	
 }
