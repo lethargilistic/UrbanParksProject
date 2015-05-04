@@ -18,5 +18,16 @@ public class Volunteer {
 		return this.myLastName;
 	}
 	
-	
+	@Override
+	public boolean equals(Object theO)
+	{
+		if (!(theO instanceof Volunteer))
+			return false;
+		
+		Volunteer theOther = (Volunteer) theO;
+		
+		return this.myFirstName.equals(theOther.myFirstName)
+			   && this.myLastName.equals(theOther.myLastName);
+				
+	}
 }

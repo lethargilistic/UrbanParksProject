@@ -21,7 +21,7 @@ public class DataPollster {
 		//Job has no room.
 		//TODO:The job's start date has `not passed.
 			//Not sure where we're storing the current date. Do we use the System time?
-	List<Job> getPendingJobs(Volunteer theVolunteer) {
+	public List<Job> getPendingJobs(Volunteer theVolunteer) {
 		//USER STORY 2
 
 		//Called by Volunteer.viewUpcomingJobs()
@@ -34,6 +34,7 @@ public class DataPollster {
 		//up for
 
 		List<Job> applicableJobs = new ArrayList<>();
+		System.out.println(theVolunteer.myFirstName);
 		List<Job> volsJobs = getVolunteerJobs(theVolunteer);
 		for (Job j : myJobList.getCopyList())
 		{
