@@ -1,5 +1,6 @@
 package model;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.Scanner;
 
 
@@ -18,6 +19,9 @@ public class ParkManager {
 	 * The last name of the park manager.
 	 */
 	private String myLastName;
+	
+	private Schedule mySchedule = new Schedule();
+	private DataPollster myPollster = new DataPollster();
 	
 	/**
 	 * Give control of the program to the Park Manager user. Called upon login.
@@ -74,7 +78,7 @@ public class ParkManager {
 		Park myPark = selectPark();
 		Job myJob = constructJob(myPark);
 		
-		if(Schedule.receiveJob(myJob)){
+		if(mySchedule.receiveJob(myJob)){
 			System.out.println("Job successfully added!");
 		} else {
 			System.out.println("Sorry, but the job could not be added.");
@@ -90,7 +94,7 @@ public class ParkManager {
 		Scanner in = new Scanner(System.in);
 		
 		for(int i = 0; i < myManagedParks.size(); i++) {
-			System.out.println(i + "    " + myManagedParks.get(i).name);
+			System.out.println(i + "    " + myManagedParks.get(i).getName());
 		}
 		
 		System.out.println("\nPlease select the number preceding the park where the job is located.");
@@ -117,13 +121,29 @@ public class ParkManager {
 		System.out.println("How many volunteers do you want for heavy grade work?");
 		int myHeavy = in.nextInt();		
 		
-		System.out.println("On which day should the job begin?");
-		int myStartDate = in.nextInt();
 		
-		System.out.println("On which day should the job finish?");
-		int myEndDate = in.nextInt();		
+		System.out.println("Please enter the start date of the job in the following format: mmddyyyy");
+		String myStringStartDate = in.nextLine();
+		GregorianCalendar myStartDate = parseDate(myStringStartDate);
+		
+		System.out.println("Please enter the end date of the job in the following format: mmddyyyy");
+		String myStringEndDate = in.nextLine();		
+		GregorianCalendar myEndDate = parseDate(myStringEndDate);
 		
 		return new Job(thePark, myLight, myMedium, myHeavy, myStartDate, myEndDate);		
+	}
+	
+	/**
+	 * Convert a date string to a Gregorian Calendar object.
+	 * @param stringDate A string representing a date, of format mmddyyyy
+	 * @return A Gregorian Calendar object representing that date.
+	 */
+	private GregorianCalendar parseDate(String stringDate) {
+		int myDay = Integer.parseInt(stringDate.substring(0, 2));
+		int myMonth = Integer.parseInt(stringDate.substring(2, 4));
+		int myYear = Integer.parseInt(stringDate.substring(4, 8));		
+		
+		return new GregorianCalendar(myYear, myMonth, myDay);
 	}
 	
 	
@@ -135,14 +155,14 @@ public class ParkManager {
 	public void viewUpcomingJobs() {
 		System.out.println("\nViewing Jobs...");
 		
-		ArrayList<Job> myJobList = DataPollster.getManagerJobs(myManagedParks);
+		ArrayList<Job> myJobList = (ArrayList<Job>) myPollster.getManagerJobs(this);
 		
 		for(Job job : myJobList) {
 			System.out.println("\n" + job.jobID + " " + job.myPark + "\n    Begins:" + 
-					job.myStartDate + " , Ends:" + job.myEndDate + "\n    Light Slots:" +
-					job.getMyLightCurrent + "/" + job.getMyLightMax + "   Medium Slots:" +
-					job.getMyMediumCurrent + "/" + job.getMyMediumMax +
-					"   Heavy Slots:" + job.getMyHeavyCurrent + "/" + job.getMyHeavyMax);
+					job.getStartDate + " , Ends:" + job.getEndDate + "\n    Light Slots:" +
+					job.getLightCurrent + "/" + job.getLightMax + "   Medium Slots:" +
+					job.getMediumCurrent + "/" + job.getMediumMax +
+					"   Heavy Slots:" + job.getHeavyCurrent + "/" + job.getHeavyMax);
 		}		
 	}
 	
@@ -164,7 +184,7 @@ public class ParkManager {
 			return;
 		}
 		
-		ArrayList<Volunteer> myVolunteerList = DataPollster.getVolunteerList(myJobID);
+		ArrayList<Volunteer> myVolunteerList = (ArrayList<Volunteer>) myPollster.getVolunteerList(myJobID);
 		
 		for(Volunteer volunteer : myVolunteerList) {
 			System.out.println(volunteer.firstName + " " + volunteer.lastName);
