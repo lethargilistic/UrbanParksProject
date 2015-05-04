@@ -9,4 +9,17 @@ public class Volunteer {
 		myFirstName = firstName;
 		myLastName = lastName;
 	}
+	
+	@Override
+	public boolean equals(Object theO)
+	{
+		if (!(theO instanceof Volunteer))
+			return false;
+		
+		Volunteer theOther = (Volunteer) theO;
+		
+		return this.myFirstName.equals(theOther.myFirstName)
+			   && this.myLastName.equals(theOther.myLastName);
+				
+	}
 }

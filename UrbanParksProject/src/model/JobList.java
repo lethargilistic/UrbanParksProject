@@ -41,10 +41,7 @@ public class JobList {
 	 * @return a copy of the jobs list.
 	 */
 	public List<Job> getCopyList() {
-		
-		List<Job> newList = new ArrayList<Job>();
-		Collections.copy(newList, myJobList);
-		return newList;
+		return new ArrayList<Job>(myJobList);
 	}    
 	
 	/**

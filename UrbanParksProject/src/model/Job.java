@@ -1,6 +1,6 @@
 package model;
 
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -101,6 +101,7 @@ public class Job {
     	myHeavyMax = theHeavySlots;
     	myStartDate = theStartDate;
     	myEndDate = theEndDate;
+    	myVolunteerList = new ArrayList<>();
     }
     
     /**
