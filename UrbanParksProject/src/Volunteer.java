@@ -1,3 +1,4 @@
+package model;
 
 public class Volunteer {
 	public String firstName;

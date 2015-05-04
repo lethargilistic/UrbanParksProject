@@ -1,4 +1,4 @@
-package arsh_360;
+package model;
 
 import java.util.Date;
 import java.util.List;
@@ -164,5 +164,11 @@ public class Job {
     	}
     }
 
-
+    /**
+     * This method is called when someone wants to know if there is room for another volunteer in the job.
+     */
+    public boolean hasRoom()
+    {
+    	return ((myHeavyMax + myMediumMax + myLightMax) - (myHeavyCurrent + myMediumCurrent + myLightCurrent)) > 0;
+    }
 }

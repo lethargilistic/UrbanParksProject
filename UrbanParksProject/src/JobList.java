@@ -1,4 +1,4 @@
-package arsh_360;
+package model;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -78,7 +78,7 @@ public class JobList {
 	 * @return a list.
 	 */
 	public List<Volunteer> getCopyVList() {
-		List<Volunteer> newList = new ArrayList<Job>();
+		List<Volunteer> newList = new ArrayList<Volunteer>();
 		Collections.copy(newList, myVolunteerList);
 		return newList;
 	}

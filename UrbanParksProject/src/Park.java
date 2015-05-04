@@ -1,4 +1,4 @@
-package arsh_360;
+package model;
 
 /**
  * This class is an instance of a park.
