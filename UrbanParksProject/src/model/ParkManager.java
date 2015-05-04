@@ -44,7 +44,7 @@ public class ParkManager {
 	/**
 	 * Parse a command, and call other methods to execute the command.
 	 */
-	private boolean parseCommand(String command) {
+	public boolean parseCommand(String command) {
 		switch(command) { 
 			case "new job":
 			case "new":				
@@ -157,6 +157,7 @@ public class ParkManager {
 	 * @return True if valid, false if not.
 	 */
 	private boolean checkPark(int theJobID) {
+		//TODO
 		return true; //Unsure of how to implement this at the moment. Will it be done through DataPollster?	
 	}
 
