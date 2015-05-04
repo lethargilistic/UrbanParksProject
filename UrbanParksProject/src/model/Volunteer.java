@@ -9,4 +9,14 @@ public class Volunteer {
 		myFirstName = firstName;
 		myLastName = lastName;
 	}
+	
+	public String getFirstName() {
+		return this.myFirstName;
+	}
+	
+	public String getLastName() {
+		return this.myLastName;
+	}
+	
+	
 }

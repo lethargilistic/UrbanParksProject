@@ -117,7 +117,7 @@ public class ParkManagerUI {
 	 */
 	public void displayVolunteers(ArrayList<Volunteer> theVolunteerList) {
 		for(Volunteer volunteer : theVolunteerList) {
-			System.out.println(volunteer.firstName + " " + volunteer.lastName);
+			System.out.println(volunteer.getFirstName() + " " + volunteer.getLastName());
 		}
 	}
 	
