@@ -9,9 +9,9 @@ public class DataPollster {
 	/**
 	 * A reference to a list of jobs in memory.
 	 */
-	List<Job> myJobList;
+	JobList myJobList;
 	
-	DataPollster(List<Job> theJoblist)
+	public DataPollster(JobList theJoblist)
 	{
 		myJobList = theJoblist;
 	}
@@ -35,7 +35,7 @@ public class DataPollster {
 
 		List<Job> applicableJobs = new ArrayList<>();
 		List<Job> volsJobs = getVolunteerJobs(theVolunteer);
-		for (Job j : myJobList)
+		for (Job j : myJobList.getCopyList())
 		{
 			//TODO, need to review the requirements for signing up for job
 			int i = volsJobs.indexOf(j);
@@ -85,7 +85,7 @@ public class DataPollster {
 		
 		//Checks through myJobList and finds all jobs for which the volunteer has
 		// signed up for
-		for (Job j : myJobList)
+		for (Job j : myJobList.getCopyList())
 		{
 			//TODO: Should I get the job's list via a method?
 			if (j.myVolunteerList.contains(theVolunteer))
@@ -113,7 +113,7 @@ public class DataPollster {
 
 		//Check through myJobList and select all Jobs in all park
 		//managed by the PM.
-		for (Job j : myJobList)
+		for (Job j : myJobList.getCopyList())
 		{
 			if (theManager.getManagedParks().contains(j.myPark))
 			{
@@ -134,7 +134,7 @@ public class DataPollster {
 		//Create an empty list for returning.
 		List<Volunteer> retVols = new ArrayList<>();
 		// Check through the myJobList and select the Job with that jobID
-		for (Job j : myJobList)
+		for (Job j : myJobList.getCopyList())
 		{
 			if (j.myJobID == theJobID)
 			{
