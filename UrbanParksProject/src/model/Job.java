@@ -22,10 +22,13 @@ public class Job {
 	 */
     public List<Volunteer> myVolunteerList;
 
-    /**
-     * NOTE: I don't know what this does but it was in the pseudo-code so I kept it here.
-     */
-    public boolean myIsRequest;
+//    (Arsh)
+//    /**
+//     * NOTE: I don't know what this does but it was in the pseudo-code so I kept it here.
+//     */
+//    (Mike)
+//    We weren't using this. TODO: Discuss removal
+//    public boolean myIsRequest;
     
     /**
      * This is the start date of the job.
@@ -77,12 +80,6 @@ public class Job {
      * This value holds the park that the job will be located at.
      */
     public Park myPark;
-
-    /**
-     * This value holds the manager who created the job.
-     */
-    public ParkManager myManager;
-
 
     /**
      * This is a constructor.
@@ -229,10 +226,6 @@ public class Job {
 
 	public Park getPark() {
 		return myPark;
-	}
-
-	public ParkManager getManager() {
-		return myManager;
 	}
 	
 	@Override

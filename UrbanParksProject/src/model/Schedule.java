@@ -56,12 +56,13 @@ public class Schedule {
 			okToAdd = false;
 		}
 		
-		// make sure that the job is being requested
-		if (!theJob.myIsRequest) {
-			okToAdd = false;
-		}
+//		We weren't using this. TODO: Discuss removal
+//		// make sure that the job is being requested
+//		if (!theJob.myIsRequest) {
+//			okToAdd = false;
+//		}
 		
-		if (theJob.getLightCurrent() == 0 && theJob.getMediumCurrent() == 0 && theJob.getHeavyCurrent() == 0) {
+		if (!theJob.hasLightRoom() || !theJob.hasMediumRoom() || !theJob.hasHeavyRoom()) {
 			okToAdd = false;
 		}
 		
@@ -74,9 +75,6 @@ public class Schedule {
 			okToAdd = false;
 		}
 		
-		if (theJob.myManager == null) {
-			okToAdd = false;
-		}
 		
 		if (okToAdd) {
 			// To get the master job list which is editable
@@ -104,7 +102,7 @@ public class Schedule {
 		boolean okToAdd = true;
 		
 		//Schedule will check to make sure the Job ID is valid
-		if (theJobID < Integer.MIN_VALUE || theJobID > Integer.MAX_VALUE) {
+		if (theJobID < 0 || theJobID > MAX_TOTAL_NUM_JOBS) {
 			okToAdd = false;
 		}
 		
@@ -126,6 +124,10 @@ public class Schedule {
 				break;
 			}
 		}
+		
+		// If the job doesn't exist, return false.
+		if (j == null)
+			return false;
 		
 		// Schedule will check to make sure there is a slot open in the grade using 
 		// the Job object from before
@@ -169,7 +171,7 @@ public class Schedule {
 			System.out.println("Error with given data. Volunteer was not added to Job.");
 		}
 		
-		return okToAdd;
+		return okToAdd && jobExists && openGrade;
 	}
 	
 	public JobList getJobList() {
