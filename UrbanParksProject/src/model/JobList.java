@@ -51,7 +51,6 @@ public class JobList {
 	 * @return the actual list of jobs.
 	 */
 	public List<Job> getJobList() { 
-		
 		return myJobList;
     }
 	
@@ -75,12 +74,6 @@ public class JobList {
 	 * @return a list.
 	 */
 	public List<Volunteer> getCopyVList() {
-		List<Volunteer> newList = new ArrayList<Volunteer>();
-		Collections.copy(newList, myVolunteerList);
-		return newList;
+		return new ArrayList<Volunteer>(myVolunteerList);
 	}
-	
-
-
-
 }

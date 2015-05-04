@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class ParkManagerUI {
@@ -90,9 +91,9 @@ public class ParkManagerUI {
 	/**
 	 * Display all of the parks that the Park Manager manages in the console.
 	 */
-	public void displayParks(ArrayList<Park> theParkList) {
-		for(int i = 0; i < theParkList.size(); i++) {
-			System.out.println(i + "    " + theParkList.get(i).getName());
+	public void displayParks(List<Park> myManagedParks) {
+		for(int i = 0; i < myManagedParks.size(); i++) {
+			System.out.println(i + "    " + myManagedParks.get(i).getName());
 		}		
 	}
 	

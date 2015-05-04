@@ -19,7 +19,7 @@ public class DataPollster {
 	//TODO: test all possible conflicts
 		//Don't have a job they've already signed up for on that day
 		//Job has no room.
-		//TODO:The job's start date has `not passed.
+		//TODO:The job's start date has not passed.
 			//Not sure where we're storing the current date. Do we use the System time?
 	public List<Job> getPendingJobs(Volunteer theVolunteer) {
 		//USER STORY 2
@@ -36,7 +36,8 @@ public class DataPollster {
 		List<Job> applicableJobs = new ArrayList<>();
 		System.out.println(theVolunteer.myFirstName);
 		List<Job> volsJobs = getVolunteerJobs(theVolunteer);
-		for (Job j : myJobList.getCopyList())
+		List<Job> jobs = myJobList.getCopyList();
+		for (Job j : jobs)
 		{
 			//TODO, need to review the requirements for signing up for job
 			int i = volsJobs.indexOf(j);
@@ -47,21 +48,28 @@ public class DataPollster {
 				{
 					continue;
 				}
-				//TODO:The job's start date has not passed.
-				
-				//Test for conflicts with jobs the volunteer has already signed up for.
-				for (Job anyVjob: volsJobs)
+			}
+			
+			//Test for conflicts with jobs the volunteer has already signed up for.
+			boolean dayConflict = false;
+			for (Job anyVjob: volsJobs)
+			{
+				//Don't have a job they've already signed up for on that day
+				if (anyVjob.getStartDate().equals(j.getStartDate()) 
+						|| anyVjob.getStartDate().equals(j.getEndDate())
+						|| anyVjob.getEndDate().equals(j.getStartDate())
+						|| anyVjob.getEndDate().equals(j.getEndDate()))
 				{
-					//Don't have a job they've already signed up for on that day
-					if (anyVjob.getStartDate().equals(j.getStartDate()) 
-							|| anyVjob.getStartDate().equals(j.getEndDate())
-							|| anyVjob.getEndDate().equals(j.getStartDate())
-							|| anyVjob.getEndDate().equals(j.getEndDate()))
-					{
-						break;
-					}
+					dayConflict = true;
+					break;
 				}
 			}
+			if (dayConflict)
+			{
+				continue;
+			}
+			
+			applicableJobs.add(j);
 		}
 		//Make a copy of each selected Job, and put it into a Job List.
 
@@ -72,7 +80,7 @@ public class DataPollster {
 		return applicableJobs;
 	}
 
-	List<Job> getVolunteerJobs(Volunteer theVolunteer) {
+	public List<Job> getVolunteerJobs(Volunteer theVolunteer) {
 		//USER STORY 4
 
 		//Called by Volunteer.viewMyJobs()
@@ -99,7 +107,7 @@ public class DataPollster {
 		return jobsSignedUpFor;
 	}
 
-	List<Job> getManagerJobs(ParkManager theManager){
+	public List<Job> getManagerJobs(ParkManager theManager){
 		//USER STORY 5
 
 		//Called by ParkManager.viewUpcomingJobs()
@@ -126,7 +134,7 @@ public class DataPollster {
 		return jobsManaging;
 	}
 
-	List<Volunteer> getVolunteerList(int theJobID) {
+	public List<Volunteer> getVolunteerList(int theJobID) {
 		//USER STORY 6
 		// Called by ParkManager.viewJobVolunteers()
 

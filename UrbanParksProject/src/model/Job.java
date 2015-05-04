@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class Job {
 	
-	
+	public static int nextJobID = 0;
 	/**
 	 * This value is the identification number of a job.
 	 */
@@ -95,6 +95,7 @@ public class Job {
      */
     public Job(Park thePark, int theLightSlots, int theMediumSlots, int theHeavySlots,
     		GregorianCalendar theStartDate, GregorianCalendar theEndDate) {
+    	myJobID = nextJobID++;
     	myPark = thePark;
     	myLightMax = theLightSlots;
     	myMediumMax = theMediumSlots;
@@ -232,5 +233,11 @@ public class Job {
 
 	public ParkManager getManager() {
 		return myManager;
+	}
+	
+	@Override
+	public String toString()
+	{
+		return myPark.toString();
 	}
 }
