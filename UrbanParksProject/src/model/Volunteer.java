@@ -10,6 +10,14 @@ public class Volunteer {
 		myLastName = lastName;
 	}
 	
+	public String getFirstName() {
+		return this.myFirstName;
+	}
+	
+	public String getLastName() {
+		return this.myLastName;
+	}
+	
 	@Override
 	public boolean equals(Object theO)
 	{
