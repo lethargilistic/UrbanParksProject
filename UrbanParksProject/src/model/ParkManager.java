@@ -9,7 +9,7 @@ public class ParkManager {
 	/**
 	 * A list of all the parks managed by the park manager.
 	 */
-	private ArrayList<Park> myManagedParks;
+	private List<Park> myManagedParks;
 	
 	private String myFirstName;
 	private String myLastName;
@@ -22,9 +22,11 @@ public class ParkManager {
 	/**
 	 * Constructor for ParkManager, which requires a Schedule and DataPollster to be passed to it.
 	 */
-	public ParkManager(Schedule theSchedule, DataPollster thePollster) {
+	public ParkManager(Schedule theSchedule, DataPollster thePollster, List<Park> theManagedParks) {
 		this.mySchedule = theSchedule;
 		this.myPollster = thePollster;
+		this.myManagedParks = new ArrayList<>();
+		this.myManagedParks.addAll(theManagedParks);
 	}
 
 	
@@ -162,9 +164,7 @@ public class ParkManager {
 	}
 
 	List<Park> getManagedParks() {
-		List<Park> retList = new ArrayList<>();
-		Collections.copy(retList, myManagedParks);
-		return retList;
+		return Collections.unmodifiableList(myManagedParks);
 	}	
 	
 }

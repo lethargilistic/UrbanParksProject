@@ -1,8 +1,17 @@
-package model;
+package model.test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
-import org.junit.After;
+import java.util.ArrayList;
+import java.util.List;
+
+import model.DataPollster;
+import model.JobList;
+import model.Park;
+import model.ParkManager;
+import model.Schedule;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -12,13 +21,16 @@ public class ParkManagerTest {
 	private Schedule mySchedule;
 	private DataPollster myPollster;
 	private JobList myList;
+	private List<Park> myParks;
 
 	@Before
 	public void setUp() throws Exception {
 		myList = new JobList();
 		mySchedule = new Schedule(myList);
 		myPollster = new DataPollster(myList);
-		myManager = new ParkManager(mySchedule, myPollster);
+		myParks = new ArrayList<Park>();
+		myParks.add(new Park("Bobcat Park", "Seattle", 98304));
+		myManager = new ParkManager(mySchedule, myPollster, myParks);
 	}
 
 	@Test

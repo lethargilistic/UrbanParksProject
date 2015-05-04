@@ -1,10 +1,6 @@
-/**
- * 
- */
 package model.test;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
@@ -14,9 +10,11 @@ import model.DataPollster;
 import model.Job;
 import model.JobList;
 import model.Park;
+import model.ParkManager;
 import model.Schedule;
 import model.Volunteer;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -39,27 +37,27 @@ public class DataPollsterTest {
 		p = new Park("Pioneer Park", "Tacoma", 98444);
 		
 		jl = new JobList();
-		List<Job> jobs = jl.getJobList();
-		jobs.add(new Job(p, 5, 5, 5, 
+		List<Job> jBank = jl.getJobList();
+		jBank.add(new Job(p, 5, 5, 5, 
 				new GregorianCalendar(2015, 6, 15), 
 				new GregorianCalendar(2015, 6, 15)));
-		jobs.add(new Job(p, 5, 5, 5, 
+		System.out.println(jBank.get(0).myJobID);
+		jBank.add(new Job(p, 5, 5, 5, 
 				new GregorianCalendar(2015, 6, 16), 
 				new GregorianCalendar(2015, 6, 16)));
-		jobs.add(new Job(p, 5, 5, 5, 
+		jBank.add(new Job(p, 5, 5, 5, 
 				new GregorianCalendar(2015, 6, 17), 
 				new GregorianCalendar(2015, 6, 17)));
-		jobs.add(new Job(p, 5, 5, 5, 
+		jBank.add(new Job(p, 5, 5, 5, 
 				new GregorianCalendar(2015, 6, 18), 
 				new GregorianCalendar(2015, 6, 18)));
-		jobs.add(new Job(p, 5, 5, 5, 
+		jBank.add(new Job(p, 5, 5, 5, 
 				new GregorianCalendar(2015, 6, 19), 
 				new GregorianCalendar(2015, 6, 19)));
-		jobs.add(new Job(p, 5, 5, 5, 
+		jBank.add(new Job(p, 5, 5, 5, 
 				new GregorianCalendar(2015, 6, 20), 
 				new GregorianCalendar(2015, 6, 20)));
 		
-		System.out.println((jl.getJobList()));
 		dp = new DataPollster(jl);
 		s = new Schedule(jl);
 		vBank = new ArrayList<>();
@@ -70,7 +68,7 @@ public class DataPollsterTest {
 		vBank.add(new Volunteer("Jasmine", "Pederson"));
 		vBank.add(new Volunteer("Arshdeep", "Singh"));
 		vBank.add(new Volunteer("Samantha", "Kuk"));
-	}
+}
 
 	/**
 	 * Test method for {@link model.DataPollster#getPendingJobs(model.Volunteer)}.
@@ -78,14 +76,20 @@ public class DataPollsterTest {
 	@Test
 	public void testGetPendingJobs() {
 		List<Job> jobs = jl.getJobList();
-		assertEquals("foo", new ArrayList<Job>(), dp.getPendingJobs(vBank.get(0)));
+		assertEquals("Empty list problem.", jobs, dp.getPendingJobs(vBank.get(0)));
 		
 		
 		//TODO: So why don't we just pass the Job in here instead of the ID?
 		s.addVolunteerToJob(vBank.get(0), jobs.get(0).myJobID, 1);
-		s.addVolunteerToJob(vBank.get(1), jobs.get(0).myJobID, 1);
-		s.addVolunteerToJob(vBank.get(2), jobs.get(0).myJobID, 1);
-		s.addVolunteerToJob(vBank.get(3), jobs.get(0).myJobID, 1);
+		s.addVolunteerToJob(vBank.get(0), jobs.get(1).myJobID, 1);
+		s.addVolunteerToJob(vBank.get(0), jobs.get(2).myJobID, 1);
+		s.addVolunteerToJob(vBank.get(0), jobs.get(3).myJobID, 1);
+		
+		List<Job> pendJob = new ArrayList<Job>();
+		pendJob.add(jobs.get(4));
+		pendJob.add(jobs.get(5));
+		
+		assertEquals("The List filled incorrectly.", pendJob, dp.getPendingJobs(vBank.get(0)));
 	}
 
 	/**
@@ -93,7 +97,23 @@ public class DataPollsterTest {
 	 */
 	@Test
 	public void testGetVolunteerJobs() {
-		fail("Not yet implemented");
+		List<Job> jobs = jl.getJobList();
+		assertEquals("Empty list problem.", new ArrayList<Job>(), dp.getVolunteerJobs(vBank.get(0)));
+		
+		
+		//TODO: So why don't we just pass the Job in here instead of the ID?
+		s.addVolunteerToJob(vBank.get(0), jobs.get(0).myJobID, 1);
+		s.addVolunteerToJob(vBank.get(0), jobs.get(1).myJobID, 1);
+		s.addVolunteerToJob(vBank.get(0), jobs.get(2).myJobID, 1);
+		s.addVolunteerToJob(vBank.get(0), jobs.get(3).myJobID, 1);
+		
+		List<Job> vsJob = new ArrayList<Job>();
+		vsJob.add(jobs.get(0));
+		vsJob.add(jobs.get(1));
+		vsJob.add(jobs.get(2));
+		vsJob.add(jobs.get(3));
+		
+		assertEquals("The List filled incorrectly.", vsJob, dp.getVolunteerJobs(vBank.get(0)));
 	}
 
 	/**
@@ -101,7 +121,21 @@ public class DataPollsterTest {
 	 */
 	@Test
 	public void testGetManagerJobs() {
-		fail("Not yet implemented");
+		List<Park> listOfP = new ArrayList<Park>();
+		listOfP.add(p);
+		ParkManager pm = new ParkManager(s, dp, listOfP);
+
+		List<Job> pmJobs = jl.getCopyList();
+		assertEquals("Not all jobs in pm's park were accounted for.", pmJobs, dp.getManagerJobs(pm));
+		
+		Park p2 = new Park("Foolly Park", "Portland", 98232);
+		List<Job> jobs = jl.getJobList();
+		jobs.add(new Job(p2, 5, 5, 5, 
+				new GregorianCalendar(2015, 6, 15), 
+				new GregorianCalendar(2015, 6, 15)));
+		
+		
+		assertEquals("A job at another park affected the return value.", pmJobs, dp.getManagerJobs(pm));
 	}
 
 	/**
@@ -109,7 +143,24 @@ public class DataPollsterTest {
 	 */
 	@Test
 	public void testGetVolunteerList() {
-		fail("Not yet implemented");
+		List<Job> jobs = jl.getJobList();
+		assertEquals("Empty list problem.", new ArrayList<Job>(), dp.getVolunteerList(jobs.get(0).myJobID));
+		
+		List<Volunteer> vList = new ArrayList<>();
+		
+		for (int i = 0; i <5; i++)
+		{
+			s.addVolunteerToJob(vBank.get(i), jobs.get(0).myJobID, 1);
+			vList.add(vBank.get(i));
+		}
+		
+		assertEquals("The List filled incorrectly.", vList, dp.getVolunteerList(jobs.get(0).myJobID));
+	}
+	
+	@After
+	public void teardown()
+	{
+		Job.nextJobID = 0;
 	}
 
 }

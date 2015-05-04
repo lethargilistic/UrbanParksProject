@@ -43,6 +43,11 @@ public class Park {
 		return myName;
 	}
     
+	@Override
+	public String toString()
+	{
+		return myName;
+	}
     
     //TODO: Maybe we should create getters so that we can encapsulate
     		//our data?

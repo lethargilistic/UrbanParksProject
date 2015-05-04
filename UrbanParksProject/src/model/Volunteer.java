@@ -30,4 +30,10 @@ public class Volunteer {
 			   && this.myLastName.equals(theOther.myLastName);
 				
 	}
+	
+	@Override
+	public String toString()
+	{
+		return myFirstName + " " + myLastName;
+	}
 }
