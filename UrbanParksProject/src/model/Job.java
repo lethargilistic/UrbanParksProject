@@ -140,7 +140,7 @@ public class Job {
     	if (myMediumCurrent < myMediumMax) {
     		myMediumCurrent ++;
     	} else {
-    		throw new IllegalStateException("Max has already been reached. Cannot increment.");
+    		System.out.println("Max has already been reached. Cannot increment.");
     	}
     }
 

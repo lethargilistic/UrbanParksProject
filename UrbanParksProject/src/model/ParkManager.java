@@ -152,6 +152,10 @@ public class ParkManager {
 		ArrayList<Volunteer> myVolunteerList = (ArrayList<Volunteer>) myPollster.getVolunteerList(myJobID);
 		myUI.displayVolunteers(myVolunteerList);		
 	}
+	
+	public void setManagedParks(ArrayList<Park> theManagedParks) {
+		this.myManagedParks = theManagedParks;
+	}
 
 	
 	/**
