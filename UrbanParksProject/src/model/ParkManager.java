@@ -158,11 +158,11 @@ public class ParkManager {
 		ArrayList<Job> myJobList = (ArrayList<Job>) myPollster.getManagerJobs(this);
 		
 		for(Job job : myJobList) {
-			System.out.println("\n" + job.jobID + " " + job.myPark + "\n    Begins:" + 
-					job.getStartDate + " , Ends:" + job.getEndDate + "\n    Light Slots:" +
-					job.getLightCurrent + "/" + job.getLightMax + "   Medium Slots:" +
-					job.getMediumCurrent + "/" + job.getMediumMax +
-					"   Heavy Slots:" + job.getHeavyCurrent + "/" + job.getHeavyMax);
+			System.out.println("\n" + job.getJobID() + " " + job.getPark() + "\n    Begins:" + 
+					job.getStartDate() + " , Ends:" + job.getEndDate() + "\n    Light Slots:" +
+					job.getLightCurrent() + "/" + job.getLightMax() + "   Medium Slots:" +
+					job.getMediumCurrent() + "/" + job.getMediumMax() +
+					"   Heavy Slots:" + job.getHeavyCurrent() + "/" + job.getHeavyMax());
 		}		
 	}
 	
