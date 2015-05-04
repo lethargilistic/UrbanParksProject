@@ -36,6 +36,12 @@ public class Park {
     	myLocation = theLoc;
     	myZipCode = theZip;
     }
+
+
+
+	public String getName() {
+		return myName;
+	}
     
     
     //TODO: Maybe we should create getters so that we can encapsulate

@@ -1,6 +1,7 @@
 package model;
 
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
@@ -29,12 +30,12 @@ public class Job {
     /**
      * This is the start date of the job.
      */
-    private Date myStartDate;
+    private GregorianCalendar myStartDate;
 
     /**
      * This is the ending date of the job.
      */
-    private Date myEndDate;
+    private GregorianCalendar myEndDate;
 
     /**
      * This value holds the maximum number of people who can sign up for the light portion
@@ -92,7 +93,8 @@ public class Job {
      * @param theStartDate is the starting date of the job
      * @param theEndDate is the ending date of the job.
      */
-    public Job(Park thePark, int theLightSlots, int theMediumSlots, int theHeavySlots, Date theStartDate, Date theEndDate) {
+    public Job(Park thePark, int theLightSlots, int theMediumSlots, int theHeavySlots,
+    		GregorianCalendar theStartDate, GregorianCalendar theEndDate) {
     	myPark = thePark;
     	myLightMax = theLightSlots;
     	myMediumMax = theMediumSlots;
@@ -105,7 +107,7 @@ public class Job {
      * This is used to return the starting date of the job.
      * @return myStartDate
      */
-    public Date getStartDate() {
+    public GregorianCalendar getStartDate() {
     	return myStartDate;
     }
     
@@ -113,7 +115,7 @@ public class Job {
      * This is used to return the ending date of the job.
      * @return myEndDate
      */
-    public Date getEndDate() {
+    public GregorianCalendar getEndDate() {
     	return myEndDate;
     }
     
@@ -190,4 +192,44 @@ public class Job {
     {
     	return ((myHeavyMax + myMediumMax + myLightMax) - (myHeavyCurrent + myMediumCurrent + myLightCurrent)) > 0;
     }
+
+	public int getJobID() {
+		return jobID;
+	}
+
+	public List<Volunteer> getVolunteerList() {
+		return myVolunteerList;
+	}
+
+	public int getLightMax() {
+		return myLightMax;
+	}
+
+	public int getLightCurrent() {
+		return myLightCurrent;
+	}
+
+	public int getMediumMax() {
+		return myMediumMax;
+	}
+
+	public int getMediumCurrent() {
+		return myMediumCurrent;
+	}
+
+	public int getHeavyMax() {
+		return myHeavyMax;
+	}
+
+	public int getHeavyCurrent() {
+		return myHeavyCurrent;
+	}
+
+	public Park getPark() {
+		return myPark;
+	}
+
+	public ParkManager getManager() {
+		return myManager;
+	}
 }
