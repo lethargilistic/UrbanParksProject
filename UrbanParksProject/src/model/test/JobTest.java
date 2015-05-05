@@ -1,4 +1,4 @@
-package model;
+package model.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -7,6 +7,13 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
+
+import model.DataPollster;
+import model.Job;
+import model.JobList;
+import model.Park;
+import model.ParkManager;
+import model.Schedule;
 
 import org.junit.Before;
 import org.junit.Test;
