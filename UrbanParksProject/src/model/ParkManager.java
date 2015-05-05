@@ -27,6 +27,7 @@ public class ParkManager {
 		this.myPollster = thePollster;
 		this.myManagedParks = new ArrayList<>();
 		this.myManagedParks.addAll(theManagedParks);
+		this.myUI = new ParkManagerUI();
 	}
 
 	
