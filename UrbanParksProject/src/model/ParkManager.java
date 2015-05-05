@@ -116,7 +116,7 @@ public class ParkManager {
 		GregorianCalendar myStartDate = stringToCalendar(myStartString);
 		GregorianCalendar myEndDate = stringToCalendar(myEndString);
 		
-		return new Job(thePark, myLight, myMedium, myHeavy, myStartDate, myEndDate);		
+		return new Job(thePark, myLight, myMedium, myHeavy, myStartDate, myEndDate, this);		
 	}
 	
 	
