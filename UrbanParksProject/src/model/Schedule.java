@@ -56,12 +56,6 @@ public class Schedule {
 			okToAdd = false;
 		}
 		
-//		We weren't using this. TODO: Discuss removal
-//		// make sure that the job is being requested
-//		if (!theJob.myIsRequest) {
-//			okToAdd = false;
-//		}
-		
 		if (!theJob.hasLightRoom() || !theJob.hasMediumRoom() || !theJob.hasHeavyRoom()) {
 			okToAdd = false;
 		}
@@ -75,6 +69,9 @@ public class Schedule {
 			okToAdd = false;
 		}
 		
+		if (theJob.myManager == null){
+			okToAdd = false;
+		}
 		
 		if (okToAdd) {
 			// To get the master job list which is editable

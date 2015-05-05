@@ -111,7 +111,7 @@ public class ParkManager {
 		GregorianCalendar myStartDate = parseDate(myStartString);
 		GregorianCalendar myEndDate = parseDate(myEndString);
 		
-		return new Job(thePark, myLight, myMedium, myHeavy, myStartDate, myEndDate);		
+		return new Job(thePark, myLight, myMedium, myHeavy, myStartDate, myEndDate, this);		
 	}
 	
 	

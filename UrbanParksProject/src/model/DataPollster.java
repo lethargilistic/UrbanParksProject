@@ -34,7 +34,6 @@ public class DataPollster {
 		//up for
 
 		List<Job> applicableJobs = new ArrayList<>();
-		System.out.println(theVolunteer.myFirstName);
 		List<Job> volsJobs = getVolunteerJobs(theVolunteer);
 		List<Job> jobs = myJobList.getCopyList();
 		for (Job j : jobs)
