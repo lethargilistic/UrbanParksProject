@@ -48,6 +48,8 @@ public class ParkManager {
 	 * Parse a command, and call other methods to execute the command.
 	 */
 	public boolean parseCommand(String command) {
+		command = command.toLowerCase(); //lower case to avoid ambiguity
+		
 		switch(command) { 
 			case "new job":
 			case "new":				

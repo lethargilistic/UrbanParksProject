@@ -13,7 +13,7 @@ public class ParkManagerUI {
 	}
 	
 	public String getCommand() {	
-		return in.nextLine().toLowerCase(); //lower case to avoid ambiguity
+		return in.nextLine();
 	}
 	
 	
@@ -28,7 +28,12 @@ public class ParkManagerUI {
 	
 	public int getLightSlots() {		
 		System.out.println("\nHow many volunteers do you want for light grade work?");
-		int myLight = in.nextInt();
+		int myLight = 0;
+		
+		if(in.hasNextInt()) {
+			myLight = in.nextInt();
+		}	
+		
 		return myLight;
 	}
 	
@@ -46,6 +51,7 @@ public class ParkManagerUI {
 	
 	public String getStartDate() {
 		System.out.println("Please enter the start date of the job in the following format: mmddyyyy");
+		String inputBuffer = in.nextLine();
 		String myStartDate = in.nextLine();
 		return myStartDate;
 	}
