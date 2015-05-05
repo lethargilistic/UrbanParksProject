@@ -22,12 +22,17 @@ public class ParkManager {
 	/**
 	 * Constructor for ParkManager, which requires a Schedule and DataPollster to be passed to it.
 	 */
-	public ParkManager(Schedule theSchedule, DataPollster thePollster, List<Park> theManagedParks) {
+	public ParkManager(Schedule theSchedule, DataPollster thePollster,
+			List<Park> theManagedParks) {
 		this.mySchedule = theSchedule;
 		this.myPollster = thePollster;
 		this.myManagedParks = new ArrayList<>();
 		this.myManagedParks.addAll(theManagedParks);
 		this.myUI = new ParkManagerUI();
+	}
+	
+	public void initialize() {
+		commandLoop();
 	}
 
 	
@@ -108,8 +113,8 @@ public class ParkManager {
 		String myStartString = myUI.getStartDate();
 		String myEndString = myUI.getEndDate();		
 		
-		GregorianCalendar myStartDate = parseDate(myStartString);
-		GregorianCalendar myEndDate = parseDate(myEndString);
+		GregorianCalendar myStartDate = stringToCalendar(myStartString);
+		GregorianCalendar myEndDate = stringToCalendar(myEndString);
 		
 		return new Job(thePark, myLight, myMedium, myHeavy, myStartDate, myEndDate);		
 	}
@@ -120,12 +125,12 @@ public class ParkManager {
 	 * @param stringDate A string representing a date, of format mmddyyyy
 	 * @return A Gregorian Calendar object representing that date.
 	 */
-	private GregorianCalendar parseDate(String stringDate) {
+	private GregorianCalendar stringToCalendar(String stringDate) {
 		int myDay = Integer.parseInt(stringDate.substring(0, 2));
 		int myMonth = Integer.parseInt(stringDate.substring(2, 4));
 		int myYear = Integer.parseInt(stringDate.substring(4, 8));		
 		
-		return new GregorianCalendar(myYear, myMonth, myDay);
+		return new GregorianCalendar(myYear, myDay, myMonth);
 	}
 	
 	

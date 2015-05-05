@@ -1,6 +1,8 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Scanner;
 
@@ -93,12 +95,22 @@ public class ParkManagerUI {
 	public void displayJobs(ArrayList<Job> theJobList) {
 		
 		for(Job job : theJobList) {
-			System.out.println("\n" + job.getJobID() + " " + job.getPark() + "\n    Begins:" + 
-					job.getStartDate() + " , Ends:" + job.getEndDate() + "\n    Light Slots:" +
-					job.getLightCurrent() + "/" + job.getLightMax() + "   Medium Slots:" +
+			String startDate = calendarToString(job.getStartDate());
+			String endDate = calendarToString(job.getEndDate());
+			
+			System.out.println("\n" + job.getJobID() + " " + job.getPark() + "\n    Begins: " + 
+					startDate + " , Ends: " + endDate + "\n    Light Slots: " +
+					job.getLightCurrent() + "/" + job.getLightMax() + "   Medium Slots: " +
 					job.getMediumCurrent() + "/" + job.getMediumMax() +
-					"   Heavy Slots:" + job.getHeavyCurrent() + "/" + job.getHeavyMax());
+					"   Heavy Slots: " + job.getHeavyCurrent() + "/" + job.getHeavyMax());
 		}
+	}
+	
+	private String calendarToString(GregorianCalendar theCalendar) {
+		String returnString = theCalendar.get(Calendar.MONTH) + "/" +
+				theCalendar.get(Calendar.DAY_OF_MONTH) + "/" +
+				theCalendar.get(Calendar.YEAR);
+		return returnString;
 	}
 	
 	
