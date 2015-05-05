@@ -20,15 +20,7 @@ public class Job {
 	/**
 	 * This is the list which holds the volunteers that have signed up to participate in this job.
 	 */
-    public List<Volunteer> myVolunteerList;
-
-//    (Arsh)
-//    /**
-//     * NOTE: I don't know what this does but it was in the pseudo-code so I kept it here.
-//     */
-//    (Mike)
-//    We weren't using this. TODO: Discuss removal
-//    public boolean myIsRequest;
+    public List<Volunteer> myVolunteerList; 
     
     /**
      * This is the start date of the job.
@@ -121,20 +113,18 @@ public class Job {
     /**
      * This method is called when someone has signed up for a light portion of this job.
      * 
-     * @throws IllegalStateException if called after max has been reached.
      */
     public void incrementLight() {
     	 if (myLightCurrent < myLightMax) {
     		 myLightCurrent ++;
     	 } else {
-    		 throw new IllegalStateException("Max has already been reached. Cannot increment.");
+    		 System.out.println("Max has already been reached. Cannot increment.");
     	 }
     }
 
     /**
      * This method is called when someone has signed up for a medium portion of this job.
      * 
-     * @throws IllegalStateException if called after max has been reached.
      */
     public void incrementMedium() {
     	if (myMediumCurrent < myMediumMax) {
@@ -147,19 +137,20 @@ public class Job {
     /**
      * This method is called when someone has signed up for a heavy portion of this job.
      * 
-     * @throws IllegalStateException if called after max has been reached.
      */
     public void incrementHeavy() {
     	if (myHeavyCurrent < myHeavyMax) {
     		myHeavyCurrent ++;
     	} else {
-    		throw new IllegalStateException("Max has already been reached. Cannot increment.");
+    		System.out.println("Max has already been reached. Cannot increment.");
     	}
     }
 
     /**
-     * This method is called when someone needs the current number of light volunteers.
-     * @return the number of light volunteers.
+     * This method is called when someone needs to know if there are any
+     * more light positions available.
+     * 
+     * @return true if there are light positions available, false otherwise.
      */
     public boolean hasLightRoom()
     {
@@ -167,8 +158,10 @@ public class Job {
     }
     
     /**
-     * This method is called when someone needs the current number of medium volunteers.
-     * @return the number of medium volunteers.
+     * This method is called when someone needs to know if there are any
+     * more medium positions available.
+     * 
+     * @return true if there are medium positions available, false otherwise.
      */
     public boolean hasMediumRoom()
     {
@@ -177,13 +170,16 @@ public class Job {
     
 
     /**
-     * This method is called when someone needs the current number of heavy volunteers.
-     * @return the number of heavy volunteers.
-     */public boolean hasHeavyRoom()
+     * This method is called when someone needs to know if there are any
+     * more heavy positions available.
+     * 
+     * @return true if there are heavy positions available, false otherwise.
+     */
+    public boolean hasHeavyRoom()
     {
-     	return (myHeavyMax - myHeavyCurrent) > 0;
+    	return (myHeavyMax - myHeavyCurrent) > 0;
     }
-    
+
     /**
      * This method is called when someone wants to know if there is room for another volunteer in the job.
      */
