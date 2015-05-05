@@ -1,10 +1,13 @@
 package model;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import java.util.List;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -17,7 +20,14 @@ public class JobTest {
 	public void setUp() throws Exception {
 		GregorianCalendar startDate = new GregorianCalendar(6, 11, 1992);
 		GregorianCalendar endDate = new GregorianCalendar(7, 11, 1992);
-		myJob = new Job(myPark, 2, 3, 4, startDate, endDate);
+		JobList jl = new JobList();
+		Schedule s = new Schedule(jl);
+		DataPollster dp = new DataPollster(jl);
+		Park p = new Park ("Boolean Park", "Tacoma", 19222);
+		List<Park> pList = new ArrayList<>();
+		pList.add(p);
+		ParkManager pm = new ParkManager(s, dp, pList);
+		myJob = new Job(myPark, 2, 3, 4, startDate, endDate, pm);
 	}
 
 	@Test

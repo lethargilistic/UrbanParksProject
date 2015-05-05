@@ -75,6 +75,11 @@ public class Job {
     public Park myPark;
 
     /**
+     * The Park Manager in charge of the job.
+     */
+    public ParkManager myManager;
+    
+    /**
      * This is a constructor.
      * @param thePark is the park 
      * @param theLightSlots is the max number of light positions
@@ -84,7 +89,7 @@ public class Job {
      * @param theEndDate is the ending date of the job.
      */
     public Job(Park thePark, int theLightSlots, int theMediumSlots, int theHeavySlots,
-    		GregorianCalendar theStartDate, GregorianCalendar theEndDate) {
+    		GregorianCalendar theStartDate, GregorianCalendar theEndDate, ParkManager theManager) {
     	myJobID = nextJobID++;
     	myPark = thePark;
     	myLightMax = theLightSlots;
@@ -93,6 +98,7 @@ public class Job {
     	myStartDate = theStartDate;
     	myEndDate = theEndDate;
     	myVolunteerList = new ArrayList<>();
+    	myManager = theManager;
     }
     
     /**

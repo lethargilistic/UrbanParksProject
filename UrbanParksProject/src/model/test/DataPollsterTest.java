@@ -35,28 +35,35 @@ public class DataPollsterTest {
 	@Before
 	public void setUp() throws Exception {
 		p = new Park("Pioneer Park", "Tacoma", 98444);
+		List<Park> pList = new ArrayList<>();
+		pList.add(p);
 		
 		jl = new JobList();
 		List<Job> jBank = jl.getJobList();
 		jBank.add(new Job(p, 5, 5, 5, 
 				new GregorianCalendar(2015, 6, 15), 
-				new GregorianCalendar(2015, 6, 15)));
-		System.out.println(jBank.get(0).myJobID);
+				new GregorianCalendar(2015, 6, 15), 
+				new ParkManager(s, dp, pList)));
 		jBank.add(new Job(p, 5, 5, 5, 
 				new GregorianCalendar(2015, 6, 16), 
-				new GregorianCalendar(2015, 6, 16)));
+				new GregorianCalendar(2015, 6, 16), 
+				new ParkManager(s, dp, pList)));
 		jBank.add(new Job(p, 5, 5, 5, 
 				new GregorianCalendar(2015, 6, 17), 
-				new GregorianCalendar(2015, 6, 17)));
+				new GregorianCalendar(2015, 6, 17),
+				new ParkManager(s, dp, pList)));
 		jBank.add(new Job(p, 5, 5, 5, 
 				new GregorianCalendar(2015, 6, 18), 
-				new GregorianCalendar(2015, 6, 18)));
+				new GregorianCalendar(2015, 6, 18), 
+				new ParkManager(s, dp, pList)));
 		jBank.add(new Job(p, 5, 5, 5, 
 				new GregorianCalendar(2015, 6, 19), 
-				new GregorianCalendar(2015, 6, 19)));
+				new GregorianCalendar(2015, 6, 19),
+				new ParkManager(s, dp, pList)));
 		jBank.add(new Job(p, 5, 5, 5, 
 				new GregorianCalendar(2015, 6, 20), 
-				new GregorianCalendar(2015, 6, 20)));
+				new GregorianCalendar(2015, 6, 20), 
+				new ParkManager(s, dp, pList)));
 		
 		dp = new DataPollster(jl);
 		s = new Schedule(jl);
@@ -132,7 +139,8 @@ public class DataPollsterTest {
 		List<Job> jobs = jl.getJobList();
 		jobs.add(new Job(p2, 5, 5, 5, 
 				new GregorianCalendar(2015, 6, 15), 
-				new GregorianCalendar(2015, 6, 15)));
+				new GregorianCalendar(2015, 6, 15),
+				pm));
 		
 		
 		assertEquals("A job at another park affected the return value.", pmJobs, dp.getManagerJobs(pm));

@@ -27,6 +27,7 @@ public class ParkManager {
 		this.myPollster = thePollster;
 		this.myManagedParks = new ArrayList<>();
 		this.myManagedParks.addAll(theManagedParks);
+		this.myUI = new ParkManagerUI();
 	}
 
 	
@@ -47,6 +48,8 @@ public class ParkManager {
 	 * Parse a command, and call other methods to execute the command.
 	 */
 	public boolean parseCommand(String command) {
+		command = command.toLowerCase(); //lower case to avoid ambiguity
+		
 		switch(command) { 
 			case "new job":
 			case "new":				
@@ -108,7 +111,7 @@ public class ParkManager {
 		GregorianCalendar myStartDate = parseDate(myStartString);
 		GregorianCalendar myEndDate = parseDate(myEndString);
 		
-		return new Job(thePark, myLight, myMedium, myHeavy, myStartDate, myEndDate);		
+		return new Job(thePark, myLight, myMedium, myHeavy, myStartDate, myEndDate, this);		
 	}
 	
 	

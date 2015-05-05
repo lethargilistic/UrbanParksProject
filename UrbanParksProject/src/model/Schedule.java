@@ -76,6 +76,9 @@ public class Schedule {
 			okToAdd = false;
 		}
 		
+		if (theJob.myManager == null){
+			okToAdd = false;
+		}
 		
 		if (okToAdd) {
 			// To get the master job list which is editable
