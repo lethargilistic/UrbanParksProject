@@ -1,75 +1,66 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Scanner;
 
 public class ParkManagerUI {
 	
+	private Scanner in = new Scanner(System.in);
+	
 	public void listCommands() {
 		System.out.println("\nnew job    view jobs    view job volunteers    quit");
 	}
 	
-	public String getCommand() {
-		Scanner in = new Scanner(System.in);		
-		return in.nextLine().toLowerCase(); //lower case to avoid ambiguity
+	public String getCommand() {	
+		return in.nextLine();
 	}
 	
 	
 	public int getJobID() {
-		Scanner in = new Scanner(System.in);
 		System.out.println("Please input the ID of the job whose volunteers you would like to view.");
 		int myJobID = in.nextInt();
-		
-		in.close();
 		return myJobID;
 	}
 	
 	
 	
 	
-	public int getLightSlots() {
-		Scanner in = new Scanner(System.in);		
+	public int getLightSlots() {		
 		System.out.println("\nHow many volunteers do you want for light grade work?");
-		int myLight = in.nextInt();
+		int myLight = 0;
 		
-		in.close();
+		if(in.hasNextInt()) {
+			myLight = in.nextInt();
+		}	
+		
 		return myLight;
 	}
 	
-	public int getMediumSlots() {
-		Scanner in = new Scanner(System.in);		
+	public int getMediumSlots() {		
 		System.out.println("\nHow many volunteers do you want for medium grade work?");
 		int myMedium = in.nextInt();
-		
-		in.close();
 		return myMedium;
 	}
 	
-	public int getHeavySlots() {
-		Scanner in = new Scanner(System.in);		
+	public int getHeavySlots() {	
 		System.out.println("\nHow many volunteers do you want for heavy grade work?");
 		int myHeavy = in.nextInt();
-		
-		in.close();
 		return myHeavy;
 	}
 	
 	public String getStartDate() {
-		Scanner in = new Scanner(System.in);
 		System.out.println("Please enter the start date of the job in the following format: mmddyyyy");
+		String inputBuffer = in.nextLine();
 		String myStartDate = in.nextLine();
-		
-		in.close();
 		return myStartDate;
 	}
 	
 	public String getEndDate() {
-		Scanner in = new Scanner(System.in);
 		System.out.println("Please enter the end date of the job in the following format: mmddyyyy");
 		String myEndDate = in.nextLine();
-		
-		in.close();
 		return myEndDate;
 	}	
 	
@@ -104,12 +95,22 @@ public class ParkManagerUI {
 	public void displayJobs(ArrayList<Job> theJobList) {
 		
 		for(Job job : theJobList) {
-			System.out.println("\n" + job.getJobID() + " " + job.getPark() + "\n    Begins:" + 
-					job.getStartDate() + " , Ends:" + job.getEndDate() + "\n    Light Slots:" +
-					job.getLightCurrent() + "/" + job.getLightMax() + "   Medium Slots:" +
+			String startDate = calendarToString(job.getStartDate());
+			String endDate = calendarToString(job.getEndDate());
+			
+			System.out.println("\n" + job.getJobID() + " " + job.getPark() + "\n    Begins: " + 
+					startDate + " , Ends: " + endDate + "\n    Light Slots: " +
+					job.getLightCurrent() + "/" + job.getLightMax() + "   Medium Slots: " +
 					job.getMediumCurrent() + "/" + job.getMediumMax() +
-					"   Heavy Slots:" + job.getHeavyCurrent() + "/" + job.getHeavyMax());
+					"   Heavy Slots: " + job.getHeavyCurrent() + "/" + job.getHeavyMax());
 		}
+	}
+	
+	private String calendarToString(GregorianCalendar theCalendar) {
+		String returnString = theCalendar.get(Calendar.MONTH) + "/" +
+				theCalendar.get(Calendar.DAY_OF_MONTH) + "/" +
+				theCalendar.get(Calendar.YEAR);
+		return returnString;
 	}
 	
 	
@@ -134,11 +135,8 @@ public class ParkManagerUI {
 	 * Prompt the user for a park number, and return that value.
 	 */
 	public int selectParkNum() {
-		Scanner in = new Scanner(System.in);
 		System.out.println("\nPlease select the number preceding the park where the job is located.");
 		int myParkNum = in.nextInt();
-		in.close();
-		
 		return myParkNum;
 	}
 }
