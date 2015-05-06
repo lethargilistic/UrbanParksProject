@@ -65,11 +65,11 @@ public class Schedule {
 			okToAdd = false;
 		}
 		
-		if (theJob.myPark == null) {
+		if (theJob.getPark() == null) {
 			okToAdd = false;
 		}
 		
-		if (theJob.myManager == null){
+		if (theJob.getManager() == null){
 			okToAdd = false;
 		}
 		

@@ -168,7 +168,7 @@ public class DataPollsterTest {
 	@After
 	public void teardown()
 	{
-		Job.nextJobID = 0;
+		Job.setNextJobID(0);
 	}
 
 }
