@@ -19,7 +19,7 @@ public class ParkManagerUI {
 	 * Display the possible commands that the user could type. 
 	 */
 	public void listCommands() {
-		System.out.println("\n 1.new job     2.view jobs     3.view volunteers     4.quit\n");
+		System.out.println("\n1.new job     2.view jobs     3.view volunteers     4.quit\n");
 	}
 	
 	/**
@@ -38,6 +38,7 @@ public class ParkManagerUI {
 				+ " like to view.");
 		int myJobID = in.nextInt();
 		return myJobID;
+		
 	}
 	
 	/**
@@ -114,6 +115,7 @@ public class ParkManagerUI {
 	 * Display all of the parks that the Park Manager manages in the console.
 	 */
 	public void displayParks(List<Park> myManagedParks) {
+		System.out.println();
 		for(int i = 0; i < myManagedParks.size(); i++) {
 			System.out.println(i + "    " + myManagedParks.get(i).getName());
 		}		
@@ -130,15 +132,15 @@ public class ParkManagerUI {
 			String endDate = calendarToString(job.getEndDate());
 			
 			String jobString = "\n";
-			jobString += job.getJobID();
-			jobString += " " + job.getPark();
+			jobString += "Job ID: " + job.getJobID();
+			jobString += "\n    " + job.getPark();
 			
 			jobString += "\n    Begins: " + startDate;
 			jobString += " , Ends: " + endDate;
 			
 			jobString += "\n    Light Slots: " + job.getLightCurrent() + "/" + job.getLightMax();
 			jobString += "\n    Medium Slots: " + job.getMediumCurrent() + "/" + job.getMediumMax();
-			jobString += "\n    Heavy Slots: " + job.getHeavyCurrent() + "/" + job.getHeavyMax();
+			jobString += "\n    Heavy Slots: " + job.getHeavyCurrent() + "/" + job.getHeavyMax() + "\n";
 			
 			System.out.println(jobString);
 		}
@@ -176,7 +178,7 @@ public class ParkManagerUI {
 	 * Prompt the user for a park number, and return that value.
 	 */
 	public int selectParkNum() {
-		System.out.println("\nPlease select the number preceding the park where the job is located.");
+		
 		int myParkNum = in.nextInt();
 		return myParkNum;
 	}
