@@ -47,7 +47,7 @@ public class Schedule {
 		}
 		
 		// checks that the job id is valid
-		if (theJob.myJobID < Integer.MIN_VALUE || theJob.myJobID > Integer.MAX_VALUE) {
+		if (theJob.getJobID() < Integer.MIN_VALUE || theJob.getJobID() > Integer.MAX_VALUE) {
 			okToAdd = false;
 		}
 		
@@ -116,7 +116,7 @@ public class Schedule {
 			// If invalid, return else get Job object with that Job ID
 			j = editableJobList.get(i);
 			
-			if (j.myJobID == theJobID) {
+			if (j.getJobID() == theJobID) {
 				jobExists = true;
 				break;
 			}
