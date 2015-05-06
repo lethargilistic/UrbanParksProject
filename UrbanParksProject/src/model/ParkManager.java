@@ -1,19 +1,25 @@
 package model;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+/**
+ * ParkManager can add new jobs to the schedule, view all jobs for the parks they manage,
+ * and view all volunteers for a given job.
+ * @author Taylor Gorman
+ * @version 1.01
+ *
+ */
 public class ParkManager {
 	
-	/**
-	 * A list of all the parks managed by the park manager.
-	 */
-	private List<Park> myManagedParks;
-	
+	//Class Variables
 	private ParkManagerUI myUI;	
 	private Schedule mySchedule;
 	private DataPollster myPollster;
+	private List<Park> myManagedParks;	
+	
 	
 	/**
 	 * Constructor for ParkManager, which requires a Schedule and DataPollster to be passed to it.
@@ -40,6 +46,7 @@ public class ParkManager {
 	public void commandLoop() {
 		myUI.listCommands();
 		String command = myUI.getCommand();
+		
 		if(parseCommand(command)) {
 			commandLoop();
 		}
@@ -54,18 +61,20 @@ public class ParkManager {
 		
 		switch(command) { 
 			case "new job":
-			case "new":				
+			case "new":	
+			case "n":
 				createJob(); 
 				return true;
 			
 			case "view jobs":
 			case "view job":
+			case "j":
 				viewUpcomingJobs();
 				return true;
 			
-			case "view job volunteers":
-			case "view job volunteer":
 			case "view volunteers":
+			case "view volunteer":
+			case "v":
 				viewJobVolunteers();
 				return true;
 			
@@ -88,11 +97,13 @@ public class ParkManager {
 	 * 5. Tell the user if the new job was successfully added.
 	 */
 	public void createJob() {	
-		myUI.displayParks(myManagedParks);
+		myUI.displayParks(myManagedParks); //Show the parks to the user, including their IDs
+		
 		int parkNum = myUI.selectParkNum();
 		Park myPark = myManagedParks.get(parkNum);
 		
-		Job myJob = constructJob(myPark);		
+		Job myJob = constructJob(myPark);
+		
 		boolean added = mySchedule.receiveJob(myJob);
 		myUI.displayJobStatus(added);
 	}
@@ -102,8 +113,7 @@ public class ParkManager {
 	 * @param thePark The park where the job will occur.
 	 * @return The constructed Job
 	 */
-	private Job constructJob(Park thePark) {
-		
+	private Job constructJob(Park thePark) {		
 		int myLight = myUI.getLightSlots();
 		int myMedium = myUI.getMediumSlots();
 		int myHeavy = myUI.getHeavySlots();	
