@@ -87,10 +87,10 @@ public class DataPollsterTest {
 		
 		
 		//TODO: So why don't we just pass the Job in here instead of the ID?
-		s.addVolunteerToJob(vBank.get(0), jobs.get(0).myJobID, 1);
-		s.addVolunteerToJob(vBank.get(0), jobs.get(1).myJobID, 1);
-		s.addVolunteerToJob(vBank.get(0), jobs.get(2).myJobID, 1);
-		s.addVolunteerToJob(vBank.get(0), jobs.get(3).myJobID, 1);
+		s.addVolunteerToJob(vBank.get(0), jobs.get(0).getJobID(), 1);
+		s.addVolunteerToJob(vBank.get(0), jobs.get(1).getJobID(), 1);
+		s.addVolunteerToJob(vBank.get(0), jobs.get(2).getJobID(), 1);
+		s.addVolunteerToJob(vBank.get(0), jobs.get(3).getJobID(), 1);
 		
 		List<Job> pendJob = new ArrayList<Job>();
 		pendJob.add(jobs.get(4));
@@ -109,10 +109,10 @@ public class DataPollsterTest {
 		
 		
 		//TODO: So why don't we just pass the Job in here instead of the ID?
-		s.addVolunteerToJob(vBank.get(0), jobs.get(0).myJobID, 1);
-		s.addVolunteerToJob(vBank.get(0), jobs.get(1).myJobID, 1);
-		s.addVolunteerToJob(vBank.get(0), jobs.get(2).myJobID, 1);
-		s.addVolunteerToJob(vBank.get(0), jobs.get(3).myJobID, 1);
+		s.addVolunteerToJob(vBank.get(0), jobs.get(0).getJobID(), 1);
+		s.addVolunteerToJob(vBank.get(0), jobs.get(1).getJobID(), 1);
+		s.addVolunteerToJob(vBank.get(0), jobs.get(2).getJobID(), 1);
+		s.addVolunteerToJob(vBank.get(0), jobs.get(3).getJobID(), 1);
 		
 		List<Job> vsJob = new ArrayList<Job>();
 		vsJob.add(jobs.get(0));
@@ -152,23 +152,23 @@ public class DataPollsterTest {
 	@Test
 	public void testGetVolunteerList() {
 		List<Job> jobs = jl.getJobList();
-		assertEquals("Empty list problem.", new ArrayList<Job>(), dp.getVolunteerList(jobs.get(0).myJobID));
+		assertEquals("Empty list problem.", new ArrayList<Job>(), dp.getVolunteerList(jobs.get(0).getJobID()));
 		
 		List<Volunteer> vList = new ArrayList<>();
 		
 		for (int i = 0; i <5; i++)
 		{
-			s.addVolunteerToJob(vBank.get(i), jobs.get(0).myJobID, 1);
+			s.addVolunteerToJob(vBank.get(i), jobs.get(0).getJobID(), 1);
 			vList.add(vBank.get(i));
 		}
 		
-		assertEquals("The List filled incorrectly.", vList, dp.getVolunteerList(jobs.get(0).myJobID));
+		assertEquals("The List filled incorrectly.", vList, dp.getVolunteerList(jobs.get(0).getJobID()));
 	}
 	
 	@After
 	public void teardown()
 	{
-		Job.nextJobID = 0;
+		Job.setNextJobID(0);
 	}
 
 }

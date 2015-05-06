@@ -1,36 +1,43 @@
 package model;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+/**
+ * ParkManager can add new jobs to the schedule, view all jobs for the parks they manage,
+ * and view all volunteers for a given job.
+ * @author Taylor Gorman
+ * @version 1.01
+ *
+ */
 public class ParkManager {
 	
-	/**
-	 * A list of all the parks managed by the park manager.
-	 */
-	private List<Park> myManagedParks;
-	
-	private String myFirstName;
-	private String myLastName;
-	
+	//Class Variables
 	private ParkManagerUI myUI;	
 	private Schedule mySchedule;
 	private DataPollster myPollster;
+	private List<Park> myManagedParks;	
 	
 	
 	/**
 	 * Constructor for ParkManager, which requires a Schedule and DataPollster to be passed to it.
 	 */
-	public ParkManager(Schedule theSchedule, DataPollster thePollster, List<Park> theManagedParks) {
+	public ParkManager(Schedule theSchedule, DataPollster thePollster,
+			List<Park> theManagedParks) {
 		this.mySchedule = theSchedule;
 		this.myPollster = thePollster;
-		this.myManagedParks = new ArrayList<>();
-		this.myManagedParks.addAll(theManagedParks);
+		this.myManagedParks = new ArrayList<>(theManagedParks);
 		this.myUI = new ParkManagerUI();
 	}
 
-	
+	//TODO: Should be removed in favor of having the commands be processed in the UI.
+	public void initialize() {
+		commandLoop();
+	}
+
+	//TODO: Should be removed in favor of having the commands be processed in the UI.
 	/**
 	 * The main loop for Park Manager.<br>
 	 * Lists possible commands, prompts the user for one, and then acts on it.<br>
@@ -39,11 +46,13 @@ public class ParkManager {
 	public void commandLoop() {
 		myUI.listCommands();
 		String command = myUI.getCommand();
+		
 		if(parseCommand(command)) {
 			commandLoop();
 		}
 	}
 	
+	//TODO: Should be removed in favor of having the commands be processed in the UI.
 	/**
 	 * Parse a command, and call other methods to execute the command.
 	 */
@@ -52,18 +61,20 @@ public class ParkManager {
 		
 		switch(command) { 
 			case "new job":
-			case "new":				
+			case "new":	
+			case "n":
 				createJob(); 
 				return true;
 			
 			case "view jobs":
 			case "view job":
+			case "j":
 				viewUpcomingJobs();
 				return true;
 			
-			case "view job volunteers":
-			case "view job volunteer":
 			case "view volunteers":
+			case "view volunteer":
+			case "v":
 				viewJobVolunteers();
 				return true;
 			
@@ -86,11 +97,13 @@ public class ParkManager {
 	 * 5. Tell the user if the new job was successfully added.
 	 */
 	public void createJob() {	
-		myUI.displayParks(myManagedParks);
+		myUI.displayParks(myManagedParks); //Show the parks to the user, including their IDs
+		
 		int parkNum = myUI.selectParkNum();
 		Park myPark = myManagedParks.get(parkNum);
 		
-		Job myJob = constructJob(myPark);		
+		Job myJob = constructJob(myPark);
+		
 		boolean added = mySchedule.receiveJob(myJob);
 		myUI.displayJobStatus(added);
 	}
@@ -100,16 +113,15 @@ public class ParkManager {
 	 * @param thePark The park where the job will occur.
 	 * @return The constructed Job
 	 */
-	private Job constructJob(Park thePark) {
-		
+	private Job constructJob(Park thePark) {		
 		int myLight = myUI.getLightSlots();
 		int myMedium = myUI.getMediumSlots();
 		int myHeavy = myUI.getHeavySlots();	
 		String myStartString = myUI.getStartDate();
 		String myEndString = myUI.getEndDate();		
 		
-		GregorianCalendar myStartDate = parseDate(myStartString);
-		GregorianCalendar myEndDate = parseDate(myEndString);
+		GregorianCalendar myStartDate = stringToCalendar(myStartString);
+		GregorianCalendar myEndDate = stringToCalendar(myEndString);
 		
 		return new Job(thePark, myLight, myMedium, myHeavy, myStartDate, myEndDate, this);		
 	}
@@ -120,16 +132,13 @@ public class ParkManager {
 	 * @param stringDate A string representing a date, of format mmddyyyy
 	 * @return A Gregorian Calendar object representing that date.
 	 */
-	private GregorianCalendar parseDate(String stringDate) {
+	private GregorianCalendar stringToCalendar(String stringDate) {
 		int myDay = Integer.parseInt(stringDate.substring(0, 2));
 		int myMonth = Integer.parseInt(stringDate.substring(2, 4));
 		int myYear = Integer.parseInt(stringDate.substring(4, 8));		
 		
-		return new GregorianCalendar(myYear, myMonth, myDay);
+		return new GregorianCalendar(myYear, myDay, myMonth);
 	}
-	
-	
-	
 	
 	/**
 	 * Print a list of all upcoming jobs for every Park that the ParkManager manages.
@@ -139,8 +148,6 @@ public class ParkManager {
 		myUI.displayJobs(myJobList);	
 	}
 	
-	
-
 	/**
 	 * Print a list of every Volunteer for a selected Job.
 	 */
@@ -160,7 +167,7 @@ public class ParkManager {
 		this.myManagedParks = theManagedParks;
 	}
 
-	
+	//TODO: What is the user story for this method?
 	/**
 	 * Check to make sure that the Job ID is valid.
 	 * @return True if valid, false if not.

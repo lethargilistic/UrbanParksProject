@@ -15,7 +15,11 @@ public class Main {
 		
 		
 		ParkManager myManager = new ParkManager(mySchedule, myPollster, myParkList);
+<<<<<<< HEAD
 		//myManager.initialize();
+=======
+		myManager.initialize();
+>>>>>>> branch 'master' of https://github.com/360Group3/UrbanParksProject.git
 
 	}
 

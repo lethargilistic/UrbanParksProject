@@ -11,19 +11,17 @@ public class Park {
 	/**
 	 * This holds the name of the park.
 	 */
-	public String myName;
+	private String myName;
 
 	/**
 	 * This holds the value of the location (the city) of the park.
 	 */
-    public String myLocation;
+    private String myLocation;
 
     /**
      * This holds the value of the zip code that the park is located in.
      */
-    public int myZipCode;
-
-    
+    private int myZipCode;
     
     /**
      * This is a constructor.
@@ -37,8 +35,6 @@ public class Park {
     	myZipCode = theZip;
     }
 
-
-
 	public String getName() {
 		return myName;
 	}
@@ -48,7 +44,4 @@ public class Park {
 	{
 		return myName;
 	}
-    
-    //TODO: Maybe we should create getters so that we can encapsulate
-    		//our data?
 }

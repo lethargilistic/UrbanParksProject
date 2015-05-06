@@ -9,7 +9,7 @@ public class DataPollster {
 	/**
 	 * A reference to a list of jobs in memory.
 	 */
-	JobList myJobList;
+	private JobList myJobList;
 	
 	public DataPollster(JobList theJoblist)
 	{
@@ -123,7 +123,7 @@ public class DataPollster {
 		//managed by the PM.
 		for (Job j : myJobList.getCopyList())
 		{
-			if (theManager.getManagedParks().contains(j.myPark))
+			if (theManager.getManagedParks().contains(j.getPark()))
 			{
 				jobsManaging.add(j);
 			}
@@ -144,7 +144,7 @@ public class DataPollster {
 		// Check through the myJobList and select the Job with that jobID
 		for (Job j : myJobList.getCopyList())
 		{
-			if (j.myJobID == theJobID)
+			if (j.getJobID() == theJobID)
 			{
 				// Use that Job object to get a copied list of associated Volunteers
 				retVols.addAll(j.myVolunteerList);

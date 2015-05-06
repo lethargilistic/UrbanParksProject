@@ -11,12 +11,12 @@ import java.util.List;
  */
 public class Job {
 	
-	public static int nextJobID = 0;
+	private static int nextJobID = 0;
 	
 	/**
 	 * This value is the identification number of a job.
 	 */
-	public int myJobID;
+	private int myJobID;
 
 	/**
 	 * This is the list which holds the volunteers that have signed up to participate in this job.
@@ -72,12 +72,12 @@ public class Job {
     /**
      * This value holds the park that the job will be located at.
      */
-    public Park myPark;
+    private Park myPark;
 
     /**
      * The Park Manager in charge of the job.
      */
-    public ParkManager myManager;
+    private ParkManager myManager;
     
     /**
      * This is a constructor.
@@ -91,15 +91,24 @@ public class Job {
     public Job(Park thePark, int theLightSlots, int theMediumSlots, int theHeavySlots,
     		GregorianCalendar theStartDate, GregorianCalendar theEndDate, ParkManager theManager) {
     	myJobID = nextJobID++;
-    	myPark = thePark;
-    	myLightMax = theLightSlots;
-    	myMediumMax = theMediumSlots;
-    	myHeavyMax = theHeavySlots;
+    	myVolunteerList = new ArrayList<>();
     	myStartDate = theStartDate;
     	myEndDate = theEndDate;
-    	myVolunteerList = new ArrayList<>();
+    	myPark = thePark;
     	myManager = theManager;
+    	
+    	myLightMax = theLightSlots;
+    	myLightCurrent = 0;
+    	myMediumMax = theMediumSlots;
+    	myMediumCurrent = 0;
+    	myHeavyMax = theHeavySlots;
+    	myHeavyCurrent = 0;
     }
+    
+	public static void setNextJobID(int theID)
+	{
+		nextJobID = 0;
+	}
     
     /**
      * This is used to return the starting date of the job.
@@ -189,10 +198,14 @@ public class Job {
 
     /**
      * This method is called when someone wants to know if there is room for another volunteer in the job.
+     * 
+     * @return true if there are positions available, false otherwise.
      */
     public boolean hasRoom()
     {
-    	return ((myHeavyMax + myMediumMax + myLightMax) - (myHeavyCurrent + myMediumCurrent + myLightCurrent)) > 0;
+    	return (myLightMax - myLightCurrent) == 0
+    			&& (myMediumMax + myMediumCurrent) == 0 
+    			&& (myHeavyMax - myHeavyCurrent) == 0;
     }
 
 	public int getJobID() {
@@ -229,6 +242,10 @@ public class Job {
 
 	public Park getPark() {
 		return myPark;
+	}
+	
+	public ParkManager getManager() {
+		return myManager;
 	}
 	
 	@Override
