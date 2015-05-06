@@ -90,14 +90,18 @@ public class Job {
     public Job(Park thePark, int theLightSlots, int theMediumSlots, int theHeavySlots,
     		GregorianCalendar theStartDate, GregorianCalendar theEndDate, ParkManager theManager) {
     	myJobID = nextJobID++;
-    	myPark = thePark;
-    	myLightMax = theLightSlots;
-    	myMediumMax = theMediumSlots;
-    	myHeavyMax = theHeavySlots;
+    	myVolunteerList = new ArrayList<>();
     	myStartDate = theStartDate;
     	myEndDate = theEndDate;
-    	myVolunteerList = new ArrayList<>();
+    	myPark = thePark;
     	myManager = theManager;
+    	
+    	myLightMax = theLightSlots;
+    	myLightCurrent = 0;
+    	myMediumMax = theMediumSlots;
+    	myMediumCurrent = 0;
+    	myHeavyMax = theHeavySlots;
+    	myHeavyCurrent = 0;
     }
     
     /**
@@ -188,10 +192,14 @@ public class Job {
 
     /**
      * This method is called when someone wants to know if there is room for another volunteer in the job.
+     * 
+     * @return true if there are positions available, false otherwise.
      */
     public boolean hasRoom()
     {
-    	return ((myHeavyMax + myMediumMax + myLightMax) - (myHeavyCurrent + myMediumCurrent + myLightCurrent)) > 0;
+    	return (myLightMax - myLightCurrent) == 0
+    			&& (myMediumMax + myMediumCurrent) == 0 
+    			&& (myHeavyMax - myHeavyCurrent) == 0;
     }
 
 	public int getJobID() {

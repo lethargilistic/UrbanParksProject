@@ -11,13 +11,9 @@ public class ParkManager {
 	 */
 	private List<Park> myManagedParks;
 	
-	private String myFirstName;
-	private String myLastName;
-	
 	private ParkManagerUI myUI;	
 	private Schedule mySchedule;
 	private DataPollster myPollster;
-	
 	
 	/**
 	 * Constructor for ParkManager, which requires a Schedule and DataPollster to be passed to it.
@@ -26,16 +22,16 @@ public class ParkManager {
 			List<Park> theManagedParks) {
 		this.mySchedule = theSchedule;
 		this.myPollster = thePollster;
-		this.myManagedParks = new ArrayList<>();
-		this.myManagedParks.addAll(theManagedParks);
+		this.myManagedParks = new ArrayList<>(theManagedParks);
 		this.myUI = new ParkManagerUI();
 	}
-	
+
+	//TODO: Should be removed in favor of having the commands be processed in the UI.
 	public void initialize() {
 		commandLoop();
 	}
 
-	
+	//TODO: Should be removed in favor of having the commands be processed in the UI.
 	/**
 	 * The main loop for Park Manager.<br>
 	 * Lists possible commands, prompts the user for one, and then acts on it.<br>
@@ -49,6 +45,7 @@ public class ParkManager {
 		}
 	}
 	
+	//TODO: Should be removed in favor of having the commands be processed in the UI.
 	/**
 	 * Parse a command, and call other methods to execute the command.
 	 */
@@ -133,9 +130,6 @@ public class ParkManager {
 		return new GregorianCalendar(myYear, myDay, myMonth);
 	}
 	
-	
-	
-	
 	/**
 	 * Print a list of all upcoming jobs for every Park that the ParkManager manages.
 	 */
@@ -144,8 +138,6 @@ public class ParkManager {
 		myUI.displayJobs(myJobList);	
 	}
 	
-	
-
 	/**
 	 * Print a list of every Volunteer for a selected Job.
 	 */
@@ -165,7 +157,7 @@ public class ParkManager {
 		this.myManagedParks = theManagedParks;
 	}
 
-	
+	//TODO: What is the user story for this method?
 	/**
 	 * Check to make sure that the Job ID is valid.
 	 * @return True if valid, false if not.

@@ -22,29 +22,43 @@ public class JobTest {
 	
 	private Job myJob;
 	private Park myPark;
-
+	private ParkManager myParkManager;
+	
 	@Before
 	public void setUp() throws Exception {
 		GregorianCalendar startDate = new GregorianCalendar(6, 11, 1992);
-		GregorianCalendar endDate = new GregorianCalendar(7, 11, 1992);
+		GregorianCalendar endDate = new GregorianCalendar(6, 11, 1992);
+		
 		JobList jl = new JobList();
 		Schedule s = new Schedule(jl);
 		DataPollster dp = new DataPollster(jl);
+		
 		Park p = new Park ("Boolean Park", "Tacoma", 19222);
 		List<Park> pList = new ArrayList<>();
 		pList.add(p);
-		ParkManager pm = new ParkManager(s, dp, pList);
-		myJob = new Job(myPark, 2, 3, 4, startDate, endDate, pm);
+		
+		myParkManager = new ParkManager(s, dp, pList);
+		
+		myJob = new Job(myPark, 2, 3, 4, startDate, endDate, myParkManager);
 	}
 
 	@Test
-	public void getterTest() {
+	public void constructorTest() {
 		assertEquals(2, myJob.getLightMax());
 		assertEquals(3, myJob.getMediumMax());
 		assertEquals(4, myJob.getHeavyMax());
 		assertEquals(0, myJob.getLightCurrent());
 		assertEquals(0, myJob.getMediumCurrent());
 		assertEquals(0, myJob.getHeavyCurrent());
+		
+		
+		for (int i = 1; i <= 5; i++)
+		{
+			Job j = new Job(myPark, 2, 3, 4, 
+							new GregorianCalendar(6, 11+i, 1992), 
+							new GregorianCalendar(6, 11+i, 1992), myParkManager);
+			assertEquals(i, j.getJobID());
+		}
 	}
 	
 	@Test

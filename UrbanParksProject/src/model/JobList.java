@@ -22,7 +22,6 @@ public class JobList {
 	 * This is a list of volunteers who have created accounts with the program.
 	 */
 	private List<Volunteer> myVolunteerList;
-
 	
 	/**
 	 * This is a constructor.
@@ -32,7 +31,6 @@ public class JobList {
 		myVolunteerList = new ArrayList<Volunteer>();
 		
 	}
-	
 	
 	/**
 	 * This method should be called by Sorter class.

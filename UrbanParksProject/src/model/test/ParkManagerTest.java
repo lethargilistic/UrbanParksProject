@@ -1,7 +1,6 @@
 package model.test;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +15,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class ParkManagerTest {
-	
+
 	private ParkManager myManager;
 	private Schedule mySchedule;
 	private DataPollster myPollster;
@@ -33,6 +32,7 @@ public class ParkManagerTest {
 		myManager = new ParkManager(mySchedule, myPollster, myParks);
 	}
 
+	//TODO: Should be removed in favor of having the commands be processed in the UI.
 	@Test
 	public void parseCommandTest() {
 		assertFalse(myManager.parseCommand("quit"));
@@ -45,4 +45,8 @@ public class ParkManagerTest {
 		assertFalse(myManager.parseCommand("new jobzo"));
 	}
 
+	@Test
+	public void testCreateJob() {
+		fail("Not yet implemented");
+	}
 }
