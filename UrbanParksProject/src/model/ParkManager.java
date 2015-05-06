@@ -63,24 +63,28 @@ public class ParkManager {
 			case "new job":
 			case "new":	
 			case "n":
+			case "1":
 				createJob(); 
 				return true;
 			
 			case "view jobs":
 			case "view job":
 			case "j":
+			case "2":
 				viewUpcomingJobs();
 				return true;
 			
 			case "view volunteers":
 			case "view volunteer":
 			case "v":
+			case "3":
 				viewJobVolunteers();
 				return true;
 			
 			case "exit":
 			case "close":
 			case "quit":
+			case "4":
 			default: 
 				return false;
 		}

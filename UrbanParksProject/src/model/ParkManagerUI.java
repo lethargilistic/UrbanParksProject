@@ -19,7 +19,7 @@ public class ParkManagerUI {
 	 * Display the possible commands that the user could type. 
 	 */
 	public void listCommands() {
-		System.out.println("\nnew job     view jobs     view volunteers     quit\n");
+		System.out.println("\n 1.new job     2.view jobs     3.view volunteers     4.quit\n");
 	}
 	
 	/**
