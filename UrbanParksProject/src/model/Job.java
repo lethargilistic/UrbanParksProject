@@ -11,11 +11,11 @@ import java.util.List;
  */
 public class Job {
 	
-	public static int nextJobID = 0;
+	private static int nextJobID = 0;
 	/**
 	 * This value is the identification number of a job.
 	 */
-	public int myJobID;
+	private int myJobID;
 
 	/**
 	 * This is the list which holds the volunteers that have signed up to participate in this job.
@@ -71,12 +71,12 @@ public class Job {
     /**
      * This value holds the park that the job will be located at.
      */
-    public Park myPark;
+    private Park myPark;
 
     /**
      * The Park Manager in charge of the job.
      */
-    public ParkManager myManager;
+    private ParkManager myManager;
     
     /**
      * This is a constructor.
@@ -103,6 +103,11 @@ public class Job {
     	myHeavyMax = theHeavySlots;
     	myHeavyCurrent = 0;
     }
+    
+	public static void setNextJobID(int theID)
+	{
+		nextJobID = 0;
+	}
     
     /**
      * This is used to return the starting date of the job.
@@ -236,6 +241,10 @@ public class Job {
 
 	public Park getPark() {
 		return myPark;
+	}
+	
+	public ParkManager getManager() {
+		return myManager;
 	}
 	
 	@Override

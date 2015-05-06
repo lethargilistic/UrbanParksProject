@@ -11,17 +11,17 @@ public class Park {
 	/**
 	 * This holds the name of the park.
 	 */
-	public String myName;
+	private String myName;
 
 	/**
 	 * This holds the value of the location (the city) of the park.
 	 */
-    public String myLocation;
+    private String myLocation;
 
     /**
      * This holds the value of the zip code that the park is located in.
      */
-    public int myZipCode;
+    private int myZipCode;
     
     /**
      * This is a constructor.

@@ -1,8 +1,8 @@
 package model;
 
 public class Volunteer {
-	public String myFirstName;
-	public String myLastName;
+	private String myFirstName;
+	private String myLastName;
 	
 	public Volunteer(String firstName, String lastName)
 	{
