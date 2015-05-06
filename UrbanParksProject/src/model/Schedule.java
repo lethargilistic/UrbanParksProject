@@ -63,7 +63,10 @@ public class Schedule {
 		//of Light, Medium, or Heavy has 0 spaces.
 		//Some jobs will have zero space for one or two of these levels which means when
 		//that job is passed in, it will always enter this if-statement and return false....not good.
-		if (!theJob.hasLightRoom() || !theJob.hasMediumRoom() || !theJob.hasHeavyRoom()) {
+		
+		//I made changed here! I changed all the or (||) to and (&&). Now the if-statement wont be entered
+		//unless there is zero room in each job level. Arsh.
+		if (!theJob.hasLightRoom() && !theJob.hasMediumRoom() && !theJob.hasHeavyRoom()) {
 			okToAdd = false;
 		}
 		

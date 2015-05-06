@@ -21,5 +21,10 @@ public class Main {
 		myManager.initialize();
 
 	}
+	
+	
+	
+	
+	//NOTE: when creating an account for volunteer, don't forget to add him into the myVolunteerList in JobList class.
 
 }

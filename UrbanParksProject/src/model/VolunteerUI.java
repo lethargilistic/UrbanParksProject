@@ -54,6 +54,41 @@ public class VolunteerUI {
 		return returnString;
 	}
 	
+	/**
+	 * Prompts the user to enter a number which represents the job's ID.
+	 * @return ID number
+	 */
+	public int getJobID() {
+		System.out.println("To select a job to sign up for, please type its ID #.");
+		int ID = 0;
+		
+		if(in.hasNextInt()) {
+			ID = in.nextInt();
+		}	
+		
+		return ID;
+	}
+	
+	/**
+	 * Prompts the user to enter in a number depending on the difficulty of the work
+	 * he wants to do.
+	 * @return difficulty level.
+	 */
+	public int getDifficultyLevel() {
+		System.out.println("\nWhat level of work do you want to sign up for?");
+		int level = 0;
+		
+		System.out.println("Type 1 for light work, 2 for medium work, or 3 for heavy work.");
+		
+		if(in.hasNextInt()) {
+			level = in.nextInt();
+		}	
+		
+		return level;
+	}
+
+	
+	
 	
 	
 }

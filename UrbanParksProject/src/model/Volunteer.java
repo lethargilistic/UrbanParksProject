@@ -8,6 +8,7 @@ public class Volunteer {
 	
 	private VolunteerUI myUI;
 	private DataPollster myPoll;
+	private Schedule mySched;
 	
 	
 	
@@ -18,11 +19,12 @@ public class Volunteer {
 		
 	}
 	
-	public Volunteer(String firstName, String lastName, DataPollster thePoll) {
+	public Volunteer(String firstName, String lastName, DataPollster thePoll, Schedule theSched) {
 		myFirstName = firstName;
 		myLastName = lastName;
 		
 		myPoll = thePoll;
+		mySched = theSched;
 		myUI = new VolunteerUI();
 	}
 	
@@ -106,7 +108,7 @@ public class Volunteer {
 				case "j":
 				case "m":
 				case "3":
-					viewUpcomingJobs();
+					viewMyJobs();
 					return true;
 				
 				case "exit":
@@ -118,20 +120,36 @@ public class Volunteer {
 			}
 		}
 	
-	
-	public void viewAvailableJobs() {
-		myUI.displayJobs(myPoll.getAllJobs());
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+
+		/**
+		 * This method gives a list of all the jobs to the UI for this class.
+		 */
+		public void viewAvailableJobs() {
+			myUI.displayJobs(myPoll.getAllJobs());
+		}
+
+
+		/**
+		 * The volunteer can sign up for jobs from here.
+		 */
+		private void signUp() {
+			int jobID = myUI.getJobID();
+			
+			int level = myUI.getDifficultyLevel();
+			
+		}
+
+
+		private void viewMyJobs() {
+			// TODO Auto-generated method stub
+
+		}
+
+
+
+
+
+
+
 }
