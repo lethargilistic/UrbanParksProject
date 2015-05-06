@@ -56,6 +56,13 @@ public class Schedule {
 			okToAdd = false;
 		}
 		
+		//removed myIsRequest if-statement from here.
+		
+		
+		//NOTE: The problem with this if-statement is that it will be entered if any
+		//of Light, Medium, or Heavy has 0 spaces.
+		//Some jobs will have zero space for one or two of these levels which means when
+		//that job is passed in, it will always enter this if-statement and return false....not good.
 		if (!theJob.hasLightRoom() || !theJob.hasMediumRoom() || !theJob.hasHeavyRoom()) {
 			okToAdd = false;
 		}

@@ -11,7 +11,10 @@ public class Main {
 		
 		ArrayList<Park> myParkList = new ArrayList<Park>();
 		Park myPark = new Park("Bobcat Park", "Hugo", 98335);
+		Park myPark2 = new Park("Seahurt Park", "Burien", 98106);
+		
 		myParkList.add(myPark);
+		myParkList.add(myPark2);
 		
 		
 		ParkManager myManager = new ParkManager(mySchedule, myPollster, myParkList);
