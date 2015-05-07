@@ -136,8 +136,20 @@ public class Volunteer {
 		private void signUp() {
 			int jobID = myUI.getJobID();
 			
+			if(!checkPark(jobID)) { //enter this if park ID is NOT valid.
+				myUI.showJobIDError();	//the code for checkPark() is not yet written, we have to write it.
+				return;
+			}
+			
 			int level = myUI.getDifficultyLevel();
 			
+			try {	//attempt to add this volunteer
+				mySched.addVolunteerToJob(this, jobID, level);
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+				return;
+			}
+			//if the volunteer is added successfully then addVolunteerToJob() will print out a success message.
 		}
 
 
@@ -147,6 +159,14 @@ public class Volunteer {
 		}
 
 
+		/**
+		 * Check to make sure that the Job ID is valid.
+		 * @return True if valid, false if not.
+		 */
+		private boolean checkPark(int theJobID) {
+			//TODO
+			return true; //Unsure of how to implement this at the moment. Will it be done through DataPollster?	
+		}
 
 
 

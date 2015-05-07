@@ -13,7 +13,7 @@ public class VolunteerUI {
 	 * Display the possible commands that the user could type. 
 	 */
 	public void listCommands() {
-		System.out.println("\n1.new job     2.view jobs     3.view volunteers     4.quit\n");
+		System.out.println("\n1.view jobs     2.sign up     3.view my jobs     4.quit\n");
 	}
 	
 	/**
@@ -82,13 +82,20 @@ public class VolunteerUI {
 		
 		if(in.hasNextInt()) {
 			level = in.nextInt();
-		}	
+		} 
 		
 		return level;
 	}
 
 	
 	
+	
+	/**
+	 * Display an error in the console that the Job ID was not recognized.
+	 */
+	public void showJobIDError() {
+		System.out.println("Sorry, but the Job ID was not recognized.");
+	}
 	
 	
 }
