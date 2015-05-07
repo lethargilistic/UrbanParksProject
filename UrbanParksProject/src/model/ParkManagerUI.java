@@ -83,7 +83,8 @@ public class ParkManagerUI {
 	public String getStartDate() {
 		System.out.println("Please enter the start date of the job in the following format:"
 				+ " mmddyyyy");
-		String inputBuffer = in.nextLine(); //The console UI has problems without this line.
+		in.nextLine(); // The console UI has problems without this line.
+					   // Got rid of storing the output of this line as we never used the var.
 		String myStartDate = in.nextLine();
 		return myStartDate;
 	}
