@@ -159,7 +159,7 @@ public class ScheduleTest {
 			bool1 = mySchedule.addVolunteerToJob(myVolunteer, -10, 2);
 		} catch (Exception e) {
 			
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		assertFalse(bool1);
 	}
