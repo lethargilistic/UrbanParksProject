@@ -32,12 +32,24 @@ public class UserList {
 	/**
 	 * Return a copy of the Volunteer List.
 	 */
-	public List<Volunteer> getCopyVList() {
+	public List<Volunteer> getVolunteerCopyList() {
 		return new ArrayList<Volunteer>(myVolunteerList);
 	}
 	
+	/**
+	 * Return a copy of the ParkManager List.
+	 */
+	public List<ParkManager> getParkManagerCopyList() {
+		return new ArrayList<ParkManager>(myParkManagerList);
+	}
 	
-	
+	/**
+	 * Return a copy of the Administrator List.
+	 */
+	public List<Administrator> getAdministratorCopyLIst() {
+		return new ArrayList<Administrator>(myAdministratorList);
+	}
+		
 	
 	
 	/*
@@ -52,6 +64,20 @@ public class UserList {
 	 */
 	public void setVolunteerList(List<Volunteer> theVolunteerList) {
 		this.myVolunteerList = theVolunteerList;
+	}
+	
+	/**
+	 * Update the ParkManager List with a new version.
+	 */
+	public void setParkManagerList(List<ParkManager> theParkManagerList) {
+		this.myParkManagerList = theParkManagerList;
+	}
+	
+	/**
+	 * Update the Administrator List with a new version.
+	 */
+	public void setAdministratorList(List<Administrator> theAdministratorList) {
+		this.myAdministratorList = theAdministratorList;
 	}
 
 }

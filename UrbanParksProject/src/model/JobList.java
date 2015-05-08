@@ -4,10 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This class is used to create lists for all the pending jobs and all the
- * volunteers who have created accounts.
- * @author Arsh
- * @version May 1
+ * This class is used to create lists for all of the pending jobs.
+ * @author Arshdeep Singh
+ * @version 1 May 2015
  *
  */
 public class JobList {
@@ -17,15 +16,11 @@ public class JobList {
 	 */
 	private List<Job> myJobList;
 	
-
-	
 	/**
 	 * This is a constructor.
 	 */
 	public JobList() {
-		myJobList = new ArrayList<Job>();
-		
-		
+		myJobList = new ArrayList<Job>();		
 	}
 	
 	/**
