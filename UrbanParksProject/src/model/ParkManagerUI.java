@@ -9,7 +9,7 @@ import java.util.Scanner;
 /**
  * A console-based user interface for park managers to use.
  * @author Taylor Gorman
- * @version 1.01
+ * @version 6 May 2015
  */
 public class ParkManagerUI {
 	
