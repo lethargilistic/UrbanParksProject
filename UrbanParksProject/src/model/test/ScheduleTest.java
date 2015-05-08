@@ -154,7 +154,13 @@ public class ScheduleTest {
 	 */
 	@Test
 	public void test1ForAddVolunteerToJob() {
-		boolean bool1 = mySchedule.addVolunteerToJob(myVolunteer, -10, 2);
+		boolean bool1 = false; //an error was showing up so I had to initialize this to false.
+		try { //I added exceptions to addVolunteer so I put this into a try catch block.
+			bool1 = mySchedule.addVolunteerToJob(myVolunteer, -10, 2);
+		} catch (Exception e) {
+			
+			//e.printStackTrace();
+		}
 		assertFalse(bool1);
 	}
 	
@@ -163,7 +169,13 @@ public class ScheduleTest {
 	 */
 	@Test
 	public void test2ForAddVolunteerToJob() {
-		boolean bool2 = mySchedule.addVolunteerToJob(myVolunteer, 10, 4);
+		boolean bool2 = false; //an error was showing up so I had to initialize this to false.
+		try { //I added exceptions to addVolunteer so I put this into a try catch block.
+			bool2 = mySchedule.addVolunteerToJob(myVolunteer, 10, 4);
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+		}
 		assertFalse(bool2);
 	}
 	

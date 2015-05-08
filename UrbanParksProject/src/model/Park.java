@@ -6,7 +6,10 @@ package model;
  * @version May 1
  *
  */
-public class Park {
+public class Park { // Because the myLocation and myZipCode fields are never used,
+					// this brings up the question of whether we even need these fields.
+					// Therefore, if we're only going to identify a Park by it's name as
+					// a string, then it raises the question: do we even need a Park class?!?
 	
 	/**
 	 * This holds the name of the park.
@@ -16,12 +19,12 @@ public class Park {
 	/**
 	 * This holds the value of the location (the city) of the park.
 	 */
-    private String myLocation;
+    private String myLocation; // warning - not used!
 
     /**
      * This holds the value of the zip code that the park is located in.
      */
-    private int myZipCode;
+    private int myZipCode; // warning - not used!
     
     /**
      * This is a constructor.

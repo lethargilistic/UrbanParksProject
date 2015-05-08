@@ -63,7 +63,10 @@ public class Schedule {
 		//of Light, Medium, or Heavy has 0 spaces.
 		//Some jobs will have zero space for one or two of these levels which means when
 		//that job is passed in, it will always enter this if-statement and return false....not good.
-		if (!theJob.hasLightRoom() || !theJob.hasMediumRoom() || !theJob.hasHeavyRoom()) {
+		
+		//I made changed here! I changed all the or (||) to and (&&). Now the if-statement wont be entered
+		//unless there is zero room in each job level. Arsh.
+		if (!theJob.hasLightRoom() && !theJob.hasMediumRoom() && !theJob.hasHeavyRoom()) {
 			okToAdd = false;
 		}
 		
@@ -101,13 +104,18 @@ public class Schedule {
 	 * @param theWorkGrade the work grade selected by the Volunteer for a particular Job.
 	 * I'm assuming this value would be 1 = light, 2 = medium, or 3 = heavy.
 	 * @return true if the Volunteer was added to the Job and false otherwise.
+	 * @throws Exception 
 	 */
-	public boolean addVolunteerToJob(Volunteer theVolunteer, int theJobID, int theWorkGrade) {
+	public boolean addVolunteerToJob(Volunteer theVolunteer, int theJobID, int theWorkGrade) throws Exception {
 		boolean okToAdd = true;
 		
 		//Schedule will check to make sure the Job ID is valid
 		if (theJobID < 0 || theJobID > MAX_TOTAL_NUM_JOBS) {
 			okToAdd = false;
+			
+			throw new IllegalArgumentException("This job ID does not exist");
+																	//NOTE: this exception is thrown if the user enters
+																	//an invalid ID. It will be caught in a try-catch block.
 		}
 		
 		if (theWorkGrade < 1 || theWorkGrade > 3) {
@@ -152,6 +160,10 @@ public class Schedule {
 					openGrade = true;
 				}
 				break;
+			default:
+					throw new IllegalStateException(theWorkGrade + " for job " + theJobID + " is full");	
+												//This will be caught in a try-catch block when the volunteer attempts
+												//to join a job grade that is not available.
 		}
 		
 		if (okToAdd && jobExists && openGrade) {

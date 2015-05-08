@@ -112,7 +112,7 @@ public class DataPollster {
 		//Called by ParkManager.viewUpcomingJobs()
 
 		//Calls JobList.getCopyList() to get a copy of myJobList
-			//It already has a refrence to the joblist
+			//It already has a reference to the joblist
 		
 		//Create a new list of jobs with copies of the Jobs from Schedule’s 
 		//myJobList
@@ -132,6 +132,16 @@ public class DataPollster {
 		//Return new list of copied Jobs
 		return jobsManaging;
 	}
+	
+	/**
+	 * This method returns a list of all of the jobs.
+	 * It is called when volunteer wants to see a list of jobs so that he can sign up.
+	 */
+	public List<Job> getAllJobs() {
+		return new ArrayList<Job>(myJobList.getCopyList());
+	}
+	
+	
 
 	public List<Volunteer> getVolunteerList(int theJobID) {
 		//USER STORY 6

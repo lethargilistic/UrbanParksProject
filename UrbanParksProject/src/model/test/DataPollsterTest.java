@@ -79,18 +79,19 @@ public class DataPollsterTest {
 
 	/**
 	 * Test method for {@link model.DataPollster#getPendingJobs(model.Volunteer)}.
+	 * @throws Exception 
 	 */
 	@Test
-	public void testGetPendingJobs() {
+	public void testGetPendingJobs() throws Exception {
 		List<Job> jobs = jl.getJobList();
 		assertEquals("Empty list problem.", jobs, dp.getPendingJobs(vBank.get(0)));
 		
 		
 		//TODO: So why don't we just pass the Job in here instead of the ID?
-		s.addVolunteerToJob(vBank.get(0), jobs.get(0).getJobID(), 1);
-		s.addVolunteerToJob(vBank.get(0), jobs.get(1).getJobID(), 1);
-		s.addVolunteerToJob(vBank.get(0), jobs.get(2).getJobID(), 1);
-		s.addVolunteerToJob(vBank.get(0), jobs.get(3).getJobID(), 1);
+		s.addVolunteerToJob(vBank.get(0), jobs.get(0).getJobID(), 1);//NOTE: I added @throws exception
+		s.addVolunteerToJob(vBank.get(0), jobs.get(1).getJobID(), 1);//NOTE: I added @throws exception
+		s.addVolunteerToJob(vBank.get(0), jobs.get(2).getJobID(), 1);//NOTE: I added @throws exception
+		s.addVolunteerToJob(vBank.get(0), jobs.get(3).getJobID(), 1);//NOTE: I added @throws exception
 		
 		List<Job> pendJob = new ArrayList<Job>();
 		pendJob.add(jobs.get(4));
@@ -101,18 +102,19 @@ public class DataPollsterTest {
 
 	/**
 	 * Test method for {@link model.DataPollster#getVolunteerJobs(model.Volunteer)}.
+	 * @throws Exception 
 	 */
 	@Test
-	public void testGetVolunteerJobs() {
+	public void testGetVolunteerJobs() throws Exception {
 		List<Job> jobs = jl.getJobList();
 		assertEquals("Empty list problem.", new ArrayList<Job>(), dp.getVolunteerJobs(vBank.get(0)));
 		
 		
 		//TODO: So why don't we just pass the Job in here instead of the ID?
-		s.addVolunteerToJob(vBank.get(0), jobs.get(0).getJobID(), 1);
-		s.addVolunteerToJob(vBank.get(0), jobs.get(1).getJobID(), 1);
-		s.addVolunteerToJob(vBank.get(0), jobs.get(2).getJobID(), 1);
-		s.addVolunteerToJob(vBank.get(0), jobs.get(3).getJobID(), 1);
+		s.addVolunteerToJob(vBank.get(0), jobs.get(0).getJobID(), 1); //NOTE: I added @throws exception
+		s.addVolunteerToJob(vBank.get(0), jobs.get(1).getJobID(), 1);//NOTE: I added @throws exception
+		s.addVolunteerToJob(vBank.get(0), jobs.get(2).getJobID(), 1);//NOTE: I added @throws exception
+		s.addVolunteerToJob(vBank.get(0), jobs.get(3).getJobID(), 1);//NOTE: I added @throws exception
 		
 		List<Job> vsJob = new ArrayList<Job>();
 		vsJob.add(jobs.get(0));
@@ -148,9 +150,10 @@ public class DataPollsterTest {
 
 	/**
 	 * Test method for {@link model.DataPollster#getVolunteerList(int)}.
+	 * @throws Exception 
 	 */
 	@Test
-	public void testGetVolunteerList() {
+	public void testGetVolunteerList() throws Exception {
 		List<Job> jobs = jl.getJobList();
 		assertEquals("Empty list problem.", new ArrayList<Job>(), dp.getVolunteerList(jobs.get(0).getJobID()));
 		
@@ -158,7 +161,7 @@ public class DataPollsterTest {
 		
 		for (int i = 0; i <5; i++)
 		{
-			s.addVolunteerToJob(vBank.get(i), jobs.get(0).getJobID(), 1);
+			s.addVolunteerToJob(vBank.get(i), jobs.get(0).getJobID(), 1); //NOTE: I added @throws exception
 			vList.add(vBank.get(i));
 		}
 		
