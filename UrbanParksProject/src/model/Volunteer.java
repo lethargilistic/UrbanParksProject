@@ -1,5 +1,9 @@
 package model;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.List;
+
 public class Volunteer {
 	
 	
@@ -154,8 +158,43 @@ public class Volunteer {
 
 
 		private void viewMyJobs() {
-			// TODO Auto-generated method stub
-
+			List<Job> aList = mySched.getJobList().getCopyList(); //get the list of jobs so we can traverse it.
+			
+			//go through each job in the list and see if the volunteer has signed up for that job.
+			for (Job j: aList) {
+				if (j.myVolunteerList.contains(this)) {
+					printJobInfo(j);
+				}
+			}
+		}
+			
+		private void printJobInfo(Job job) {
+			String startDate = calendarToString(job.getStartDate());
+			String endDate = calendarToString(job.getEndDate());
+			
+			String jobString = "\n";
+			jobString += "Job ID: " + job.getJobID();
+			jobString += "\n    " + job.getPark();
+			
+			jobString += "\n    Begins: " + startDate;
+			jobString += " , Ends: " + endDate;
+			
+			jobString += "\n    Light Slots: " + job.getLightCurrent() + "/" + job.getLightMax();
+			jobString += "\n    Medium Slots: " + job.getMediumCurrent() + "/" + job.getMediumMax();
+			jobString += "\n    Heavy Slots: " + job.getHeavyCurrent() + "/" + job.getHeavyMax() + "\n";
+			
+			System.out.println(jobString);
+		}
+			
+		
+		/**
+		 * Convert a GregorianCalendar object to string of format mmddyyyy
+		 */
+		private String calendarToString(GregorianCalendar theCalendar) {
+			String returnString = theCalendar.get(Calendar.MONTH) + "/" +
+					theCalendar.get(Calendar.DAY_OF_MONTH) + "/" +
+					theCalendar.get(Calendar.YEAR);
+			return returnString;
 		}
 
 
