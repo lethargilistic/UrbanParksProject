@@ -56,8 +56,7 @@ public class UserList {
 	 * List Setters
      * Because we only give out copies of lists, any modified version must be passed through here for changes
 	 * to be made permanent. Thus, Schedule can still check for any business rule violations.
-	 */
-	
+	 */	
 	
 	/**
 	 * Update the Volunteer List with a new version.
