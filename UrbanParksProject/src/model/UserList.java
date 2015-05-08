@@ -23,22 +23,35 @@ public class UserList {
 		myAdministratorList = new ArrayList<Administrator>();
 	}
 	
-	/** 
-	 * This method returns an actual reference to myVolunteerList.
+	
+	/*
+	 * List Getters.
+	 * Returns copies of lists so that they cannot be changed without passing them to a setter.	
 	 */
-	public List<Volunteer> getVolunteerList() {
-		return myVolunteerList;
-	}
 	
 	/**
-	 * NOTE: we didnt have this on our pseudocode but I thought we should add it so that
-	 * we can keep the volunteer list private.
-	 * 
-	 * This method returns a copy of myVolunteerList.
-	 * 
-	 * @return a list.
+	 * Return a copy of the Volunteer List.
 	 */
 	public List<Volunteer> getCopyVList() {
 		return new ArrayList<Volunteer>(myVolunteerList);
 	}
+	
+	
+	
+	
+	
+	/*
+	 * List Setters
+     * Because we only give out copies of lists, any modified version must be passed through here for changes
+	 * to be made permanent. Thus, Schedule can still check for any business rule violations.
+	 */
+	
+	
+	/**
+	 * Update the Volunteer List with a new version.
+	 */
+	public void setVolunteerList(List<Volunteer> theVolunteerList) {
+		this.myVolunteerList = theVolunteerList;
+	}
+
 }
