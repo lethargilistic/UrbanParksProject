@@ -17,17 +17,14 @@ public class JobList {
 	 */
 	private List<Job> myJobList;
 	
-	/**
-	 * This is a list of volunteers who have created accounts with the program.
-	 */
-	private List<Volunteer> myVolunteerList;
+
 	
 	/**
 	 * This is a constructor.
 	 */
 	public JobList() {
 		myJobList = new ArrayList<Job>();
-		myVolunteerList = new ArrayList<Volunteer>();
+		
 		
 	}
 	
@@ -51,26 +48,5 @@ public class JobList {
 		return myJobList;
     }
 	
-	/**
-	 * NOTE: we didnt have this on our pseudocode but I thought we should add it so that
-	 * we can keep the volunteer list private.
-	 * 
-	 * This method returns an actual reference to myVolunteerList.
-	 * @return a list.
-	 */
-	public List<Volunteer> getVolunteerList() {
-		return myVolunteerList;
-	}
-	
-	/**
-	 * NOTE: we didnt have this on our pseudocode but I thought we should add it so that
-	 * we can keep the volunteer list private.
-	 * 
-	 * This method returns a copy of myVolunteerList.
-	 * 
-	 * @return a list.
-	 */
-	public List<Volunteer> getCopyVList() {
-		return new ArrayList<Volunteer>(myVolunteerList);
-	}
+
 }
