@@ -1,6 +1,10 @@
 package model;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 /**
  * Handles both saving and loading from the jobList.txt and userList.txt files.
@@ -15,7 +19,15 @@ public class SaveManager {
 	 */
 	public JobList loadJobList() {
 		JobList myJobList = new JobList();
+		File jobFile = new File("jobList.txt");
 		
+		if(jobFile.exists() && !jobFile.isDirectory()) {
+			try {
+				loadJobFile(jobFile);
+			} catch (FileNotFoundException e) {
+				System.err.println("jobFile.txt was detected, but could not be loaded. Please delete jobFile.txt and restart the program.");
+			}
+		}
 		
 		return myJobList;
 		
@@ -26,6 +38,15 @@ public class SaveManager {
 	 */
 	public UserList loadUserList() {
 		UserList myUserList = new UserList();
+		File userFile = new File("userList.txt");
+		
+		if(userFile.exists() && !userFile.isDirectory()) {
+			try {
+				loadUserFile(userFile);
+			} catch (FileNotFoundException e) {
+				System.err.println("userFile.txt was detected, but could not be loaded. Please delete userFile.txt and restart the program.");
+			}
+		}
 		
 		return myUserList;
 	}
@@ -35,15 +56,19 @@ public class SaveManager {
 	/*
 	 * Read the contents of the Job or User file, line by line, into an array.
 	 */
-	private ArrayList<Job> loadJobFile() {
-		ArrayList<Job> jobFileList = new ArrayList<Job>();
+	private ArrayList<String> loadJobFile(File jobFile) throws FileNotFoundException {
+		ArrayList<String> jobFileList = new ArrayList<String>();
 		
+		Scanner myScanner = new Scanner(new File("jobList.txt"));
+		while(myScanner.hasNextLine()) {
+			jobFileList.add(myScanner.nextLine());
+		}
 		
-		
+		myScanner.close();		
 		return jobFileList;
 	}
 	
-	private ArrayList loadUserFile() {
+	private ArrayList loadUserFile(File userFile) throws FileNotFoundException {
 		ArrayList userFileList = new ArrayList();
 		
 		
@@ -56,6 +81,24 @@ public class SaveManager {
 	 * Recursively parse the array version of the Job or User file, and add
 	 * the user or job to their lists.
 	 */
+	
+	public List<Job> parseJobFile(ArrayList<String> theJobFileList, Schedule theSchedule) {
+		ArrayList<Job> jobList = new ArrayList<Job>();
+		
+		
+		
+		return jobList;
+	}
+	
+	public List parseUserFile(ArrayList<String> theUserFileList) {
+		ArrayList userList = new ArrayList();
+		
+		return userList;
+	}
+	
+	
+	
+	
 	
 	
 	public boolean saveJobList(JobList theJobList) {
