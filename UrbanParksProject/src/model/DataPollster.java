@@ -211,8 +211,19 @@ public class DataPollster {
 		return null;
 	}
 	
+	/**
+	 * Given a park manager's email, construct the Park Manager and return it.
+	 */
 	public ParkManager getParkManager(String parkManagerEmail) {
 		//TODO
 		return null;
+	}
+
+	/**
+	 * Return the next available Job ID to be used during the creation of a new job.
+	 */
+	public static int getNextJobID() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }

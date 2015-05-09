@@ -9,7 +9,7 @@ import java.util.List;
  * ParkManager can add new jobs to the schedule, view all jobs for the parks they manage,
  * and view all volunteers for a given job.
  * @author Taylor Gorman
- * @version 1.01
+ * @version 9 May 2015
  *
  */
 public class ParkManager {
@@ -123,31 +123,16 @@ public class ParkManager {
 	 * @param thePark The park where the job will occur.
 	 * @return The constructed Job
 	 */
-	private Job constructJob(Park thePark) {		
+	private Job constructJob(Park thePark) {	
+		int myJobID = DataPollster.getNextJobID();
 		int myLight = myUI.getLightSlots();
 		int myMedium = myUI.getMediumSlots();
 		int myHeavy = myUI.getHeavySlots();	
-		String myStartString = myUI.getStartDate();
-		String myEndString = myUI.getEndDate();		
+		String myStartDate = myUI.getStartDate();
+		String myEndDate = myUI.getEndDate();		
+		List<String> myVolunteerList = new ArrayList();
 		
-		GregorianCalendar myStartDate = stringToCalendar(myStartString);
-		GregorianCalendar myEndDate = stringToCalendar(myEndString);
-		
-		return new Job(thePark, myLight, myMedium, myHeavy, myStartDate, myEndDate, myEmail);		
-	}
-	
-	
-	/**
-	 * Convert a date string to a Gregorian Calendar object.
-	 * @param stringDate A string representing a date, of format mmddyyyy
-	 * @return A Gregorian Calendar object representing that date.
-	 */
-	private GregorianCalendar stringToCalendar(String stringDate) {
-		int myDay = Integer.parseInt(stringDate.substring(0, 2));
-		int myMonth = Integer.parseInt(stringDate.substring(2, 4));
-		int myYear = Integer.parseInt(stringDate.substring(4, 8));		
-		
-		return new GregorianCalendar(myYear, myDay, myMonth);
+		return new Job(myJobID, thePark, 0, myLight, 0, myMedium, 0, myHeavy, myStartDate, myEndDate, myEmail, myVolunteerList);
 	}
 	
 	/**
