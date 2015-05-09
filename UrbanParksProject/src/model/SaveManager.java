@@ -19,15 +19,20 @@ public class SaveManager {
 	 */
 	public JobList loadJobList() {
 		JobList myJobList = new JobList();
+		ArrayList<String> jobFileList = new ArrayList<String>();
+		List<Job> myParsedList = new ArrayList<Job>();
+		
 		File jobFile = new File("jobList.txt");
 		
 		if(jobFile.exists() && !jobFile.isDirectory()) {
 			try {
-				loadJobFile(jobFile);
+				jobFileList = loadJobFile(jobFile);
 			} catch (FileNotFoundException e) {
 				System.err.println("jobFile.txt was detected, but could not be loaded. Please delete jobFile.txt and restart the program.");
 			}
 		}
+		
+		myParsedList = parseJobFile(jobFileList);
 		
 		return myJobList;
 		
@@ -71,7 +76,12 @@ public class SaveManager {
 	private ArrayList loadUserFile(File userFile) throws FileNotFoundException {
 		ArrayList userFileList = new ArrayList();
 		
+		Scanner myScanner = new Scanner(new File("userFile.txt"));
+		while(myScanner.hasNextLine()) {
+			userFileList.add(myScanner.nextLine());
+		}
 		
+		myScanner.close();			
 		return userFileList;
 	}
 	
@@ -82,12 +92,43 @@ public class SaveManager {
 	 * the user or job to their lists.
 	 */
 	
-	public List<Job> parseJobFile(ArrayList<String> theJobFileList, Schedule theSchedule) {
-		ArrayList<Job> jobList = new ArrayList<Job>();
+	public List<Job> parseJobFile(ArrayList<String> jobFileList) {
+		List<Job> parsedJobList = new ArrayList<Job>();
 		
+		if(jobFileList.get(0).equals("End Job List")) {
+			return parsedJobList;
+		}
 		
+		int myJobID = Integer.parseInt(jobFileList.get(0));
 		
-		return jobList;
+		int myLightCurrent = Integer.parseInt(jobFileList.get(1));
+		int myLightMax = Integer.parseInt(jobFileList.get(2));
+		int myMediumCurrent = Integer.parseInt(jobFileList.get(3));
+		int myMediumMax = Integer.parseInt(jobFileList.get(4));
+		int myHeavyCurrent = Integer.parseInt(jobFileList.get(5));
+		int myHeavyMax = Integer.parseInt(jobFileList.get(6));
+		
+		String myStartDateString = jobFileList.get(7);
+		String myEndDateString = jobFileList.get(8);
+		String myPark = jobFileList.get(9);
+		String myManager = jobFileList.get(10);
+		
+		for(int i = 0; i < 12; i++) {
+			jobFileList.remove(0); //Remove all added elements from the file list.
+		}
+		
+		List<String> myVolunteerList = new ArrayList<String>();
+		
+		while(!jobFileList.get(0).equals("End Volunteer List")) {
+			myVolunteerList.add(jobFileList.get(0)); //Add the volunteer to the list, then remove it from the file list.
+			jobFileList.remove(0);
+		}
+		
+		jobFileList.remove(0); //Remove "End Volunteer List"
+		
+			
+		return parsedJobList;
+		//return parseJobFile(parsedJobList);
 	}
 	
 	public List parseUserFile(ArrayList<String> theUserFileList) {
@@ -95,6 +136,9 @@ public class SaveManager {
 		
 		return userList;
 	}
+	
+	
+	
 	
 	
 	

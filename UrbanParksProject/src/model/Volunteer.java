@@ -9,12 +9,16 @@ public class Volunteer {
 	
 	private String myFirstName;
 	private String myLastName;
+	private String myEmail;
 	
 	private VolunteerUI myUI;
 	private DataPollster myPoll;
 	private Schedule mySched;
 	
 	
+	public Volunteer(String theEmail) {
+		this.myEmail = theEmail;
+	}
 	
 	public Volunteer(String firstName, String lastName)
 	{
