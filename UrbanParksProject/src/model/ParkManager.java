@@ -20,16 +20,19 @@ public class ParkManager {
 	private DataPollster myPollster;
 	private List<Park> myManagedParks;	
 	
+	private String myEmail;
+	
 	
 	/**
 	 * Constructor for ParkManager, which requires a Schedule and DataPollster to be passed to it.
 	 */
 	public ParkManager(Schedule theSchedule, DataPollster thePollster,
-			List<Park> theManagedParks) {
+			List<Park> theManagedParks, String theEmail) {
 		this.mySchedule = theSchedule;
 		this.myPollster = thePollster;
 		this.myManagedParks = new ArrayList<>(theManagedParks);
 		this.myUI = new ParkManagerUI();
+		this.myEmail = theEmail;
 	}
 
 	//TODO: Should be removed in favor of having the commands be processed in the UI.
@@ -130,7 +133,7 @@ public class ParkManager {
 		GregorianCalendar myStartDate = stringToCalendar(myStartString);
 		GregorianCalendar myEndDate = stringToCalendar(myEndString);
 		
-		return new Job(thePark, myLight, myMedium, myHeavy, myStartDate, myEndDate, this);		
+		return new Job(thePark, myLight, myMedium, myHeavy, myStartDate, myEndDate, myEmail);		
 	}
 	
 	
@@ -166,8 +169,8 @@ public class ParkManager {
 			return;
 		}
 		
-		ArrayList<Volunteer> myVolunteerList = (ArrayList<Volunteer>) myPollster.getVolunteerList(myJobID);
-		myUI.displayVolunteers(myVolunteerList);		
+		ArrayList<String> myVolunteerList = (ArrayList<String>) myPollster.getVolunteerList(myJobID);
+		myUI.displayVolunteers(myVolunteerList, myPollster);		
 	}
 	
 	public void setManagedParks(ArrayList<Park> theManagedParks) {
@@ -184,8 +187,12 @@ public class ParkManager {
 		return true; //Unsure of how to implement this at the moment. Will it be done through DataPollster?	
 	}
 
-	List<Park> getManagedParks() {
+	public List<Park> getManagedParks() {
 		return Collections.unmodifiableList(myManagedParks);
 	}	
+	
+	public String getEmail() {
+		return myEmail;
+	}
 	
 }
