@@ -101,6 +101,10 @@ public class SaveManager {
 	public ArrayList<Job> parseJobFile(ArrayList<String> jobFileList, ArrayList<Job> theParsedList) {
 		theParsedList = new ArrayList<Job>();
 		
+		//jobList.txt was not found, which is normal if the program has not been executed before.
+		if(jobFileList.size() < 1) {
+			return theParsedList;
+		}
 		
 		//If jobFileList has ended, then return our parsed list.		 
 		if(jobFileList.get(0).equals("End Job List")) {
@@ -153,6 +157,11 @@ public class SaveManager {
 	
 	
 	public UserList parseUserFile(ArrayList<String> theUserFileList, UserList theUserList) {
+		
+		//userList.txt was not found, which is normal if the program has not been executed before.
+				if(theUserFileList.size() < 1) {
+					return theUserList;
+				}
 		
 		//If userFileList has ended, then return our parsed list.		 
 		if(theUserFileList.get(0).equals("End User List")) {
