@@ -58,8 +58,7 @@ public class SaveManager {
 			}
 		}
 		
-		parseUserFile(userFileList, myUserList);
-		
+		myUserList = parseUserFile(userFileList, myUserList);		
 		return myUserList;
 	}
 	
@@ -153,22 +152,25 @@ public class SaveManager {
 	
 	
 	
-	public void parseUserFile(ArrayList<String> theUserFileList, UserList theUserList) {
+	public UserList parseUserFile(ArrayList<String> theUserFileList, UserList theUserList) {
 		
 		//If userFileList has ended, then return our parsed list.		 
 		if(theUserFileList.get(0).equals("End User List")) {
-			return;
+			return theUserList;
 		}
 				
+		//Get basic user information.
 		String myEmail = theUserFileList.get(0);
 		String myRole = theUserFileList.get(1);
 		String myFirstName = theUserFileList.get(2);
 		String myLastName = theUserFileList.get(3);
 		
+		//Remove gathered information from file list.
 		for(int i = 0; i < 5; i++) {
 			theUserFileList.remove(0);
 		}
 		
+		//For whichever role the user is, construct their corresponding Object and add it to the User List.
 		if(myRole.equals("Volunteer")) {
 			Volunteer myVolunteer = new Volunteer(myEmail, myFirstName, myLastName);
 			List<Volunteer> myVolunteerList = theUserList.getVolunteerCopyList();
@@ -186,6 +188,7 @@ public class SaveManager {
 		if(myRole.equals("ParkManager")) {
 			List<Park> myParkList = new ArrayList<Park>();
 			
+			//Add the parks associated with the ParkManager, and remove them from the file list as we go.
 			while(!theUserFileList.get(0).equals("End Park List")) {
 				Park myPark = new Park(theUserFileList.get(0));
 				myParkList.add(myPark);
@@ -199,7 +202,8 @@ public class SaveManager {
 			theUserList.setParkManagerList(myManagerList);		
 		}
 		
-		parseUserFile(theUserFileList, theUserList);
+		//Recursively make calls until userFileList is empty.
+		return parseUserFile(theUserFileList, theUserList);
 	}
 	
 	
