@@ -22,6 +22,8 @@ public class Schedule {
 	 */
 	private JobList myJobList;
 	
+	private UserList myUserList;
+	
 	/**
 	 * Constructs a Schedule object.
 	 */
@@ -192,5 +194,10 @@ public class Schedule {
 	
 	public JobList getJobList() {
 		return myJobList;
+	}
+	
+	public User getUser(String theEmail) {
+		//TODO
+		return null;
 	}
 }

@@ -4,15 +4,66 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 public class Main {
+
+	public static MainUI myUI;
 	
-	static MainUI myUI;
 
 	public static void main(String[] args) {
+		
 		JobList myJobList = new JobList();
+		UserList myUserList = new UserList();
 		Schedule mySchedule = new Schedule(myJobList);
-		DataPollster myPollster = new DataPollster(myJobList);
+		DataPollster myPollster = new DataPollster(myJobList, myUserList);
 		myUI = new MainUI();
 		
+		myUI.initialize();
+		directLogin(mySchedule, myPollster);
+	}
+	
+	
+	
+	/**
+	 * Prompt the user to either login, register, or exit.<br>
+	 * Then, ask the user for login or register details.
+	 */
+	public static User directLogin(Schedule mySchedule, DataPollster myPollster) {
+		int loginCommand = myUI.getLoginChoice();
+		User myUser = null;
+		
+		switch (loginCommand) {
+			case 1: myUser = loginUser(mySchedule, myPollster); break;
+			case 2: myUser = registerUser(mySchedule, myPollster); break;
+			case 3: myUI.displayExit(); closeProgram(); break; //Ends program.
+			
+			//If invalid, loop back to get a different command.
+			default: myUI.displayInvalidChoice(); directLogin(mySchedule, myPollster); break;
+		}
+		
+		return myUser;
+	}
+	
+	//Return the User, unless the email was not recognized, in which we loop back to directLogin()
+	private static User loginUser(Schedule mySchedule, DataPollster myPollster) {
+		String userEmail = myUI.getUserEmail();
+		
+		if(myPollster.checkEmail(userEmail)) {
+			return mySchedule.getUser(userEmail);
+		} else {
+			myUI.displayInvalidEmail();
+			directLogin(mySchedule, myPollster);
+		}
+		
+		return null; //Not accessible.
+	}
+	
+	private static User registerUser(Schedule mySchedule, DataPollster myPollster) {
+		
+		
+		return null;
+	}
+		
+		
+		/*
 		ArrayList<Park> myParkList = new ArrayList<Park>();
 		Park myPark = new Park("Bobcat Park", "Hugo", 98335);
 		Park myPark2 = new Park("Seahurt Park", "Burien", 98106);
@@ -31,16 +82,11 @@ public class Main {
 		
 		Volunteer theVol = new Volunteer("Arsh", "Singh", myPollster, mySchedule);
 		theVol.initialize();
-	}
+		*/
 	
-	public void parseCommand(int theCommand) {
-		switch(theCommand) {
-		case 1: myUI.requestLogin(); break;
-		case 2: myUI.requestRegister(); break;
-		case 3: myUI.exitDisplay(); closeProgram(); break;
-		default: myUI.invalidChoice(); break; //Loop back if invalid
-	}
-	}
+	
+
+	
 	
 	/**
 	 * Convert a date string to a Gregorian Calendar object.

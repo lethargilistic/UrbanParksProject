@@ -11,9 +11,12 @@ public class DataPollster {
 	 */
 	private JobList myJobList;
 	
-	public DataPollster(JobList theJoblist)
+	private UserList myUserList;
+	
+	public DataPollster(JobList theJoblist, UserList theUserList)
 	{
 		myJobList = theJoblist;
+		this.myUserList = theUserList;
 	}
 	
 	//TODO: test all possible conflicts
@@ -163,5 +166,15 @@ public class DataPollster {
 		
 		// Return that copied list of Volunteers
 		return retVols;
+	}
+	
+	/**
+	 * Check the e-mail address of a user logging in to see if they exist in the system.
+	 * @param theEmail
+	 * @return
+	 */
+	public boolean checkEmail(String theEmail) {
+		//TODO
+		return true;
 	}
 }

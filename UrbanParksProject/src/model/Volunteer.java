@@ -4,7 +4,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-public class Volunteer {
+public class Volunteer implements User {
 	
 	
 	private String myFirstName;
@@ -205,6 +205,26 @@ public class Volunteer {
 		private boolean checkPark(int theJobID) {
 			//TODO
 			return true; //Unsure of how to implement this at the moment. Will it be done through DataPollster?	
+		}
+
+		public String getEmail() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		public void setEmail(String theEmail) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		public void setFirstName(String theFirstName) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		public void setLastName(String theLastName) {
+			// TODO Auto-generated method stub
+			
 		}
 
 
