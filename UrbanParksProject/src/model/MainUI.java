@@ -18,7 +18,7 @@ public class MainUI {
 	}
 	
 	public void greetUser() {
-		System.out.println("Welcome to Urban Park's Volunteer Program!");
+		System.out.println("\n------------------------------------------\nWelcome to Urban Park's Volunteer Program!");
 	}
 	
 	
@@ -37,13 +37,13 @@ public class MainUI {
 	
 	
 	public String getReturnEmail() {
-		System.out.println("\nPlease enter your e-mail address to login:");
+		System.out.println("------------------------------------------\n\nPlease enter your e-mail address to login:");
 		return getUserString();
 	}
 	
 	
 	public String getNewEmail() {
-		System.out.println("\nWhat is your e-mail address?");
+		System.out.println("------------------------------------------\n\nWhat is your e-mail address?");
 		return getUserString();
 	}
 	
@@ -96,8 +96,6 @@ public class MainUI {
 		if(myScanner.hasNextInt()) {
 			userInput = myScanner.nextInt();
 		}
-		
-		System.out.println("User Input: " + userInput);
 		
 		return userInput;
 	}

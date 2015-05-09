@@ -32,6 +32,9 @@ public class Main {
 			mySchedule.addUser(userInfo[1], userInfo[2], userInfo[3], userInfo[4]);
 			giveControl(userInfo[1], mySchedule, myPollster);
 		}
+		
+		myUI.greetUser();
+		directLogin(mySchedule, myPollster); //Once the user logs out, we go back to the login screen.
 	}
 	
 	
@@ -40,13 +43,13 @@ public class Main {
 	 * Prompt the user to either login, register, or exit.<br>
 	 * Then, ask the user for login or register details.
 	 */
-	public static String[] directLogin(Schedule mySchedule, DataPollster myPollster) {
+	public static String[] directLogin(Schedule theSchedule, DataPollster thePollster) {
 		int loginCommand = myUI.getLoginChoice();
 		String[] userInfo = null;
 		
 		switch (loginCommand) {
-			case 1: userInfo = loginUser(mySchedule, myPollster); break;
-			case 2: userInfo = registerUser(mySchedule, myPollster); break;
+			case 1: userInfo = loginUser(theSchedule, thePollster); break;
+			case 2: userInfo = registerUser(theSchedule, thePollster); break;
 			case 3: myUI.displayExit(); closeProgram(); break; //Ends program.
 			default: myUI.displayInvalidChoice(); break;
 		}

@@ -44,12 +44,13 @@ public class ParkManager {
 	 * If the user chooses to quit, or inputs an invalid command, then the loop terminates.
 	 */
 	public void commandLoop() {
-		System.out.println("Choose an option");
 		myUI.listCommands();
 		String command = myUI.getCommand();
 		
 		if(parseCommand(command)) {
 			commandLoop();
+		} else {
+			
 		}
 	}
 	
@@ -102,7 +103,7 @@ public class ParkManager {
 	 * 5. Tell the user if the new job was successfully added.
 	 */
 	public void createJob() {	
-		System.out.println("\nPlease select the number preceding the park where the job is located.");
+		System.out.println("\n------------------------------------------\nPlease select the number preceding the park where the job is located.");
 		myUI.displayParks(myManagedParks); //Show the parks to the user, including their IDs
 		
 		int parkNum = myUI.selectParkNum();
