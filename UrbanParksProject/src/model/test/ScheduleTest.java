@@ -13,6 +13,7 @@ import model.JobList;
 import model.Park;
 import model.ParkManager;
 import model.Schedule;
+import model.UserList;
 import model.Volunteer;
 
 import org.junit.After;
@@ -55,10 +56,11 @@ public class ScheduleTest {
 	@Before
 	public void setUp() {
 		JobList myJoblist = new JobList();
+		UserList myUserList = new UserList();
 		List<Park> pList = new ArrayList<Park>();
 		pList.add(myPark);
 		mySchedule = new Schedule(myJoblist);
-		DataPollster dp = new DataPollster(myJoblist);
+		DataPollster dp = new DataPollster(myJoblist, myUserList);
 	    myParkManager = new ParkManager(mySchedule, dp, pList);
 		myPark = new Park("Wright Park", "Tacoma", 98403);
 		myJob = new Job(myPark, 10, 10, 10, new GregorianCalendar(2015, 6, 17), 

@@ -22,6 +22,8 @@ public class Schedule {
 	 */
 	private JobList myJobList;
 	
+	private UserList myUserList;
+	
 	/**
 	 * Constructs a Schedule object.
 	 */
@@ -193,4 +195,16 @@ public class Schedule {
 	public JobList getJobList() {
 		return myJobList;
 	}
+	
+	public boolean checkUser(String theEmail) {
+		//TODO
+		return true;
+	}
+
+	public void addUser(String theEmail, String theFirstName, String theLastName,
+			String theUserType) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

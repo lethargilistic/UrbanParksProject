@@ -9,7 +9,7 @@ import java.util.Scanner;
 /**
  * A console-based user interface for park managers to use.
  * @author Taylor Gorman
- * @version 1.01
+ * @version 6 May 2015
  */
 public class ParkManagerUI {
 	
@@ -19,7 +19,11 @@ public class ParkManagerUI {
 	 * Display the possible commands that the user could type. 
 	 */
 	public void listCommands() {
-		System.out.println("\n1.new job     2.view jobs     3.view volunteers     4.quit\n");
+		System.out.println("\n------------------------------------------\nPark Manager Menu\n\nWhat would you like to do?");
+		System.out.println("1) Create New Job");
+		System.out.println("2) View My Jobs");
+		System.out.println("3) View Volunteers for a Job");
+		System.out.println("4) Logout");
 	}
 	
 	/**
@@ -34,7 +38,7 @@ public class ParkManagerUI {
 	 * Prompt the user to enter the ID of a Job, and then return it.
 	 */
 	public int getJobID() {
-		System.out.println("Please input the ID of the job whose volunteers you would"
+		System.out.println("------------------------------------------\n\nPlease input the ID of the job whose volunteers you would"
 				+ " like to view.");
 		int myJobID = in.nextInt();
 		return myJobID;

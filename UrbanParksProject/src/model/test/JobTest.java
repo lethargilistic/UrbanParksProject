@@ -14,6 +14,7 @@ import model.JobList;
 import model.Park;
 import model.ParkManager;
 import model.Schedule;
+import model.UserList;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -30,8 +31,9 @@ public class JobTest {
 		GregorianCalendar endDate = new GregorianCalendar(6, 11, 1992);
 		
 		JobList jl = new JobList();
+		UserList ul = new UserList();
 		Schedule s = new Schedule(jl);
-		DataPollster dp = new DataPollster(jl);
+		DataPollster dp = new DataPollster(jl, ul);
 		
 		Park p = new Park ("Boolean Park", "Tacoma", 19222);
 		List<Park> pList = new ArrayList<>();
