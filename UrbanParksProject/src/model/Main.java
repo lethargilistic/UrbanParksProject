@@ -4,11 +4,14 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 public class Main {
+	
+	static MainUI myUI;
 
 	public static void main(String[] args) {
 		JobList myJobList = new JobList();
 		Schedule mySchedule = new Schedule(myJobList);
 		DataPollster myPollster = new DataPollster(myJobList);
+		myUI = new MainUI();
 		
 		ArrayList<Park> myParkList = new ArrayList<Park>();
 		Park myPark = new Park("Bobcat Park", "Hugo", 98335);
@@ -30,6 +33,15 @@ public class Main {
 		theVol.initialize();
 	}
 	
+	public void parseCommand(int theCommand) {
+		switch(theCommand) {
+		case 1: myUI.requestLogin(); break;
+		case 2: myUI.requestRegister(); break;
+		case 3: myUI.exitDisplay(); closeProgram(); break;
+		default: myUI.invalidChoice(); break; //Loop back if invalid
+	}
+	}
+	
 	/**
 	 * Convert a date string to a Gregorian Calendar object.
 	 * @param stringDate A string representing a date, of format mmddyyyy
@@ -41,6 +53,10 @@ public class Main {
 		int myYear = Integer.parseInt(stringDate.substring(4, 8));		
 		
 		return new GregorianCalendar(myYear, myDay, myMonth);
+	}
+	
+	public static void closeProgram() {
+		System.exit(0);
 	}
 	
 	
