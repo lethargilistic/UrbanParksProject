@@ -33,6 +33,7 @@ public class SaveManager {
 		}
 		
 		myParsedList = parseJobFile(jobFileList, myParsedList);
+		myJobList.setJobList(myParsedList);
 		
 		return myJobList;
 		
@@ -43,7 +44,11 @@ public class SaveManager {
 	 */
 	public UserList loadUserList() {
 		UserList myUserList = new UserList();
+		ArrayList<String> userFileList = new ArrayList<String>();
+		ArrayList myParsedList = new ArrayList();
+		
 		File userFile = new File("userList.txt");
+		
 		
 		if(userFile.exists() && !userFile.isDirectory()) {
 			try {
@@ -52,6 +57,8 @@ public class SaveManager {
 				System.err.println("userFile.txt was detected, but could not be loaded. Please delete userFile.txt and restart the program.");
 			}
 		}
+		
+		parseUserFile(userFileList, myUserList);
 		
 		return myUserList;
 	}
@@ -142,10 +149,57 @@ public class SaveManager {
 		return parseJobFile(jobFileList, theParsedList);
 	}
 	
-	public List parseUserFile(ArrayList<String> theUserFileList) {
-		ArrayList userList = new ArrayList();
+	
+	
+	
+	
+	public void parseUserFile(ArrayList<String> theUserFileList, UserList theUserList) {
 		
-		return userList;
+		//If userFileList has ended, then return our parsed list.		 
+		if(theUserFileList.get(0).equals("End User List")) {
+			return;
+		}
+				
+		String myEmail = theUserFileList.get(0);
+		String myRole = theUserFileList.get(1);
+		String myFirstName = theUserFileList.get(2);
+		String myLastName = theUserFileList.get(3);
+		
+		for(int i = 0; i < 5; i++) {
+			theUserFileList.remove(0);
+		}
+		
+		if(myRole.equals("Volunteer")) {
+			Volunteer myVolunteer = new Volunteer(myEmail, myFirstName, myLastName);
+			List<Volunteer> myVolunteerList = theUserList.getVolunteerCopyList();
+			myVolunteerList.add(myVolunteer);
+			theUserList.setVolunteerList(myVolunteerList);
+		}
+		
+		if(myRole.equals("Administrator")) {
+			Administrator myAdministrator = new Administrator(myEmail, myFirstName, myLastName);
+			List<Administrator> myAdministratorList = theUserList.getAdministratorCopyList();
+			myAdministratorList.add(myAdministrator);
+			theUserList.setAdministratorList(myAdministratorList);
+		}
+		
+		if(myRole.equals("ParkManager")) {
+			List<Park> myParkList = new ArrayList<Park>();
+			
+			while(!theUserFileList.get(0).equals("End Park List")) {
+				Park myPark = new Park(theUserFileList.get(0));
+				myParkList.add(myPark);
+				theUserFileList.remove(0);
+			}			
+			
+			ParkManager myManager = new ParkManager(myEmail, myFirstName, myLastName, myParkList);
+			
+			List<ParkManager> myManagerList = theUserList.getParkManagerCopyList();
+			myManagerList.add(myManager);
+			theUserList.setParkManagerList(myManagerList);		
+		}
+		
+		parseUserFile(theUserFileList, theUserList);
 	}
 	
 	

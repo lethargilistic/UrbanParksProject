@@ -20,8 +20,17 @@ public class ParkManager {
 	private DataPollster myPollster;
 	private List<Park> myManagedParks;	
 	
+	private String myFirstName;
+	private String myLastName;
+	
 	private String myEmail;
 	
+	public ParkManager(String theEmail, String theFirstName, String theLastName, List<Park> theParks) {
+		this.myEmail = theEmail;
+		this.myFirstName = theFirstName;
+		this.myLastName = theLastName;
+		this.myManagedParks = theParks;
+	}
 	
 	/**
 	 * Constructor for ParkManager, which requires a Schedule and DataPollster to be passed to it.
