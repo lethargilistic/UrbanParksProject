@@ -170,11 +170,34 @@ public class DataPollster {
 	
 	/**
 	 * Check the e-mail address of a user logging in to see if they exist in the system.
-	 * @param theEmail
-	 * @return
 	 */
 	public boolean checkEmail(String theEmail) {
 		//TODO
 		return true;
+	}
+
+	/**
+	 * Return the user type associated with the e-mail as a String.
+	 */
+	public String getUserType(String theEmail) {
+		// TODO Either "Volunteer", "ParkManager", or "Administrator"
+		return "ParkManager";
+	}
+
+	/**
+	 * Return the Park List associated with a ParkManager's e-mail.
+	 */
+	public List<Park> getParkList(String theEmail) {
+		// TODO The following code is NOT an example of how this is to be implemented. It just forces a test case.
+		
+		
+		//For testing purposes only:
+		ArrayList<Park> myParkList = new ArrayList<Park>();
+		Park myPark = new Park("Bobcat Park", "Hugo", 98335);
+		Park myPark2 = new Park("Seahurt Park", "Burien", 98106);
+		
+		myParkList.add(myPark);
+		myParkList.add(myPark2);
+		return myParkList;
 	}
 }

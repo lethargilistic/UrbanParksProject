@@ -10,6 +10,7 @@ import model.JobList;
 import model.Park;
 import model.ParkManager;
 import model.Schedule;
+import model.UserList;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -20,13 +21,14 @@ public class ParkManagerTest {
 	private Schedule mySchedule;
 	private DataPollster myPollster;
 	private JobList myList;
+	private UserList userList;
 	private List<Park> myParks;
 
 	@Before
 	public void setUp() throws Exception {
 		myList = new JobList();
 		mySchedule = new Schedule(myList);
-		myPollster = new DataPollster(myList);
+		myPollster = new DataPollster(myList, userList);
 		myParks = new ArrayList<Park>();
 		myParks.add(new Park("Bobcat Park", "Seattle", 98304));
 		myManager = new ParkManager(mySchedule, myPollster, myParks);

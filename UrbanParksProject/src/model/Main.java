@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 public class Main {
 
@@ -17,7 +18,20 @@ public class Main {
 		myUI = new MainUI();
 		
 		myUI.initialize();
-		directLogin(mySchedule, myPollster);
+		String[] userInfo = directLogin(mySchedule, myPollster);
+		
+		if(userInfo == null) { //If the command or information entered was invalid, we try again.
+			directLogin(mySchedule, myPollster);
+		}
+		
+		if(userInfo[0].equals("login")) {
+			giveControl(userInfo[1], mySchedule, myPollster);
+		}
+		
+		if(userInfo[0].equals("register")) {
+			mySchedule.addUser(userInfo[1], userInfo[2], userInfo[3], userInfo[4]);
+			giveControl(userInfo[1], mySchedule, myPollster);
+		}
 	}
 	
 	
@@ -34,79 +48,71 @@ public class Main {
 			case 1: userInfo = loginUser(mySchedule, myPollster); break;
 			case 2: userInfo = registerUser(mySchedule, myPollster); break;
 			case 3: myUI.displayExit(); closeProgram(); break; //Ends program.
-			
-			//If invalid, loop back to get a different command.
-			default: myUI.displayInvalidChoice(); directLogin(mySchedule, myPollster); break;
+			default: myUI.displayInvalidChoice(); break;
 		}
 		
 		return userInfo;
 	}
 	
-	//Return the User, unless the email was not recognized, in which we loop back to directLogin()
+	/*
+	 * Return a String array that specifies the user as logging in, and the e-mail of the user.
+	 */
 	private static String[] loginUser(Schedule mySchedule, DataPollster myPollster) {
-		String userEmail = myUI.getUserEmail();
-		boolean userExists = false;
+		
+		String userEmail = myUI.getReturnEmail();
+		String[] userInfo = null;
 		
 		if(myPollster.checkEmail(userEmail)) {
-			userExists = mySchedule.checkUser(userEmail);
+			userInfo = new String[2];
+			userInfo[0] = "login";
+			userInfo[1] = userEmail;
+			
 		} else {
 			myUI.displayInvalidEmail();
-			directLogin(mySchedule, myPollster);
 		}
 		
-		return null; //Not accessible.
+		return userInfo;
 	}
 	
-	private static String[] registerUser(Schedule mySchedule, DataPollster myPollster) {
-		
-		
-		return null;
-	}
-		
-		
-		/*
-		ArrayList<Park> myParkList = new ArrayList<Park>();
-		Park myPark = new Park("Bobcat Park", "Hugo", 98335);
-		Park myPark2 = new Park("Seahurt Park", "Burien", 98106);
-		
-		myParkList.add(myPark);
-		myParkList.add(myPark2);
-		
-		
-		ParkManager myManager = new ParkManager(mySchedule, myPollster, myParkList);
-		//myManager.initialize();
-
-		GregorianCalendar myStartDate = stringToCalendar("06052015");
-		GregorianCalendar myEndDate = stringToCalendar("06062015");
-		Job aJob = new Job(myPark, 1, 2, 3, myStartDate, myEndDate, myManager); //create a new job to test volunteer
-		mySchedule.receiveJob(aJob);
-		
-		Volunteer theVol = new Volunteer("Arsh", "Singh", myPollster, mySchedule);
-		theVol.initialize();
-		*/
-	
-	
-
-	
-	
-	/**
-	 * Convert a date string to a Gregorian Calendar object.
-	 * @param stringDate A string representing a date, of format mmddyyyy
-	 * @return A Gregorian Calendar object representing that date.
+	/*
+	 * Return a String array that specifies the user as registering, along with info on that user.
 	 */
-	private static GregorianCalendar stringToCalendar(String stringDate) {
-		int myDay = Integer.parseInt(stringDate.substring(0, 2));
-		int myMonth = Integer.parseInt(stringDate.substring(2, 4));
-		int myYear = Integer.parseInt(stringDate.substring(4, 8));		
+	private static String[] registerUser(Schedule mySchedule, DataPollster myPollster) {
+		String[] userInfo = new String[5];
 		
-		return new GregorianCalendar(myYear, myDay, myMonth);
+		userInfo[0] = "register";
+		userInfo[1] = myUI.getNewEmail();
+		userInfo[2] = myUI.getFirstName();
+		userInfo[3] = myUI.getLastName();
+		userInfo[4] = myUI.getUserType();
+		
+		if(userInfo[4] == null) userInfo = null;
+		
+		return userInfo;
 	}
+	
+	
+	/*
+	 * Transfer control to the user, specified by their e-mail address.
+	 */
+	public static void giveControl(String theEmail, Schedule mySchedule, DataPollster myPollster) {
+		String userType = myPollster.getUserType(theEmail);
+		
+		if(userType.equals("ParkManager")) {
+			List<Park> myManagedParks = myPollster.getParkList(theEmail);
+			ParkManager myManager = new ParkManager(mySchedule, myPollster, myManagedParks);
+			myManager.initialize();
+		}
+		
+		//TODO for Volunteer and Administrator
+	}
+	
+	
+	
+	
 	
 	public static void closeProgram() {
 		System.exit(0);
 	}
-	
-	
-	//NOTE: when creating an account for volunteer, don't forget to add him into the myVolunteerList in JobList class 
 
 }

@@ -36,21 +36,44 @@ public class MainUI {
 	
 	
 	
-	
-	public String getUserEmail() {
+	public String getReturnEmail() {
 		System.out.println("\nPlease enter your e-mail address to login:");
-		return myScanner.nextLine();
+		return getUserString();
 	}
 	
 	
-	public int getUserRole() {
-		return 0;
+	public String getNewEmail() {
+		System.out.println("\nWhat is your e-mail address?");
+		return getUserString();
 	}
 	
-	public String[] getUserContact() {
-		String[] userInfo = new String[3];
-		return userInfo;
+	public String getFirstName() {
+		System.out.println("\nWhat is your first name?");
+		return getUserString();
 	}
+	
+	public String getLastName() {
+		System.out.println("\nWhat is your last name?");
+		return getUserString();
+	}
+	
+	public String getUserType() {
+		System.out.println("\nWhat type of user are you?");
+		System.out.println("1) Volunteer");
+		System.out.println("2) Park Manager");
+		System.out.println("3) Administrator");
+		
+		int userType = getUserInt();
+		
+		switch (userType) {
+			case 1: return "Volunteer";
+			case 2: return "ParkManager";
+			case 3: return "Administrator";
+			default: displayInvalidChoice(); return null;
+		}
+	}
+	
+	
 	
 	
 	
@@ -68,10 +91,25 @@ public class MainUI {
 	
 	
 	private int getUserInt() {
-		return myScanner.nextInt();
+		int userInput = 0;
+		
+		if(myScanner.hasNextInt()) {
+			userInput = myScanner.nextInt();
+		}
+		
+		System.out.println("User Input: " + userInput);
+		
+		return userInput;
 	}
 	
 	private String getUserString() {
-		return myScanner.nextLine();
+		
+		String userInput = myScanner.nextLine();
+		
+		if(userInput.equals("")) {
+			userInput = myScanner.nextLine();
+		} 
+		
+		return userInput;
 	}
 }

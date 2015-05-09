@@ -201,4 +201,10 @@ public class Schedule {
 		return true;
 	}
 
+	public void addUser(String theEmail, String theFirstName, String theLastName,
+			String theUserType) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

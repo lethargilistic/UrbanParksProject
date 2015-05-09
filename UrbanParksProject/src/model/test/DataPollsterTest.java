@@ -12,6 +12,7 @@ import model.JobList;
 import model.Park;
 import model.ParkManager;
 import model.Schedule;
+import model.UserList;
 import model.Volunteer;
 
 import org.junit.After;
@@ -26,6 +27,7 @@ public class DataPollsterTest {
 
 	private Park p;
 	private JobList jl;
+	private UserList ul;
 	private DataPollster dp;
 	private Schedule s;
 	private List<Volunteer> vBank;
@@ -65,7 +67,7 @@ public class DataPollsterTest {
 				new GregorianCalendar(2015, 6, 20), 
 				new ParkManager(s, dp, pList)));
 		
-		dp = new DataPollster(jl);
+		dp = new DataPollster(jl, ul);
 		s = new Schedule(jl);
 		vBank = new ArrayList<>();
 		vBank.add(new Volunteer("Mike", "Overby"));
