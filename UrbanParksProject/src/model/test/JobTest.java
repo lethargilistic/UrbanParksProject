@@ -39,9 +39,9 @@ public class JobTest {
 		List<Park> pList = new ArrayList<>();
 		pList.add(p);
 		
-		myParkManager = new ParkManager(s, dp, pList);
+		myParkManager = new ParkManager(s, dp, pList, "tjsg1992@gmail.com");
 		
-		myJob = new Job(myPark, 2, 3, 4, startDate, endDate, myParkManager);
+		myJob = new Job(myPark, 2, 3, 4, startDate, endDate, myParkManager.getEmail());
 	}
 
 	@Test
@@ -58,7 +58,7 @@ public class JobTest {
 		{
 			Job j = new Job(myPark, 2, 3, 4, 
 							new GregorianCalendar(6, 11+i, 1992), 
-							new GregorianCalendar(6, 11+i, 1992), myParkManager);
+							new GregorianCalendar(6, 11+i, 1992), "moverby@gmail.com");
 			assertEquals(i, j.getJobID());
 		}
 	}

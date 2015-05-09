@@ -9,6 +9,7 @@ public class Volunteer {
 	
 	private String myFirstName;
 	private String myLastName;
+	private String myEmail;
 	
 	private VolunteerUI myUI;
 	private DataPollster myPoll;
@@ -16,8 +17,9 @@ public class Volunteer {
 	
 	
 	
-	public Volunteer(String firstName, String lastName)
+	public Volunteer(String theEmail, String firstName, String lastName)
 	{
+		this.myEmail = theEmail;
 		myFirstName = firstName;
 		myLastName = lastName;
 		
@@ -148,7 +150,7 @@ public class Volunteer {
 			int level = myUI.getDifficultyLevel();
 			
 			try {	//attempt to add this volunteer
-				mySched.addVolunteerToJob(this, jobID, level);
+				mySched.addVolunteerToJob(this.myEmail, jobID, level);
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 				return;

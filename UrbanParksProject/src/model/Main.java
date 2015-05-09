@@ -103,7 +103,8 @@ public class Main {
 		
 		if(userType.equals("ParkManager")) {
 			List<Park> myManagedParks = myPollster.getParkList(theEmail);
-			ParkManager myManager = new ParkManager(mySchedule, myPollster, myManagedParks);
+			String myEmail = "tjsg1992@gmail.com";
+			ParkManager myManager = new ParkManager(mySchedule, myPollster, myManagedParks, myEmail);
 			myManager.initialize();
 		}
 		
