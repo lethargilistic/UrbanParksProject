@@ -196,8 +196,9 @@ public class Schedule {
 		return myJobList;
 	}
 	
-	public User getUser(String theEmail) {
+	public boolean checkUser(String theEmail) {
 		//TODO
-		return null;
+		return true;
 	}
+
 }

@@ -26,28 +26,29 @@ public class Main {
 	 * Prompt the user to either login, register, or exit.<br>
 	 * Then, ask the user for login or register details.
 	 */
-	public static User directLogin(Schedule mySchedule, DataPollster myPollster) {
+	public static String[] directLogin(Schedule mySchedule, DataPollster myPollster) {
 		int loginCommand = myUI.getLoginChoice();
-		User myUser = null;
+		String[] userInfo = null;
 		
 		switch (loginCommand) {
-			case 1: myUser = loginUser(mySchedule, myPollster); break;
-			case 2: myUser = registerUser(mySchedule, myPollster); break;
+			case 1: userInfo = loginUser(mySchedule, myPollster); break;
+			case 2: userInfo = registerUser(mySchedule, myPollster); break;
 			case 3: myUI.displayExit(); closeProgram(); break; //Ends program.
 			
 			//If invalid, loop back to get a different command.
 			default: myUI.displayInvalidChoice(); directLogin(mySchedule, myPollster); break;
 		}
 		
-		return myUser;
+		return userInfo;
 	}
 	
 	//Return the User, unless the email was not recognized, in which we loop back to directLogin()
-	private static User loginUser(Schedule mySchedule, DataPollster myPollster) {
+	private static String[] loginUser(Schedule mySchedule, DataPollster myPollster) {
 		String userEmail = myUI.getUserEmail();
+		boolean userExists = false;
 		
 		if(myPollster.checkEmail(userEmail)) {
-			return mySchedule.getUser(userEmail);
+			userExists = mySchedule.checkUser(userEmail);
 		} else {
 			myUI.displayInvalidEmail();
 			directLogin(mySchedule, myPollster);
@@ -56,7 +57,7 @@ public class Main {
 		return null; //Not accessible.
 	}
 	
-	private static User registerUser(Schedule mySchedule, DataPollster myPollster) {
+	private static String[] registerUser(Schedule mySchedule, DataPollster myPollster) {
 		
 		
 		return null;
