@@ -31,7 +31,7 @@ public class ParkManagerTest {
 		myPollster = new DataPollster(myList, userList);
 		myParks = new ArrayList<Park>();
 		myParks.add(new Park("Bobcat Park", "Seattle", 98304));
-		myManager = new ParkManager(mySchedule, myPollster, myParks);
+		myManager = new ParkManager(mySchedule, myPollster, myParks, "arshdeep@gmail.com");
 	}
 
 	//TODO: Should be removed in favor of having the commands be processed in the UI.

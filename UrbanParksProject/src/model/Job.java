@@ -19,9 +19,9 @@ public class Job {
 	private int myJobID;
 
 	/**
-	 * This is the list which holds the volunteers that have signed up to participate in this job.
+	 * This is the list which holds the e-mail addresses of all volunteers that have signed up to participate in this job.
 	 */
-    public List<Volunteer> myVolunteerList; 
+    public List<String> myVolunteerList; 
     
     /**
      * This is the start date of the job.
@@ -77,7 +77,7 @@ public class Job {
     /**
      * The Park Manager in charge of the job.
      */
-    private ParkManager myManager;
+    private String myManager;
     
     /**
      * This is a constructor.
@@ -89,13 +89,13 @@ public class Job {
      * @param theEndDate is the ending date of the job.
      */
     public Job(Park thePark, int theLightSlots, int theMediumSlots, int theHeavySlots,
-    		GregorianCalendar theStartDate, GregorianCalendar theEndDate, ParkManager theManager) {
+    		GregorianCalendar theStartDate, GregorianCalendar theEndDate, String theManagerEmail) {
     	myJobID = nextJobID++;
     	myVolunteerList = new ArrayList<>();
     	myStartDate = theStartDate;
     	myEndDate = theEndDate;
     	myPark = thePark;
-    	myManager = theManager;
+    	myManager = theManagerEmail;
     	
     	myLightMax = theLightSlots;
     	myLightCurrent = 0;
@@ -212,7 +212,7 @@ public class Job {
 		return myJobID;
 	}
 
-	public List<Volunteer> getVolunteerList() {
+	public List<String> getVolunteerList() {
 		return myVolunteerList;
 	}
 
@@ -244,7 +244,7 @@ public class Job {
 		return myPark;
 	}
 	
-	public ParkManager getManager() {
+	public String getManager() {
 		return myManager;
 	}
 	

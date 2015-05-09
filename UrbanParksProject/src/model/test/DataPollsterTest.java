@@ -45,38 +45,38 @@ public class DataPollsterTest {
 		jBank.add(new Job(p, 5, 5, 5, 
 				new GregorianCalendar(2015, 6, 15), 
 				new GregorianCalendar(2015, 6, 15), 
-				new ParkManager(s, dp, pList)));
+				"senorreido@gmail.com"));
 		jBank.add(new Job(p, 5, 5, 5, 
 				new GregorianCalendar(2015, 6, 16), 
 				new GregorianCalendar(2015, 6, 16), 
-				new ParkManager(s, dp, pList)));
+				"senorreido@gmail.com"));
 		jBank.add(new Job(p, 5, 5, 5, 
 				new GregorianCalendar(2015, 6, 17), 
 				new GregorianCalendar(2015, 6, 17),
-				new ParkManager(s, dp, pList)));
+				"senorreido@gmail.com"));
 		jBank.add(new Job(p, 5, 5, 5, 
 				new GregorianCalendar(2015, 6, 18), 
 				new GregorianCalendar(2015, 6, 18), 
-				new ParkManager(s, dp, pList)));
+				"senorreido@gmail.com"));
 		jBank.add(new Job(p, 5, 5, 5, 
 				new GregorianCalendar(2015, 6, 19), 
 				new GregorianCalendar(2015, 6, 19),
-				new ParkManager(s, dp, pList)));
+				"senorreido@gmail.com"));
 		jBank.add(new Job(p, 5, 5, 5, 
 				new GregorianCalendar(2015, 6, 20), 
 				new GregorianCalendar(2015, 6, 20), 
-				new ParkManager(s, dp, pList)));
+				"senorreido@gmail.com"));
 		
 		dp = new DataPollster(jl, ul);
 		s = new Schedule(jl);
 		vBank = new ArrayList<>();
-		vBank.add(new Volunteer("Mike", "Overby"));
-		vBank.add(new Volunteer("Reid", "Thompson"));
-		vBank.add(new Volunteer("Ariel", "McNamera"));
-		vBank.add(new Volunteer("Taylor", "Gorman"));
-		vBank.add(new Volunteer("Jasmine", "Pederson"));
-		vBank.add(new Volunteer("Arshdeep", "Singh"));
-		vBank.add(new Volunteer("Samantha", "Kuk"));
+		vBank.add(new Volunteer("moverby@gmail.com", "Mike", "Overby"));
+		vBank.add(new Volunteer("senorreido@gmail.com", "Reid", "Thompson"));
+		vBank.add(new Volunteer("classmate1@gmail.com", "Ariel", "McNamera"));
+		vBank.add(new Volunteer("refactoreverything@gmail.com", "Taylor", "Gorman"));
+		vBank.add(new Volunteer("classmate2@gmail.com", "Jasmine", "Pederson"));
+		vBank.add(new Volunteer("internetfail@gmail.com", "Arshdeep", "Singh"));
+		vBank.add(new Volunteer("classmate3@gmail.com", "Samantha", "Kuk"));
 }
 
 	/**
@@ -134,7 +134,7 @@ public class DataPollsterTest {
 	public void testGetManagerJobs() {
 		List<Park> listOfP = new ArrayList<Park>();
 		listOfP.add(p);
-		ParkManager pm = new ParkManager(s, dp, listOfP);
+		ParkManager pm = new ParkManager(s, dp, listOfP, "randomemail@gmail.com");
 
 		List<Job> pmJobs = jl.getCopyList();
 		assertEquals("Not all jobs in pm's park were accounted for.", pmJobs, dp.getManagerJobs(pm));
@@ -144,7 +144,7 @@ public class DataPollsterTest {
 		jobs.add(new Job(p2, 5, 5, 5, 
 				new GregorianCalendar(2015, 6, 15), 
 				new GregorianCalendar(2015, 6, 15),
-				pm));
+				"senorreido@gmail.com"));
 		
 		
 		assertEquals("A job at another park affected the return value.", pmJobs, dp.getManagerJobs(pm));
