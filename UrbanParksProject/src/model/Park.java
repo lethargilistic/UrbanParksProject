@@ -37,6 +37,17 @@ public class Park { // Because the myLocation and myZipCode fields are never use
     	myLocation = theLoc;
     	myZipCode = theZip;
     }
+    
+    /**
+     * Temporary constructor for testing purposes.
+     * @author Taylor Gorman
+     * @version 9 May 2015
+     */
+    public Park(String theName) {
+    	myName = theName;
+    	myLocation = "Tacoma";
+    	myZipCode = 98335;
+    }
 
 	public String getName() {
 		return myName;

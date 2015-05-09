@@ -20,7 +20,7 @@ public class SaveManager {
 	public JobList loadJobList() {
 		JobList myJobList = new JobList();
 		ArrayList<String> jobFileList = new ArrayList<String>();
-		List<Job> myParsedList = new ArrayList<Job>();
+		ArrayList<Job> myParsedList = new ArrayList<Job>();
 		
 		File jobFile = new File("jobList.txt");
 		
@@ -32,7 +32,7 @@ public class SaveManager {
 			}
 		}
 		
-		myParsedList = parseJobFile(jobFileList);
+		myParsedList = parseJobFile(jobFileList, myParsedList);
 		
 		return myJobList;
 		
@@ -92,13 +92,16 @@ public class SaveManager {
 	 * the user or job to their lists.
 	 */
 	
-	public List<Job> parseJobFile(ArrayList<String> jobFileList) {
-		List<Job> parsedJobList = new ArrayList<Job>();
+	public ArrayList<Job> parseJobFile(ArrayList<String> jobFileList, ArrayList<Job> theParsedList) {
+		theParsedList = new ArrayList<Job>();
 		
+		
+		//If jobFileList has ended, then return our parsed list.		 
 		if(jobFileList.get(0).equals("End Job List")) {
-			return parsedJobList;
+			return theParsedList;
 		}
 		
+		//Construct Job
 		int myJobID = Integer.parseInt(jobFileList.get(0));
 		
 		int myLightCurrent = Integer.parseInt(jobFileList.get(1));
@@ -108,27 +111,35 @@ public class SaveManager {
 		int myHeavyCurrent = Integer.parseInt(jobFileList.get(5));
 		int myHeavyMax = Integer.parseInt(jobFileList.get(6));
 		
-		String myStartDateString = jobFileList.get(7);
-		String myEndDateString = jobFileList.get(8);
+		String myStartDate = jobFileList.get(7);
+		String myEndDate = jobFileList.get(8);
 		String myPark = jobFileList.get(9);
 		String myManager = jobFileList.get(10);
 		
+		//Remove all added elements from the file list.
 		for(int i = 0; i < 12; i++) {
-			jobFileList.remove(0); //Remove all added elements from the file list.
+			jobFileList.remove(0); 
 		}
 		
 		List<String> myVolunteerList = new ArrayList<String>();
 		
+		//Add the volunteer to the volunteer list, then remove it from the file list.
 		while(!jobFileList.get(0).equals("End Volunteer List")) {
-			myVolunteerList.add(jobFileList.get(0)); //Add the volunteer to the list, then remove it from the file list.
+			myVolunteerList.add(jobFileList.get(0)); 
 			jobFileList.remove(0);
 		}
 		
-		jobFileList.remove(0); //Remove "End Volunteer List"
+		//Remove "End Volunteer List"
+		jobFileList.remove(0);
+		Park newPark = new Park("Happy Park", "Tacoma", 98335);
 		
-			
-		return parsedJobList;
-		//return parseJobFile(parsedJobList);
+		//Construct the new job, and then add it to the list.
+		Job myJob = new Job(myJobID, newPark, myLightCurrent, myLightMax, myMediumCurrent, myMediumMax, myHeavyCurrent, myHeavyMax, 
+				myStartDate, myEndDate, myManager, myVolunteerList);
+		theParsedList.add(myJob);
+
+		//Recursively make calls until jobFileList is empty.
+		return parseJobFile(jobFileList, theParsedList);
 	}
 	
 	public List parseUserFile(ArrayList<String> theUserFileList) {
