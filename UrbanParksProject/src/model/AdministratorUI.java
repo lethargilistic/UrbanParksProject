@@ -16,10 +16,11 @@ public class AdministratorUI {
 	 */
 	private Scanner myIn;
 	
-	/**
-	 * An Administrator object to be associated with this UI object.
-	 */
-	private Administrator myAdmin;
+// HOPEFULLY WE CAN CHANGE THE UI CLASSES LATER TO HAVE USER OBJECTS INSTEAD OF THE OPPOSITE WAY
+//	/**
+//	 * An Administrator object to be associated with this UI object.
+//	 */
+//	private Administrator myAdmin;
 	
 	/**
 	 * Constructs an AdministratorUI object.
@@ -28,23 +29,23 @@ public class AdministratorUI {
 		myIn = new Scanner(System.in);
 	}
 	
-	/**
-	 * Controls the whole flow of interaction regarding this UI class and the Administrator class.
-	 */
-	public void initializeUI() {
-		listCommands();
-		String choiceStr = getInput();
-		int choice = getFirstIntChoice(choiceStr);
-		boolean stayLoggedIn = executeOptionChosen(choice);
-		if (stayLoggedIn) { // reprompt user to with list of commands - continuing their interaction with the UI
-			initializeUI();
-		} // the implied else would return control back to whatever method called initializeUI() - probably mainUI
-	}
+//	/**
+//	 * Controls the whole flow of interaction regarding this UI class and the Administrator class.
+//	 */
+//	public void initializeUI() {
+//		listCommands();
+//		String choiceStr = getInput();
+//		int choice = getFirstIntChoice(choiceStr);
+//		boolean stayLoggedIn = executeOptionChosen(choice);
+//		if (stayLoggedIn) { // reprompt user to with list of commands - continuing their interaction with the UI
+//			initializeUI();
+//		} // the implied else would return control back to whatever method called initializeUI() - probably mainUI
+//	}
 	
 	/**
 	 * Prints the commands that the Administrator can select.
 	 */
-	private void listCommands() {
+	public void listCommands() {
 		System.out.println("\n------------------------------------------\n"
 				+ "Administrator Menu\n"
 				+ "\nWhat would you like to do?\n"
@@ -60,7 +61,7 @@ public class AdministratorUI {
 	 * @param theChoice a string containing the user's response to the list of commands.
 	 * @return the command chosen by the user.
 	 */
-	private int getFirstIntChoice(final String theChoice) {
+	public int getFirstIntChoice(final String theChoice) {
 		final Scanner scan = new Scanner(theChoice);
 		int choice = -1;
 		while (scan.hasNext()) {
@@ -73,39 +74,39 @@ public class AdministratorUI {
 		return choice;
 	}
 	
-	/**
-	 * Calls appropriate Administrator methods if valid input is given. Otherwise, it
-	 * reprompts the user with the original list of commands.
-	 * 
-	 * @param theChoice is the integer of the option to be executed by the user.
-	 * @return false if the user wishes to log out, and true otherwise.
-	 */
-	private boolean executeOptionChosen(final int theChoice) {
-		boolean stayLoggedIn = true;
-		if (theChoice <= 0 || theChoice > 2) {
-			System.out.println("Invalid command selected. Please try again.\n");
-			initializeUI(); // restart UI interaction
-		} else { // valid input was given
-			switch(theChoice) { // no default case needed because of original if test
-				case 1: // search volunteers by last name
-				    String lastName = promptForVolsLastName();
-				    boolean lastNameValid = !lastName.equals(""); // other conditions to add?
-					while (!lastNameValid) {
-						System.out.println("No last name was entered. Please try again.\n");
-						lastName = promptForVolsLastName();
-						lastNameValid = !lastName.equals("");
-					} // lastName is valid now
-					// get and output list of Volunteers with matching last names
-					// Step 1) List<Volunteer> matchingVols = getMatchingVolunteers(lastName)
-					// Step 2) displayMatchingVolunteers(matchingVols);
-				case 2: // logout
-					System.out.println("Option 2 selected.\n"
-							+ "Logging out now.\n");
-					stayLoggedIn = false;
-			}
-		}
-		return stayLoggedIn;
-	}
+//	/**
+//	 * Calls appropriate Administrator methods if valid input is given. Otherwise, it
+//	 * reprompts the user with the original list of commands.
+//	 * 
+//	 * @param theChoice is the integer of the option to be executed by the user.
+//	 * @return false if the user wishes to log out, and true otherwise.
+//	 */
+//	public boolean executeOptionChosen(final int theChoice) {
+//		boolean stayLoggedIn = true;
+//		if (theChoice <= 0 || theChoice > 2) {
+//			System.out.println("Invalid command selected. Please try again.\n");
+//			initializeUI(); // restart UI interaction
+//		} else { // valid input was given
+//			switch(theChoice) { // no default case needed because of original if test
+//				case 1: // search volunteers by last name
+//				    String lastName = promptForVolsLastName();
+//				    boolean lastNameValid = !lastName.equals(""); // other conditions to add?
+//					while (!lastNameValid) {
+//						System.out.println("No last name was entered. Please try again.\n");
+//						lastName = promptForVolsLastName();
+//						lastNameValid = !lastName.equals("");
+//					} // lastName is valid now
+//					// get and output list of Volunteers with matching last names
+//					// Step 1) List<Volunteer> matchingVols = getMatchingVolunteers(lastName)
+//					// Step 2) displayMatchingVolunteers(matchingVols);
+//				case 2: // logout
+//					System.out.println("Option 2 selected.\n"
+//							+ "Logging out now.\n");
+//					stayLoggedIn = false;
+//			}
+//		}
+//		return stayLoggedIn;
+//	}
 	
 	/**
 	 * Gets the input last entered by the Administrator indicating what they would like
@@ -113,7 +114,7 @@ public class AdministratorUI {
 	 * 
 	 * @return a string indicating their command.
 	 */
-	private String getInput() {	
+	public String getInput() {	
 		return myIn.nextLine();
 	}
 	
@@ -122,7 +123,7 @@ public class AdministratorUI {
 	 * 
 	 * @return a String of the last name of the Volunteer to search for.
 	 */
-	private String promptForVolsLastName() {
+	public String promptForVolsLastName() {
 		System.out.println("Option 1 selected.\n"
 				+ "Please enter the last name of the Volunteer to search for: \n");
 		return getInput();
@@ -130,23 +131,23 @@ public class AdministratorUI {
 	
 	// access Vol list thru DataPollster thru UserList methods
 	
-	/**
-	 * Returns a list of relevant Volunteers based on the last name entered.
-	 * 
-	 * @param theLastName is the last name of the Volunteer to search for.
-	 */
-	private List<Volunteer> getMatchingVolunteers(String theLastName) {
-		return null;
-	}
+//	/**
+//	 * Returns a list of relevant Volunteers based on the last name entered.
+//	 * 
+//	 * @param theLastName is the last name of the Volunteer to search for.
+//	 */
+//	public List<Volunteer> getMatchingVolunteers(String theLastName) {
+//		return null;
+//	}
 	
-	/**
-	 *  Would receive a list of relevant Volunteers.
-	 */
-	private void displayMatchingVolunteers(List<Volunteer> theMatchingVols) {
-		//TODO
-		//VolunteerList = Administrator.searchVolunteers()
-		//Print out list
-	}
+//	/**
+//	 *  Would receive a list of relevant Volunteers.
+//	 */
+//	public void displayMatchingVolunteers(List<Volunteer> theMatchingVols) {
+//		//TODO
+//		//VolunteerList = Administrator.searchVolunteers()
+//		//Print out list
+//	}
 
 // OLD METHOD - BROKE IT INTO SMALLER METHODS FOR CODE RE-USE
 //	/**
