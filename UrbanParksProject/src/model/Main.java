@@ -107,7 +107,7 @@ public class Main {
 	}
 	
 	
-	/*
+	/**
 	 * Transfer control to the user, specified by their e-mail address.
 	 */
 	public static void giveControl(String[] theUserInfo, Schedule theSchedule, DataPollster thePollster) {

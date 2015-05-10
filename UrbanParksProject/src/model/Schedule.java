@@ -195,11 +195,6 @@ public class Schedule {
 	public JobList getJobList() {
 		return myJobList;
 	}
-	
-	public boolean checkUser(String theEmail) {
-		//TODO can someone java doc this method? I dont know what its supposed to do.
-		return true;
-	}
 
 	public void addUser(String theEmail, String theFirstName, String theLastName,
 			String theUserType) {
