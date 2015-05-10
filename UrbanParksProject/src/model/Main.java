@@ -14,29 +14,35 @@ public class Main {
 		SaveManager mySaveManager = new SaveManager();
 		JobList myJobList = mySaveManager.loadJobList();
 		UserList myUserList = mySaveManager.loadUserList();
+		String[] userInfo;
 		
 		Schedule mySchedule = new Schedule(myJobList);
 		DataPollster myPollster = new DataPollster(myJobList, myUserList);
 		myUI = new MainUI();
 		
 		myUI.initialize();
-		String[] userInfo = directLogin(mySchedule, myPollster);
 		
-		if(userInfo == null) { //If the command or information entered was invalid, we try again.
-			directLogin(mySchedule, myPollster); //TODO make this a while loop
+		//We return to the top of the loop whenever the user logs out, and prompt them to login again.
+		//The loop continues until the user selects Exit.
+		while(true) {
+			userInfo = directLogin(mySchedule, myPollster);
+			
+			if(userInfo == null) { //If the command or information entered was invalid, we try again.
+				directLogin(mySchedule, myPollster);
+			}
+			
+			if(userInfo[0].equals("login")) {
+				giveControl(userInfo[1], mySchedule, myPollster);
+			}
+			
+			if(userInfo[0].equals("register")) {
+				mySchedule.addUser(userInfo[1], userInfo[2], userInfo[3], userInfo[4]);
+				giveControl(userInfo[1], mySchedule, myPollster);
+			}
+			
+			myUI.greetUser();
 		}
 		
-		if(userInfo[0].equals("login")) {
-			giveControl(userInfo[1], mySchedule, myPollster);
-		}
-		
-		if(userInfo[0].equals("register")) {
-			mySchedule.addUser(userInfo[1], userInfo[2], userInfo[3], userInfo[4]);
-			giveControl(userInfo[1], mySchedule, myPollster);
-		}
-		
-		myUI.greetUser();
-		directLogin(mySchedule, myPollster); //Once the user logs out, we go back to the login screen.
 	}
 	
 	
@@ -55,7 +61,6 @@ public class Main {
 			case 3: myUI.displayExit(); closeProgram(); break; //Ends program.
 			default: myUI.displayInvalidChoice(); break;
 		}
-		
 		return userInfo;
 	}
 	
@@ -75,7 +80,6 @@ public class Main {
 		} else {
 			myUI.displayInvalidEmail();
 		}
-		
 		return userInfo;
 	}
 	

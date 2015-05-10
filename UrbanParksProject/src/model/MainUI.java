@@ -107,7 +107,7 @@ public class MainUI {
 		if(userInput.equals("")) { //TODO, maybe make this a while so that it will continuously 
 									//prompt the user, instead of just once?
 			userInput = myScanner.nextLine();
-		} 
+		}
 		
 		return userInput;
 	}
