@@ -27,17 +27,17 @@ public class SaveManager {
 		ArrayList<String> jobFileList = new ArrayList<String>();
 		ArrayList<Job> myParsedList = new ArrayList<Job>();
 		
-		File jobFile = new File("rsc/jobList.txt");
+		File inFile = new File("rsc/jobList.txt");
 		
-		if(!jobFile.exists()) {
-			jobFile = new File("rsc\\jobList.txt");
+		if(!inFile.exists()) {
+			inFile = new File("rsc\\jobList.txt");
 		}
 		
-		if(jobFile.exists() && !jobFile.isDirectory()) {
+		if(inFile.exists() && !inFile.isDirectory()) {
 			try {
-				jobFileList = loadJobFile(jobFile);
+				jobFileList = loadJobFile(inFile);
 			} catch (FileNotFoundException e) {
-				System.err.println("jobFile.txt was detected, but could not be loaded. Please delete jobFile.txt and restart the program.");
+				System.err.println("jobList.txt was detected, but could not be loaded. Please delete jobFile.txt and restart the program.");
 			}
 		}
 		
@@ -56,18 +56,18 @@ public class SaveManager {
 		ArrayList<String> userFileList = new ArrayList<String>();
 		ArrayList myParsedList = new ArrayList();
 		
-		File userFile = new File("rsc/userList.txt");
+		File inFile = new File("rsc/userList.txt");
 		
-		if(!userFile.exists()) {
-			userFile = new File("rsc\\userList.txt");
+		if(!inFile.exists()) {
+			inFile = new File("rsc\\userList.txt");
 		}
 		
 		
-		if(userFile.exists() && !userFile.isDirectory()) {
+		if(inFile.exists() && !inFile.isDirectory()) {
 			try {
-				userFileList = loadUserFile(userFile);
+				userFileList = loadUserFile(inFile);
 			} catch (FileNotFoundException e) {
-				System.err.println("userFile.txt was detected, but could not be loaded. Please delete userFile.txt and restart the program.");
+				System.err.println("userList.txt was detected, but could not be loaded. Please delete userFile.txt and restart the program.");
 			}
 		}
 		
@@ -240,9 +240,15 @@ public class SaveManager {
 	public boolean saveJobList(JobList theJobList) {
 		List<String> jobInfo = extractJobInfo(theJobList);
 		
+		File outFile = new File("rsc/jobListOut.txt");
+		
+		if(!outFile.exists()) {
+			outFile = new File("rsc\\jobListOut.txt");
+		}
+		
 		try {
 			//TODO change to jobList.txt once we verify there aren't any inconsistencies
-			FileWriter fw = new FileWriter("rsc\\jobListOut.txt");
+			FileWriter fw = new FileWriter(outFile);
 			BufferedWriter bw = new BufferedWriter(fw);
 			
 			for(int i = 0; i < jobInfo.size(); i++) {
@@ -296,11 +302,17 @@ public class SaveManager {
 	 */
 	public boolean saveUserList(UserList theUserList) {
 		
+		File outFile = new File("rsc/userListOut.txt");
+		
+		if(!outFile.exists()) {
+			outFile = new File("rsc\\userListOut.txt");
+		}
+		
 		List<String> userInfo = extractUserInfo(theUserList);
 		
 		try {
 			//TODO change to userList.txt once we verify there aren't any inconsistencies
-			FileWriter fw = new FileWriter("rsc\\userListOut.txt");
+			FileWriter fw = new FileWriter(outFile);
 			BufferedWriter bw = new BufferedWriter(fw);
 			
 			for(int i = 0; i < userInfo.size(); i++) {
