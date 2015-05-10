@@ -178,6 +178,8 @@ public class ParkManagerUI {
 	 * Take an ArrayList of Volunteers, and display their names to the console.
 	 */
 	public void displayVolunteers(ArrayList<String> myVolunteerList, DataPollster thePollster) {
+		System.out.println(myVolunteerList.size());
+		
 		for(String volunteerString : myVolunteerList) {
 			Volunteer volunteer = thePollster.getVolunteer(volunteerString);
 			System.out.println(volunteer.getFirstName() + " " + volunteer.getLastName());

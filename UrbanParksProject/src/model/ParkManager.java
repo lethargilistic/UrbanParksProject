@@ -177,5 +177,13 @@ public class ParkManager {
 	public String getEmail() {
 		return myEmail;
 	}
+
+	public String getFirstName() {
+		return this.myFirstName;
+	}
+	
+	public String getLastName() {
+		return this.myLastName;
+	}
 	
 }

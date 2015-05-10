@@ -1,8 +1,13 @@
 package model;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Scanner;
 
@@ -23,6 +28,7 @@ public class SaveManager {
 		ArrayList<Job> myParsedList = new ArrayList<Job>();
 		
 		File jobFile = new File("rsc\\jobList.txt");
+		
 		if(jobFile.exists() && !jobFile.isDirectory()) {
 			try {
 				jobFileList = loadJobFile(jobFile);
@@ -92,11 +98,10 @@ public class SaveManager {
 	
 	
 	
-	/*
-	 * Recursively parse the array version of the Job or User file, and add
-	 * the user or job to their lists.
+
+	/**
+	 * Recursively parse the array version of the Job File, construct Jobs from the information, and pass back a list of those jobs.
 	 */
-	
 	public ArrayList<Job> parseJobFile(ArrayList<String> jobFileList, ArrayList<Job> theParsedList) {		
 		//jobList.txt was not found, which is normal if the program has not been executed before.
 		if(jobFileList.size() < 1) {
@@ -152,7 +157,9 @@ public class SaveManager {
 	
 	
 	
-	
+	/**
+	 * Recursively parse the array version of the User File, construct Users from the information, and pass back a list of those users.
+	 */
 	public UserList parseUserFile(ArrayList<String> theUserFileList, UserList theUserList) {
 		
 		//userList.txt was not found, which is normal if the program has not been executed before.
@@ -187,7 +194,7 @@ public class SaveManager {
 		}
 		
 		if(myRole.equals("Administrator")) {
-			Administrator myAdministrator = new Administrator(myEmail, myFirstName, myLastName);
+			Administrator myAdministrator = new Administrator(myFirstName, myLastName, myEmail);
 			List<Administrator> myAdministratorList = theUserList.getAdministratorCopyList();
 			myAdministratorList.add(myAdministrator);
 			theUserList.setAdministratorList(myAdministratorList);
@@ -218,19 +225,148 @@ public class SaveManager {
 	
 	
 	
-	
-	
-	
-	
-	
-	
+
+	/**
+	 * Parse a JobList and write its contents to a text file.
+	 */
 	public boolean saveJobList(JobList theJobList) {
+		List<String> jobInfo = extractJobInfo(theJobList);
+		
+		try {
+			//TODO change to jobList.txt once we verify there aren't any inconsistencies
+			FileWriter fw = new FileWriter("rsc\\jobListOut.txt");
+			BufferedWriter bw = new BufferedWriter(fw);
+			
+			for(int i = 0; i < jobInfo.size(); i++) {
+				bw.write(jobInfo.get(i));
+				bw.newLine();
+			}
+			bw.close();
+		} catch (IOException e) {
+			System.out.println("Job List could not be saved.");
+			return false;
+		}		
 		
 		return true;
 	}
 	
+	/**
+	 * Copy JobList into an Array, line-by-line.
+	 */
+	public List<String> extractJobInfo(JobList theJobList) {
+		List<String> jobInfo = new ArrayList<String>();
+		
+		for(Job job : theJobList.getCopyList()) {
+			jobInfo.add(String.valueOf(job.getJobID()));
+			jobInfo.add(String.valueOf(job.getLightCurrent()));
+			jobInfo.add(String.valueOf(job.getLightMax()));
+			jobInfo.add(String.valueOf(job.getMediumCurrent()));
+			jobInfo.add(String.valueOf(job.getMediumMax()));
+			jobInfo.add(String.valueOf(job.getHeavyCurrent()));
+			jobInfo.add(String.valueOf(job.getHeavyMax()));
+			jobInfo.add(calendarToString(job.getStartDate()));
+			jobInfo.add(calendarToString(job.getEndDate()));
+			jobInfo.add(job.getPark().getName());
+			jobInfo.add(job.getManager());
+			
+			for(String volunteer : job.getVolunteerList()) {
+				jobInfo.add(volunteer);
+			}
+			
+			jobInfo.add("End Volunteer List");
+		}
+		
+		jobInfo.add("End Job List");	
+		return jobInfo;
+	}
+	
+	
+	
+	
+	/**
+	 * Parse a UserList and write its contents to a text file.
+	 */
 	public boolean saveUserList(UserList theUserList) {
 		
+		List<String> userInfo = extractUserInfo(theUserList);
+		
+		try {
+			//TODO change to userList.txt once we verify there aren't any inconsistencies
+			FileWriter fw = new FileWriter("rsc\\userListOut.txt");
+			BufferedWriter bw = new BufferedWriter(fw);
+			
+			for(int i = 0; i < userInfo.size(); i++) {
+				bw.write(userInfo.get(i));
+				bw.newLine();
+			}
+			bw.close();
+		} catch (IOException e) {
+			System.out.println("User List could not be saved.");
+			return false;
+		}		
+		
 		return true;
+	}
+	
+	/**
+	 * Copy UserList into an Array, line-by-line.
+	 */
+	public List<String> extractUserInfo(UserList theUserList) {
+		List<String> userInfo = new ArrayList<String>();
+		
+		for(Volunteer volunteer : theUserList.getVolunteerCopyList()) {
+			userInfo.add(volunteer.getEmail());
+			userInfo.add("Volunteer");
+			userInfo.add(volunteer.getFirstName());
+			userInfo.add(volunteer.getLastName());
+		}
+		
+		for(ParkManager manager : theUserList.getParkManagerCopyList()) {
+			userInfo.add(manager.getEmail());
+			userInfo.add("ParkManager");
+			userInfo.add(manager.getFirstName());
+			userInfo.add(manager.getLastName());
+			
+			for(Park park : manager.getManagedParks()) {
+				userInfo.add(park.getName());
+			}
+			userInfo.add("End Park List");
+		}
+		
+		for(Administrator admin : theUserList.getAdministratorCopyList()) {
+			userInfo.add(admin.getEmail());
+			userInfo.add("Administrator");
+			userInfo.add(admin.getFirstName());
+			userInfo.add(admin.getLastName());
+		}
+		
+		userInfo.add("End User List");	
+		return userInfo;
+	}
+	
+	
+	
+	
+	
+	/**
+	 * Convert a GregorianCalendar object to string of format mmddyyyy
+	 */
+	private String calendarToString(GregorianCalendar theCalendar) {
+		
+		String returnString = "";
+		
+		if(theCalendar.get(Calendar.MONTH) < 10) {
+			returnString += "0";
+		}
+		returnString += theCalendar.get(Calendar.MONTH);
+		
+		if(theCalendar.get(Calendar.DAY_OF_MONTH) < 10) {
+			returnString += "0";
+		}
+		returnString += theCalendar.get(Calendar.DAY_OF_MONTH);
+		
+		returnString += theCalendar.get(Calendar.YEAR);
+
+		return returnString;
 	}
 }

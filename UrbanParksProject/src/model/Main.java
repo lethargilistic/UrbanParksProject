@@ -41,6 +41,9 @@ public class Main {
 				giveControl(userInfo, mySchedule, myPollster);
 			}
 			
+			mySaveManager.saveJobList(myJobList);
+			mySaveManager.saveUserList(myUserList);
+			
 			myUI.greetUser();
 		}
 		
