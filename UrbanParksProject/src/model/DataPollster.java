@@ -140,6 +140,7 @@ public class DataPollster {
 		//managed by the PM.
 		for (Job j : myJobList.getCopyList())
 		{
+			System.out.println(j.getPark());
 			if (theManager.getManagedParks().contains(j.getPark()))
 			{
 				jobsManaging.add(j);

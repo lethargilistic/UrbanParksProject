@@ -151,7 +151,7 @@ public class SaveManager {
 		
 		//Remove "End Volunteer List"
 		jobFileList.remove(0);
-		Park newPark = new Park("Happy Park", "Tacoma", 98335);
+		Park newPark = new Park(myPark, "Tacoma", 98335);
 		
 		//Construct the new job, and then add it to the list.
 		Job myJob = new Job(myJobID, newPark, myLightCurrent, myLightMax, myMediumCurrent, myMediumMax, myHeavyCurrent, myHeavyMax, 
