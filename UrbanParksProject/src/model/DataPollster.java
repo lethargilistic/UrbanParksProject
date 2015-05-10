@@ -4,6 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 //TODO: we definitely need getters for the other classes, like Park and Job.
+/**
+ * A class to poll our data-containing classes on behalf of our users.
+ * 
+ * @author Mike Overby
+ * @author Reid Thompson
+ * @version 5.10.2015
+ */
 public class DataPollster {
 
 	/**
@@ -12,6 +19,13 @@ public class DataPollster {
 	private JobList myJobList;
 	
 	private UserList myUserList;
+	
+	/**
+	 * Return the next available Job ID to be used during the creation of a new job.
+	 */
+	public static int getNextJobID() {
+		return Job.nextJobID++;
+	}
 	
 	public DataPollster(JobList theJoblist, UserList theUserList)
 	{
@@ -90,7 +104,7 @@ public class DataPollster {
 		//Calls JobList.getCopyList() to get a copy of myJobList
 			//It already has a reference to the joblist
 
-		// Create a new list of Jobs with copies of the Jobs from Schedule’s master 
+		// Create a new list of Jobs with copies of the Jobs from Scheduleï¿½s master 
 		// list
 		List<Job> jobsSignedUpFor = new ArrayList<Job>();
 		
@@ -117,7 +131,7 @@ public class DataPollster {
 		//Calls JobList.getCopyList() to get a copy of myJobList
 			//It already has a reference to the joblist
 		
-		//Create a new list of jobs with copies of the Jobs from Schedule’s 
+		//Create a new list of jobs with copies of the Jobs from Scheduleï¿½s 
 		//myJobList
 
 		List<Job> jobsManaging = new ArrayList<Job>();
@@ -183,26 +197,30 @@ public class DataPollster {
 		//in this method, search each of the three lists in myUserList.
 				//depending on which of the lists theEmail is found in, return the related string.
 		
+		String user = "";
+		
 		List<Volunteer> vList = myUserList.getVolunteerCopyList();
 		for (Volunteer v : vList) {
 			if (v.getEmail().equals(theEmail)) {
-				return "Volunteer";
+				user = "Volunteer";
 			}
 		}
 		
 		List<ParkManager> pList = myUserList.getParkManagerCopyList();
 		for (ParkManager p: pList) {
 			if (p.getEmail().equals(theEmail)) {
-				return "ParkManager";
+				user = "ParkManager";
 			}
 		}
 		
 		List<Administrator> aList = myUserList.getAdministratorCopyList();
-		// TODO traverse aList and compares email.
-		
-		
-		//default
-		return "ParkManager";
+		for (Administrator a : aList) {
+			if (a.getEmail().equals(theEmail)) {
+				user = "Administrator";
+			}
+		}
+
+		return user;
 		
 		
 	}
@@ -211,9 +229,10 @@ public class DataPollster {
 	 * Return the Park List associated with a ParkManager's e-mail.
 	 */
 	public List<Park> getParkList(String theEmail) {
+		// actual implementation of method, below...
+		
+		
 		// TODO The following code is NOT an example of how this is to be implemented. It just forces a test case.
-		
-		
 		//For testing purposes only:
 		ArrayList<Park> myParkList = new ArrayList<Park>();
 		Park myPark = new Park("Bobcat Park", "Hugo", 98335);
@@ -226,27 +245,30 @@ public class DataPollster {
 
 	/**
 	 * Given a volunteer's email, construct the Volunteer and return it.
-	 * @param volunteerEmail
-	 * @return
+	 * 
+	 * @param theVolunteerEmail is the email address of the Volunteer.
+	 * @return a new Volunteer object with the given email address.
 	 */
-	public Volunteer getVolunteer(String volunteerEmail) {
-		// TODO Auto-generated method stub
-		return null;
+	public Volunteer getVolunteer(String theVolunteerEmail) { // Reid: why do we need this method? where is it used?
+		return new Volunteer(theVolunteerEmail);
 	}
 	
 	/**
 	 * Given a park manager's email, construct the Park Manager and return it.
+	 * 
+	 * @param theParkManagerEmail is the email address of the Park Manager.
+	 * @return a new ParkManager object with the given email address.
 	 */
-	public ParkManager getParkManager(String parkManagerEmail) {
-		//TODO
-		return null;
+	public ParkManager getParkManager(String theParkManagerEmail) { // Reid: why do we need this method? where is it used?
+		return new ParkManager(theParkManagerEmail);
 	}
-
+	
 	/**
-	 * Return the next available Job ID to be used during the creation of a new job.
+	 * Returns the UserList field.
+	 * 
+	 * @return the UserList field.
 	 */
-	public static int getNextJobID() {
-		// TODO Auto-generated method stub
-		return 0;
+	public UserList getUserList() {
+		return this.myUserList;
 	}
 }

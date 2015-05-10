@@ -102,12 +102,12 @@ public class MainUI {
 
 		if(myScanner.hasNextInt()) {
 			userInput = myScanner.nextInt();
-			} else{
-				myScanner.next();
-			}
+		} else {
+			myScanner.next();
+		}
 
 		return userInput;
-		}
+	}
 
 	
 	private String getUserString() {

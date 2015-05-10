@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class Job {
 	
-	private static int nextJobID = 0;
+	protected static int nextJobID = 0;
 	
 	/**
 	 * This value is the identification number of a job.
@@ -21,7 +21,7 @@ public class Job {
 	/**
 	 * This is the list which holds the e-mail addresses of all volunteers that have signed up to participate in this job.
 	 */
-    public List<String> myVolunteerList; 
+    public List<String> myVolunteerList; // Reid: why is this not private?
     
     /**
      * This is the start date of the job.
@@ -75,7 +75,7 @@ public class Job {
     private Park myPark;
 
     /**
-     * The Park Manager in charge of the job.
+     * The email address of the Park Manager in charge of the job.
      */
     private String myManager;
     
