@@ -218,9 +218,10 @@ public class DataPollster {
 	 * Return the Park List associated with a ParkManager's e-mail.
 	 */
 	public List<Park> getParkList(String theEmail) {
+		// actual implementation of method, below...
+		
+		
 		// TODO The following code is NOT an example of how this is to be implemented. It just forces a test case.
-		
-		
 		//For testing purposes only:
 		ArrayList<Park> myParkList = new ArrayList<Park>();
 		Park myPark = new Park("Bobcat Park", "Hugo", 98335);
@@ -233,33 +234,28 @@ public class DataPollster {
 
 	/**
 	 * Given a volunteer's email, construct the Volunteer and return it.
-	 * @param volunteerEmail
-	 * @return
+	 * 
+	 * @param theVolunteerEmail is the email address of the Volunteer.
+	 * @return a new Volunteer object with the given email address.
 	 */
-	public Volunteer getVolunteer(String volunteerEmail) {
-		Volunteer v = null;
-		List<Job> jobs = myJobList.getCopyList();
-		for (Job j : jobs) {
-			for (String s : j.myVolunteerList) {
-				        
-			}
-		}
-		return v;
+	public Volunteer getVolunteer(String theVolunteerEmail) { // Reid: why do we need this method? where is it used?
+		return new Volunteer(theVolunteerEmail);
 	}
 	
 	/**
 	 * Given a park manager's email, construct the Park Manager and return it.
+	 * 
+	 * @param theParkManagerEmail is the email address of the Park Manager.
+	 * @return a new ParkManager object with the given email address.
 	 */
-	public ParkManager getParkManager(String parkManagerEmail) {
-		//TODO
-		return null;
+	public ParkManager getParkManager(String theParkManagerEmail) { // Reid: why do we need this method? where is it used?
+		return new ParkManager(theParkManagerEmail);
 	}
 
 	/**
 	 * Return the next available Job ID to be used during the creation of a new job.
 	 */
 	public static int getNextJobID() {
-		// TODO Auto-generated method stub
-		return 0;
+		return Job.nextJobID++;
 	}
 }

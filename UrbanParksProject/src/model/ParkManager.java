@@ -25,6 +25,10 @@ public class ParkManager {
 	
 	private String myEmail;
 	
+	public ParkManager(String theEmail) {
+		myEmail = theEmail;
+	}
+	
 	public ParkManager(String theEmail, String theFirstName, String theLastName, List<Park> theParks) {
 		this.myEmail = theEmail;
 		this.myFirstName = theFirstName;

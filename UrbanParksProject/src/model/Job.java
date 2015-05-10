@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class Job {
 	
-	private static int nextJobID = 0;
+	protected static int nextJobID = 0;
 	
 	/**
 	 * This value is the identification number of a job.
