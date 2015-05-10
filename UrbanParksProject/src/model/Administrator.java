@@ -35,4 +35,16 @@ public class Administrator {
 		//TODO
 		return null;
 	}
+
+	public String getEmail() {
+		return this.myEmail;
+	}
+	
+	public String getFirstName() {
+		return this.myFirstName;
+	}
+	
+	public String getLastName() {
+		return this.myLastName;
+	}
 }

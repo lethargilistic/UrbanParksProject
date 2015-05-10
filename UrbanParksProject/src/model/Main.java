@@ -11,30 +11,42 @@ public class Main {
 
 	public static void main(String[] args) {
 		
-		JobList myJobList = new JobList();
-		UserList myUserList = new UserList();
+		SaveManager mySaveManager = new SaveManager();
+		JobList myJobList = mySaveManager.loadJobList();
+		UserList myUserList = mySaveManager.loadUserList();
+		String[] userInfo;
+		
 		Schedule mySchedule = new Schedule(myJobList);
 		DataPollster myPollster = new DataPollster(myJobList, myUserList);
 		myUI = new MainUI();
 		
 		myUI.initialize();
-		String[] userInfo = directLogin(mySchedule, myPollster);
 		
-		if(userInfo == null) { //If the command or information entered was invalid, we try again.
-			directLogin(mySchedule, myPollster);
+		//We return to the top of the loop whenever the user logs out, and prompt them to login again.
+		//The loop continues until the user selects Exit.
+		while(true) {
+			userInfo = directLogin(mySchedule, myPollster);
+			
+			//If the command or information entered was invalid, we try again.
+			if(userInfo == null || mySchedule == null || myPollster == null) {
+				directLogin(mySchedule, myPollster);
+			}
+			
+			if(userInfo[0].equals("login")) {
+				giveControl(userInfo, mySchedule, myPollster);
+			}
+			
+			if(userInfo[0].equals("register")) {
+				mySchedule.addUser(userInfo[1], userInfo[2], userInfo[3], userInfo[4]);
+				giveControl(userInfo, mySchedule, myPollster);
+			}
+			
+			mySaveManager.saveJobList(myJobList);
+			mySaveManager.saveUserList(myUserList);
+			
+			myUI.greetUser();
 		}
 		
-		if(userInfo[0].equals("login")) {
-			giveControl(userInfo[1], mySchedule, myPollster);
-		}
-		
-		if(userInfo[0].equals("register")) {
-			mySchedule.addUser(userInfo[1], userInfo[2], userInfo[3], userInfo[4]);
-			giveControl(userInfo[1], mySchedule, myPollster);
-		}
-		
-		myUI.greetUser();
-		directLogin(mySchedule, myPollster); //Once the user logs out, we go back to the login screen.
 	}
 	
 	
@@ -53,7 +65,6 @@ public class Main {
 			case 3: myUI.displayExit(); closeProgram(); break; //Ends program.
 			default: myUI.displayInvalidChoice(); break;
 		}
-		
 		return userInfo;
 	}
 	
@@ -73,7 +84,6 @@ public class Main {
 		} else {
 			myUI.displayInvalidEmail();
 		}
-		
 		return userInfo;
 	}
 	
@@ -98,12 +108,13 @@ public class Main {
 	/*
 	 * Transfer control to the user, specified by their e-mail address.
 	 */
-	public static void giveControl(String theEmail, Schedule mySchedule, DataPollster myPollster) {
-		String userType = myPollster.getUserType(theEmail);
+	public static void giveControl(String[] theUserInfo, Schedule mySchedule, DataPollster myPollster) {
+		String userType = myPollster.getUserType(theUserInfo[1]);
 		
 		if(userType.equals("ParkManager")) {
-			List<Park> myManagedParks = myPollster.getParkList(theEmail);
-			ParkManager myManager = new ParkManager(mySchedule, myPollster, myManagedParks);
+			List<Park> myManagedParks = myPollster.getParkList(theUserInfo[1]);
+			String myEmail = theUserInfo[1];
+			ParkManager myManager = new ParkManager(mySchedule, myPollster, myManagedParks, myEmail);
 			myManager.initialize();
 		}
 		

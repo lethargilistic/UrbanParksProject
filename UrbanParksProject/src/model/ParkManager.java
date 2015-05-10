@@ -9,7 +9,7 @@ import java.util.List;
  * ParkManager can add new jobs to the schedule, view all jobs for the parks they manage,
  * and view all volunteers for a given job.
  * @author Taylor Gorman
- * @version 1.01
+ * @version 9 May 2015
  *
  */
 public class ParkManager {
@@ -20,16 +20,28 @@ public class ParkManager {
 	private DataPollster myPollster;
 	private List<Park> myManagedParks;	
 	
+	private String myFirstName;
+	private String myLastName;
+	
+	private String myEmail;
+	
+	public ParkManager(String theEmail, String theFirstName, String theLastName, List<Park> theParks) {
+		this.myEmail = theEmail;
+		this.myFirstName = theFirstName;
+		this.myLastName = theLastName;
+		this.myManagedParks = theParks;
+	}
 	
 	/**
 	 * Constructor for ParkManager, which requires a Schedule and DataPollster to be passed to it.
 	 */
 	public ParkManager(Schedule theSchedule, DataPollster thePollster,
-			List<Park> theManagedParks) {
+			List<Park> theManagedParks, String theEmail) {
 		this.mySchedule = theSchedule;
 		this.myPollster = thePollster;
 		this.myManagedParks = new ArrayList<>(theManagedParks);
 		this.myUI = new ParkManagerUI();
+		this.myEmail = theEmail;
 	}
 
 	//TODO: Should be removed in favor of having the commands be processed in the UI.
@@ -45,50 +57,39 @@ public class ParkManager {
 	 */
 	public void commandLoop() {
 		myUI.listCommands();
-		String command = myUI.getCommand();
+		int choice = myUI.getUserInt();
 		
-		if(parseCommand(command)) {
+		if(parseCommand(choice)) {
 			commandLoop();
-		} else {
-			
 		}
 	}
 	
 	//TODO: Should be removed in favor of having the commands be processed in the UI.
 	/**
 	 * Parse a command, and call other methods to execute the command.
+	 * @return Return true if we should continue the command loop, false if the user wants to logout.
 	 */
-	public boolean parseCommand(String command) {
-		command = command.toLowerCase(); //lower case to avoid ambiguity
+	public boolean parseCommand(int choice) {
 		
-		switch(command) { 
-			case "new job":
-			case "new":	
-			case "n":
-			case "1":
+		switch(choice) { 
+			case 1:
 				createJob(); 
 				return true;
-			
-			case "view jobs":
-			case "view job":
-			case "j":
-			case "2":
+				
+			case 2:
 				viewUpcomingJobs();
 				return true;
 			
-			case "view volunteers":
-			case "view volunteer":
-			case "v":
-			case "3":
+			case 3:
 				viewJobVolunteers();
 				return true;
 			
-			case "exit":
-			case "close":
-			case "quit":
-			case "4":
-			default: 
+			case 4:
 				return false;
+				
+			default: 
+				myUI.displayInvalidChoice();
+				return true;
 		}
 	}
 
@@ -120,31 +121,16 @@ public class ParkManager {
 	 * @param thePark The park where the job will occur.
 	 * @return The constructed Job
 	 */
-	private Job constructJob(Park thePark) {		
+	private Job constructJob(Park thePark) {	
+		int myJobID = DataPollster.getNextJobID();
 		int myLight = myUI.getLightSlots();
 		int myMedium = myUI.getMediumSlots();
 		int myHeavy = myUI.getHeavySlots();	
-		String myStartString = myUI.getStartDate();
-		String myEndString = myUI.getEndDate();		
+		String myStartDate = myUI.getStartDate();
+		String myEndDate = myUI.getEndDate();		
+		List<String> myVolunteerList = new ArrayList();
 		
-		GregorianCalendar myStartDate = stringToCalendar(myStartString);
-		GregorianCalendar myEndDate = stringToCalendar(myEndString);
-		
-		return new Job(thePark, myLight, myMedium, myHeavy, myStartDate, myEndDate, this);		
-	}
-	
-	
-	/**
-	 * Convert a date string to a Gregorian Calendar object.
-	 * @param stringDate A string representing a date, of format mmddyyyy
-	 * @return A Gregorian Calendar object representing that date.
-	 */
-	private GregorianCalendar stringToCalendar(String stringDate) {
-		int myDay = Integer.parseInt(stringDate.substring(0, 2));
-		int myMonth = Integer.parseInt(stringDate.substring(2, 4));
-		int myYear = Integer.parseInt(stringDate.substring(4, 8));		
-		
-		return new GregorianCalendar(myYear, myDay, myMonth);
+		return new Job(myJobID, thePark, 0, myLight, 0, myMedium, 0, myHeavy, myStartDate, myEndDate, myEmail, myVolunteerList);
 	}
 	
 	/**
@@ -166,8 +152,8 @@ public class ParkManager {
 			return;
 		}
 		
-		ArrayList<Volunteer> myVolunteerList = (ArrayList<Volunteer>) myPollster.getVolunteerList(myJobID);
-		myUI.displayVolunteers(myVolunteerList);		
+		ArrayList<String> myVolunteerList = (ArrayList<String>) myPollster.getVolunteerList(myJobID);
+		myUI.displayVolunteers(myVolunteerList, myPollster);		
 	}
 	
 	public void setManagedParks(ArrayList<Park> theManagedParks) {
@@ -184,8 +170,20 @@ public class ParkManager {
 		return true; //Unsure of how to implement this at the moment. Will it be done through DataPollster?	
 	}
 
-	List<Park> getManagedParks() {
+	public List<Park> getManagedParks() {
 		return Collections.unmodifiableList(myManagedParks);
 	}	
+	
+	public String getEmail() {
+		return myEmail;
+	}
+
+	public String getFirstName() {
+		return this.myFirstName;
+	}
+	
+	public String getLastName() {
+		return this.myLastName;
+	}
 	
 }

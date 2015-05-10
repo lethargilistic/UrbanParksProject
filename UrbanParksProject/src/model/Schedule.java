@@ -108,7 +108,7 @@ public class Schedule {
 	 * @return true if the Volunteer was added to the Job and false otherwise.
 	 * @throws Exception 
 	 */
-	public boolean addVolunteerToJob(Volunteer theVolunteer, int theJobID, int theWorkGrade) throws Exception {
+	public boolean addVolunteerToJob(String theVolunteer, int theJobID, int theWorkGrade) throws Exception {
 		boolean okToAdd = true;
 		
 		//Schedule will check to make sure the Job ID is valid
@@ -197,7 +197,7 @@ public class Schedule {
 	}
 	
 	public boolean checkUser(String theEmail) {
-		//TODO
+		//TODO can someone java doc this method? I dont know what its supposed to do.
 		return true;
 	}
 

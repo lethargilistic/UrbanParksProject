@@ -146,14 +146,14 @@ public class DataPollster {
 	
 	
 
-	public List<Volunteer> getVolunteerList(int theJobID) {
+	public List<String> getVolunteerList(int theJobID) {
 		//USER STORY 6
 		// Called by ParkManager.viewJobVolunteers()
 
 		//Calls JobList.getCopyList() to get a copy of myJobList
 
 		//Create an empty list for returning.
-		List<Volunteer> retVols = new ArrayList<>();
+		List<String> retVols = new ArrayList<>();
 		// Check through the myJobList and select the Job with that jobID
 		for (Job j : myJobList.getCopyList())
 		{
@@ -180,8 +180,31 @@ public class DataPollster {
 	 * Return the user type associated with the e-mail as a String.
 	 */
 	public String getUserType(String theEmail) {
-		// TODO Either "Volunteer", "ParkManager", or "Administrator"
+		//in this method, search each of the three lists in myUserList.
+				//depending on which of the lists theEmail is found in, return the related string.
+		
+		List<Volunteer> vList = myUserList.getVolunteerCopyList();
+		for (Volunteer v : vList) {
+			if (v.getEmail().equals(theEmail)) {
+				return "Volunteer";
+			}
+		}
+		
+		List<ParkManager> pList = myUserList.getParkManagerCopyList();
+		for (ParkManager p: pList) {
+			if (p.getEmail().equals(theEmail)) {
+				return "ParkManager";
+			}
+		}
+		
+		List<Administrator> aList = myUserList.getAdministratorCopyList();
+		// TODO traverse aList and compares email.
+		
+		
+		//default
 		return "ParkManager";
+		
+		
 	}
 
 	/**
@@ -199,5 +222,31 @@ public class DataPollster {
 		myParkList.add(myPark);
 		myParkList.add(myPark2);
 		return myParkList;
+	}
+
+	/**
+	 * Given a volunteer's email, construct the Volunteer and return it.
+	 * @param volunteerEmail
+	 * @return
+	 */
+	public Volunteer getVolunteer(String volunteerEmail) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	/**
+	 * Given a park manager's email, construct the Park Manager and return it.
+	 */
+	public ParkManager getParkManager(String parkManagerEmail) {
+		//TODO
+		return null;
+	}
+
+	/**
+	 * Return the next available Job ID to be used during the creation of a new job.
+	 */
+	public static int getNextJobID() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }
