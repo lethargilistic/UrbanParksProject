@@ -13,7 +13,11 @@ import java.util.Scanner;
  */
 public class ParkManagerUI {
 	
-	private Scanner in = new Scanner(System.in);
+	private Scanner myScanner;
+	
+	public ParkManagerUI() {
+		myScanner = new Scanner(System.in);
+	}
 	
 	/**
 	 * Display the possible commands that the user could type. 
@@ -27,10 +31,28 @@ public class ParkManagerUI {
 	}
 	
 	/**
-	 * Return the command that the user has typed.
+	 * Return an integer that the user has typed.
 	 */
-	public String getCommand() {	
-		return in.nextLine();
+	public int getUserInt() {
+		int userInput = 0;
+
+		if(myScanner.hasNextInt()) {
+			userInput = myScanner.nextInt();
+		} else {
+			myScanner.next();
+		}
+
+		return userInput;
+	}
+	
+	private String getUserString() {		
+		String userInput = myScanner.nextLine();
+		
+		if(userInput.equals("")) { //TODO, maybe make this a while so that it will continuously 
+									//prompt the user, instead of just once? - Reid agrees.
+			userInput = myScanner.nextLine();
+		}
+		return userInput;
 	}
 	
 	
@@ -40,7 +62,7 @@ public class ParkManagerUI {
 	public int getJobID() {
 		System.out.println("------------------------------------------\n\nPlease input the ID of the job whose volunteers you would"
 				+ " like to view.");
-		int myJobID = in.nextInt();
+		int myJobID = getUserInt();
 		return myJobID;
 		
 	}
@@ -52,11 +74,7 @@ public class ParkManagerUI {
 	public int getLightSlots() {		
 		System.out.println("\nHow many volunteers do you want for light grade work?");
 		int myLight = 0;
-		
-		if(in.hasNextInt()) { //The console UI has problems without this check.
-			myLight = in.nextInt();
-		}	
-		
+		myLight = getUserInt();
 		return myLight;
 	}
 
@@ -66,7 +84,7 @@ public class ParkManagerUI {
 	 */
 	public int getMediumSlots() {		
 		System.out.println("\nHow many volunteers do you want for medium grade work?");
-		int myMedium = in.nextInt();
+		int myMedium = getUserInt();
 		return myMedium;
 	}
 	
@@ -76,7 +94,7 @@ public class ParkManagerUI {
 	 */
 	public int getHeavySlots() {	
 		System.out.println("\nHow many volunteers do you want for heavy grade work?");
-		int myHeavy = in.nextInt();
+		int myHeavy = getUserInt();
 		return myHeavy;
 	}
 	
@@ -87,9 +105,7 @@ public class ParkManagerUI {
 	public String getStartDate() {
 		System.out.println("Please enter the start date of the job in the following format:"
 				+ " mmddyyyy");
-		in.nextLine(); // The console UI has problems without this line.
-					   // Got rid of storing the output of this line as we never used the var.
-		String myStartDate = in.nextLine();
+		String myStartDate = getUserString();
 		return myStartDate;
 	}
 	
@@ -100,7 +116,7 @@ public class ParkManagerUI {
 	public String getEndDate() {
 		System.out.println("Please enter the end date of the job in the following format:"
 				+ " mmddyyyy");
-		String myEndDate = in.nextLine();
+		String myEndDate = getUserString();
 		return myEndDate;
 	}	
 	
@@ -166,10 +182,16 @@ public class ParkManagerUI {
 	 * Take an ArrayList of Volunteers, and display their names to the console.
 	 */
 	public void displayVolunteers(ArrayList<String> myVolunteerList, DataPollster thePollster) {
+		System.out.println(myVolunteerList.size());
+		
 		for(String volunteerString : myVolunteerList) {
 			Volunteer volunteer = thePollster.getVolunteer(volunteerString);
 			System.out.println(volunteer.getFirstName() + " " + volunteer.getLastName());
 		}
+	}
+	
+	public void displayInvalidChoice() {
+		System.out.println("\nSorry, but your choice was invalid.");
 	}
 	
 	/**
@@ -185,7 +207,7 @@ public class ParkManagerUI {
 	 */
 	public int selectParkNum() {
 		
-		int myParkNum = in.nextInt();
+		int myParkNum = getUserInt();
 		return myParkNum;
 	}
 }

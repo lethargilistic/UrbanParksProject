@@ -25,10 +25,18 @@ public class ParkManager {
 	
 	private String myEmail;
 	
-	public ParkManager(String theEmail, String theFirstName, String theLastName, List<Park> theParks) {
+	public ParkManager(String theEmail) {
+		myEmail = theEmail;
+	}
+	
+	public ParkManager(String theEmail, String theFirstName, String theLastName) {
 		this.myEmail = theEmail;
 		this.myFirstName = theFirstName;
 		this.myLastName = theLastName;
+	}
+	
+	public ParkManager(String theEmail, String theFirstName, String theLastName, List<Park> theParks) {
+		this(theEmail, theFirstName, theLastName);
 		this.myManagedParks = theParks;
 	}
 	
@@ -50,6 +58,7 @@ public class ParkManager {
 	}
 
 	//TODO: Should be removed in favor of having the commands be processed in the UI.
+	// Reid: you mean having the commands processed in the UI class?
 	/**
 	 * The main loop for Park Manager.<br>
 	 * Lists possible commands, prompts the user for one, and then acts on it.<br>
@@ -57,51 +66,42 @@ public class ParkManager {
 	 */
 	public void commandLoop() {
 		myUI.listCommands();
-		String command = myUI.getCommand();
+		int choice = myUI.getUserInt();
 		
-		if(parseCommand(command)) {
+		if(parseCommand(choice)) {
 			commandLoop();
-		} else {
-			
 		}
 	}
 	
 	//TODO: Should be removed in favor of having the commands be processed in the UI.
 	/**
 	 * Parse a command, and call other methods to execute the command.
+	 * @return Return true if we should continue the command loop, false if the user wants to logout.
 	 */
-	public boolean parseCommand(String command) {
-		command = command.toLowerCase(); //lower case to avoid ambiguity
-		
-		switch(command) { 
-			case "new job":
-			case "new":	
-			case "n":
-			case "1":
+	public boolean parseCommand(int choice) {
+		boolean status = true;
+		switch(choice) { 
+			case 1:
 				createJob(); 
-				return true;
-			
-			case "view jobs":
-			case "view job":
-			case "j":
-			case "2":
+				break;
+				
+			case 2:
 				viewUpcomingJobs();
-				return true;
+				break;
 			
-			case "view volunteers":
-			case "view volunteer":
-			case "v":
-			case "3":
+			case 3:
 				viewJobVolunteers();
-				return true;
+				break;
 			
-			case "exit":
-			case "close":
-			case "quit":
-			case "4":
+			case 4:
+				status = false;
+				
 			default: 
-				return false;
+				myUI.displayInvalidChoice();
+				break;
 		}
+		
+		return status;
 	}
 
 	
@@ -121,9 +121,9 @@ public class ParkManager {
 		int parkNum = myUI.selectParkNum();
 		Park myPark = myManagedParks.get(parkNum);
 		
-		Job myJob = constructJob(myPark);
+		Job job = constructJob(myPark);
 		
-		boolean added = mySchedule.receiveJob(myJob);
+		boolean added = mySchedule.receiveJob(job);
 		myUI.displayJobStatus(added);
 	}
 	
@@ -139,7 +139,7 @@ public class ParkManager {
 		int myHeavy = myUI.getHeavySlots();	
 		String myStartDate = myUI.getStartDate();
 		String myEndDate = myUI.getEndDate();		
-		List<String> myVolunteerList = new ArrayList();
+		List<String> myVolunteerList = new ArrayList<>();
 		
 		return new Job(myJobID, thePark, 0, myLight, 0, myMedium, 0, myHeavy, myStartDate, myEndDate, myEmail, myVolunteerList);
 	}
@@ -187,6 +187,14 @@ public class ParkManager {
 	
 	public String getEmail() {
 		return myEmail;
+	}
+
+	public String getFirstName() {
+		return this.myFirstName;
+	}
+	
+	public String getLastName() {
+		return this.myLastName;
 	}
 	
 	@Override

@@ -4,6 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 //TODO: we definitely need getters for the other classes, like Park and Job.
+/**
+ * A class to poll our data-containing classes on behalf of our users.
+ * 
+ * @author Mike Overby
+ * @author Reid Thompson
+ * @version 5.10.2015
+ */
 public class DataPollster {
 
 	/**
@@ -12,6 +19,13 @@ public class DataPollster {
 	private JobList myJobList;
 	
 	private UserList myUserList;
+	
+	/**
+	 * Return the next available Job ID to be used during the creation of a new job.
+	 */
+	public static int getNextJobID() {
+		return Job.nextJobID++;
+	}
 	
 	public DataPollster(JobList theJoblist, UserList theUserList)
 	{
@@ -90,7 +104,7 @@ public class DataPollster {
 		//Calls JobList.getCopyList() to get a copy of myJobList
 			//It already has a reference to the joblist
 
-		// Create a new list of Jobs with copies of the Jobs from Schedule’s master 
+		// Create a new list of Jobs with copies of the Jobs from Scheduleï¿½s master 
 		// list
 		List<Job> jobsSignedUpFor = new ArrayList<Job>();
 		
@@ -109,31 +123,28 @@ public class DataPollster {
 		return jobsSignedUpFor;
 	}
 
+	/**
+	 * Return a list of all jobs associated with a given ParkManager.
+	 * @author Taylor Gorman
+	 */
 	public List<Job> getManagerJobs(ParkManager theManager){
-		//USER STORY 5
+		List<Job> jobReturnList = new ArrayList<Job>();
+		List<Park> managedParks = theManager.getManagedParks();
 
-		//Called by ParkManager.viewUpcomingJobs()
-
-		//Calls JobList.getCopyList() to get a copy of myJobList
-			//It already has a reference to the joblist
-		
-		//Create a new list of jobs with copies of the Jobs from Schedule’s 
-		//myJobList
-
-		List<Job> jobsManaging = new ArrayList<Job>();
-
-		//Check through myJobList and select all Jobs in all park
-		//managed by the PM.
-		for (Job j : myJobList.getCopyList())
-		{
-			if (theManager.getManagedParks().contains(j.getPark()))
-			{
-				jobsManaging.add(j);
+		//Select all jobs in JobList with the same name as a Park that ParkManager manages.
+		for (Job job : myJobList.getCopyList())	{
+			String jobParkName = job.getPark().getName();
+			
+			for(Park park : managedParks) {						
+				String managedParkName = park.getName();
+				
+				if(jobParkName.equals(managedParkName)) {
+					jobReturnList.add(job);
+				}
 			}
 		}
-		
-		//Return new list of copied Jobs
-		return jobsManaging;
+
+		return jobReturnList;
 	}
 	
 	/**
@@ -196,45 +207,87 @@ public class DataPollster {
 
 	/**
 	 * Return the Park List associated with a ParkManager's e-mail.
+	 * @author Taylor Gorman
 	 */
-	public List<Park> getParkList(String theEmail) {
-		// TODO The following code is NOT an example of how this is to be implemented. It just forces a test case.
+	public List<Park> getParkList(String theEmail) {		
+		List<ParkManager> managerList = myUserList.getParkManagerCopyList();
 		
-		//For testing purposes only:
-		ArrayList<Park> myParkList = new ArrayList<Park>();
-		Park myPark = new Park("Bobcat Park", "Hugo", 98335);
-		Park myPark2 = new Park("Seahurt Park", "Burien", 98106);
-		
-		myParkList.add(myPark);
-		myParkList.add(myPark2);
-		return myParkList;
+		for(ParkManager manager : managerList) {
+			if(manager.getEmail().equals(theEmail)) {
+				return manager.getManagedParks();
+			}
+		}
+		return new ArrayList<Park>();
 	}
+
 
 	/**
 	 * Given a volunteer's email, construct the Volunteer and return it.
-	 * @param volunteerEmail
-	 * @return
+	 * 
+	 * @param theVolunteerEmail is the email address of the Volunteer.
+	 * @return a new Volunteer object with the given email address.
+	 * @author Taylor Gorman
 	 */
-	public Volunteer getVolunteer(String volunteerEmail) {
-		for (Volunteer v : myUserList.getVolunteerCopyList())
-		{
-			if (v.getEmail().equals(volunteerEmail))
-				return v;
-		}
+	public Volunteer getVolunteer(String theVolunteerEmail) { // Reid: why do we need this method? where is it used?
+		Volunteer defaultVolunteer = new Volunteer(theVolunteerEmail); //Default case if the Park Volunteer is not found.
+		List<Volunteer> volunteerCopyList = myUserList.getVolunteerCopyList();
 		
-		return null;
+		for(Volunteer volunteer : volunteerCopyList) {
+			if(volunteer.getEmail().equals(theVolunteerEmail)) {
+				return volunteer;
+			}
+		}
+
+		return defaultVolunteer;
 	}
 	
 	/**
 	 * Given a park manager's email, construct the Park Manager and return it.
+	 * 
+	 * @param theParkManagerEmail is the email address of the Park Manager.
+	 * @return a new ParkManager object with the given email address.
+	 * @author Taylor Gorman
 	 */
-	public ParkManager getParkManager(String parkManagerEmail) {
-		for (ParkManager v : myUserList.getParkManagerCopyList())
-		{
-			if (v.getEmail().equals(parkManagerEmail))
-				return v;
+	public ParkManager getParkManager(String theParkManagerEmail) {
+		
+		ParkManager defaultManager = new ParkManager(theParkManagerEmail); //Default case if the Park Manager is not found.
+		List<ParkManager> managerCopyList = myUserList.getParkManagerCopyList();
+		
+		for(ParkManager manager : managerCopyList) {
+			if(manager.getEmail().equals(theParkManagerEmail)) {
+				return manager;
+			}
+		}
+
+		return defaultManager;
+	}
+	
+	/**
+	 * Given a administrator's email, construct the Administrator and return it.
+	 * 
+	 * @param theAdministratorEmail is the email address of the Administrator.
+	 * @return a new Administrator object with the given email address.
+	 * @author Taylor Gorman
+	 */
+	public Administrator getAdministrator(String theAdministratorEmail) { // Reid: why do we need this method? where is it used?
+		Administrator defaultAdministrator = new Administrator(theAdministratorEmail); //Default case if the Park Administrator is not found.
+		List<Administrator> administratorCopyList = myUserList.getAdministratorCopyList();
+		
+		for(Administrator administrator : administratorCopyList) {
+			if(administrator.getEmail().equals(theAdministratorEmail)) {
+				return administrator;
+			}
 		}
 		
-		return null;
+		return defaultAdministrator;
+	}
+	
+	/**
+	 * Returns the UserList field.
+	 * 
+	 * @return the UserList field.
+	 */
+	public UserList getUserList() {
+		return this.myUserList;
 	}
 }
