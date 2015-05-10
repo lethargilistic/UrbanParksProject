@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -44,23 +45,31 @@ public class Administrator {
 	}
 	
 	/**
-	 * Display a list of all volunteers, sorted in alphabetical order.
+	 * Display a list of all volunteers, sorted in alphabetical order by email address.
 	 */
-	public List<Volunteer> searchVolunteers() {
+	public List<String> displayVolunteers() {
 		List<Job> jobs = myPollster.getAllJobs();
-		List<Volunteer> vols = new ArrayList<>(MAX_NUM_VOLS);
-//		for (Job j : jobs) {
-//			for (Volunteer v : j.myVolunteerList) {
-//				
-//			}
-//		}
+		List<String> vols = new ArrayList<>(MAX_NUM_VOLS);
 		
-		// get list of vols
+		// get list of volunteers' email addresses
+		for (Job j : jobs) {
+			for (String s : j.myVolunteerList) {
+				if (!vols.contains(s)) {
+					vols.add(s);
+				}
+			}
+		}
+
 		// sort
-		// output
-		// return that sorted list
+		Collections.sort(vols);
 		
-		return null;
+		// output
+		for (int i = 0; i < vols.size(); i++) {
+			System.out.println(vols.get(i));
+		}
+		
+		return vols; // why do we need to return this data?
+					 // also, I made the List be of Strings not of Volunteers...
 	}
 
 	public String getEmail() {
