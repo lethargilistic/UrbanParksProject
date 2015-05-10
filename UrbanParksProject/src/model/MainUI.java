@@ -100,13 +100,13 @@ public class MainUI {
 	private int getUserInt() {
 		int userInput = 0;
 
-				if(myScanner.hasNextInt()) {
-					userInput = myScanner.nextInt();
-				} else{
-					myScanner.next();
-				}
+		if(myScanner.hasNextInt()) {
+			userInput = myScanner.nextInt();
+			} else{
+				myScanner.next();
+			}
 
-			return userInput;
+		return userInput;
 		}
 
 	

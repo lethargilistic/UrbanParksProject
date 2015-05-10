@@ -57,50 +57,39 @@ public class ParkManager {
 	 */
 	public void commandLoop() {
 		myUI.listCommands();
-		String command = myUI.getCommand();
+		int choice = myUI.getUserInt();
 		
-		if(parseCommand(command)) {
+		if(parseCommand(choice)) {
 			commandLoop();
-		} else {
-			
 		}
 	}
 	
 	//TODO: Should be removed in favor of having the commands be processed in the UI.
 	/**
 	 * Parse a command, and call other methods to execute the command.
+	 * @return Return true if we should continue the command loop, false if the user wants to logout.
 	 */
-	public boolean parseCommand(String command) {
-		command = command.toLowerCase(); //lower case to avoid ambiguity
+	public boolean parseCommand(int choice) {
 		
-		switch(command) { 
-			case "new job":
-			case "new":	
-			case "n":
-			case "1":
+		switch(choice) { 
+			case 1:
 				createJob(); 
 				return true;
-			
-			case "view jobs":
-			case "view job":
-			case "j":
-			case "2":
+				
+			case 2:
 				viewUpcomingJobs();
 				return true;
 			
-			case "view volunteers":
-			case "view volunteer":
-			case "v":
-			case "3":
+			case 3:
 				viewJobVolunteers();
 				return true;
 			
-			case "exit":
-			case "close":
-			case "quit":
-			case "4":
-			default: 
+			case 4:
 				return false;
+				
+			default: 
+				myUI.displayInvalidChoice();
+				return true;
 		}
 	}
 
