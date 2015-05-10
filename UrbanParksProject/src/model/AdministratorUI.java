@@ -56,10 +56,19 @@ public class AdministratorUI {
 		}
 	}
 	
+	/**
+	 * Gets the command last entered by the Administrator indicating what they would like
+	 * to do within the system.
+	 * 
+	 * @return a string indicating their command.
+	 */
 	private String getCommand() {	
 		return myIn.nextLine();
 	}
 	
+	/**
+	 * 
+	 */
 	public void displayVolunteers() {
 		//TODO
 		//VolunteerList = Administrator.searchVolunteers()

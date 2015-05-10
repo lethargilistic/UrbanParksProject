@@ -4,6 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 //TODO: we definitely need getters for the other classes, like Park and Job.
+/**
+ * A class to poll our data-containing classes on behalf of our users.
+ * 
+ * @author Mike Overby
+ * @author Reid Thompson
+ * @version 5.10.2015
+ */
 public class DataPollster {
 
 	/**
@@ -90,7 +97,7 @@ public class DataPollster {
 		//Calls JobList.getCopyList() to get a copy of myJobList
 			//It already has a reference to the joblist
 
-		// Create a new list of Jobs with copies of the Jobs from Schedule’s master 
+		// Create a new list of Jobs with copies of the Jobs from Scheduleï¿½s master 
 		// list
 		List<Job> jobsSignedUpFor = new ArrayList<Job>();
 		
@@ -117,7 +124,7 @@ public class DataPollster {
 		//Calls JobList.getCopyList() to get a copy of myJobList
 			//It already has a reference to the joblist
 		
-		//Create a new list of jobs with copies of the Jobs from Schedule’s 
+		//Create a new list of jobs with copies of the Jobs from Scheduleï¿½s 
 		//myJobList
 
 		List<Job> jobsManaging = new ArrayList<Job>();
@@ -230,8 +237,14 @@ public class DataPollster {
 	 * @return
 	 */
 	public Volunteer getVolunteer(String volunteerEmail) {
-		// TODO Auto-generated method stub
-		return null;
+		Volunteer v = null;
+		List<Job> jobs = myJobList.getCopyList();
+		for (Job j : jobs) {
+			for (String s : j.myVolunteerList) {
+				        
+			}
+		}
+		return v;
 	}
 	
 	/**

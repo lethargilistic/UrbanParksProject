@@ -21,7 +21,7 @@ public class Job {
 	/**
 	 * This is the list which holds the e-mail addresses of all volunteers that have signed up to participate in this job.
 	 */
-    public List<String> myVolunteerList; 
+    public List<String> myVolunteerList; // Reid: why is this not private?
     
     /**
      * This is the start date of the job.
