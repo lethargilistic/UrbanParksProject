@@ -210,22 +210,6 @@ public class Volunteer {
 			return returnString;
 		}
 
-		public String getEmail() {
-			return myEmail;
-		}
-
-		public void setEmail(String theEmail) {
-			myEmail = theEmail;
-		}
-
-		public void setFirstName(String theFirstName) {
-			myFirstName = theFirstName;
-		}
-
-		public void setLastName(String theLastName) {
-			myLastName = theLastName;
-		}
-
 		@Override
 		public boolean equals(Object theO)
 		{
@@ -242,5 +226,21 @@ public class Volunteer {
 		public String toString()
 		{
 			return myFirstName + " " + myLastName;
+		}
+		
+		/**
+		 * Check to make sure that the Job ID is valid.
+		 * @return True if valid, false if not.
+		 */
+		private boolean checkPark(int theJobID) {
+			boolean status = false;
+			List<Job> aList = mySched.getJobList().getCopyList();
+			for (Job j: aList) {
+				if (j.getJobID() == theJobID) {
+					status = true;
+				}
+			}
+
+			return status; //if true was never return within the for-each loop then return false
 		}
 }
