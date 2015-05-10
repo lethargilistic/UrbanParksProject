@@ -24,7 +24,7 @@ public class Main {
 		while(true) {
 			JobList jobList = saveManager.loadJobList();
 			UserList userList = saveManager.loadUserList();
-			Schedule schedule = new Schedule(jobList);
+			Schedule schedule = new Schedule(jobList, userList);
 			DataPollster pollster = new DataPollster(jobList, userList);
 			
 			userInfo = directLogin(schedule, pollster);

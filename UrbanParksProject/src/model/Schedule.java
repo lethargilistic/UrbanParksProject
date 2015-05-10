@@ -27,8 +27,9 @@ public class Schedule {
 	/**
 	 * Constructs a Schedule object.
 	 */
-	public Schedule(JobList theJobList) {
-		myJobList = theJobList;
+	public Schedule(JobList theJobList, UserList theUserList) {
+		this.myJobList = theJobList;
+		this.myUserList = theUserList;
 	}
 
 	/**
@@ -198,6 +199,7 @@ public class Schedule {
 
 	public void addUser(String theEmail, String theFirstName, String theLastName,
 			String theUserType) {
+
 		switch(theUserType) {
 			case "Administrator":
 				Administrator a = new Administrator(theEmail, theFirstName, theLastName);
@@ -205,12 +207,15 @@ public class Schedule {
 				listAdmin.add(a);
 				myUserList.setAdministratorList(listAdmin);
 				break;
+				
 			case "ParkManager":
-				ParkManager p = new ParkManager(theEmail, theFirstName, theLastName);
-				List<ParkManager> listPM = myUserList.getParkManagerCopyList();
-				listPM.add(p);
-				myUserList.setParkManagerList(listPM);
+
+				ParkManager newManager = new ParkManager(theEmail, theFirstName, theLastName);
+				List<ParkManager> managerList = myUserList.getParkManagerCopyList();
+				managerList.add(newManager);
+				myUserList.setParkManagerList(managerList);
 				break;
+				
 			case "Volunteer":
 				Volunteer v = new Volunteer(theEmail, theFirstName, theLastName);
 				List<Volunteer> listVols = myUserList.getVolunteerCopyList();
