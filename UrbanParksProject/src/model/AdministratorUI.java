@@ -2,8 +2,16 @@ package model;
 
 import java.util.Scanner;
 
+/**
+ * 
+ * @author Reid Thompson
+ *
+ */
 public class AdministratorUI {
 
+	// All parsing happens here.
+	// All options are int choices.
+	
 	//Ready User Input
 	private Scanner in = new Scanner(System.in);
 	
