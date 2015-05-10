@@ -7,7 +7,15 @@ import java.util.Scanner;
 
 public class VolunteerUI {
 
-	private Scanner in = new Scanner(System.in);
+	private Scanner in;
+	
+	/**
+	 * 
+	 */
+	public VolunteerUI() {
+		in= new Scanner(System.in);
+	}
+	
 	
 	/**
 	 * Display the possible commands that the user could type. 

@@ -78,6 +78,17 @@ public class Volunteer {
 				
 	}
 	
+	public boolean equals2(Object theO) {
+		
+		if (!(theO instanceof Volunteer))
+			return false;
+		
+		Volunteer theOther = (Volunteer) theO;
+		
+		return myEmail.equals(theOther.getEmail());
+		
+	}
+	
 	@Override
 	public String toString()
 	{
