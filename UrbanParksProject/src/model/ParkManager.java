@@ -29,10 +29,14 @@ public class ParkManager {
 		myEmail = theEmail;
 	}
 	
-	public ParkManager(String theEmail, String theFirstName, String theLastName, List<Park> theParks) {
+	public ParkManager(String theEmail, String theFirstName, String theLastName) {
 		this.myEmail = theEmail;
 		this.myFirstName = theFirstName;
 		this.myLastName = theLastName;
+	}
+	
+	public ParkManager(String theEmail, String theFirstName, String theLastName, List<Park> theParks) {
+		this(theEmail, theFirstName, theLastName);
 		this.myManagedParks = theParks;
 	}
 	

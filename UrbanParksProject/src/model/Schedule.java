@@ -203,7 +203,26 @@ public class Schedule {
 
 	public void addUser(String theEmail, String theFirstName, String theLastName,
 			String theUserType) {
-		// TODO Auto-generated method stub
+		switch(theUserType) {
+			case "Administrator":
+				Administrator a = new Administrator(theEmail, theFirstName, theLastName);
+				List<Administrator> listAdmin = myUserList.getAdministratorCopyList();
+				listAdmin.add(a);
+				myUserList.setAdministratorList(listAdmin);
+				break;
+			case "ParkManager":
+				ParkManager p = new ParkManager(theEmail, theFirstName, theLastName);
+				List<ParkManager> listPM = myUserList.getParkManagerCopyList();
+				listPM.add(p);
+				myUserList.setParkManagerList(listPM);
+				break;
+			case "Volunteer":
+				Volunteer v = new Volunteer(theEmail, theFirstName, theLastName);
+				List<Volunteer> listVols = myUserList.getVolunteerCopyList();
+				listVols.add(v);
+				myUserList.setVolunteerList(listVols);
+				break;
+		}
 		
 	}
 
