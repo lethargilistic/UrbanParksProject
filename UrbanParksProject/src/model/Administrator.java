@@ -9,9 +9,10 @@ import java.util.List;
  * @author Reid Thompson
  * @author Taylor Gorman
  * @version 8 May 2015
- *
  */
 public class Administrator {
+	
+	// need to add in methods for UI interaction...
 	
 	private static final int MAX_NUM_VOLS = 1000;
 	

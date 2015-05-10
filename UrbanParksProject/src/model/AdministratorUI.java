@@ -39,7 +39,9 @@ public class AdministratorUI {
 		
 		// searches string until it encounters a number, which is interpreted
 		// as the desired command of the Administrator
-		while (!scan.hasNextInt());
+		while (!scan.hasNextInt()) {
+			scan.next();
+		}
 		choice = scan.nextInt();
 		scan.close();
 		

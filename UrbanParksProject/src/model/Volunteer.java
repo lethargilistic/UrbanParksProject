@@ -5,7 +5,9 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 public class Volunteer {
-	
+	// TODO: (Reid) A Job's volunteer list should contain Volunteer objects rather than Strings,
+	// as it makes the life of the Administrator difficult when they wish to search all
+	// Volunteers by last name.
 	
 	private String myFirstName;
 	private String myLastName;
