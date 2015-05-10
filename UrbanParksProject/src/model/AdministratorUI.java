@@ -17,6 +17,11 @@ public class AdministratorUI {
 	private Scanner myIn;
 	
 	/**
+	 * An Administrator object to be associated with this UI object.
+	 */
+	private Administrator myAdmin;
+	
+	/**
 	 * Constructs an AdministratorUI object.
 	 */
 	public AdministratorUI() {
@@ -122,6 +127,8 @@ public class AdministratorUI {
 				+ "Please enter the last name of the Volunteer to search for: \n");
 		return getInput();
 	}
+	
+	// access Vol list thru DataPollster thru UserList methods
 	
 	/**
 	 * Returns a list of relevant Volunteers based on the last name entered.
