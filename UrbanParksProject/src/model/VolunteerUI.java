@@ -7,7 +7,11 @@ import java.util.Scanner;
 
 public class VolunteerUI {
 
-	private Scanner in = new Scanner(System.in);
+	private Scanner myIn;
+	
+	public VolunteerUI() {
+		myIn = new Scanner(System.in);
+	}
 	
 	/**
 	 * Display the possible commands that the user could type. 
@@ -20,7 +24,7 @@ public class VolunteerUI {
 	 * Return the command that the user has typed.
 	 */
 	public String getCommand() {	
-		return in.nextLine();
+		return myIn.nextLine();
 	}
 
 	public void displayJobs(List<Job> theJobList) {
@@ -62,8 +66,8 @@ public class VolunteerUI {
 		System.out.println("To select a job to sign up for, please type its ID #.");
 		int ID = 0;
 		
-		if(in.hasNextInt()) {
-			ID = in.nextInt();
+		if(myIn.hasNextInt()) {
+			ID = myIn.nextInt();
 		}	
 		
 		return ID;
@@ -80,8 +84,8 @@ public class VolunteerUI {
 		
 		System.out.println("Type 1 for light work, 2 for medium work, or 3 for heavy work.");
 		
-		if(in.hasNextInt()) {
-			level = in.nextInt();
+		if(myIn.hasNextInt()) {
+			level = myIn.nextInt();
 		} 
 		
 		return level;

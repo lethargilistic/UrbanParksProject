@@ -36,8 +36,6 @@ public class ParkManagerUI {
 	public int getUserInt() {
 		int userInput = 0;
 
-		// Reid: shouldn't this be in a loop?
-		// you'd want to iterate over the whole line to see if any #s were entered
 		if(myScanner.hasNextInt()) {
 			userInput = myScanner.nextInt();
 		} else {
