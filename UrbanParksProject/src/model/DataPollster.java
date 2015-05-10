@@ -190,26 +190,30 @@ public class DataPollster {
 		//in this method, search each of the three lists in myUserList.
 				//depending on which of the lists theEmail is found in, return the related string.
 		
+		String user = "";
+		
 		List<Volunteer> vList = myUserList.getVolunteerCopyList();
 		for (Volunteer v : vList) {
 			if (v.getEmail().equals(theEmail)) {
-				return "Volunteer";
+				user = "Volunteer";
 			}
 		}
 		
 		List<ParkManager> pList = myUserList.getParkManagerCopyList();
 		for (ParkManager p: pList) {
 			if (p.getEmail().equals(theEmail)) {
-				return "ParkManager";
+				user = "ParkManager";
 			}
 		}
 		
 		List<Administrator> aList = myUserList.getAdministratorCopyList();
-		// TODO traverse aList and compares email.
-		
-		
-		//default
-		return "ParkManager";
+		for (Administrator a : aList) {
+			if (a.getEmail().equals(theEmail)) {
+				user = "Administrator";
+			}
+		}
+
+		return user;
 		
 		
 	}
