@@ -12,12 +12,9 @@ public class Main {
 	public static void main(String[] args) {
 		
 		SaveManager mySaveManager = new SaveManager();
-		JobList myJobList = mySaveManager.loadJobList();
-		UserList myUserList = mySaveManager.loadUserList();
 		String[] userInfo;
 		
-		Schedule mySchedule = new Schedule(myJobList);
-		DataPollster myPollster = new DataPollster(myJobList, myUserList);
+		
 		myUI = new MainUI();
 		
 		myUI.initialize();
@@ -25,6 +22,11 @@ public class Main {
 		//We return to the top of the loop whenever the user logs out, and prompt them to login again.
 		//The loop continues until the user selects Exit.
 		while(true) {
+			JobList myJobList = mySaveManager.loadJobList();
+			UserList myUserList = mySaveManager.loadUserList();
+			Schedule mySchedule = new Schedule(myJobList);
+			DataPollster myPollster = new DataPollster(myJobList, myUserList);
+			
 			userInfo = directLogin(mySchedule, myPollster);
 			
 			//If the command or information entered was invalid, we try again.
