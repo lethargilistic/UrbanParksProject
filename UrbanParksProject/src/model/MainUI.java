@@ -1,5 +1,6 @@
 package model;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**
@@ -24,8 +25,14 @@ public class MainUI {
 	
 	//Get user login choice.
 	public int getLoginChoice() {
-		displayLoginChoices();
-		return getUserInt();
+		while(true) {
+			displayLoginChoices();
+			
+			int userChoice = getUserInt();
+			
+			if(userChoice > 0 && userChoice < 4) return userChoice;
+			else displayInvalidChoice();
+		}
 	}
 			
 	public void displayLoginChoices() {
@@ -69,7 +76,7 @@ public class MainUI {
 			case 1: return "Volunteer";
 			case 2: return "ParkManager";
 			case 3: return "Administrator";
-			default: displayInvalidChoice(); return null;
+			default: displayInvalidChoice(); return getUserType();
 		}
 	}
 	
@@ -92,13 +99,16 @@ public class MainUI {
 	
 	private int getUserInt() {
 		int userInput = 0;
-		
-		if(myScanner.hasNextInt()) {
-			userInput = myScanner.nextInt();
+
+				if(myScanner.hasNextInt()) {
+					userInput = myScanner.nextInt();
+				} else{
+					myScanner.next();
+				}
+
+			return userInput;
 		}
-		
-		return userInput;
-	}
+
 	
 	private String getUserString() {
 		

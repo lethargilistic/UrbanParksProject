@@ -27,7 +27,8 @@ public class Main {
 		while(true) {
 			userInfo = directLogin(mySchedule, myPollster);
 			
-			if(userInfo == null) { //If the command or information entered was invalid, we try again.
+			//If the command or information entered was invalid, we try again.
+			if(userInfo == null || mySchedule == null || myPollster == null) {
 				directLogin(mySchedule, myPollster);
 			}
 			
