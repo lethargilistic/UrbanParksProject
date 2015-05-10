@@ -13,7 +13,11 @@ import java.util.Scanner;
  */
 public class ParkManagerUI {
 	
-	private Scanner myScanner = new Scanner(System.in);
+	private Scanner myScanner;
+	
+	public ParkManagerUI() {
+		myScanner = new Scanner(System.in);
+	}
 	
 	/**
 	 * Display the possible commands that the user could type. 
@@ -32,7 +36,7 @@ public class ParkManagerUI {
 	public int getUserInt() {
 		int userInput = 0;
 
-		// shouldn't this be in a loop?
+		// Reid: shouldn't this be in a loop?
 		// you'd want to iterate over the whole line to see if any #s were entered
 		if(myScanner.hasNextInt()) {
 			userInput = myScanner.nextInt();
@@ -47,7 +51,7 @@ public class ParkManagerUI {
 		String userInput = myScanner.nextLine();
 		
 		if(userInput.equals("")) { //TODO, maybe make this a while so that it will continuously 
-									//prompt the user, instead of just once?
+									//prompt the user, instead of just once? - Reid agrees.
 			userInput = myScanner.nextLine();
 		}
 		return userInput;

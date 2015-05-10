@@ -54,6 +54,7 @@ public class ParkManager {
 	}
 
 	//TODO: Should be removed in favor of having the commands be processed in the UI.
+	// Reid: you mean having the commands processed in the UI class?
 	/**
 	 * The main loop for Park Manager.<br>
 	 * Lists possible commands, prompts the user for one, and then acts on it.<br>
@@ -114,9 +115,9 @@ public class ParkManager {
 		int parkNum = myUI.selectParkNum();
 		Park myPark = myManagedParks.get(parkNum);
 		
-		Job myJob = constructJob(myPark);
+		Job job = constructJob(myPark);
 		
-		boolean added = mySchedule.receiveJob(myJob);
+		boolean added = mySchedule.receiveJob(job);
 		myUI.displayJobStatus(added);
 	}
 	
@@ -132,7 +133,7 @@ public class ParkManager {
 		int myHeavy = myUI.getHeavySlots();	
 		String myStartDate = myUI.getStartDate();
 		String myEndDate = myUI.getEndDate();		
-		List<String> myVolunteerList = new ArrayList();
+		List<String> myVolunteerList = new ArrayList<>();
 		
 		return new Job(myJobID, thePark, 0, myLight, 0, myMedium, 0, myHeavy, myStartDate, myEndDate, myEmail, myVolunteerList);
 	}

@@ -75,7 +75,7 @@ public class Job {
     private Park myPark;
 
     /**
-     * The Park Manager in charge of the job.
+     * The email address of the Park Manager in charge of the job.
      */
     private String myManager;
     
