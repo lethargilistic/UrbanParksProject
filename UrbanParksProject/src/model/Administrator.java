@@ -27,6 +27,10 @@ public class Administrator {
 	private AdministratorUI myUI;
 	private DataPollster myPollster;
 	
+	public Administrator(String theEmail) {
+		this.myEmail = theEmail;
+	}
+	
 	
 	/**
 	 * Constructs an Administrator object.

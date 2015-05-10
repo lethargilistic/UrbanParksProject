@@ -229,7 +229,7 @@ public class DataPollster {
 	 * Return the Park List associated with a ParkManager's e-mail.
 	 */
 	public List<Park> getParkList(String theEmail) {
-		// actual implementation of method, below...
+		
 		
 		
 		// TODO The following code is NOT an example of how this is to be implemented. It just forces a test case.
@@ -250,7 +250,16 @@ public class DataPollster {
 	 * @return a new Volunteer object with the given email address.
 	 */
 	public Volunteer getVolunteer(String theVolunteerEmail) { // Reid: why do we need this method? where is it used?
-		return new Volunteer(theVolunteerEmail);
+		Volunteer defaultVolunteer = new Volunteer(theVolunteerEmail); //Default case if the Park Volunteer is not found.
+		List<Volunteer> volunteerCopyList = myUserList.getVolunteerCopyList();
+		
+		for(Volunteer volunteer : volunteerCopyList) {
+			if(volunteer.getEmail().equals(theVolunteerEmail)) {
+				return volunteer;
+			}
+		}
+
+		return defaultVolunteer;
 	}
 	
 	/**
@@ -259,8 +268,37 @@ public class DataPollster {
 	 * @param theParkManagerEmail is the email address of the Park Manager.
 	 * @return a new ParkManager object with the given email address.
 	 */
-	public ParkManager getParkManager(String theParkManagerEmail) { // Reid: why do we need this method? where is it used?
-		return new ParkManager(theParkManagerEmail);
+	public ParkManager getParkManager(String theParkManagerEmail) {
+		
+		ParkManager defaultManager = new ParkManager(theParkManagerEmail); //Default case if the Park Manager is not found.
+		List<ParkManager> managerCopyList = myUserList.getParkManagerCopyList();
+		
+		for(ParkManager manager : managerCopyList) {
+			if(manager.getEmail().equals(theParkManagerEmail)) {
+				return manager;
+			}
+		}
+
+		return defaultManager;
+	}
+	
+	/**
+	 * Given a administrator's email, construct the Administrator and return it.
+	 * 
+	 * @param theAdministratorEmail is the email address of the Administrator.
+	 * @return a new Administrator object with the given email address.
+	 */
+	public Administrator getAdministrator(String theAdministratorEmail) { // Reid: why do we need this method? where is it used?
+		Administrator defaultAdministrator = new Administrator(theAdministratorEmail); //Default case if the Park Administrator is not found.
+		List<Administrator> administratorCopyList = myUserList.getAdministratorCopyList();
+		
+		for(Administrator administrator : administratorCopyList) {
+			if(administrator.getEmail().equals(theAdministratorEmail)) {
+				return administrator;
+			}
+		}
+
+		return defaultAdministrator;
 	}
 	
 	/**
