@@ -45,6 +45,24 @@ public class Volunteer {
 		return this.myLastName;
 	}
 	
+	
+	public String getEmail() {
+		return myEmail;
+	}
+
+	public void setEmail(String theEmail) {
+		myEmail = theEmail;
+	}
+
+	public void setFirstName(String theFirstName) {
+		myFirstName = theFirstName;
+	}
+
+	public void setLastName(String theLastName) {
+		myLastName = theLastName;
+	}
+	
+	
 	@Override
 	public boolean equals(Object theO)
 	{
@@ -124,8 +142,10 @@ public class Volunteer {
 				case "close":
 				case "quit":
 				case "4":
+					return false; //return false if user wants to exit.
 				default: 
-					return false;
+					System.out.println("You did not enter a valid number.");
+					return true; //return true and prompt the user again.
 			}
 		}
 	
@@ -208,29 +228,18 @@ public class Volunteer {
 		 * @return True if valid, false if not.
 		 */
 		private boolean checkPark(int theJobID) {
-			//TODO
-			return true; //Unsure of how to implement this at the moment. Will it be done through DataPollster?	
-		}
-
-		public String getEmail() {
-			// TODO Auto-generated method stub
-			return null;
-		}
-
-		public void setEmail(String theEmail) {
-			// TODO Auto-generated method stub
 			
+			List<Job> aList = mySched.getJobList().getCopyList();
+			for (Job j: aList) {
+				if (j.getJobID() == theJobID) {
+					return true;
+				}
+			}
+			
+			return false; //if true was never return within the for-each loop then return false
 		}
 
-		public void setFirstName(String theFirstName) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		public void setLastName(String theLastName) {
-			// TODO Auto-generated method stub
-			
-		}
+		
 
 
 

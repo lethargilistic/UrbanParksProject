@@ -197,7 +197,7 @@ public class Schedule {
 	}
 	
 	public boolean checkUser(String theEmail) {
-		//TODO
+		//TODO can someone java doc this method? I dont know what its supposed to do.
 		return true;
 	}
 
