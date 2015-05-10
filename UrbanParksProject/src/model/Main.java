@@ -32,12 +32,12 @@ public class Main {
 			}
 			
 			if(userInfo[0].equals("login")) {
-				giveControl(userInfo[1], mySchedule, myPollster);
+				giveControl(userInfo, mySchedule, myPollster);
 			}
 			
 			if(userInfo[0].equals("register")) {
 				mySchedule.addUser(userInfo[1], userInfo[2], userInfo[3], userInfo[4]);
-				giveControl(userInfo[1], mySchedule, myPollster);
+				giveControl(userInfo, mySchedule, myPollster);
 			}
 			
 			myUI.greetUser();
@@ -104,12 +104,12 @@ public class Main {
 	/*
 	 * Transfer control to the user, specified by their e-mail address.
 	 */
-	public static void giveControl(String theEmail, Schedule mySchedule, DataPollster myPollster) {
-		String userType = myPollster.getUserType(theEmail);
+	public static void giveControl(String[] theUserInfo, Schedule mySchedule, DataPollster myPollster) {
+		String userType = myPollster.getUserType(theUserInfo[1]);
 		
 		if(userType.equals("ParkManager")) {
-			List<Park> myManagedParks = myPollster.getParkList(theEmail);
-			String myEmail = "tjsg1992@gmail.com";
+			List<Park> myManagedParks = myPollster.getParkList(theUserInfo[1]);
+			String myEmail = theUserInfo[1];
 			ParkManager myManager = new ParkManager(mySchedule, myPollster, myManagedParks, myEmail);
 			myManager.initialize();
 		}
