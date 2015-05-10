@@ -50,9 +50,15 @@ public class Administrator {
 	 * Constructs an Administrator object, also initializing its DataPollster field.
 	 */
 	public Administrator(String theFirstName, String theLastName, String theEmail, DataPollster thePollster) {
+		//TODO remove this constructor, implement getters and setters for First and Last name instead.
 		this(theFirstName, theLastName, theEmail);
 		this.myPollster = thePollster;
 		this.myUI = new AdministratorUI();
+	}
+	
+	public Administrator(DataPollster thePollster, String theEmail) {
+		this.myPollster = thePollster;
+		this.myEmail = theEmail;
 	}
 	
 	/**

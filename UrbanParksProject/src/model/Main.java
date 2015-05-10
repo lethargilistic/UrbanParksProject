@@ -110,20 +110,28 @@ public class Main {
 	/*
 	 * Transfer control to the user, specified by their e-mail address.
 	 */
-	public static void giveControl(String[] theUserInfo, Schedule mySchedule, DataPollster myPollster) {
-		String userType = myPollster.getUserType(theUserInfo[1]);
+	public static void giveControl(String[] theUserInfo, Schedule theSchedule, DataPollster thePollster) {
+		String userType = thePollster.getUserType(theUserInfo[1]);
 		
 		if(userType.equals("ParkManager")) {
-			List<Park> myManagedParks = myPollster.getParkList(theUserInfo[1]);
-			String myEmail = theUserInfo[1];
-			ParkManager myManager = new ParkManager(mySchedule, myPollster, myManagedParks, myEmail);
-			myManager.initialize();
+			List<Park> managedParks = thePollster.getParkList(theUserInfo[1]);
+			String email = theUserInfo[1];
+			ParkManager manager = new ParkManager(theSchedule, thePollster, managedParks, email);
+			manager.initialize();
 		}
 		
-		//TODO for Volunteer and Administrator
+		if(userType.equals("Volunteer")) {
+			String email = theUserInfo[1];
+			Volunteer volunteer = new Volunteer(theSchedule, thePollster, email);
+			volunteer.initialize();
+		}
+		
+		if(userType.equals("Administrator")) {
+			String email = theUserInfo[1];
+			Administrator administrator = new Administrator(thePollster, email);
+			administrator.initialize();
+		}
 	}
-	
-	
 	
 	
 	/**
