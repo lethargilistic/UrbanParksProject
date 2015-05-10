@@ -79,27 +79,29 @@ public class ParkManager {
 	 * @return Return true if we should continue the command loop, false if the user wants to logout.
 	 */
 	public boolean parseCommand(int choice) {
-		
+		boolean status = true;
 		switch(choice) { 
 			case 1:
 				createJob(); 
-				return true;
+				break;
 				
 			case 2:
 				viewUpcomingJobs();
-				return true;
+				break;
 			
 			case 3:
 				viewJobVolunteers();
-				return true;
+				break;
 			
 			case 4:
-				return false;
+				status = false;
 				
 			default: 
 				myUI.displayInvalidChoice();
-				return true;
+				break;
 		}
+		
+		return status;
 	}
 
 	
