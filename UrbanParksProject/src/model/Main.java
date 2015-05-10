@@ -23,7 +23,7 @@ public class Main {
 		String[] userInfo = directLogin(mySchedule, myPollster);
 		
 		if(userInfo == null) { //If the command or information entered was invalid, we try again.
-			directLogin(mySchedule, myPollster);
+			directLogin(mySchedule, myPollster); //TODO make this a while loop
 		}
 		
 		if(userInfo[0].equals("login")) {

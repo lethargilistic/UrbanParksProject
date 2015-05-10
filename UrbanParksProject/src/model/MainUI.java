@@ -104,7 +104,8 @@ public class MainUI {
 		
 		String userInput = myScanner.nextLine();
 		
-		if(userInput.equals("")) {
+		if(userInput.equals("")) { //TODO, maybe make this a while so that it will continuously 
+									//prompt the user, instead of just once?
 			userInput = myScanner.nextLine();
 		} 
 		

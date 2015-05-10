@@ -180,8 +180,31 @@ public class DataPollster {
 	 * Return the user type associated with the e-mail as a String.
 	 */
 	public String getUserType(String theEmail) {
-		// TODO Either "Volunteer", "ParkManager", or "Administrator"
+		//in this method, search each of the three lists in myUserList.
+				//depending on which of the lists theEmail is found in, return the related string.
+		
+		List<Volunteer> vList = myUserList.getVolunteerCopyList();
+		for (Volunteer v : vList) {
+			if (v.getEmail().equals(theEmail)) {
+				return "Volunteer";
+			}
+		}
+		
+		List<ParkManager> pList = myUserList.getParkManagerCopyList();
+		for (ParkManager p: pList) {
+			if (p.getEmail().equals(theEmail)) {
+				return "ParkManager";
+			}
+		}
+		
+		List<Administrator> aList = myUserList.getAdministratorCopyList();
+		// TODO traverse aList and compares email.
+		
+		
+		//default
 		return "ParkManager";
+		
+		
 	}
 
 	/**
