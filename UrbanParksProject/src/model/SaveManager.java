@@ -73,7 +73,7 @@ public class SaveManager {
 		while(myScanner.hasNextLine()) {
 			jobFileList.add(myScanner.nextLine());
 		}
-		
+
 		myScanner.close();	
 		return jobFileList;
 	}
@@ -97,9 +97,7 @@ public class SaveManager {
 	 * the user or job to their lists.
 	 */
 	
-	public ArrayList<Job> parseJobFile(ArrayList<String> jobFileList, ArrayList<Job> theParsedList) {
-		theParsedList = new ArrayList<Job>();
-		
+	public ArrayList<Job> parseJobFile(ArrayList<String> jobFileList, ArrayList<Job> theParsedList) {		
 		//jobList.txt was not found, which is normal if the program has not been executed before.
 		if(jobFileList.size() < 1) {
 			return theParsedList;
