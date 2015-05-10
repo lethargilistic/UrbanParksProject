@@ -104,7 +104,6 @@ public class Volunteer {
 	 * If the user chooses to quit, or inputs an invalid command, then the loop terminates.
 	 */
 	public void commandLoop() {
-		System.out.println("Choose an option");
 		myUI.listCommands();
 		String command = myUI.getCommand();
 

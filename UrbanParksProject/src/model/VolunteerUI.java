@@ -17,7 +17,10 @@ public class VolunteerUI {
 	 * Display the possible commands that the user could type. 
 	 */
 	public void listCommands() {
-		System.out.println("\n1.view jobs     2.sign up     3.view my jobs     4.quit\n");
+		System.out.println("\n------------------------------------------\n"
+				+ "Volunteer Menu\n"
+				+ "\nChoose an option\n"
+				+ "1.view jobs     2.sign up     3.view my jobs     4.quit");
 	}
 	
 	/**
