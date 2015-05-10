@@ -9,8 +9,11 @@ import java.util.Scanner;
  */
 public class AdministratorUI {
 
+	// TODO:
 	// All parsing happens here.
 	// All options are int choices.
+	// Going to have to called by mainUI.
+	// Need to review Taylor's design changes.
 	
 	//Ready User Input
 	private Scanner in = new Scanner(System.in);
