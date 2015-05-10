@@ -43,6 +43,7 @@ public class Volunteer {
 		this.mySched = theSchedule;
 		this.myPoll = thePollster;
 		this.myEmail = theEmail;
+		myUI = new VolunteerUI();
 	}
 	
 	public String getFirstName() {

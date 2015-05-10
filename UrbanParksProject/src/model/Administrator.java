@@ -59,6 +59,7 @@ public class Administrator {
 	public Administrator(DataPollster thePollster, String theEmail) {
 		this.myPollster = thePollster;
 		this.myEmail = theEmail;
+		this.myUI = new AdministratorUI();
 	}
 	
 	/**
