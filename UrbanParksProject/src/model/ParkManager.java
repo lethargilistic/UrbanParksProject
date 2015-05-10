@@ -133,7 +133,7 @@ public class ParkManager {
 	 * @return The constructed Job
 	 */
 	private Job constructJob(Park thePark) {	
-		int myJobID = DataPollster.getNextJobID();
+		int myJobID = Job.getNextJobID();
 		int myLight = myUI.getLightSlots();
 		int myMedium = myUI.getMediumSlots();
 		int myHeavy = myUI.getHeavySlots();	
@@ -189,4 +189,15 @@ public class ParkManager {
 		return myEmail;
 	}
 	
+	@Override
+	public boolean equals(Object theO)
+	{
+		if (!(theO instanceof ParkManager))
+			return false;
+	
+		ParkManager theOther = (ParkManager) theO;
+		
+		return this.myEmail.equals(theOther.myEmail);
+				
+	}
 }

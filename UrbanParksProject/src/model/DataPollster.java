@@ -24,7 +24,7 @@ public class DataPollster {
 		//Job has no room.
 		//TODO:The job's start date has not passed.
 			//Not sure where we're storing the current date. Do we use the System time?
-	public List<Job> getPendingJobs(Volunteer theVolunteer) {
+	public List<Job> getPendingJobs(String string) {
 		//USER STORY 2
 
 		//Called by Volunteer.viewUpcomingJobs()
@@ -37,7 +37,7 @@ public class DataPollster {
 		//up for
 
 		List<Job> applicableJobs = new ArrayList<>();
-		List<Job> volsJobs = getVolunteerJobs(theVolunteer);
+		List<Job> volsJobs = getVolunteerJobs(string);
 		List<Job> jobs = myJobList.getCopyList();
 		for (Job j : jobs)
 		{
@@ -82,7 +82,7 @@ public class DataPollster {
 		return applicableJobs;
 	}
 
-	public List<Job> getVolunteerJobs(Volunteer theVolunteer) {
+	public List<Job> getVolunteerJobs(String string) {
 		//USER STORY 4
 
 		//Called by Volunteer.viewMyJobs()
@@ -99,7 +99,7 @@ public class DataPollster {
 		for (Job j : myJobList.getCopyList())
 		{
 			//TODO: Should I get the job's list via a method?
-			if (j.myVolunteerList.contains(theVolunteer))
+			if (j.myVolunteerList.contains(string))
 			{
 				jobsSignedUpFor.add(j);
 			}
@@ -172,16 +172,26 @@ public class DataPollster {
 	 * Check the e-mail address of a user logging in to see if they exist in the system.
 	 */
 	public boolean checkEmail(String theEmail) {
-		//TODO
-		return true;
+		if(myUserList.getVolunteerCopyList().contains(theEmail) 
+				|| myUserList.getParkManagerCopyList().contains(theEmail)
+				|| myUserList.getAdministratorCopyList().contains(theEmail))
+			return true;
+		return false;
 	}
 
 	/**
 	 * Return the user type associated with the e-mail as a String.
 	 */
 	public String getUserType(String theEmail) {
-		// TODO Either "Volunteer", "ParkManager", or "Administrator"
-		return "ParkManager";
+		String userType = "";
+		if(myUserList.getVolunteerCopyList().contains(theEmail))
+			userType = "Volunteer";
+		else if(myUserList.getParkManagerCopyList().contains(theEmail))
+			userType = "ParkManager";
+		else if (myUserList.getAdministratorCopyList().contains(theEmail))
+			userType = "Administrator";
+		
+		return userType;
 	}
 
 	/**
@@ -189,7 +199,6 @@ public class DataPollster {
 	 */
 	public List<Park> getParkList(String theEmail) {
 		// TODO The following code is NOT an example of how this is to be implemented. It just forces a test case.
-		
 		
 		//For testing purposes only:
 		ArrayList<Park> myParkList = new ArrayList<Park>();
@@ -207,7 +216,12 @@ public class DataPollster {
 	 * @return
 	 */
 	public Volunteer getVolunteer(String volunteerEmail) {
-		// TODO Auto-generated method stub
+		for (Volunteer v : myUserList.getVolunteerCopyList())
+		{
+			if (v.getEmail().equals(volunteerEmail))
+				return v;
+		}
+		
 		return null;
 	}
 	
@@ -215,15 +229,12 @@ public class DataPollster {
 	 * Given a park manager's email, construct the Park Manager and return it.
 	 */
 	public ParkManager getParkManager(String parkManagerEmail) {
-		//TODO
+		for (ParkManager v : myUserList.getParkManagerCopyList())
+		{
+			if (v.getEmail().equals(parkManagerEmail))
+				return v;
+		}
+		
 		return null;
-	}
-
-	/**
-	 * Return the next available Job ID to be used during the creation of a new job.
-	 */
-	public static int getNextJobID() {
-		// TODO Auto-generated method stub
-		return 0;
 	}
 }

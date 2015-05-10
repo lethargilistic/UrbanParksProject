@@ -83,9 +83,12 @@ public class Job {
      * Constructor for job, taking several arguments of integers, Calendar Strings, and e-mails.
      * @author Taylor Gorman
      */
-    public Job(int theJobID, Park thePark, int theLightCurrent, int theLightMax, int theMediumCurrent, int theMediumMax,
-    		int theHeavyCurrent, int theHeavyMax, String theStartDate, String theEndDate, String theManagerEmail, 
-    		List<String> theVolunteerList) {
+    public Job(int theJobID, Park thePark, 
+    		int theLightCurrent, int theLightMax, 
+    		int theMediumCurrent, int theMediumMax,
+    		int theHeavyCurrent, int theHeavyMax, 
+    		String theStartDate, String theEndDate, 
+    		String theManagerEmail, List<String> theVolunteerList) {
     	
     	this.myJobID = theJobID;
     	this.myPark = thePark;
@@ -119,12 +122,6 @@ public class Job {
 		
 		return new GregorianCalendar(myYear, myDay, myMonth);
     }
-    
-    
-	public static void setNextJobID(int theID)
-	{
-		nextJobID = 0;
-	}
     
     /**
      * This is used to return the starting date of the job.
@@ -224,6 +221,15 @@ public class Job {
     			&& (myHeavyMax - myHeavyCurrent) == 0;
     }
 
+	public static void setNextJobID(int theID)
+	{
+		nextJobID = theID;
+	}
+
+	public static int getNextJobID() {
+		return nextJobID++;
+	}
+	
 	public int getJobID() {
 		return myJobID;
 	}

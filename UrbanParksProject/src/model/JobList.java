@@ -46,7 +46,4 @@ public class JobList {
 	public void setJobList(ArrayList<Job> theJobList) {
 		this.myJobList = theJobList;
 	}
-
-	
-
 }

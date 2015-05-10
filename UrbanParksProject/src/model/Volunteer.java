@@ -45,27 +45,6 @@ public class Volunteer {
 		return this.myLastName;
 	}
 	
-	@Override
-	public boolean equals(Object theO)
-	{
-		if (!(theO instanceof Volunteer))
-			return false;
-		
-		Volunteer theOther = (Volunteer) theO;
-		
-		return this.myFirstName.equals(theOther.myFirstName)
-			   && this.myLastName.equals(theOther.myLastName);
-				
-	}
-	
-	@Override
-	public String toString()
-	{
-		return myFirstName + " " + myLastName;
-	}
-	
-	
-	
 	//==============stuff I added======================
 	
 	//TODO: Should be removed in favor of having the commands be processed in the UI.
@@ -191,7 +170,6 @@ public class Volunteer {
 			System.out.println(jobString);
 		}
 			
-		
 		/**
 		 * Convert a GregorianCalendar object to string of format mmddyyyy
 		 */
@@ -201,7 +179,6 @@ public class Volunteer {
 					theCalendar.get(Calendar.YEAR);
 			return returnString;
 		}
-
 
 		/**
 		 * Check to make sure that the Job ID is valid.
@@ -213,27 +190,36 @@ public class Volunteer {
 		}
 
 		public String getEmail() {
-			// TODO Auto-generated method stub
-			return null;
+			return myEmail;
 		}
 
 		public void setEmail(String theEmail) {
-			// TODO Auto-generated method stub
-			
+			myEmail = theEmail;
 		}
 
 		public void setFirstName(String theFirstName) {
-			// TODO Auto-generated method stub
-			
+			myFirstName = theFirstName;
 		}
 
 		public void setLastName(String theLastName) {
-			// TODO Auto-generated method stub
-			
+			myLastName = theLastName;
 		}
 
-
-
-
-
+		@Override
+		public boolean equals(Object theO)
+		{
+			if (!(theO instanceof Volunteer))
+				return false;
+		
+			Volunteer theOther = (Volunteer) theO;
+			
+			return this.myEmail.equals(theOther.myEmail);
+					
+		}
+		
+		@Override
+		public String toString()
+		{
+			return myFirstName + " " + myLastName;
+		}
 }
