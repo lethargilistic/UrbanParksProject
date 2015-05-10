@@ -123,32 +123,28 @@ public class DataPollster {
 		return jobsSignedUpFor;
 	}
 
+	/**
+	 * Return a list of all jobs associated with a given ParkManager.
+	 * @author Taylor Gorman
+	 */
 	public List<Job> getManagerJobs(ParkManager theManager){
-		//USER STORY 5
+		List<Job> jobReturnList = new ArrayList<Job>();
+		List<Park> managedParks = theManager.getManagedParks();
 
-		//Called by ParkManager.viewUpcomingJobs()
-
-		//Calls JobList.getCopyList() to get a copy of myJobList
-			//It already has a reference to the joblist
-		
-		//Create a new list of jobs with copies of the Jobs from Schedule�s 
-		//myJobList
-
-		List<Job> jobsManaging = new ArrayList<Job>();
-
-		//Check through myJobList and select all Jobs in all park
-		//managed by the PM.
-		for (Job j : myJobList.getCopyList())
-		{
-			System.out.println(j.getPark());
-			if (theManager.getManagedParks().contains(j.getPark()))
-			{
-				jobsManaging.add(j);
+		//Select all jobs in JobList with the same name as a Park that ParkManager manages.
+		for (Job job : myJobList.getCopyList())	{
+			String jobParkName = job.getPark().getName();
+			
+			for(Park park : managedParks) {						
+				String managedParkName = park.getName();
+				
+				if(jobParkName.equals(managedParkName)) {
+					jobReturnList.add(job);
+				}
 			}
 		}
-		
-		//Return new list of copied Jobs
-		return jobsManaging;
+
+		return jobReturnList;
 	}
 	
 	/**
@@ -228,20 +224,17 @@ public class DataPollster {
 
 	/**
 	 * Return the Park List associated with a ParkManager's e-mail.
+	 * @author Taylor Gorman
 	 */
-	public List<Park> getParkList(String theEmail) {
+	public List<Park> getParkList(String theEmail) {		
+		List<ParkManager> managerList = myUserList.getParkManagerCopyList();
 		
-		
-		
-		// TODO The following code is NOT an example of how this is to be implemented. It just forces a test case.
-		//For testing purposes only:
-		ArrayList<Park> myParkList = new ArrayList<Park>();
-		Park myPark = new Park("Bobcat Park", "Hugo", 98335);
-		Park myPark2 = new Park("Seahurt Park", "Burien", 98106);
-		
-		myParkList.add(myPark);
-		myParkList.add(myPark2);
-		return myParkList;
+		for(ParkManager manager : managerList) {
+			if(manager.getEmail().equals(theEmail)) {
+				return manager.getManagedParks();
+			}
+		}
+		return new ArrayList<Park>();
 	}
 
 	/**
@@ -249,6 +242,7 @@ public class DataPollster {
 	 * 
 	 * @param theVolunteerEmail is the email address of the Volunteer.
 	 * @return a new Volunteer object with the given email address.
+	 * @author Taylor Gorman
 	 */
 	public Volunteer getVolunteer(String theVolunteerEmail) { // Reid: why do we need this method? where is it used?
 		Volunteer defaultVolunteer = new Volunteer(theVolunteerEmail); //Default case if the Park Volunteer is not found.
@@ -268,6 +262,7 @@ public class DataPollster {
 	 * 
 	 * @param theParkManagerEmail is the email address of the Park Manager.
 	 * @return a new ParkManager object with the given email address.
+	 * @author Taylor Gorman
 	 */
 	public ParkManager getParkManager(String theParkManagerEmail) {
 		
@@ -288,6 +283,7 @@ public class DataPollster {
 	 * 
 	 * @param theAdministratorEmail is the email address of the Administrator.
 	 * @return a new Administrator object with the given email address.
+	 * @author Taylor Gorman
 	 */
 	public Administrator getAdministrator(String theAdministratorEmail) { // Reid: why do we need this method? where is it used?
 		Administrator defaultAdministrator = new Administrator(theAdministratorEmail); //Default case if the Park Administrator is not found.
