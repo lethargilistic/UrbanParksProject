@@ -240,14 +240,13 @@ public class SaveManager {
 	public boolean saveJobList(JobList theJobList) {
 		List<String> jobInfo = extractJobInfo(theJobList);
 		
-		File outFile = new File("rsc/jobListOut.txt");
+		File outFile = new File("rsc/jobList.txt");
 		
 		if(!outFile.exists()) {
-			outFile = new File("rsc\\jobListOut.txt");
+			outFile = new File("rsc\\jobList.txt");
 		}
 		
 		try {
-			//TODO change to jobList.txt once we verify there aren't any inconsistencies
 			FileWriter fw = new FileWriter(outFile);
 			BufferedWriter bw = new BufferedWriter(fw);
 			
@@ -302,16 +301,15 @@ public class SaveManager {
 	 */
 	public boolean saveUserList(UserList theUserList) {
 		
-		File outFile = new File("rsc/userListOut.txt");
+		File outFile = new File("rsc/userList.txt");
 		
 		if(!outFile.exists()) {
-			outFile = new File("rsc\\userListOut.txt");
+			outFile = new File("rsc\\userList.txt");
 		}
 		
 		List<String> userInfo = extractUserInfo(theUserList);
 		
 		try {
-			//TODO change to userList.txt once we verify there aren't any inconsistencies
 			FileWriter fw = new FileWriter(outFile);
 			BufferedWriter bw = new BufferedWriter(fw);
 			
