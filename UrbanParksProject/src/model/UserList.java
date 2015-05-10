@@ -46,7 +46,7 @@ public class UserList {
 	/**
 	 * Return a copy of the Administrator List.
 	 */
-	public List<Administrator> getAdministratorCopyLIst() {
+	public List<Administrator> getAdministratorCopyList() {
 		return new ArrayList<Administrator>(myAdministratorList);
 	}
 		

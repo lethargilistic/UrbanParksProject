@@ -43,6 +43,8 @@ public class ScheduleTest {
 	 */
 	private Job myJob;
 	
+	private String myVolEmail;
+	
 	/**
 	 * Volunteer object for testing.
 	 */
@@ -61,11 +63,11 @@ public class ScheduleTest {
 		pList.add(myPark);
 		mySchedule = new Schedule(myJoblist);
 		DataPollster dp = new DataPollster(myJoblist, myUserList);
-	    myParkManager = new ParkManager(mySchedule, dp, pList);
+	    myParkManager = new ParkManager(mySchedule, dp, pList, "tjsg1992@gmail.com");
 		myPark = new Park("Wright Park", "Tacoma", 98403);
 		myJob = new Job(myPark, 10, 10, 10, new GregorianCalendar(2015, 6, 17), 
-				new GregorianCalendar(2015, 6, 17), myParkManager);
-		myVolunteer = new Volunteer("Bob", "Smith");
+				new GregorianCalendar(2015, 6, 17), "tjsg1992@gmail.com");
+		myVolunteer = new Volunteer("generic@gmail.com", "Bob", "Smith");
 	}
 
 	/**
@@ -85,7 +87,7 @@ public class ScheduleTest {
 	@Test
 	public void test2ForReceiveJob() {
 		Job badDates = new Job(myPark, 10, 10, 10, new GregorianCalendar(2015, 6, 17), 
-					   new GregorianCalendar(2015, 6, 15), myParkManager);
+					   new GregorianCalendar(2015, 6, 15), "tjsg1992@gmail.com");
 		boolean bool1 = mySchedule.receiveJob(badDates);
 		assertFalse(bool1);
 	}
@@ -95,7 +97,7 @@ public class ScheduleTest {
 	 */
 	@Test
 	public void test4ForReceiveJob() {
-		myJob.myVolunteerList.add(myVolunteer);
+		myJob.myVolunteerList.add(myVolEmail);
 		boolean bool3 = mySchedule.receiveJob(myJob);
 		assertFalse(bool3);
 	}
@@ -107,7 +109,7 @@ public class ScheduleTest {
 	@Test
 	public void test6ForReceiveJob() {
 		Job noSpace = new Job(myPark, 0, 0, 0, new GregorianCalendar(2015, 6, 17), 
-					  new GregorianCalendar(2015, 6, 17), myParkManager);
+					  new GregorianCalendar(2015, 6, 17), "tjsg1992@gmail.com");
 		boolean bool5 = mySchedule.receiveJob(noSpace);
 		assertFalse(bool5);
 	}
@@ -120,7 +122,7 @@ public class ScheduleTest {
 	public void test7ForReceiveJob() {
 		int itrs = 5;
 		Job overflowed = new Job(myPark, 2, 10, 4, new GregorianCalendar(2015, 6, 17), 
-						 new GregorianCalendar(2015, 6, 17), myParkManager);
+						 new GregorianCalendar(2015, 6, 17), "tjsg1992@gmail.com");
 		for (int i = 0; i < itrs; i++) {
 			overflowed.incrementLight();
 		}
@@ -134,7 +136,7 @@ public class ScheduleTest {
 	@Test
 	public void test8ForReceiveJob() {
 		Job nullPark = new Job(null, 5, 5, 5, new GregorianCalendar(2015, 6, 17),
-				new GregorianCalendar(2015, 6, 17), myParkManager);
+				new GregorianCalendar(2015, 6, 17), "tjsg1992@gmail.com");
 		boolean bool7 = mySchedule.receiveJob(nullPark);
 		assertFalse(bool7);
 	}
@@ -158,7 +160,7 @@ public class ScheduleTest {
 	public void test1ForAddVolunteerToJob() {
 		boolean bool1 = false; //an error was showing up so I had to initialize this to false.
 		try { //I added exceptions to addVolunteer so I put this into a try catch block.
-			bool1 = mySchedule.addVolunteerToJob(myVolunteer, -10, 2);
+			bool1 = mySchedule.addVolunteerToJob(myVolEmail, -10, 2);
 		} catch (Exception e) {
 			
 			//e.printStackTrace();
@@ -173,7 +175,7 @@ public class ScheduleTest {
 	public void test2ForAddVolunteerToJob() {
 		boolean bool2 = false; //an error was showing up so I had to initialize this to false.
 		try { //I added exceptions to addVolunteer so I put this into a try catch block.
-			bool2 = mySchedule.addVolunteerToJob(myVolunteer, 10, 4);
+			bool2 = mySchedule.addVolunteerToJob(myVolEmail, 10, 4);
 		} catch (Exception e) {
 			
 			e.printStackTrace();

@@ -11,8 +11,10 @@ public class Main {
 
 	public static void main(String[] args) {
 		
-		JobList myJobList = new JobList();
-		UserList myUserList = new UserList();
+		SaveManager mySaveManager = new SaveManager();
+		JobList myJobList = mySaveManager.loadJobList();
+		UserList myUserList = mySaveManager.loadUserList();
+		
 		Schedule mySchedule = new Schedule(myJobList);
 		DataPollster myPollster = new DataPollster(myJobList, myUserList);
 		myUI = new MainUI();
@@ -103,7 +105,8 @@ public class Main {
 		
 		if(userType.equals("ParkManager")) {
 			List<Park> myManagedParks = myPollster.getParkList(theEmail);
-			ParkManager myManager = new ParkManager(mySchedule, myPollster, myManagedParks);
+			String myEmail = "tjsg1992@gmail.com";
+			ParkManager myManager = new ParkManager(mySchedule, myPollster, myManagedParks, myEmail);
 			myManager.initialize();
 		}
 		

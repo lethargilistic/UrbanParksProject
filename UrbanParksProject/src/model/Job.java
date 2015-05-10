@@ -19,9 +19,9 @@ public class Job {
 	private int myJobID;
 
 	/**
-	 * This is the list which holds the volunteers that have signed up to participate in this job.
+	 * This is the list which holds the e-mail addresses of all volunteers that have signed up to participate in this job.
 	 */
-    public List<Volunteer> myVolunteerList; 
+    public List<String> myVolunteerList; 
     
     /**
      * This is the start date of the job.
@@ -77,33 +77,49 @@ public class Job {
     /**
      * The Park Manager in charge of the job.
      */
-    private ParkManager myManager;
+    private String myManager;
     
     /**
-     * This is a constructor.
-     * @param thePark is the park 
-     * @param theLightSlots is the max number of light positions
-     * @param theMediumSlots is the max number of medium positions
-     * @param theHeavySlots is the max number of heavy positions
-     * @param theStartDate is the starting date of the job
-     * @param theEndDate is the ending date of the job.
+     * Constructor for job, taking several arguments of integers, Calendar Strings, and e-mails.
+     * @author Taylor Gorman
      */
-    public Job(Park thePark, int theLightSlots, int theMediumSlots, int theHeavySlots,
-    		GregorianCalendar theStartDate, GregorianCalendar theEndDate, ParkManager theManager) {
-    	myJobID = nextJobID++;
-    	myVolunteerList = new ArrayList<>();
-    	myStartDate = theStartDate;
-    	myEndDate = theEndDate;
-    	myPark = thePark;
-    	myManager = theManager;
+    public Job(int theJobID, Park thePark, int theLightCurrent, int theLightMax, int theMediumCurrent, int theMediumMax,
+    		int theHeavyCurrent, int theHeavyMax, String theStartDate, String theEndDate, String theManagerEmail, 
+    		List<String> theVolunteerList) {
     	
-    	myLightMax = theLightSlots;
-    	myLightCurrent = 0;
-    	myMediumMax = theMediumSlots;
-    	myMediumCurrent = 0;
-    	myHeavyMax = theHeavySlots;
-    	myHeavyCurrent = 0;
+    	this.myJobID = theJobID;
+    	this.myPark = thePark;
+    	
+    	this.myLightCurrent = theLightCurrent;
+    	this.myLightMax = theLightMax;
+    	this.myMediumCurrent = theMediumCurrent;
+    	this.myMediumMax = theMediumMax;
+    	this.myHeavyCurrent = theHeavyCurrent;
+    	this.myHeavyMax = theHeavyMax;
+    	
+    	this.myStartDate = stringToCalendar(theStartDate);
+    	this.myEndDate = stringToCalendar(theEndDate);
+    	
+    	this.myManager = theManagerEmail;
+    	this.myVolunteerList = theVolunteerList;
     }
+    
+    /**
+     * Convert a date string to a Gregorian Calendar object.
+	 * @param stringDate A string representing a date, of format mmddyyyy
+	 * @return A Gregorian Calendar object representing that date.
+	 * 
+	 * @author Taylor Gorman
+	 * @version 9 May 2015
+     */
+    private GregorianCalendar stringToCalendar(String stringDate) {
+		int myDay = Integer.parseInt(stringDate.substring(0, 2));
+		int myMonth = Integer.parseInt(stringDate.substring(2, 4));
+		int myYear = Integer.parseInt(stringDate.substring(4, 8));		
+		
+		return new GregorianCalendar(myYear, myDay, myMonth);
+    }
+    
     
 	public static void setNextJobID(int theID)
 	{
@@ -212,7 +228,7 @@ public class Job {
 		return myJobID;
 	}
 
-	public List<Volunteer> getVolunteerList() {
+	public List<String> getVolunteerList() {
 		return myVolunteerList;
 	}
 
@@ -244,7 +260,7 @@ public class Job {
 		return myPark;
 	}
 	
-	public ParkManager getManager() {
+	public String getManager() {
 		return myManager;
 	}
 	
