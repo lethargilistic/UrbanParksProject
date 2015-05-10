@@ -27,9 +27,9 @@ public class Volunteer {
 		this.myEmail = theEmail;
 		myFirstName = firstName;
 		myLastName = lastName;
-		
 	}
 	
+	//TODO remove this constructor, implement getters and setters for First and Last name instead.
 	public Volunteer(String firstName, String lastName, DataPollster thePoll, Schedule theSched) {
 		myFirstName = firstName;
 		myLastName = lastName;
@@ -37,6 +37,12 @@ public class Volunteer {
 		myPoll = thePoll;
 		mySched = theSched;
 		myUI = new VolunteerUI();
+	}
+	
+	public Volunteer(Schedule theSchedule, DataPollster thePollster, String theEmail) {
+		this.mySched = theSchedule;
+		this.myPoll = thePollster;
+		this.myEmail = theEmail;
 	}
 	
 	public String getFirstName() {
