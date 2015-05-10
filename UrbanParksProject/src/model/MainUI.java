@@ -11,7 +11,11 @@ import java.util.Scanner;
  */
 public class MainUI {
 	
-	private Scanner myScanner = new Scanner(System.in);
+	private Scanner myScanner;
+	
+	public MainUI() {
+		myScanner = new Scanner(System.in);
+	}
 	
 	//Initialize UI.
 	public void initialize() {
