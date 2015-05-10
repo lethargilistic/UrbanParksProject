@@ -20,6 +20,13 @@ public class DataPollster {
 	
 	private UserList myUserList;
 	
+	/**
+	 * Return the next available Job ID to be used during the creation of a new job.
+	 */
+	public static int getNextJobID() {
+		return Job.nextJobID++;
+	}
+	
 	public DataPollster(JobList theJoblist, UserList theUserList)
 	{
 		myJobList = theJoblist;
@@ -255,11 +262,13 @@ public class DataPollster {
 	public ParkManager getParkManager(String theParkManagerEmail) { // Reid: why do we need this method? where is it used?
 		return new ParkManager(theParkManagerEmail);
 	}
-
+	
 	/**
-	 * Return the next available Job ID to be used during the creation of a new job.
+	 * Returns the UserList field.
+	 * 
+	 * @return the UserList field.
 	 */
-	public static int getNextJobID() {
-		return Job.nextJobID++;
+	public UserList getUserList() {
+		return this.myUserList;
 	}
 }
