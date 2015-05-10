@@ -54,24 +54,55 @@ public class AdministratorUI {
 		System.out.println("2) Logout\n");
 	}
 	
+//	/**
+//	 * Returns the integer of the command chosen by the user. If there are more than one
+//	 * integer on a line, it takes the first one.
+//	 * 
+//	 * @param theChoice a string containing the user's response to the list of commands.
+//	 * @return the command chosen by the user.
+//	 */
+//	public int getFirstIntChoice(final String theChoice) {
+//		final Scanner scan = new Scanner(theChoice);
+//		int choice = -1;
+//		while (scan.hasNext()) {
+//			if (scan.hasNextInt()) {
+//				choice = scan.nextInt();
+//				break;
+//			}
+//		}
+//		scan.close();
+//		return choice;
+//	}
+	
 	/**
-	 * Returns the integer of the command chosen by the user. If there are more than one
-	 * integer on a line, it takes the first one.
 	 * 
-	 * @param theChoice a string containing the user's response to the list of commands.
-	 * @return the command chosen by the user.
 	 */
-	public int getFirstIntChoice(final String theChoice) {
-		final Scanner scan = new Scanner(theChoice);
-		int choice = -1;
-		while (scan.hasNext()) {
-			if (scan.hasNextInt()) {
-				choice = scan.nextInt();
-				break;
-			}
+	public int getUserInt() {
+		int userInput = 0;
+
+		// Reid: shouldn't this be in a loop?
+		// you'd want to iterate over the whole line to see if any #s were entered
+		if(myIn.hasNextInt()) {
+			userInput = myIn.nextInt();
+		} else {
+			myIn.next();
 		}
-		scan.close();
-		return choice;
+
+		return userInput;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public String getUserString() {		
+		String userInput = myIn.nextLine();
+		
+		if(userInput.equals("")) { //TODO, maybe make this a while so that it will continuously 
+									//prompt the user, instead of just once? - Reid agrees.
+			userInput = myIn.nextLine();
+		}
+		return userInput;
 	}
 	
 //	/**
@@ -108,15 +139,15 @@ public class AdministratorUI {
 //		return stayLoggedIn;
 //	}
 	
-	/**
-	 * Gets the input last entered by the Administrator indicating what they would like
-	 * to do within the system.
-	 * 
-	 * @return a string indicating their command.
-	 */
-	public String getInput() {	
-		return myIn.nextLine();
-	}
+//	/**
+//	 * Gets the input last entered by the Administrator indicating what they would like
+//	 * to do within the system.
+//	 * 
+//	 * @return a string indicating their command.
+//	 */
+//	public String getInput() {	
+//		return myIn.nextLine();
+//	}
 	
 	/**
 	 * Returns a String of the last name of the Volunteer to search for.
@@ -126,7 +157,7 @@ public class AdministratorUI {
 	public String promptForVolsLastName() {
 		System.out.println("Option 1 selected.\n"
 				+ "Please enter the last name of the Volunteer to search for: \n");
-		return getInput();
+		return getUserString();
 	}
 	
 	// access Vol list thru DataPollster thru UserList methods

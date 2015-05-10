@@ -91,8 +91,7 @@ public class Administrator {
 	 */
 	public void initialize() {
 		myUI.listCommands();
-		String choiceStr = myUI.getInput();
-		int choice = myUI.getFirstIntChoice(choiceStr);
+		int choice = myUI.getUserInt();
 		boolean stayLoggedIn = executeOptionChosen(choice);
 		if (stayLoggedIn) { // reprompt user to with list of commands - continuing their interaction with the UI
 			initialize();
@@ -133,10 +132,12 @@ public class Administrator {
 						
 					});
 					displayMatchingVolunteers(lastName, matchingVols);
+					break;
 				case 2: // logout
 					System.out.println("Option 2 selected.\n"
 							+ "Logging out now.\n");
 					stayLoggedIn = false;
+					break;
 			}
 		}
 		return stayLoggedIn;
