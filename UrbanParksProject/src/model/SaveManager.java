@@ -22,8 +22,7 @@ public class SaveManager {
 		ArrayList<String> jobFileList = new ArrayList<String>();
 		ArrayList<Job> myParsedList = new ArrayList<Job>();
 		
-		File jobFile = new File("jobList.txt");
-		
+		File jobFile = new File("rsc\\jobList.txt");
 		if(jobFile.exists() && !jobFile.isDirectory()) {
 			try {
 				jobFileList = loadJobFile(jobFile);
@@ -47,7 +46,7 @@ public class SaveManager {
 		ArrayList<String> userFileList = new ArrayList<String>();
 		ArrayList myParsedList = new ArrayList();
 		
-		File userFile = new File("userList.txt");
+		File userFile = new File("rsc\\userList.txt");
 		
 		
 		if(userFile.exists() && !userFile.isDirectory()) {
@@ -70,19 +69,19 @@ public class SaveManager {
 	private ArrayList<String> loadJobFile(File jobFile) throws FileNotFoundException {
 		ArrayList<String> jobFileList = new ArrayList<String>();
 		
-		Scanner myScanner = new Scanner(new File("jobList.txt"));
+		Scanner myScanner = new Scanner(new File("rsc\\jobList.txt"));
 		while(myScanner.hasNextLine()) {
 			jobFileList.add(myScanner.nextLine());
 		}
 		
-		myScanner.close();		
+		myScanner.close();	
 		return jobFileList;
 	}
 	
 	private ArrayList loadUserFile(File userFile) throws FileNotFoundException {
 		ArrayList userFileList = new ArrayList();
 		
-		Scanner myScanner = new Scanner(new File("userFile.txt"));
+		Scanner myScanner = new Scanner(new File("rsc\\userList.txt"));
 		while(myScanner.hasNextLine()) {
 			userFileList.add(myScanner.nextLine());
 		}
