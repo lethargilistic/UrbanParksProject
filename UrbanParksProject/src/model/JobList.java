@@ -11,23 +11,14 @@ import java.util.List;
  */
 public class JobList {
 	
-	/**
-	 * This is a list of all the pending jobs.
-	 */
 	private List<Job> myJobList;
 	
-	/**
-	 * This is a constructor.
-	 */
 	public JobList() {
 		myJobList = new ArrayList<Job>();		
 	}
 	
 	/**
-	 * This method should be called by Sorter class.
-	 * 
-	 * It returns a copy of myJobList.
-	 * @return a copy of the jobs list.
+	 * Return a copy of the list of jobs.
 	 */
 	public List<Job> getCopyList() {
 		return new ArrayList<Job>(myJobList);
@@ -45,6 +36,13 @@ public class JobList {
 	
 	public void setJobList(ArrayList<Job> theJobList) {
 		this.myJobList = theJobList;
+	}
+	
+	/**
+	 * Return the number of jobs contained within JobList.
+	 */
+	public int getNumberJobs() {
+		return myJobList.size();
 	}
 
 	

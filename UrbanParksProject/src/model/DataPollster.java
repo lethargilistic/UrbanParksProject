@@ -23,8 +23,8 @@ public class DataPollster {
 	/**
 	 * Return the next available Job ID to be used during the creation of a new job.
 	 */
-	public static int getNextJobID() {
-		return Job.nextJobID++;
+	public int getNextJobID() {
+		return myJobList.getNumberJobs();
 	}
 	
 	public DataPollster(JobList theJoblist, UserList theUserList)

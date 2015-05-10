@@ -133,7 +133,7 @@ public class ParkManager {
 	 * @return The constructed Job
 	 */
 	private Job constructJob(Park thePark) {	
-		int myJobID = DataPollster.getNextJobID();
+		int myJobID = myPollster.getNextJobID();
 		int myLight = myUI.getLightSlots();
 		int myMedium = myUI.getMediumSlots();
 		int myHeavy = myUI.getHeavySlots();	

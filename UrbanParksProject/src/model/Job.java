@@ -120,12 +120,6 @@ public class Job {
 		return new GregorianCalendar(myYear, myDay, myMonth);
     }
     
-    
-	public static void setNextJobID(int theID)
-	{
-		nextJobID = 0;
-	}
-    
     /**
      * This is used to return the starting date of the job.
      * @return myStartDate
