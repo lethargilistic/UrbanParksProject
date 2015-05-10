@@ -55,7 +55,7 @@ public class Schedule {
 		}
 		
 		// checks if volunteer list is empty
-		if (!theJob.myVolunteerList.isEmpty()) {
+		if (!theJob.getVolunteerList().isEmpty()) {
 			okToAdd = false;
 		}
 		
@@ -172,7 +172,7 @@ public class Schedule {
 		if (okToAdd && jobExists && openGrade) {
 			// If everything is okay, we add the Volunteer to the Job’s Volunteer List,
 			// increment the grade slot, and return.
-			j.myVolunteerList.add(theVolunteer);
+			j.getVolunteerList().add(theVolunteer);
 			
 			switch (theWorkGrade) {
 				case 1:

@@ -113,7 +113,7 @@ public class DataPollster {
 		for (Job j : myJobList.getCopyList())
 		{
 			//TODO: Should I get the job's list via a method?
-			if (j.myVolunteerList.contains(theVolunteer))
+			if (j.getVolunteerList().contains(theVolunteer))
 			{
 				jobsSignedUpFor.add(j);
 			}
@@ -171,7 +171,7 @@ public class DataPollster {
 			if (j.getJobID() == theJobID)
 			{
 				// Use that Job object to get a copied list of associated Volunteers
-				retVols.addAll(j.myVolunteerList);
+				retVols.addAll(j.getVolunteerList());
 			}
 		}
 		

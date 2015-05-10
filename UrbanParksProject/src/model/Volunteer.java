@@ -197,7 +197,7 @@ public class Volunteer {
 
 		//go through each job in the list and see if the volunteer has signed up for that job.
 		for (Job j: aList) {
-			if (j.myVolunteerList.contains(this)) {
+			if (j.getVolunteerList().contains(this)) {
 				printJobInfo(j);
 			}
 		}
