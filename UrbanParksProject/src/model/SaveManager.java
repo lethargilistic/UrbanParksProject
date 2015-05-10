@@ -51,7 +51,7 @@ public class SaveManager {
 		
 		if(userFile.exists() && !userFile.isDirectory()) {
 			try {
-				loadUserFile(userFile);
+				userFileList = loadUserFile(userFile);
 			} catch (FileNotFoundException e) {
 				System.err.println("userFile.txt was detected, but could not be loaded. Please delete userFile.txt and restart the program.");
 			}
@@ -104,7 +104,7 @@ public class SaveManager {
 		if(jobFileList.size() < 1) {
 			return theParsedList;
 		}
-		
+
 		//If jobFileList has ended, then return our parsed list.		 
 		if(jobFileList.get(0).equals("End Job List")) {
 			return theParsedList;
@@ -126,7 +126,7 @@ public class SaveManager {
 		String myManager = jobFileList.get(10);
 		
 		//Remove all added elements from the file list.
-		for(int i = 0; i < 12; i++) {
+		for(int i = 0; i < 11; i++) {
 			jobFileList.remove(0); 
 		}
 		
@@ -166,17 +166,19 @@ public class SaveManager {
 		if(theUserFileList.get(0).equals("End User List")) {
 			return theUserList;
 		}
-				
+
 		//Get basic user information.
 		String myEmail = theUserFileList.get(0);
 		String myRole = theUserFileList.get(1);
 		String myFirstName = theUserFileList.get(2);
 		String myLastName = theUserFileList.get(3);
-		
+
 		//Remove gathered information from file list.
-		for(int i = 0; i < 5; i++) {
+		for(int i = 0; i < 4; i++) {
 			theUserFileList.remove(0);
 		}
+		
+		
 		
 		//For whichever role the user is, construct their corresponding Object and add it to the User List.
 		if(myRole.equals("Volunteer")) {
@@ -202,6 +204,8 @@ public class SaveManager {
 				myParkList.add(myPark);
 				theUserFileList.remove(0);
 			}			
+			
+			theUserFileList.remove(0);
 			
 			ParkManager myManager = new ParkManager(myEmail, myFirstName, myLastName, myParkList);
 			
