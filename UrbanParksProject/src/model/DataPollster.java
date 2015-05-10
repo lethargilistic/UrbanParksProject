@@ -207,13 +207,7 @@ public class DataPollster {
 		}
 		
 		List<Administrator> aList = myUserList.getAdministratorCopyList();
-<<<<<<< HEAD
-		// TODO traverse aList and compares email.
-		
-		
-		//default
-		return "Administrator";
-=======
+
 		for (Administrator a : aList) {
 			if (a.getEmail().equals(theEmail)) {
 				user = "Administrator";
@@ -221,7 +215,7 @@ public class DataPollster {
 		}
 
 		return user;
->>>>>>> branch 'master' of https://github.com/360Group3/UrbanParksProject.git
+
 		
 		
 	}
