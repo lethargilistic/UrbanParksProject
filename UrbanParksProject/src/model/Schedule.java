@@ -202,7 +202,7 @@ public class Schedule {
 
 		switch(theUserType) {
 			case "Administrator":
-				Administrator a = new Administrator(theEmail, theFirstName, theLastName);
+				Administrator a = new Administrator(theFirstName, theLastName, theEmail);
 				List<Administrator> listAdmin = myUserList.getAdministratorCopyList();
 				listAdmin.add(a);
 				myUserList.setAdministratorList(listAdmin);
