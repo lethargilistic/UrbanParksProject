@@ -215,10 +215,14 @@ public class ParkManagerUI {
 		if(theVolunteerList.isEmpty()) {
 			System.out.println("There are no Volunteers associated with this Job.");
 		} else {
+			System.out.println("\n");
+			
 			for(ArrayList<String> volunteerArray : theVolunteerList) {
 				Volunteer volunteer = thePollster.getVolunteer(volunteerArray.get(0));
-				System.out.println(volunteer.getFirstName() + " " + volunteer.getLastName());
-				System.out.println("Email: " + volunteer.getEmail() + "\n");
+				
+				System.out.println("Name: " + volunteer.getFirstName() + " " + volunteer.getLastName());
+				System.out.println("Email: " + volunteerArray.get(0));
+				System.out.println("Grade: " + volunteerArray.get(1) + "\n");
 			}
 		}
 	}
