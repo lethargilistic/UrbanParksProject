@@ -204,10 +204,24 @@ public class Administrator {
 	 */
 	private void displayAllVolunteersLNFN(final List<Volunteer> theVols) {
 		System.out.println("Here is the list of all Volunteers: Last name, First name\n");
+		List<Job> jobs = null;
 		
 		for (int i = 0; i < theVols.size(); i++) {
 			final Volunteer v = theVols.get(i);
 			System.out.println(v.getLastName() + ", " + v.getFirstName());
+			System.out.println("Email: " + v.getEmail());
+			jobs = myPollster.getVolunteerJobs(v);
+			if (!jobs.isEmpty()) {
+				System.out.println("Jobs signed up for: ");
+				for (int j = 0; j < jobs.size(); j++) {
+					final Job job = jobs.get(j);
+					System.out.println("\tJob ID #" + job.getJobID());
+				}
+			}
+		}
+		
+		if (jobs.isEmpty()) {
+			System.out.println("This volunteer has not signed up for any jobs.");
 		}
 	}
 	
