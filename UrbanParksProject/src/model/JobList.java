@@ -44,7 +44,4 @@ public class JobList {
 	public int getNumberJobs() {
 		return myJobList.size();
 	}
-
-	
-
 }
