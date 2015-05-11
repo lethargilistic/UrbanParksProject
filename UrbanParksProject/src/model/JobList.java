@@ -45,3 +45,4 @@ public class JobList {
 		return myJobList.size();
 	}
 }
+
