@@ -89,7 +89,7 @@ public class ScheduleTest {
 	 * Testing with a Job having invalid dates.
 	 */
 	@Test
-	public void test2ForReceiveJob() {
+	public void testForInvalidDatesReceiveJob() {
 		Job badDates = new Job(myPark, 10, 10, 10,
 						"06172015",
 						"06152015", 
@@ -103,7 +103,7 @@ public class ScheduleTest {
 	 * Testing with a Job that doesn't have an empty Volunteer list.
 	 */
 	@Test
-	public void test4ForReceiveJob() {
+	public void testForEmptyVolListReceiveJob() {
 		ArrayList<String> temp = new ArrayList<>();
 		temp.add(myVolEmail);
 		temp.add("Light");
@@ -120,7 +120,7 @@ public class ScheduleTest {
 	 * work grade amounts.
 	 */
 	@Test
-	public void test6ForReceiveJob() {
+	public void testForNoWorkersReceiveJob() {
 		Job noSpace  =  new Job(myPark, 0, 0, 0,
 								"06172015",
 								"06172015", 
@@ -134,7 +134,7 @@ public class ScheduleTest {
 	 * Testing with a Job with a null Park.
 	 */
 	@Test
-	public void test8ForReceiveJob() {
+	public void testForNullParkReceiveJob() {
 		Job nullPark =  new Job(myPark, 2, 2, 2,
 								"06172015",
 								"06172015", 
@@ -149,7 +149,7 @@ public class ScheduleTest {
 	 * Testing with a Job with a null ParkManager.
 	 */
 	@Test
-	public void test9ForReceiveJob() {
+	public void testForNullParkManagerReceiveJob() {
 		Job nullMngr =  new Job(myPark, 2, 2, 2,
 								"06172015",
 								"06172015", 
@@ -163,7 +163,7 @@ public class ScheduleTest {
 	 * Testing with a negative job id number.
 	 */
 	@Test
-	public void test1ForAddVolunteerToJob() {
+	public void testForAddNegJobIDVolunteerToJob() {
 		boolean bool9 = false; //an error was showing up so I had to initialize this to false.
 		try { //I added exceptions to addVolunteer so I put this into a try catch block.
 			bool9 = mySchedule.addVolunteerToJob(myVolEmail, -10, 2);
@@ -178,7 +178,7 @@ public class ScheduleTest {
 	 * Testing with an invalid work grade number.
 	 */
 	@Test
-	public void test2ForAddVolunteerToJob() {
+	public void testForInvalidWorkGradeAddVolunteerToJob() {
 		boolean bool1 = false; //an error was showing up so I had to initialize this to false.
 		try { //I added exceptions to addVolunteer so I put this into a try catch block.
 			bool1 = mySchedule.addVolunteerToJob(myVolEmail, 10, 4);
