@@ -36,16 +36,11 @@ public class DataPollster {
 	//TODO: test all possible conflicts
 		//Don't have a job they've already signed up for on that day
 		//Job has no room.
-		//TODO:The job's start date has not passed.
 			//Not sure where we're storing the current date. Do we use the System time?
 	public List<Job> getPendingJobs(Volunteer theVolunteer) {
 		//USER STORY 2
 
 		//Called by Volunteer.viewUpcomingJobs()
-
-		//Calls JobList.getCopyList() to get a copy of myJobList
-			//TODO: clear this up with the others.
-			//It already has a reference to the joblist, though?
 		
 		//Check through myJobList and select all Jobs that the Volunteer can sign
 		//up for

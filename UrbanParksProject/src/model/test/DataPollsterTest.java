@@ -76,29 +76,29 @@ public class DataPollsterTest {
 		jBank.add(new Job(p, 5, 5, 5,
 						  "06152015", 
 						  "06152015", 
-						  "senorreido@gmail.com", new ArrayList<>()));
+						  "foo@gmail.com", new ArrayList<>()));
 
 		jBank.add(new Job(p, 5, 5, 5,
 				  		  "06162015", 
 				  		  "06162015", 
-				  		  "senorreido@gmail.com", vBank));
+				  		  "bar@gmail.com", vBank));
 
 		jBank.add(new Job(p, 5, 5, 5,
 				  		  "06172015", 
 				  		  "06172015", 
-				  		  "senorreido@gmail.com", vBank));
+				  		  "buzz@gmail.com", vBank));
 		jBank.add(new Job(p, 5, 5, 5,
 						  "06182015", 
 						  "06182015", 
-						  "senorreido@gmail.com", vBank));
+						  "bazz@gmail.com", vBank));
 		jBank.add(new Job(p, 5, 5, 5,
 				  		  "06192015", 
 				  		  "06192015", 
-				  		  "senorreido@gmail.com", vBank));
+				  		  "cadandscoundrel@gmail.com", vBank));
 		jBank.add(new Job(p, 5, 5, 5,
 				  		  "06202015", 
 				  		  "06202015", 
-				  		  "senorreido@gmail.com", vBank));
+				  		  "zahnthrawn@gmail.com", vBank));
 		
 		dp = new DataPollster(jl, ul);
 		s = new Schedule(jl, ul);
@@ -138,10 +138,10 @@ public class DataPollsterTest {
 		
 		
 		//TODO: So why don't we just pass the Job in here instead of the ID?
-		s.addVolunteerToJob(vBank.get(0), jobs.get(0).getJobID()); //NOTE: I added @throws exception
-		s.addVolunteerToJob(vBank.get(0), jobs.get(1).getJobID());//NOTE: I added @throws exception
-		s.addVolunteerToJob(vBank.get(0), jobs.get(2).getJobID());//NOTE: I added @throws exception
-		s.addVolunteerToJob(vBank.get(0), jobs.get(3).getJobID());//NOTE: I added @throws exception
+//		s.addVolunteerToJob(vBank.get(0), jobs.get(0).getJobID());//NOTE: I added @throws exception
+//		s.addVolunteerToJob(vBank.get(0), jobs.get(1).getJobID());//NOTE: I added @throws exception
+//		s.addVolunteerToJob(vBank.get(0), jobs.get(2).getJobID());//NOTE: I added @throws exception
+//		s.addVolunteerToJob(vBank.get(0), jobs.get(3).getJobID());//NOTE: I added @throws exception
 		
 		List<Job> vsJob = new ArrayList<Job>(); //Volunteer's Jobs
 		vsJob.add(jobs.get(0));

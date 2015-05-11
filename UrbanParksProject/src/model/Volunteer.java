@@ -78,20 +78,10 @@ public class Volunteer {
 		
 		Volunteer theOther = (Volunteer) theO;
 		
-		return this.myFirstName.equals(theOther.myFirstName)
-			   && this.myLastName.equals(theOther.myLastName);
+		return (this.myFirstName.equals(theOther.myFirstName)
+			   && this.myLastName.equals(theOther.myLastName)) 
+			   || myEmail.equals(theOther.getEmail());
 				
-	}
-	
-	public boolean equals2(Object theO) {
-		
-		if (!(theO instanceof Volunteer))
-			return false;
-		
-		Volunteer theOther = (Volunteer) theO;
-		
-		return myEmail.equals(theOther.getEmail());
-		
 	}
 	
 	@Override
