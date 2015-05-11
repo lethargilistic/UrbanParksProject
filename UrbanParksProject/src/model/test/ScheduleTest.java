@@ -61,12 +61,19 @@ public class ScheduleTest {
 		UserList myUserList = new UserList();
 		List<Park> pList = new ArrayList<Park>();
 		pList.add(myPark);
-		mySchedule = new Schedule(myJoblist);
+		mySchedule = new Schedule(myJoblist, myUserList);
 		DataPollster dp = new DataPollster(myJoblist, myUserList);
 	    myParkManager = new ParkManager(mySchedule, dp, pList, "tjsg1992@gmail.com");
 		myPark = new Park("Wright Park", "Tacoma", 98403);
-		myJob = new Job(myPark, 10, 10, 10, new GregorianCalendar(2015, 6, 17), 
-				new GregorianCalendar(2015, 6, 17), "tjsg1992@gmail.com");
+		myJob = new Job(myPark, 
+						0, 10,
+						0, 10,
+						0, 10,
+						"06172015",
+						"06172015", 
+						"tjsg1992@gmail.com",
+						new ArrayList<String>());
+		
 		myVolunteer = new Volunteer("generic@gmail.com", "Bob", "Smith");
 	}
 
@@ -86,8 +93,14 @@ public class ScheduleTest {
 	 */
 	@Test
 	public void test2ForReceiveJob() {
-		Job badDates = new Job(myPark, 10, 10, 10, new GregorianCalendar(2015, 6, 17), 
-					   new GregorianCalendar(2015, 6, 15), "tjsg1992@gmail.com");
+		Job badDates = new Job(myPark, 
+						0, 10,
+						0, 10,
+						0, 10,
+						"06172015",
+						"06152015", 
+						"tjsg1992@gmail.com",
+						new ArrayList<String>());
 		boolean bool1 = mySchedule.receiveJob(badDates);
 		assertFalse(bool1);
 	}
@@ -97,7 +110,7 @@ public class ScheduleTest {
 	 */
 	@Test
 	public void test4ForReceiveJob() {
-		myJob.myVolunteerList.add(myVolEmail);
+		myJob.getVolunteerList().add(myVolEmail);
 		boolean bool3 = mySchedule.receiveJob(myJob);
 		assertFalse(bool3);
 	}
@@ -108,8 +121,14 @@ public class ScheduleTest {
 	 */
 	@Test
 	public void test6ForReceiveJob() {
-		Job noSpace = new Job(myPark, 0, 0, 0, new GregorianCalendar(2015, 6, 17), 
-					  new GregorianCalendar(2015, 6, 17), "tjsg1992@gmail.com");
+		Job noSpace  =  new Job(myPark, 
+								0, 0,
+								0, 0,
+								0, 0,
+								"06172015",
+								"06172015", 
+								"tjsg1992@gmail.com",
+								new ArrayList<String>());
 		boolean bool5 = mySchedule.receiveJob(noSpace);
 		assertFalse(bool5);
 	}
@@ -121,13 +140,51 @@ public class ScheduleTest {
 	@Test
 	public void test7ForReceiveJob() {
 		int itrs = 5;
-		Job overflowed = new Job(myPark, 2, 10, 4, new GregorianCalendar(2015, 6, 17), 
-						 new GregorianCalendar(2015, 6, 17), "tjsg1992@gmail.com");
+		Job overflowed = new Job(myPark, 
+				0, 2,
+				0, 2,
+				0, 2,
+				"06172015",
+				"06172015", 
+				"tjsg1992@gmail.com",
+				new ArrayList<String>());
+		
 		for (int i = 0; i < itrs; i++) {
 			overflowed.incrementLight();
 		}
 		boolean bool6 = mySchedule.receiveJob(overflowed);
-		assertFalse(bool6);
+		assertFalse("Light overflow failed", bool6);
+		
+		overflowed = new Job(myPark, 
+				0, 2,
+				0, 2,
+				0, 2,
+				"06172015",
+				"06172015", 
+				"tjsg1992@gmail.com",
+				new ArrayList<String>());
+		
+		for (int i = 0; i < itrs; i++) {
+			overflowed.incrementMedium();
+		}
+		bool6 = mySchedule.receiveJob(overflowed);
+		assertFalse("Medium overflow failed", bool6);
+		
+
+		overflowed = new Job(myPark, 
+				0, 2,
+				0, 2,
+				0, 2,
+				"06172015",
+				"06172015", 
+				"tjsg1992@gmail.com",
+				new ArrayList<String>());
+		
+		for (int i = 0; i < itrs; i++) {
+			overflowed.incrementHeavy();
+		}
+		bool6 = mySchedule.receiveJob(overflowed);
+		assertFalse("Heavy overflow failed", bool6);
 	}
 	
 	/**
@@ -135,8 +192,14 @@ public class ScheduleTest {
 	 */
 	@Test
 	public void test8ForReceiveJob() {
-		Job nullPark = new Job(null, 5, 5, 5, new GregorianCalendar(2015, 6, 17),
-				new GregorianCalendar(2015, 6, 17), "tjsg1992@gmail.com");
+		Job nullPark =  new Job(myPark, 
+								0, 2,
+								0, 2,
+								0, 2,
+								"06172015",
+								"06172015", 
+								"tjsg1992@gmail.com",
+								null);
 		boolean bool7 = mySchedule.receiveJob(nullPark);
 		assertFalse(bool7);
 	}
@@ -147,8 +210,14 @@ public class ScheduleTest {
 	 */
 	@Test
 	public void test9ForReceiveJob() {
-		Job nullMngr = new Job(myPark, 5, 5, 5, new GregorianCalendar(2015, 6, 17),
-				new GregorianCalendar(2015, 6, 17), null);
+		Job nullMngr =  new Job(myPark, 
+								0, 2,
+								0, 2,
+								0, 2,
+								"06172015",
+								"06172015", 
+								null,
+								new ArrayList<String>());
 		boolean bool8 = mySchedule.receiveJob(nullMngr);
 		assertFalse(bool8);
 	}
@@ -184,7 +253,7 @@ public class ScheduleTest {
 	}
 	
 	@After
-	public void teardown()
+	public void tearDown()
 	{
 		Job.setNextJobID(0);
 	}
