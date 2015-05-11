@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -23,15 +24,11 @@ public class SaveManager {
 	 * Read jobList.txt, and generate from it a JobList containing all Jobs and their information.
 	 */
 	public JobList loadJobList() {
+		File inFile = getJobFile();
+		
 		JobList myJobList = new JobList();
 		ArrayList<String> jobFileList = new ArrayList<String>();
 		ArrayList<Job> myParsedList = new ArrayList<Job>();
-		
-		File inFile = new File("rsc/jobList.txt");
-		
-		if(!inFile.exists()) {
-			inFile = new File("rsc\\jobList.txt");
-		}
 		
 		if(inFile.exists() && !inFile.isDirectory()) {
 			try {
@@ -39,29 +36,48 @@ public class SaveManager {
 			} catch (FileNotFoundException e) {
 				System.err.println("jobList.txt was detected, but could not be loaded. Please delete jobFile.txt and restart the program.");
 			}
-		}
+		} 
 		
 		myParsedList = parseJobFile(jobFileList, myParsedList);
 		myJobList.setJobList(myParsedList);
 		
-		return myJobList;
+		return myJobList;		
+	}
+	
+	/*
+	 * Return the File to load/save job data to.
+	 */
+	private File getJobFile() {
+		File jobFile = new File("rsc/jobList.txt");
 		
+		jobFile = new File("rsc/jobList.txt"); //Try iOS
+		if(jobFile.exists()) return jobFile;
+		
+		jobFile = new File("rsc\\jobList.txt"); //Try Windows
+		if(jobFile.exists()) return jobFile;
+		
+		try {
+			jobFile = new File(SaveManager.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath()); //Try jar
+		} catch (URISyntaxException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		jobFile = jobFile.getParentFile();		
+		jobFile = new File(jobFile.toString() + "\\jobList.txt");		
+		
+		return jobFile;
 	}
 	
 	/**
 	 * Read userList.txt, and generate from it a UserList containing all Users and their information.
 	 */
 	public UserList loadUserList() {
+		File inFile = getUserFile();
+		
 		UserList myUserList = new UserList();
 		ArrayList<String> userFileList = new ArrayList<String>();
 		ArrayList myParsedList = new ArrayList();
-		
-		File inFile = new File("rsc/userList.txt");
-		
-		if(!inFile.exists()) {
-			inFile = new File("rsc\\userList.txt");
-		}
-		
 		
 		if(inFile.exists() && !inFile.isDirectory()) {
 			try {
@@ -70,9 +86,34 @@ public class SaveManager {
 				System.err.println("userList.txt was detected, but could not be loaded. Please delete userFile.txt and restart the program.");
 			}
 		}
-		
+				
 		myUserList = parseUserFile(userFileList, myUserList);		
 		return myUserList;
+	}
+	
+	/*
+	 * Return the File to load/save user data to.
+	 */
+	private File getUserFile() {
+		File userFile = new File("rsc/userList.txt");
+		
+		userFile = new File("rsc/userList.txt"); //Try iOS
+		if(userFile.exists()) return userFile;
+		
+		userFile = new File("rsc\\jobList.txt"); //Try Windows
+		if(userFile.exists()) return userFile;
+		
+		try {
+			userFile = new File(SaveManager.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath()); //Try jar
+		} catch (URISyntaxException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		userFile = userFile.getParentFile();		
+		userFile = new File(userFile.toString() + "\\userList.txt");
+
+		return userFile;
 	}
 	
 	
@@ -241,11 +282,7 @@ public class SaveManager {
 	public boolean saveJobList(JobList theJobList) {
 		List<String> jobInfo = extractJobInfo(theJobList);
 		
-		File outFile = new File("rsc/jobList.txt");
-		
-		if(!outFile.exists()) {
-			outFile = new File("rsc\\jobList.txt");
-		}
+		File outFile = getJobFile();
 		
 		try {
 			FileWriter fw = new FileWriter(outFile);
@@ -300,11 +337,7 @@ public class SaveManager {
 	 */
 	public boolean saveUserList(UserList theUserList) {
 		
-		File outFile = new File("rsc/userList.txt");
-		
-		if(!outFile.exists()) {
-			outFile = new File("rsc\\userList.txt");
-		}
+		File outFile = getUserFile();
 		
 		List<String> userInfo = extractUserInfo(theUserList);
 		
