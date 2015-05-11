@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -170,7 +171,7 @@ public class Schedule {
 		}
 		
 		if (okToAdd && jobExists && openGrade) {
-			// If everything is okay, we add the Volunteer to the Jobâ€™s Volunteer List,
+			// If everything is okay, we add the Volunteer to the Job’s Volunteer List,
 			// increment the grade slot, and return.
 			j.getVolunteerList().add(theVolunteer);
 			
@@ -222,6 +223,21 @@ public class Schedule {
 				listVols.add(v);
 				myUserList.setVolunteerList(listVols);
 				break;
+		}
+		
+	}
+	
+	/**
+	 * Update the list of managed parks of a Park Manager.
+	 * @author Taylor Gorman
+	 */
+	public void updateParkList(String theEmail, List<Park> theManagedParks) {
+		List<ParkManager> myManagerList = myUserList.getParkManagerCopyList();
+		
+		for(ParkManager manager : myManagerList) {
+			if(manager.getEmail().equals(theEmail)) {
+				manager.setManagedParks(theManagedParks);
+			}
 		}
 		
 	}
