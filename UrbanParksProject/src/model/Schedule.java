@@ -198,6 +198,37 @@ public class Schedule {
 																	//an invalid ID. It will be caught in a try-catch block.
 		}
 		
+		Job addJob = null;
+		
+		//Find the job that we are adding to.
+		for(Job job : myJobList.getCopyList()) {
+			if(job.getJobID() == theJobID) {
+				addJob = job;
+			}
+		}
+		
+		GregorianCalendar startDate = addJob.getStartDate();
+		GregorianCalendar endDate = addJob.getEndDate();
+		
+		boolean sameDate = false;
+		
+		for(Job job : myJobList.getCopyList()) {
+			for(ArrayList<String> volunteer : job.getVolunteerList()) {
+				if(volunteer.get(0).equals(theVolunteer.get(0))) {
+					//Found a job with the volunteer in it!
+					if(startDate.equals(job.getStartDate())) sameDate = true;
+					if(startDate.equals(job.getEndDate())) sameDate = true;
+					if(endDate.equals(job.getStartDate())) sameDate = true;
+					if(endDate.equals(job.getEndDate())) sameDate = true;
+				}
+			}
+		}
+		
+		if(sameDate) {
+			System.out.println("\nSorry, but you are already signed up for a job that occurs the same date!");
+			return false;
+		}
+		
 		//Calls JobList.getJobList() to get the master job list which is editable
 		List<Job> editableJobList = myJobList.getJobList();
 		
