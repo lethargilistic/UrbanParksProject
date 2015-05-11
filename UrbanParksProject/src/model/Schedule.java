@@ -181,7 +181,7 @@ public class Schedule {
 	 * @return true if the Volunteer was added to the Job and false otherwise.
 	 * @throws Exception 
 	 */
-	public boolean addVolunteerToJob(String theVolunteer, int theJobID, int theWorkGrade) throws Exception {
+	public boolean addVolunteerToJob(ArrayList<String> theVolunteer, int theJobID) throws Exception {
 		boolean okToAdd = true;
 		
 		//Schedule will check to make sure the Job ID is valid
@@ -191,10 +191,6 @@ public class Schedule {
 			throw new IllegalArgumentException("This job ID does not exist");
 																	//NOTE: this exception is thrown if the user enters
 																	//an invalid ID. It will be caught in a try-catch block.
-		}
-		
-		if (theWorkGrade < 1 || theWorkGrade > 3) {
-			okToAdd = false;
 		}
 		
 		//Calls JobList.getJobList() to get the master job list which is editable
@@ -219,24 +215,24 @@ public class Schedule {
 		// Schedule will check to make sure there is a slot open in the grade using 
 		// the Job object from before
 		boolean openGrade = false;
-		switch (theWorkGrade) {
-			case 1:
+		switch (theVolunteer.get(1)) {
+			case "Light":
 				if (j.hasLightRoom()) {
 					openGrade = true;
 				}
 				break;
-			case 2:
+			case "Medium":
 				if (j.hasMediumRoom()) {
 					openGrade = true;
 				}
 				break;
-			case 3:
+			case "Heavy":
 				if (j.hasHeavyRoom()) {
 					openGrade = true;
 				}
 				break;
 			default:
-					throw new IllegalStateException(theWorkGrade + " for job " + theJobID + " is full");	
+					throw new IllegalStateException(theVolunteer.get(1) + " for job " + theJobID + " is full");	
 												//This will be caught in a try-catch block when the volunteer attempts
 												//to join a job grade that is not available.
 		}
@@ -245,32 +241,18 @@ public class Schedule {
 			// If everything is okay, we add the Volunteer to the Job’s Volunteer List,
 			// increment the grade slot, and return.
 
-			ArrayList<String> volArray = new ArrayList<String>();
-			volArray.add(theVolunteer);
-			switch (theWorkGrade) {
-			case 1:
-				volArray.add("Light");
-				break;
-			case 2:
-				volArray.add("Medium");
-				break;
-			case 3:
-				volArray.add("Heavy");
-				break;
-			}
-
-			j.getVolunteerList().add(volArray);
+			j.getVolunteerList().add(theVolunteer);
 
 			
 			//increment the value of the grade because a person has been added to it.
-			switch (theWorkGrade) {
-			case 1:
+			switch (theVolunteer.get(1)) {
+			case "Light":
 				j.incrementLight();
 				break;
-			case 2:
+			case "Medium":
 				j.incrementMedium();
 				break;
-			case 3:
+			case "Heavy":
 				j.incrementHeavy();
 				break;
 			}
