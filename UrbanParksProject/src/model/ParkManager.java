@@ -33,6 +33,7 @@ public class ParkManager {
 		this.myEmail = theEmail;
 		this.myFirstName = theFirstName;
 		this.myLastName = theLastName;
+		myManagedParks = new ArrayList<Park>();
 	}
 	
 	public ParkManager(String theEmail, String theFirstName, String theLastName, List<Park> theParks) {
