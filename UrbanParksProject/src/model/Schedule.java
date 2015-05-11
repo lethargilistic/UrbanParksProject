@@ -200,7 +200,7 @@ public class Schedule {
 		final List<Job> validJobList = new ArrayList<>(myJobList.getJobList().size());
 		for (int i = 0; i < editableJobList.size(); i++) {
 			final Job j = editableJobList.get(i);
-			if (j.getStartDate().after(now)) { // second condition takes care of BIZ RULE #6
+			if (j.getStartDate().after(now)) { // BIZ RULE #6 - doesn't work!
 				validJobList.add(j);
 			}
 		}
