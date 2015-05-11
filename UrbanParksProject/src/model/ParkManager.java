@@ -8,7 +8,9 @@ import java.util.List;
 /**
  * ParkManager can add new jobs to the schedule, view all jobs for the parks they manage,
  * and view all volunteers for a given job.
+ * 
  * @author Taylor Gorman
+ * @author Reid Thompson
  * @version 9 May 2015
  *
  */
@@ -96,7 +98,7 @@ public class ParkManager {
 			
 			case 4:
 				status = false;
-				
+				break;
 			default: 
 				myUI.displayInvalidChoice();
 				break;
@@ -169,15 +171,14 @@ public class ParkManager {
 	 * Print a list of every Volunteer for a selected Job.
 	 */
 	public void viewJobVolunteers() {
-		int myJobID = myUI.getJobID();
+		int jobID = myUI.getJobID();
 		
-		if(!checkPark(myJobID)) { //enter this if park ID is NOT valid.
+		if(!checkPark(jobID)) { //enter this if park ID is NOT valid.
 			myUI.showJobIDError();
-			return;
+		} else {
+			ArrayList<String> myVolunteerList = (ArrayList<String>) myPollster.getVolunteerList(jobID);
+			myUI.displayVolunteers(myVolunteerList, myPollster);	
 		}
-		
-		ArrayList<String> myVolunteerList = (ArrayList<String>) myPollster.getVolunteerList(myJobID);
-		myUI.displayVolunteers(myVolunteerList, myPollster);		
 	}
 	
 	public void setManagedParks(List<Park> theManagedParks) {
@@ -185,18 +186,20 @@ public class ParkManager {
 	}
 
 	//TODO: What is the user story for this method?
+	// user story #6
 	/**
 	 * Check to make sure that the Job ID is valid.
 	 * @return True if valid, false if not.
 	 */
 	private boolean checkPark(int theJobID) {
-		for (Job j : myPollster.getAllJobs())
-		{
-			if (j.getJobID() == theJobID && myManagedParks.contains(j.getPark()))
-				return true;
+		boolean result = false;
+
+		for (Job j : myPollster.getAllJobs()) {
+			if (j.getJobID() == theJobID)
+				result = true;
 		}
-		return false;
-		}
+		return result;
+	}
 
 	public List<Park> getManagedParks() {
 		return Collections.unmodifiableList(myManagedParks);
