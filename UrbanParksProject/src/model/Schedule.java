@@ -54,10 +54,9 @@ public class Schedule {
 		}
 		//BIZ rule 2. A job may not be added if the total number of pending jobs during that week 
 			//(3 days on either side of the job days) is currently 5.
-		if (!checkThisWeek(theJob)) {
+		else if (!checkThisWeek(theJob)) {
 			okToAdd = false; //this is entered if checkThisWeek() returns false;
 		} 
-		
 		
 		//BIZ rule 5. A job may not be added that is in the past or more than three months in the future. 
 				//I am going to say that the manager can only create a job on a date after today.
@@ -70,21 +69,24 @@ public class Schedule {
 			okToAdd = false;
 		}
 		
-		
-
 		// checks if date range is valid
-		if (theJob.getStartDate().after(theJob.getEndDate())) {
+		else if (theJob.getStartDate().after(theJob.getEndDate())) {
 			okToAdd = false;
 		}
 		
 		
 		// checks that the job id is valid
-		if (theJob.getJobID() < Integer.MIN_VALUE || theJob.getJobID() > Integer.MAX_VALUE) {
+		else if (theJob.getJobID() < Integer.MIN_VALUE || theJob.getJobID() > Integer.MAX_VALUE) {
+			okToAdd = false;
+		}
+		
+		// check if the volunteer list is null
+		else if (theJob.getVolunteerList() == null){
 			okToAdd = false;
 		}
 		
 		// checks if volunteer list is empty
-		if (!theJob.getVolunteerList().isEmpty()) {
+		else if (!theJob.getVolunteerList().isEmpty()) {
 			okToAdd = false;
 		}
 		
@@ -98,20 +100,20 @@ public class Schedule {
 		
 		//I made changed here! I changed all the or (||) to and (&&). Now the if-statement wont be entered
 		//unless there is zero room in each job level. Arsh.
-		if (!theJob.hasLightRoom() && !theJob.hasMediumRoom() && !theJob.hasHeavyRoom()) {
+		else if (!theJob.hasLightRoom() && !theJob.hasMediumRoom() && !theJob.hasHeavyRoom()) {
 			okToAdd = false;
 		}
 		
-		if (theJob.getLightCurrent() > theJob.getLightMax() || theJob.getMediumCurrent() > theJob.getMediumMax()
+		else if (theJob.getLightCurrent() > theJob.getLightMax() || theJob.getMediumCurrent() > theJob.getMediumMax()
 				|| theJob.getHeavyCurrent() > theJob.getHeavyMax()) {
 			okToAdd = false;
 		}
 		
-		if (theJob.getPark() == null) {
+		else if (theJob.getPark() == null) {
 			okToAdd = false;
 		}
 		
-		if (theJob.getManager() == null){
+		else if (theJob.getManager() == null){
 			okToAdd = false;
 		}
 		
