@@ -199,11 +199,20 @@ public class Schedule {
 		//Calls JobList.getJobList() to get the master job list which is editable
 		List<Job> editableJobList = myJobList.getJobList();
 		
+		final GregorianCalendar now = new GregorianCalendar();
+		final List<Job> validJobList = new ArrayList<>(myJobList.getJobList().size());
+		for (int i = 0; i < editableJobList.size(); i++) {
+			final Job j = editableJobList.get(i);
+			if (j.getStartDate().after(now)) { // second condition takes care of BIZ RULE #6
+				validJobList.add(j);
+			}
+		}
+		
 		boolean jobExists = false;
 		Job j = null;
-		for (int i = 0; i < editableJobList.size(); i++) {
+		for (int i = 0; i < validJobList.size(); i++) {
 			// If invalid, return else get Job object with that Job ID
-			j = editableJobList.get(i);
+			j = validJobList.get(i);
 			
 			if (j.getJobID() == theJobID) {
 				jobExists = true;
@@ -212,8 +221,7 @@ public class Schedule {
 		}
 		
 		// If the job doesn't exist, return false.
-		final GregorianCalendar now = new GregorianCalendar();
-		if (j == null || j.getStartDate().before(now)) // second condition takes care of BIZ RULE #6
+		if (j == null)
 			return false;
 		
 		// Schedule will check to make sure there is a slot open in the grade using 
