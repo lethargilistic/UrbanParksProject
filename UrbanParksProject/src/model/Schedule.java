@@ -143,7 +143,7 @@ public class Schedule {
 		
 		// Schedule will check to make sure there is a slot open in the grade using 
 		// the Job object from before
-		boolean openGrade = false;
+		boolean openGrade = true;
 		
 		/*
 		 * 
