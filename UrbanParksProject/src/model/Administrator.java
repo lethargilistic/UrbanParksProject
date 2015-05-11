@@ -107,12 +107,30 @@ public class Administrator {
 	 */
 	private boolean executeOptionChosen(final int theChoice) {
 		boolean stayLoggedIn = true;
-		if (theChoice <= 0 || theChoice > 2) {
+		if (theChoice <= 0 || theChoice > 3) {
 			System.out.println("Invalid command selected. Please try again.\n");
 			initialize(); // restart UI interaction
 		} else { // valid input was given
 			switch(theChoice) { // no default case needed because of original if test
-				case 1: // search volunteers by last name
+				case 1: // list all volunteers by last name, first name (sorted ascending)
+					List<Volunteer> allVols = myPollster.getUserList().getVolunteerCopyList();
+					Collections.sort(allVols, new Comparator<Volunteer>() {
+						
+						// to sort Volunteers by last name ascending and then by first name ascending
+						@Override
+						public int compare(Volunteer theVol1, Volunteer theVol2) {
+							int result = theVol1.getLastName().compareTo(theVol2.getLastName());
+							if (result == 0) {
+								result = theVol1.getFirstName().compareTo(theVol2.getFirstName());
+							}
+							return result;
+						}
+						
+					});
+					displayAllVolunteersLNFN(allVols);
+					break;
+				case 2: // search volunteers by last name
+					System.out.println("Option 2 selected.\n");
 				    String lastName = myUI.promptForVolsLastName();
 				    boolean lastNameValid = !lastName.equals(""); // other conditions to add?
 					while (!lastNameValid) {
@@ -122,19 +140,23 @@ public class Administrator {
 					} // lastName is valid now
 					// get and output list of Volunteers with matching last names
 					List<Volunteer> matchingVols = getMatchingVolunteers(lastName);
-					Collections.sort(matchingVols, new Comparator<Volunteer>() {
-
-						// to sort Volunteers in ascending order based on first name
-						@Override
-						public int compare(final Volunteer theVol1, final Volunteer theVol2) {
-							return theVol1.getFirstName().compareTo(theVol2.getFirstName());
-						}
-						
-					});
-					displayMatchingVolunteers(lastName, matchingVols);
+					if (!matchingVols.isEmpty()) {
+						Collections.sort(matchingVols, new Comparator<Volunteer>() {
+	
+							// to sort Volunteers in ascending order based on first name
+							@Override
+							public int compare(final Volunteer theVol1, final Volunteer theVol2) {
+								return theVol1.getFirstName().compareTo(theVol2.getFirstName());
+							}
+							
+						});
+						displayMatchingVolunteers(lastName, matchingVols);
+					} else {
+						System.out.println("There were no Volunteers matching the last name " + lastName);
+					}
 					break;
-				case 2: // logout
-					System.out.println("Option 2 selected.\n"
+				case 3: // logout
+					System.out.println("Option 3 selected.\n"
 							+ "Logging out now.\n");
 					stayLoggedIn = false;
 					break;
@@ -174,6 +196,18 @@ public class Administrator {
 		for (int i = 0; i < theMatchingVols.size(); i++) {
 			final Volunteer currVol = theMatchingVols.get(i);
 			System.out.println(currVol.getFirstName() + " " + currVol.getLastName());
+		}
+	}
+	
+	/**
+	 * 
+	 */
+	private void displayAllVolunteersLNFN(final List<Volunteer> theVols) {
+		System.out.println("Here is the list of all Volunteers: Last name, First name\n");
+		
+		for (int i = 0; i < theVols.size(); i++) {
+			final Volunteer v = theVols.get(i);
+			System.out.println(v.getLastName() + ", " + v.getFirstName());
 		}
 	}
 	
