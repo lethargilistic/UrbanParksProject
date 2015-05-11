@@ -195,13 +195,19 @@ public class DataPollster {
 	 */
 	public String getUserType(String theEmail) {
 		String userType = "";
-		if(myUserList.getVolunteerCopyList().contains(theEmail))
-			userType = "Volunteer";
-		else if(myUserList.getParkManagerCopyList().contains(theEmail))
-			userType = "ParkManager";
-		else if (myUserList.getAdministratorCopyList().contains(theEmail))
-			userType = "Administrator";
 		
+		for(Volunteer volunteer : myUserList.getVolunteerCopyList()) {
+			if(volunteer.getEmail().equals(theEmail)) userType = "Volunteer";
+		}
+		
+		for(ParkManager manager : myUserList.getParkManagerCopyList()) {
+			if(manager.getEmail().equals(theEmail)) userType = "ParkManager";
+		}
+		
+		for(Administrator administrator : myUserList.getAdministratorCopyList()) {
+			if(administrator.getEmail().equals(theEmail)) userType = "Administrator";
+		}
+
 		return userType;
 	}
 
