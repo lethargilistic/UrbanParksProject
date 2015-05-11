@@ -64,6 +64,7 @@ public class Schedule {
 		if (!theJob.getStartDate().after(now)) {
 			okToAdd = false;
 		}
+		
 		now.add(Calendar.DAY_OF_MONTH, 90);
 		if (theJob.getStartDate().after(now)) {
 			okToAdd = false;
@@ -211,7 +212,8 @@ public class Schedule {
 		}
 		
 		// If the job doesn't exist, return false.
-		if (j == null)
+		final GregorianCalendar now = new GregorianCalendar();
+		if (j == null || j.getStartDate().before(now)) // second condition takes care of BIZ RULE #6
 			return false;
 		
 		// Schedule will check to make sure there is a slot open in the grade using 
@@ -240,24 +242,10 @@ public class Schedule {
 		}
 		
 		if (okToAdd && jobExists && openGrade) {
-			// If everything is okay, we add the Volunteer to the Job’s Volunteer List,
+			// If everything is okay, we add the Volunteer to the Jobï¿½s Volunteer List,
 			// increment the grade slot, and return.
 
 			j.getVolunteerList().add(theVolunteer);
-
-			
-			//increment the value of the grade because a person has been added to it.
-			switch (theVolunteer.get(1)) {
-			case "Light":
-				j.incrementLight();
-				break;
-			case "Medium":
-				j.incrementMedium();
-				break;
-			case "Heavy":
-				j.incrementHeavy();
-				break;
-			}
 		} else {
 			// If either of these are false, we print to the console and return
 			System.out.println("Error with given data. Volunteer was not added to Job.");
