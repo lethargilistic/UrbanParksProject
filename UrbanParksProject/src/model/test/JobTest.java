@@ -42,13 +42,10 @@ public class JobTest {
 		myParkManager = new ParkManager(s, dp, pList, "tjsg1992@gmail.com");
 		
 		
-		myJob = new Job(myPark, 
-					    0, 2,
-					    0, 3,
-					    0, 4, 
+		myJob = new Job(myPark, 2, 3, 4, 
 					    startDate, endDate,
 					    myParkManager.getEmail(),
-					    new ArrayList<String>());
+					    new ArrayList<ArrayList<String>>());
 	}
 
 	@Test
@@ -63,13 +60,11 @@ public class JobTest {
 		
 		for (int i = 1; i <= 5; i++)
 		{
-			Job j = new Job(myPark, 
-							0, 2,
-							0, 3,
-							0, 4, 
+			Job j = new Job(myPark, 2,3,4, 
 							"06" + Integer.toString(11+i) + 1992, 
 							"06" + Integer.toString(11+i) + 1992, 
-							"moverby@gmail.com", new ArrayList<String>());
+							"moverby@gmail.com",
+						    new ArrayList<ArrayList<String>>());
 			assertEquals(i, j.getJobID());
 		}
 	}
