@@ -176,7 +176,7 @@ public class Volunteer {
 		int jobID = myUI.getJobID();
 
 		if(!checkPark(jobID)) { //enter this if park ID is NOT valid.
-			myUI.showJobIDError();	//the code for checkPark() is not yet written, we have to write it.
+			myUI.showJobIDError();
 			return;
 		}
 
@@ -235,6 +235,7 @@ public class Volunteer {
 	}
 
 
+	//TODO: Should be a Schedule method
 	/**
 	 * Check to make sure that the Job ID is valid.
 	 * @return True if valid, false if not.
