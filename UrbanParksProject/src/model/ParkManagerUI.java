@@ -49,8 +49,7 @@ public class ParkManagerUI {
 	private String getUserString() {		
 		String userInput = myScanner.nextLine();
 		
-		if(userInput.equals("")) { //TODO, maybe make this a while so that it will continuously 
-									//prompt the user, instead of just once? - Reid agrees.
+		if(userInput.equals("")) {
 			userInput = myScanner.nextLine();
 		}
 		return userInput;
@@ -61,7 +60,8 @@ public class ParkManagerUI {
 	 * Prompt the user to enter the ID of a Job, and then return it.
 	 */
 	public int getJobID() {
-		System.out.println("------------------------------------------\n\nPlease input the ID of the job whose volunteers you would"
+		System.out.println("------------------------------------------\n\n"
+				+ "Please input the ID of the job whose volunteers you would"
 				+ " like to view.");
 		int myJobID = getUserInt();
 		return myJobID;

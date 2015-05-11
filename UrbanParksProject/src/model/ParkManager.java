@@ -118,7 +118,8 @@ public class ParkManager {
 	 * 5. Tell the user if the new job was successfully added.
 	 */
 	public void createJob() {	
-		System.out.println("\n------------------------------------------\nPlease select the number preceding the park where the job is located.");
+		System.out.println("\n------------------------------------------\n"
+				+ "Please select the number preceding the park where the job is located.");
 		myUI.displayParks(myManagedParks); //Show the parks to the user, including their IDs
 		
 		int parkNum = myUI.getUserInt();
