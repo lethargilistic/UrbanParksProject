@@ -96,6 +96,10 @@ public class MainUI {
 		System.out.println("\nSorry, but your e-mail address was not recognized.");
 	}
 	
+	public void displayDuplicateError() {
+		System.out.println("\nSorry, but this email address is already in use.");
+	}
+	
 	
 	private int getUserInt() {
 		int userInput = 0;

@@ -23,7 +23,6 @@ public class Main {
 			UserList userList = saveManager.loadUserList();
 			Schedule schedule = new Schedule(jobList, userList);
 			DataPollster pollster = new DataPollster(jobList, userList);
-			
 			userInfo = directLogin(schedule, pollster);
 			
 			//If the command or information entered was invalid, we try again.
@@ -57,7 +56,6 @@ public class Main {
 	private static String[] directLogin(Schedule theSchedule, DataPollster thePollster) {
 		int loginCommand = UI.getLoginChoice();
 		String[] userInfo = null;
-		
 		switch (loginCommand) {
 			case 1: userInfo = loginUser(theSchedule, thePollster); break;
 			case 2: userInfo = registerUser(theSchedule, thePollster); break;
@@ -98,9 +96,34 @@ public class Main {
 		userInfo[3] = UI.getLastName();
 		userInfo[4] = UI.getUserType();
 		
-		if(userInfo[4] == null) userInfo = null;
-		
+		if(checkDuplicate(myPollster, userInfo[1])) {
+			userInfo = null;
+			UI.displayDuplicateError();
+		}
+
+		if(userInfo == null || userInfo[4] == null) userInfo = null;
 		return userInfo;
+	}
+	
+	/*
+	 * Check if the email is already being used. If so, return true. If not, return false.
+	 */
+	private static boolean checkDuplicate(DataPollster thePollster, String theEmail) {
+		
+		for(Volunteer volunteer : thePollster.getUserList().getVolunteerCopyList()) {
+			if(volunteer.getEmail().equals(theEmail)) return true;
+		}
+		
+		for(ParkManager parkManager : thePollster.getUserList().getParkManagerCopyList()) {
+			if(parkManager.getEmail().equals(theEmail)) return true;
+		}
+		
+		for(Administrator administrator : thePollster.getUserList().getAdministratorCopyList()) {
+			if(administrator.getEmail().equals(theEmail)) return true;
+		}
+		
+		
+		return false;
 	}
 	
 	
