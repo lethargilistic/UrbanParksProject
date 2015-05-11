@@ -247,7 +247,7 @@ public class Schedule {
 		}
 		
 		if (okToAdd && jobExists && openGrade) {
-			// If everything is okay, we add the Volunteer to the Job’s Volunteer List,
+			// If everything is okay, we add the Volunteer to the Jobï¿½s Volunteer List,
 			// increment the grade slot, and return.
 
 			j.getVolunteerList().add(theVolunteer);
@@ -308,3 +308,4 @@ public class Schedule {
 	}
 
 }
+
