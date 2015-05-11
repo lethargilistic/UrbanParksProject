@@ -54,9 +54,10 @@ public class Schedule {
 		}
 		//BIZ rule 2. A job may not be added if the total number of pending jobs during that week 
 			//(3 days on either side of the job days) is currently 5.
-		else if (!checkThisWeek(theJob)) {
+		if (!checkThisWeek(theJob)) {
 			okToAdd = false; //this is entered if checkThisWeek() returns false;
 		} 
+		
 		
 		//BIZ rule 5. A job may not be added that is in the past or more than three months in the future. 
 				//I am going to say that the manager can only create a job on a date after today.
@@ -64,30 +65,26 @@ public class Schedule {
 		if (!theJob.getStartDate().after(now)) {
 			okToAdd = false;
 		}
-		
 		now.add(Calendar.DAY_OF_MONTH, 90);
 		if (theJob.getStartDate().after(now)) {
 			okToAdd = false;
 		}
 		
+		
+
 		// checks if date range is valid
-		else if (theJob.getStartDate().after(theJob.getEndDate())) {
+		if (theJob.getStartDate().after(theJob.getEndDate())) {
 			okToAdd = false;
 		}
 		
 		
 		// checks that the job id is valid
-		else if (theJob.getJobID() < Integer.MIN_VALUE || theJob.getJobID() > Integer.MAX_VALUE) {
-			okToAdd = false;
-		}
-		
-		// check if the volunteer list is null
-		else if (theJob.getVolunteerList() == null){
+		if (theJob.getJobID() < Integer.MIN_VALUE || theJob.getJobID() > Integer.MAX_VALUE) {
 			okToAdd = false;
 		}
 		
 		// checks if volunteer list is empty
-		else if (!theJob.getVolunteerList().isEmpty()) {
+		if (!theJob.getVolunteerList().isEmpty()) {
 			okToAdd = false;
 		}
 		
@@ -101,20 +98,20 @@ public class Schedule {
 		
 		//I made changed here! I changed all the or (||) to and (&&). Now the if-statement wont be entered
 		//unless there is zero room in each job level. Arsh.
-		else if (!theJob.hasLightRoom() && !theJob.hasMediumRoom() && !theJob.hasHeavyRoom()) {
+		if (!theJob.hasLightRoom() && !theJob.hasMediumRoom() && !theJob.hasHeavyRoom()) {
 			okToAdd = false;
 		}
 		
-		else if (theJob.getLightCurrent() > theJob.getLightMax() || theJob.getMediumCurrent() > theJob.getMediumMax()
+		if (theJob.getLightCurrent() > theJob.getLightMax() || theJob.getMediumCurrent() > theJob.getMediumMax()
 				|| theJob.getHeavyCurrent() > theJob.getHeavyMax()) {
 			okToAdd = false;
 		}
 		
-		else if (theJob.getPark() == null) {
+		if (theJob.getPark() == null) {
 			okToAdd = false;
 		}
 		
-		else if (theJob.getManager() == null){
+		if (theJob.getManager() == null){
 			okToAdd = false;
 		}
 		
@@ -212,8 +209,7 @@ public class Schedule {
 		}
 		
 		// If the job doesn't exist, return false.
-		final GregorianCalendar now = new GregorianCalendar();
-		if (j == null || j.getStartDate().before(now)) // second condition takes care of BIZ RULE #6
+		if (j == null)
 			return false;
 		
 		// Schedule will check to make sure there is a slot open in the grade using 
@@ -242,7 +238,7 @@ public class Schedule {
 		}
 		
 		if (okToAdd && jobExists && openGrade) {
-			// If everything is okay, we add the Volunteer to the Jobï¿½s Volunteer List,
+			// If everything is okay, we add the Volunteer to the Job’s Volunteer List,
 			// increment the grade slot, and return.
 
 			j.getVolunteerList().add(theVolunteer);
