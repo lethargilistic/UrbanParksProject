@@ -179,9 +179,6 @@ public class ParkManager {
 			ArrayList<ArrayList<String>> myVolunteerList = myPollster.getVolunteerList(jobID);
 			myUI.displayVolunteers(myVolunteerList, myPollster);	
 		}
-		
-		ArrayList<ArrayList<String>> myVolunteerList = myPollster.getVolunteerList(jobID);
-		myUI.displayVolunteers(myVolunteerList, myPollster);		
 	}
 	
 	public void setManagedParks(List<Park> theManagedParks) {
