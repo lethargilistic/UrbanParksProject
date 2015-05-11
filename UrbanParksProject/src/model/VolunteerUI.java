@@ -114,7 +114,7 @@ public class VolunteerUI {
 	 * Display an error in the console that the Job ID was not recognized.
 	 */
 	public void showJobIDError() {
-		System.out.println("Sorry, but the Job ID was not recognized.");
+		System.out.println("\nSorry, but the Job ID was not recognized.");
 	}
 	
 	/**
@@ -143,7 +143,7 @@ public class VolunteerUI {
 	}
 	
 	public void displaySuccessMessage() {
-		System.out.println("\nYou were successfully added to the job!\n Thank you for helping to make the world a better place,"
+		System.out.println("\nYou were successfully added to the job!\nThank you for helping to make the world a better place,"
 				+ " one park at a time!");
 		
 	}
