@@ -235,7 +235,7 @@ public class ParkManagerUI {
 	 * Display an error in the console that the Job ID was not recognized.
 	 */
 	public void showJobIDError() {
-		System.out.println("Sorry, but the Job ID was not recognized.");
+		System.out.println("\nSorry, but this Job ID belongs to a park that you do not manage.");
 	}
 	
 	
