@@ -177,8 +177,12 @@ public class ParkManager {
 	 * @return True if valid, false if not.
 	 */
 	private boolean checkPark(int theJobID) {
-		//TODO
-		return true; //Unsure of how to implement this at the moment. Will it be done through DataPollster?	
+		for (Job j : myPollster.getAllJobs())
+		{
+			if (j.getJobID() == theJobID && myManagedParks.contains(j.getPark()))
+				return true;
+		}
+		return false;	
 	}
 
 	public List<Park> getManagedParks() {
