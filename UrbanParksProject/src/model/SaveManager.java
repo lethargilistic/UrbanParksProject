@@ -110,7 +110,7 @@ public class SaveManager {
 	/**
 	 * Recursively parse the array version of the Job File, construct Jobs from the information, and pass back a list of those jobs.
 	 */
-	public ArrayList<Job> parseJobFile(ArrayList<String> jobFileList, ArrayList<Job> theParsedList) {		
+	private ArrayList<Job> parseJobFile(ArrayList<String> jobFileList, ArrayList<Job> theParsedList) {		
 		//jobList.txt was not found, which is normal if the program has not been executed before.
 		if(jobFileList.size() < 1) {
 			return theParsedList;
@@ -168,7 +168,7 @@ public class SaveManager {
 	/**
 	 * Recursively parse the array version of the User File, construct Users from the information, and pass back a list of those users.
 	 */
-	public UserList parseUserFile(ArrayList<String> theUserFileList, UserList theUserList) {
+	private UserList parseUserFile(ArrayList<String> theUserFileList, UserList theUserList) {
 		
 		//userList.txt was not found, which is normal if the program has not been executed before.
 				if(theUserFileList.size() < 1) {
@@ -266,7 +266,7 @@ public class SaveManager {
 	/**
 	 * Copy JobList into an Array, line-by-line.
 	 */
-	public List<String> extractJobInfo(JobList theJobList) {
+	private List<String> extractJobInfo(JobList theJobList) {
 		List<String> jobInfo = new ArrayList<String>();
 		
 		for(Job job : theJobList.getCopyList()) {
@@ -329,7 +329,7 @@ public class SaveManager {
 	/**
 	 * Copy UserList into an Array, line-by-line.
 	 */
-	public List<String> extractUserInfo(UserList theUserList) {
+	private List<String> extractUserInfo(UserList theUserList) {
 		List<String> userInfo = new ArrayList<String>();
 		
 		for(Volunteer volunteer : theUserList.getVolunteerCopyList()) {
