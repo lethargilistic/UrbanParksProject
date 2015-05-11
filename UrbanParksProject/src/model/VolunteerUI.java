@@ -82,7 +82,7 @@ public class VolunteerUI {
 	 * he wants to do.
 	 * @return difficulty level.
 	 */
-	public int getDifficultyLevel() {
+	public String getDifficultyLevel() {
 		System.out.println("\nPlease enter the work intensity you would like to sign up for:");
 		int level = 0;
 		
@@ -91,8 +91,15 @@ public class VolunteerUI {
 		System.out.println("3) Heavy");
 		
 		level = getUserInt();
+		String levelString = null;
 		
-		return level;
+		switch(level) {
+		case 1: levelString = "Light";
+		case 2: levelString = "Medium";
+		case 3: levelString = "Heavy";
+		}
+		
+		return levelString;
 	}
 
 	

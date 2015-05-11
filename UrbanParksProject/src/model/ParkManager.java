@@ -152,7 +152,7 @@ public class ParkManager {
 		int myHeavy = myUI.getHeavySlots();	
 		String myStartDate = myUI.getStartDate();
 		String myEndDate = myUI.getEndDate();		
-		List<String> myVolunteerList = new ArrayList<>();
+		ArrayList<ArrayList<String>> myVolunteerList = new ArrayList<>();
 		
 		return new Job(myJobID, thePark, 0, myLight, 0, myMedium, 0, myHeavy, myStartDate, myEndDate, myEmail, myVolunteerList);
 	}
@@ -176,7 +176,7 @@ public class ParkManager {
 			return;
 		}
 		
-		ArrayList<String> myVolunteerList = (ArrayList<String>) myPollster.getVolunteerList(myJobID);
+		ArrayList<ArrayList<String>> myVolunteerList = myPollster.getVolunteerList(myJobID);
 		myUI.displayVolunteers(myVolunteerList, myPollster);		
 	}
 	
@@ -190,10 +190,13 @@ public class ParkManager {
 	 * @return True if valid, false if not.
 	 */
 	private boolean checkPark(int theJobID) {
-		for (Job j : myPollster.getAllJobs())
-		{
-			if (j.getJobID() == theJobID && myManagedParks.contains(j.getPark()))
-				return true;
+		for (Job j : myPollster.getAllJobs()) {
+			if(j.getJobID() == theJobID) {
+				for(Park park : myManagedParks) {
+					if(park.getName().equals(j.getPark().getName())) return true;
+				}
+			}
+
 		}
 		return false;
 		}

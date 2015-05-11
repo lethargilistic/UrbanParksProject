@@ -136,7 +136,6 @@ public class ParkManagerUI {
 	 * Display all of the parks that the Park Manager manages in the console.
 	 */
 	public void displayParks(List<Park> myManagedParks) {
-		System.out.println();
 		int i;
 		for(i = 0; i < myManagedParks.size(); i++) {
 			System.out.println(i + ") " + myManagedParks.get(i).getName());
@@ -198,11 +197,10 @@ public class ParkManagerUI {
 	/**
 	 * Take an ArrayList of Volunteers, and display their names to the console.
 	 */
-	public void displayVolunteers(List<String> myVolunteerList, DataPollster thePollster) {
-		System.out.println(myVolunteerList.size());
+	public void displayVolunteers(ArrayList<ArrayList<String>> myVolunteerList, DataPollster thePollster) {
 		
-		for(String volunteerString : myVolunteerList) {
-			Volunteer volunteer = thePollster.getVolunteer(volunteerString);
+		for(ArrayList<String> volunteerArray : myVolunteerList) {
+			Volunteer volunteer = thePollster.getVolunteer(volunteerArray.get(0));
 			System.out.println(volunteer.getFirstName() + " " + volunteer.getLastName());
 		}
 	}
