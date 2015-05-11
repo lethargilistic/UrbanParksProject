@@ -39,7 +39,7 @@ public class MainUI {
 		}
 	}
 			
-	public void displayLoginChoices() {
+	private void displayLoginChoices() {
 		System.out.println("\n1) Existing User");
 		System.out.println("2) New User");
 		System.out.println("3) Exit\n");
@@ -83,10 +83,6 @@ public class MainUI {
 			default: displayInvalidChoice(); return getUserType();
 		}
 	}
-	
-	
-	
-	
 	
 	public void displayExit() {
 		System.out.println("\n--End Program--");
