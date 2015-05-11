@@ -156,7 +156,7 @@ public class ParkManager {
 		String myEndDate = myUI.getEndDate();		
 		ArrayList<ArrayList<String>> myVolunteerList = new ArrayList<>();
 		
-		return new Job(myJobID, thePark, 0, myLight, 0, myMedium, 0, myHeavy, myStartDate, myEndDate, myEmail, myVolunteerList);
+		return new Job(myJobID, thePark, myLight, myMedium, myHeavy, myStartDate, myEndDate, myEmail, myVolunteerList);
 	}
 	
 	/**

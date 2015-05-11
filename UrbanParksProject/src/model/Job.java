@@ -83,25 +83,26 @@ public class Job {
      * Constructor for job, taking several arguments of integers, Calendar Strings, and e-mails.
      * @author Taylor Gorman
      */
-    public Job(int theJobID, Park thePark, int theLightCurrent, int theLightMax, int theMediumCurrent, int theMediumMax,
-    		int theHeavyCurrent, int theHeavyMax, String theStartDate, String theEndDate, String theManagerEmail, 
-    		ArrayList<ArrayList<String>> theVolunteerList) {
+    public Job(int theJobID, Park thePark, int theLightMax, int theMediumMax, int theHeavyMax, String theStartDate,
+    		String theEndDate, String theManagerEmail, ArrayList<ArrayList<String>> theVolunteerList) {
     	
     	this.myJobID = theJobID;
     	this.myPark = thePark;
     	
-    	this.myLightCurrent = theLightCurrent;
     	this.myLightMax = theLightMax;
-    	this.myMediumCurrent = theMediumCurrent;
     	this.myMediumMax = theMediumMax;
-    	this.myHeavyCurrent = theHeavyCurrent;
-    	this.myHeavyMax = theHeavyMax;
+       	this.myHeavyMax = theHeavyMax;
+       	
+    	this.myManager = theManagerEmail;
+    	this.myVolunteerList = theVolunteerList;
+    	
+    	this.myLightCurrent = getNumberOfSlots(0);
+    	this.myMediumCurrent = getNumberOfSlots(1);
+    	this.myHeavyCurrent = getNumberOfSlots(2);
     	
     	this.myStartDate = stringToCalendar(theStartDate);
     	this.myEndDate = stringToCalendar(theEndDate);
     	
-    	this.myManager = theManagerEmail;
-    	this.myVolunteerList = theVolunteerList;
     }
     
     public Job(Park thePark, int theLightCurrent, int theLightMax, int theMediumCurrent, int theMediumMax,
@@ -237,6 +238,38 @@ public class Job {
     	return (myLightMax - myLightCurrent) == 0
     			&& (myMediumMax + myMediumCurrent) == 0 
     			&& (myHeavyMax - myHeavyCurrent) == 0;
+    }
+    
+    /**
+     * Return the number of available job slots for a given work grade.
+     * @param theGradeType 0 for Light, 1 for Medium, 2 for Heavy
+     * @return
+     */
+    public int getNumberOfSlots(int theGradeType) {
+    	int numLight = 0;
+    	int numMedium = 0;
+    	int numHeavy = 0;
+    	
+    	//Iterate Volunteer List and count up how many are in each job grade
+    	for(ArrayList<String> volunteer : myVolunteerList) {
+    		if(volunteer.get(1).equals("Light")) {
+    			numLight++;
+    		}
+    		if(volunteer.get(1).equals("Medium")) {
+    			numMedium++;
+    		}
+    		if(volunteer.get(1).equals("Heavy")) {
+    			numHeavy++;
+    		}
+    	}
+    	
+    	//Return the appropriate count.
+    	switch(theGradeType) {
+    		case 0: return numLight;
+    		case 1: return numMedium;
+    		case 2: return numHeavy;
+    		default: return 0;
+    	}
     }
 
     public static void setNextJobID(int theID){

@@ -94,9 +94,9 @@ public class VolunteerUI {
 		String levelString = null;
 		
 		switch(level) {
-		case 1: levelString = "Light";
-		case 2: levelString = "Medium";
-		case 3: levelString = "Heavy";
+		case 1: levelString = "Light"; break;
+		case 2: levelString = "Medium"; break;
+		case 3: levelString = "Heavy"; break;
 		}
 		
 		return levelString;

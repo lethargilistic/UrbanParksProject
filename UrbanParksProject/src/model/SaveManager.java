@@ -124,20 +124,17 @@ public class SaveManager {
 		//Construct Job
 		int myJobID = Integer.parseInt(jobFileList.get(0));
 		
-		int myLightCurrent = Integer.parseInt(jobFileList.get(1));
-		int myLightMax = Integer.parseInt(jobFileList.get(2));
-		int myMediumCurrent = Integer.parseInt(jobFileList.get(3));
-		int myMediumMax = Integer.parseInt(jobFileList.get(4));
-		int myHeavyCurrent = Integer.parseInt(jobFileList.get(5));
-		int myHeavyMax = Integer.parseInt(jobFileList.get(6));
+		int myLightMax = Integer.parseInt(jobFileList.get(1));
+		int myMediumMax = Integer.parseInt(jobFileList.get(2));
+		int myHeavyMax = Integer.parseInt(jobFileList.get(3));
 		
-		String myStartDate = jobFileList.get(7);
-		String myEndDate = jobFileList.get(8);
-		String myPark = jobFileList.get(9);
-		String myManager = jobFileList.get(10);
+		String myStartDate = jobFileList.get(4);
+		String myEndDate = jobFileList.get(5);
+		String myPark = jobFileList.get(6);
+		String myManager = jobFileList.get(7);
 		
 		//Remove all added elements from the file list.
-		for(int i = 0; i < 11; i++) {
+		for(int i = 0; i < 8; i++) {
 			jobFileList.remove(0); 
 		}
 		
@@ -159,8 +156,7 @@ public class SaveManager {
 		Park newPark = new Park(myPark, "Tacoma", 98335);
 		
 		//Construct the new job, and then add it to the list.
-		Job myJob = new Job(myJobID, newPark, myLightCurrent, myLightMax, myMediumCurrent, myMediumMax, myHeavyCurrent, myHeavyMax, 
-				myStartDate, myEndDate, myManager, myVolunteerList);
+		Job myJob = new Job(myJobID, newPark, myLightMax, myMediumMax, myHeavyMax, myStartDate, myEndDate, myManager, myVolunteerList);
 		theParsedList.add(myJob);
 
 		//Recursively make calls until jobFileList is empty.
@@ -276,11 +272,8 @@ public class SaveManager {
 		
 		for(Job job : theJobList.getCopyList()) {
 			jobInfo.add(String.valueOf(job.getJobID()));
-			jobInfo.add(String.valueOf(job.getLightCurrent()));
 			jobInfo.add(String.valueOf(job.getLightMax()));
-			jobInfo.add(String.valueOf(job.getMediumCurrent()));
 			jobInfo.add(String.valueOf(job.getMediumMax()));
-			jobInfo.add(String.valueOf(job.getHeavyCurrent()));
 			jobInfo.add(String.valueOf(job.getHeavyMax()));
 			jobInfo.add(calendarToString(job.getStartDate()));
 			jobInfo.add(calendarToString(job.getEndDate()));
