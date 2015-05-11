@@ -137,7 +137,6 @@ public class ParkManagerUI {
 	 * Display all of the parks that the Park Manager manages in the console.
 	 */
 	public void displayParks(List<Park> myManagedParks) {
-		System.out.println();
 		int i;
 		for(i = 0; i < myManagedParks.size(); i++) {
 			System.out.println(i + ") " + myManagedParks.get(i).getName());
@@ -199,6 +198,7 @@ public class ParkManagerUI {
 	/**
 	 * Take an ArrayList of Volunteers, and display their names to the console.
 	 */
+
 	public void displayVolunteers(List<String> theVolunteerList, DataPollster thePollster) {
 		if (!theVolunteerList.isEmpty()) {
 			for(String volunteerString : theVolunteerList) {
@@ -208,6 +208,18 @@ public class ParkManagerUI {
 			}
 		} else {
 			System.out.println("There are no Volunteers associated with this Job.");
+		}
+	}
+
+	public void displayVolunteers(ArrayList<ArrayList<String>> theVolunteerList, DataPollster thePollster) {
+		if(theVolunteerList.isEmpty()) {
+			System.out.println("There are no Volunteers associated with this Job.");
+		} else {
+			for(ArrayList<String> volunteerArray : theVolunteerList) {
+				Volunteer volunteer = thePollster.getVolunteer(volunteerArray.get(0));
+				System.out.println(volunteer.getFirstName() + " " + volunteer.getLastName());
+				System.out.println("Email: " + volunteer.getEmail() + "\n");
+			}
 		}
 	}
 	
