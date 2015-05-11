@@ -9,6 +9,7 @@ import java.util.Scanner;
 /**
  * A console-based user interface for park managers to use.
  * @author Taylor Gorman
+ * @author Reid Thompson
  * @version 6 May 2015
  */
 public class ParkManagerUI {
@@ -198,12 +199,15 @@ public class ParkManagerUI {
 	/**
 	 * Take an ArrayList of Volunteers, and display their names to the console.
 	 */
-	public void displayVolunteers(List<String> myVolunteerList, DataPollster thePollster) {
-		System.out.println(myVolunteerList.size());
-		
-		for(String volunteerString : myVolunteerList) {
-			Volunteer volunteer = thePollster.getVolunteer(volunteerString);
-			System.out.println(volunteer.getFirstName() + " " + volunteer.getLastName());
+	public void displayVolunteers(List<String> theVolunteerList, DataPollster thePollster) {
+		if (!theVolunteerList.isEmpty()) {
+			for(String volunteerString : theVolunteerList) {
+				Volunteer volunteer = thePollster.getVolunteer(volunteerString);
+				System.out.println(volunteer.getFirstName() + " " + volunteer.getLastName());
+				System.out.println("Email: " + volunteer.getEmail() + "\n");
+			}
+		} else {
+			System.out.println("There are no Volunteers associated with this Job.");
 		}
 	}
 	

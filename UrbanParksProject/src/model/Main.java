@@ -134,7 +134,7 @@ public class Main {
 	/**
 	 * Breaks out of infinite loop in main method.
 	 */
-	private static void closeProgram() {
+	 private static void closeProgram() {
 		System.exit(0);
 	}
 

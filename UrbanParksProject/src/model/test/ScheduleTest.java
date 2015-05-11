@@ -141,32 +141,24 @@ public class ScheduleTest {
 	public void test7ForReceiveJob() {
 		int itrs = 5;
 		Job overflowed = new Job(myPark, 
-				0, 2,
-				0, 2,
-				0, 2,
-				"06172015",
-				"06172015", 
-				"tjsg1992@gmail.com",
-				new ArrayList<String>());
-		
-		for (int i = 0; i < itrs; i++) {
-			overflowed.incrementLight();
-		}
+								 3, 2,
+								 0, 2,
+								 0, 2,
+								 "06172015",
+								 "06172015", 
+								 "tjsg1992@gmail.com",
+								 new ArrayList<String>());
 		boolean bool6 = mySchedule.receiveJob(overflowed);
 		assertFalse("Light overflow failed", bool6);
 		
 		overflowed = new Job(myPark, 
 				0, 2,
-				0, 2,
+				3, 2,
 				0, 2,
 				"06172015",
 				"06172015", 
 				"tjsg1992@gmail.com",
 				new ArrayList<String>());
-		
-		for (int i = 0; i < itrs; i++) {
-			overflowed.incrementMedium();
-		}
 		bool6 = mySchedule.receiveJob(overflowed);
 		assertFalse("Medium overflow failed", bool6);
 		
@@ -174,15 +166,12 @@ public class ScheduleTest {
 		overflowed = new Job(myPark, 
 				0, 2,
 				0, 2,
-				0, 2,
+				3, 2,
 				"06172015",
 				"06172015", 
 				"tjsg1992@gmail.com",
 				new ArrayList<String>());
 		
-		for (int i = 0; i < itrs; i++) {
-			overflowed.incrementHeavy();
-		}
 		bool6 = mySchedule.receiveJob(overflowed);
 		assertFalse("Heavy overflow failed", bool6);
 	}
