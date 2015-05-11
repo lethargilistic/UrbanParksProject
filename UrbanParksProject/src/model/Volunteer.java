@@ -190,13 +190,13 @@ public class Volunteer {
 			volunteer.add(this.myEmail);
 			volunteer.add(level);
 			
-			mySchedule.addVolunteerToJob(volunteer, jobID);
+			if(mySchedule.addVolunteerToJob(volunteer, jobID)) {
+				myUI.displaySuccessMessage();
+			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			return;
 		}
-		
-		myUI.displaySuccessMessage();
 	}
 
 

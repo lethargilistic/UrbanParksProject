@@ -258,7 +258,7 @@ public class Schedule {
 			j.getVolunteerList().add(theVolunteer);
 		} else {
 			// If either of these are false, we print to the console and return
-			System.out.println("Error with given data. Volunteer was not added to Job.");
+			System.out.println("Sorry, but the grade of work for this job is already full!");
 		}
 
 		return okToAdd && jobExists && openGrade;
