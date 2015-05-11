@@ -33,6 +33,7 @@ public class ParkManager {
 		this.myEmail = theEmail;
 		this.myFirstName = theFirstName;
 		this.myLastName = theLastName;
+		myManagedParks = new ArrayList<Park>();
 	}
 	
 	public ParkManager(String theEmail, String theFirstName, String theLastName, List<Park> theParks) {
@@ -118,13 +119,25 @@ public class ParkManager {
 		System.out.println("\n------------------------------------------\nPlease select the number preceding the park where the job is located.");
 		myUI.displayParks(myManagedParks); //Show the parks to the user, including their IDs
 		
-		int parkNum = myUI.selectParkNum();
-		Park myPark = myManagedParks.get(parkNum);
+		int parkNum = myUI.getUserInt();
 		
-		Job job = constructJob(myPark);
+		if(parkNum < myManagedParks.size()) {
+			//ParkManager is assigning to an existing park.
+			Park myPark = myManagedParks.get(parkNum);
+			
+			Job job = constructJob(myPark);
+			
+			boolean added = mySchedule.receiveJob(job);
+			myUI.displayJobStatus(added);
+		} else {
+			//ParkManager is adding a new park
+			Park newPark = myUI.createNewPark();
+			myManagedParks.add(newPark);
+			mySchedule.updateParkList(myEmail, myManagedParks);
+			createJob();
+		}
 		
-		boolean added = mySchedule.receiveJob(job);
-		myUI.displayJobStatus(added);
+
 	}
 	
 	/**
@@ -167,7 +180,7 @@ public class ParkManager {
 		myUI.displayVolunteers(myVolunteerList, myPollster);		
 	}
 	
-	public void setManagedParks(ArrayList<Park> theManagedParks) {
+	public void setManagedParks(List<Park> theManagedParks) {
 		this.myManagedParks = theManagedParks;
 	}
 
@@ -182,8 +195,8 @@ public class ParkManager {
 			if (j.getJobID() == theJobID && myManagedParks.contains(j.getPark()))
 				return true;
 		}
-		return false;	
-	}
+		return false;
+		}
 
 	public List<Park> getManagedParks() {
 		return Collections.unmodifiableList(myManagedParks);

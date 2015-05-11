@@ -50,8 +50,9 @@ public class AdministratorUI {
 				+ "Administrator Menu\n"
 				+ "\nWhat would you like to do?\n"
 				+ "Please enter the option number, ie. 2 for Logout.");
-		System.out.println("1) Search Volunteers by Last Name\n");
-		System.out.println("2) Logout\n");
+		System.out.println("1) List all Volunteers\n");
+		System.out.println("2) Search Volunteers by Last Name\n");
+		System.out.println("3) Logout\n");
 	}
 	
 //	/**
@@ -155,8 +156,7 @@ public class AdministratorUI {
 	 * @return a String of the last name of the Volunteer to search for.
 	 */
 	public String promptForVolsLastName() {
-		System.out.println("Option 1 selected.\n"
-				+ "Please enter the last name of the Volunteer to search for: \n");
+		System.out.println("Please enter the last name of the Volunteer to search for: \n");
 		return getUserString();
 	}
 	

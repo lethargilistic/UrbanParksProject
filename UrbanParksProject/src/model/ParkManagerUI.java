@@ -137,9 +137,26 @@ public class ParkManagerUI {
 	 */
 	public void displayParks(List<Park> myManagedParks) {
 		System.out.println();
-		for(int i = 0; i < myManagedParks.size(); i++) {
-			System.out.println(i + "    " + myManagedParks.get(i).getName());
+		int i;
+		for(i = 0; i < myManagedParks.size(); i++) {
+			System.out.println(i + ") " + myManagedParks.get(i).getName());
 		}		
+		System.out.println(i + ") Add New Park...");
+	}
+	
+	public Park createNewPark() {
+		System.out.println("\n------------------------------------------");
+		
+		System.out.println("What is the name of the park?");
+		String parkName = getUserString();
+		
+		System.out.println("\nIn what city is the park located?");		
+		String cityName = getUserString();
+		
+		System.out.println("\nWhat is the zipcode of the city?");
+		int zipCode = getUserInt();
+		
+		return new Park(parkName, cityName, zipCode);
 	}
 	
 	
