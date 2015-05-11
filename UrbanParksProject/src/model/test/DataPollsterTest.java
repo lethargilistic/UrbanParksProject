@@ -3,7 +3,6 @@ package model.test;
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 import model.DataPollster;
@@ -51,7 +50,7 @@ public class DataPollsterTest {
 		
 		jl = new JobList();
 		List<Job> jBank = jl.getJobList();
-		jBank.add(new Job(1000, p, 
+		jBank.add(new Job(p, 
 						  0, 5,
 						  0, 5,
 						  0, 5,
@@ -59,7 +58,7 @@ public class DataPollsterTest {
 						  "06152015", 
 						  "senorreido@gmail.com", new ArrayList<>()));
 
-		jBank.add(new Job(1001, p, 
+		jBank.add(new Job(p, 
 				  		  0, 5,
 				  		  0, 5,
 				  		  0, 5,
@@ -67,28 +66,28 @@ public class DataPollsterTest {
 				  		  "06162015", 
 				  		  "senorreido@gmail.com", vBank));
 
-		jBank.add(new Job(1002, p, 
+		jBank.add(new Job(p, 
 				  		  0, 5,
 				  		  0, 5,
 				  		  0, 5,
 				  		  "06172015", 
 				  		  "06172015", 
 				  		  "senorreido@gmail.com", vBank));
-		jBank.add(new Job(1003, p, 
+		jBank.add(new Job(p, 
 					 	  0, 5,
 						  0, 5,
 						  0, 5,
 						  "06182015", 
 						  "06182015", 
 						  "senorreido@gmail.com", vBank));
-		jBank.add(new Job(1004, p, 
+		jBank.add(new Job(p, 
 				  		  0, 5,
 				  		  0, 5,
 				  		  0, 5,
 				  		  "06192015", 
 				  		  "06192015", 
 				  		  "senorreido@gmail.com", vBank));
-		jBank.add(new Job(1005, p, 
+		jBank.add(new Job(p, 
 				  		  0, 5,
 				  		  0, 5,
 				  		  0, 5,
@@ -139,7 +138,7 @@ public class DataPollsterTest {
 		s.addVolunteerToJob(vBank.get(0), jobs.get(2).getJobID(), 1);//NOTE: I added @throws exception
 		s.addVolunteerToJob(vBank.get(0), jobs.get(3).getJobID(), 1);//NOTE: I added @throws exception
 		
-		List<Job> vsJob = new ArrayList<Job>();
+		List<Job> vsJob = new ArrayList<Job>(); //Volunteer's Jobs
 		vsJob.add(jobs.get(0));
 		vsJob.add(jobs.get(1));
 		vsJob.add(jobs.get(2));

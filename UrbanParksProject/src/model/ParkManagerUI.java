@@ -146,7 +146,7 @@ public class ParkManagerUI {
 	/**
 	 * Take an ArrayList of Jobs, parse them, and then display their information in the console.
 	 */
-	public void displayJobs(ArrayList<Job> theJobList) {
+	public void displayJobs(List<Job> theJobList) {
 		
 		for(Job job : theJobList) {
 			String startDate = calendarToString(job.getStartDate());
@@ -181,7 +181,7 @@ public class ParkManagerUI {
 	/**
 	 * Take an ArrayList of Volunteers, and display their names to the console.
 	 */
-	public void displayVolunteers(ArrayList<String> myVolunteerList, DataPollster thePollster) {
+	public void displayVolunteers(List<String> myVolunteerList, DataPollster thePollster) {
 		System.out.println(myVolunteerList.size());
 		
 		for(String volunteerString : myVolunteerList) {

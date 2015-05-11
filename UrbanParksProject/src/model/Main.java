@@ -1,7 +1,5 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 public class Main {
@@ -13,7 +11,6 @@ public class Main {
 		
 		SaveManager saveManager = new SaveManager();
 		String[] userInfo;
-		
 		
 		UI = new MainUI();
 		
