@@ -54,7 +54,7 @@ public class Main {
 	 * Prompt the user to either login, register, or exit.<br>
 	 * Then, ask the user for login or register details.
 	 */
-	public static String[] directLogin(Schedule theSchedule, DataPollster thePollster) {
+	private static String[] directLogin(Schedule theSchedule, DataPollster thePollster) {
 		int loginCommand = UI.getLoginChoice();
 		String[] userInfo = null;
 		
@@ -107,7 +107,7 @@ public class Main {
 	/**
 	 * Transfer control to the user, specified by their e-mail address.
 	 */
-	public static void giveControl(String[] theUserInfo, Schedule theSchedule, DataPollster thePollster) {
+	private static void giveControl(String[] theUserInfo, Schedule theSchedule, DataPollster thePollster) {
 		String userType = thePollster.getUserType(theUserInfo[1]);
 		
 		if(userType.equals("ParkManager")) {
@@ -134,7 +134,7 @@ public class Main {
 	/**
 	 * Breaks out of infinite loop in main method.
 	 */
-	public static void closeProgram() {
+	private static void closeProgram() {
 		System.exit(0);
 	}
 
