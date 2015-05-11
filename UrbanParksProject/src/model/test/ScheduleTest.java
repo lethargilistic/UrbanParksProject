@@ -165,8 +165,11 @@ public class ScheduleTest {
 	@Test
 	public void testForAddNegJobIDVolunteerToJob() {
 		boolean bool9 = false; //an error was showing up so I had to initialize this to false.
+		ArrayList<String> temp = new ArrayList<>();
+		temp.add("moverby@gmail.com");
+		temp.add("Light");
 		try { //I added exceptions to addVolunteer so I put this into a try catch block.
-			bool9 = mySchedule.addVolunteerToJob(myVolEmail, -10, 2);
+			bool9 = mySchedule.addVolunteerToJob(temp, -10);
 		} catch (Exception e) {
 			
 			//e.printStackTrace();
@@ -180,8 +183,11 @@ public class ScheduleTest {
 	@Test
 	public void testForInvalidWorkGradeAddVolunteerToJob() {
 		boolean bool1 = false; //an error was showing up so I had to initialize this to false.
+		ArrayList<String> temp = new ArrayList<>();
+		temp.add("moverby@gmail.com");
+		temp.add("Light");
 		try { //I added exceptions to addVolunteer so I put this into a try catch block.
-			bool1 = mySchedule.addVolunteerToJob(myVolEmail, 10, 4);
+			bool1 = mySchedule.addVolunteerToJob(temp, 10);
 		} catch (Exception e) {
 			
 			e.printStackTrace();
