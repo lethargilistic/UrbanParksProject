@@ -11,8 +11,8 @@ public class Volunteer {
 	private String myEmail;
 	
 	private VolunteerUI myUI;
-	private DataPollster myPoll;
-	private Schedule mySched;
+	private DataPollster myPollster;
+	private Schedule mySchedule;
 	
 	
 	public Volunteer(String theEmail) {
@@ -31,14 +31,14 @@ public class Volunteer {
 		myFirstName = firstName;
 		myLastName = lastName;
 		
-		myPoll = thePoll;
-		mySched = theSched;
+		myPollster = thePoll;
+		mySchedule = theSched;
 		myUI = new VolunteerUI();
 	}
 	
 	public Volunteer(Schedule theSchedule, DataPollster thePollster, String theEmail) {
-		this.mySched = theSchedule;
-		this.myPoll = thePollster;
+		this.mySchedule = theSchedule;
+		this.myPollster = thePollster;
 		this.myEmail = theEmail;
 		myUI = new VolunteerUI();
 	}
@@ -165,7 +165,7 @@ public class Volunteer {
 	 * This method gives a list of all the jobs to the UI for this class.
 	 */
 	public void viewAvailableJobs() {
-		myUI.displayJobs(myPoll.getAllJobs());
+		myUI.displayJobs(myPollster.getAllJobs());
 	}
 
 
@@ -183,7 +183,7 @@ public class Volunteer {
 		int level = myUI.getDifficultyLevel();
 
 		try {	//attempt to add this volunteer
-			mySched.addVolunteerToJob(this.myEmail, jobID, level);
+			mySchedule.addVolunteerToJob(this.myEmail, jobID, level);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			return;
@@ -193,12 +193,14 @@ public class Volunteer {
 
 
 	private void viewMyJobs() {
-		List<Job> aList = mySched.getJobList().getCopyList(); //get the list of jobs so we can traverse it.
+		List<Job> jobList = mySchedule.getJobList().getCopyList(); //get the list of jobs so we can traverse it.
 
 		//go through each job in the list and see if the volunteer has signed up for that job.
-		for (Job j: aList) {
-			if (j.getVolunteerList().contains(this)) {
-				printJobInfo(j);
+		for(Job job : jobList) {
+			List<String> volunteerEmailList = job.getVolunteerList();
+			
+			for(String volunteerEmail : volunteerEmailList) {
+				if(volunteerEmail.equals(this.myEmail)) printJobInfo(job);
 			}
 		}
 	}
@@ -239,7 +241,7 @@ public class Volunteer {
 	 */
 	private boolean checkPark(int theJobID) {
 		boolean status = false;
-		List<Job> aList = mySched.getJobList().getCopyList();
+		List<Job> aList = mySchedule.getJobList().getCopyList();
 		for (Job j: aList) {
 			if (j.getJobID() == theJobID) {
 				status = true;
