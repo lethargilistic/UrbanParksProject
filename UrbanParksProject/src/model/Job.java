@@ -290,7 +290,7 @@ public class Job {
 	}
 
 	public int getLightCurrent() {
-		return myLightCurrent;
+		return getNumberOfSlots(0);
 	}
 
 	public int getMediumMax() {
@@ -298,7 +298,7 @@ public class Job {
 	}
 
 	public int getMediumCurrent() {
-		return myMediumCurrent;
+		return getNumberOfSlots(1);
 	}
 
 	public int getHeavyMax() {
@@ -306,7 +306,7 @@ public class Job {
 	}
 
 	public int getHeavyCurrent() {
-		return myHeavyCurrent;
+		return getNumberOfSlots(2);
 	}
 
 	public Park getPark() {
