@@ -155,42 +155,6 @@ public class Job {
     public GregorianCalendar getEndDate() {
     	return myEndDate;
     }
-    
-    /**
-     * This method is called when someone has signed up for a light portion of this job.
-     * 
-     */
-    public void incrementLight() {
-    	 if (myLightCurrent < myLightMax) {
-    		 myLightCurrent ++;
-    	 } else {
-    		 System.out.println("Max has already been reached. Cannot increment.");
-    	 }
-    }
-
-    /**
-     * This method is called when someone has signed up for a medium portion of this job.
-     * 
-     */
-    public void incrementMedium() {
-    	if (myMediumCurrent < myMediumMax) {
-    		myMediumCurrent ++;
-    	} else {
-    		System.out.println("Max has already been reached. Cannot increment.");
-    	}
-    }
-
-    /**
-     * This method is called when someone has signed up for a heavy portion of this job.
-     * 
-     */
-    public void incrementHeavy() {
-    	if (myHeavyCurrent < myHeavyMax) {
-    		myHeavyCurrent ++;
-    	} else {
-    		System.out.println("Max has already been reached. Cannot increment.");
-    	}
-    }
 
     /**
      * This method is called when someone needs to know if there are any
@@ -260,6 +224,10 @@ public class Job {
     			numHeavy++;
     		}
     	}
+    	
+    	myLightCurrent = numLight;
+    	myMediumCurrent = numMedium;
+    	myHeavyCurrent = numHeavy;
     	
     	//Return the appropriate count.
     	switch(theGradeType) {

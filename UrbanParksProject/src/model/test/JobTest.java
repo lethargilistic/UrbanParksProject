@@ -71,21 +71,36 @@ public class JobTest {
 	
 	@Test
 	public void incrementTest() {
-		myJob.incrementLight();
+		ArrayList<String> vol;
 		
-		myJob.incrementMedium();
-		myJob.incrementMedium();
-		myJob.incrementMedium();
-		myJob.incrementMedium();
-
-		assertEquals(0, myJob.getHeavyCurrent());
-		assertEquals(4, myJob.getHeavyMax());
-		
+		//Light
+		assertEquals(0, myJob.getLightCurrent());
+		vol = new ArrayList<>();
+		vol.add("moverby@gmail.com");
+		vol.add("Light");
+		myJob.getVolunteerList().add(vol);
 		assertEquals(1, myJob.getLightCurrent());
-		assertEquals(2, myJob.getLightMax());
+		vol = new ArrayList<>();
+		vol.add("farkle@gmail.com");
+		vol.add("Light");
+		myJob.getVolunteerList().add(vol);
+		assertEquals(2, myJob.getLightCurrent());
 		
-		assertEquals(3, myJob.getMediumCurrent());
-		assertEquals(3, myJob.getMediumMax());
+		//Medium
+		assertEquals(0, myJob.getMediumCurrent());
+		vol = new ArrayList<>();
+		vol.add("jbehnen@gmail.com");
+		vol.add("Medium");
+		myJob.getVolunteerList().add(vol);
+		assertEquals(1, myJob.getMediumCurrent());
+		
+		//Heavy
+		assertEquals(0, myJob.getHeavyCurrent());
+		vol = new ArrayList<>();
+		vol.add("jazzmezz@gmail.com");
+		vol.add("Heavy");
+		myJob.getVolunteerList().add(vol);
+		assertEquals(1, myJob.getHeavyCurrent());
 	}
 	
 	@Test
@@ -94,24 +109,59 @@ public class JobTest {
 		assertTrue(myJob.hasMediumRoom());
 		assertTrue(myJob.hasHeavyRoom());
 		
-		myJob.incrementLight();
-		myJob.incrementLight();
+		ArrayList<String> vol = new ArrayList<>();;
+
+		vol.add("moverby@gmail.com");
+		vol.add("Light");
+		myJob.getVolunteerList().add(vol);
+		vol.add("gotosleep@gmail.com");
+		vol.add("Light");
+		vol = new ArrayList<>();
+		myJob.getVolunteerList().add(vol);
 		
-		myJob.incrementMedium();
-		myJob.incrementMedium();
-		myJob.incrementMedium();
-		myJob.incrementMedium();
+		vol.add("yaaaaa@gmail.com");
+		vol.add("Medium");
+		vol = new ArrayList<>();
+		myJob.getVolunteerList().add(vol);
+		vol.add("foop@gmail.com");
+		vol.add("Medium");
+		vol = new ArrayList<>();
+		myJob.getVolunteerList().add(vol);
+		vol.add("witchtable@gmail.com");
+		vol.add("Medium");
+		vol = new ArrayList<>();
+		myJob.getVolunteerList().add(vol);
 		
-		myJob.incrementHeavy();
-		myJob.incrementHeavy();
+		vol.add("whodunnit@gmail.com");
+		vol.add("Heavy");
+		vol = new ArrayList<>();
+		myJob.getVolunteerList().add(vol);
+		vol.add("gitblame@gmail.com");
+		vol.add("Heavy");
+		vol = new ArrayList<>();
+		myJob.getVolunteerList().add(vol);
+		vol.add("manager@gmail.com");
+		vol.add("Heavy");
+		vol = new ArrayList<>();
+		myJob.getVolunteerList().add(vol);
+		vol.add("whomsoever@gmail.com");
+		vol.add("Heavy");
+		vol = new ArrayList<>();
+		myJob.getVolunteerList().add(vol);
 		
 		assertFalse(myJob.hasLightRoom());
 		assertFalse(myJob.hasMediumRoom());
 		assertTrue(myJob.hasHeavyRoom());
 		assertTrue(myJob.hasRoom());
 		
-		myJob.incrementHeavy();
-		myJob.incrementHeavy();
+		vol.add("notmyemail@gmail.com");
+		vol.add("Heavy");
+		vol = new ArrayList<>();
+		myJob.getVolunteerList().add(vol);
+		vol.add("taylorsall@hotmail.com");
+		vol.add("Heavy");
+		vol = new ArrayList<>();
+		myJob.getVolunteerList().add(vol);
 		
 		assertFalse(myJob.hasHeavyRoom());
 		assertFalse(myJob.hasRoom());
