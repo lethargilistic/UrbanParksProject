@@ -107,10 +107,10 @@ public class SaveManager {
 	
 	
 
-	/**
-	 * Recursively parse the array version of the Job File, construct Jobs from the information, and pass back a list of those jobs.
-	 */
-	public ArrayList<Job> parseJobFile(ArrayList<String> jobFileList, ArrayList<Job> theParsedList) {		
+
+	//Recursively parse the array version of the Job File, construct Jobs from the information, and pass back a list of those jobs.
+	
+	private ArrayList<Job> parseJobFile(ArrayList<String> jobFileList, ArrayList<Job> theParsedList) {		
 		//jobList.txt was not found, which is normal if the program has not been executed before.
 		if(jobFileList.size() < 1) {
 			return theParsedList;
@@ -124,28 +124,30 @@ public class SaveManager {
 		//Construct Job
 		int myJobID = Integer.parseInt(jobFileList.get(0));
 		
-		int myLightCurrent = Integer.parseInt(jobFileList.get(1));
-		int myLightMax = Integer.parseInt(jobFileList.get(2));
-		int myMediumCurrent = Integer.parseInt(jobFileList.get(3));
-		int myMediumMax = Integer.parseInt(jobFileList.get(4));
-		int myHeavyCurrent = Integer.parseInt(jobFileList.get(5));
-		int myHeavyMax = Integer.parseInt(jobFileList.get(6));
+		int myLightMax = Integer.parseInt(jobFileList.get(1));
+		int myMediumMax = Integer.parseInt(jobFileList.get(2));
+		int myHeavyMax = Integer.parseInt(jobFileList.get(3));
 		
-		String myStartDate = jobFileList.get(7);
-		String myEndDate = jobFileList.get(8);
-		String myPark = jobFileList.get(9);
-		String myManager = jobFileList.get(10);
+		String myStartDate = jobFileList.get(4);
+		String myEndDate = jobFileList.get(5);
+		String myPark = jobFileList.get(6);
+		String myManager = jobFileList.get(7);
 		
 		//Remove all added elements from the file list.
-		for(int i = 0; i < 11; i++) {
+		for(int i = 0; i < 8; i++) {
 			jobFileList.remove(0); 
 		}
 		
-		List<String> myVolunteerList = new ArrayList<String>();
+		ArrayList<ArrayList<String>> myVolunteerList = new ArrayList<ArrayList<String>>();
 		
 		//Add the volunteer to the volunteer list, then remove it from the file list.
 		while(!jobFileList.get(0).equals("End Volunteer List")) {
-			myVolunteerList.add(jobFileList.get(0)); 
+			ArrayList<String> volunteer = new ArrayList<String>();
+			volunteer.add(jobFileList.get(0));
+			volunteer.add(jobFileList.get(1));
+			myVolunteerList.add(volunteer); 
+			
+			jobFileList.remove(0);
 			jobFileList.remove(0);
 		}
 		
@@ -154,8 +156,7 @@ public class SaveManager {
 		Park newPark = new Park(myPark, "Tacoma", 98335);
 		
 		//Construct the new job, and then add it to the list.
-		Job myJob = new Job(myJobID, newPark, myLightCurrent, myLightMax, myMediumCurrent, myMediumMax, myHeavyCurrent, myHeavyMax, 
-				myStartDate, myEndDate, myManager, myVolunteerList);
+		Job myJob = new Job(myJobID, newPark, myLightMax, myMediumMax, myHeavyMax, myStartDate, myEndDate, myManager, myVolunteerList);
 		theParsedList.add(myJob);
 
 		//Recursively make calls until jobFileList is empty.
@@ -165,10 +166,10 @@ public class SaveManager {
 	
 	
 	
-	/**
+	/*
 	 * Recursively parse the array version of the User File, construct Users from the information, and pass back a list of those users.
 	 */
-	public UserList parseUserFile(ArrayList<String> theUserFileList, UserList theUserList) {
+	private UserList parseUserFile(ArrayList<String> theUserFileList, UserList theUserList) {
 		
 		//userList.txt was not found, which is normal if the program has not been executed before.
 				if(theUserFileList.size() < 1) {
@@ -263,27 +264,25 @@ public class SaveManager {
 		return true;
 	}
 	
-	/**
+	/*
 	 * Copy JobList into an Array, line-by-line.
 	 */
-	public List<String> extractJobInfo(JobList theJobList) {
+	private List<String> extractJobInfo(JobList theJobList) {
 		List<String> jobInfo = new ArrayList<String>();
 		
 		for(Job job : theJobList.getCopyList()) {
 			jobInfo.add(String.valueOf(job.getJobID()));
-			jobInfo.add(String.valueOf(job.getLightCurrent()));
 			jobInfo.add(String.valueOf(job.getLightMax()));
-			jobInfo.add(String.valueOf(job.getMediumCurrent()));
 			jobInfo.add(String.valueOf(job.getMediumMax()));
-			jobInfo.add(String.valueOf(job.getHeavyCurrent()));
 			jobInfo.add(String.valueOf(job.getHeavyMax()));
 			jobInfo.add(calendarToString(job.getStartDate()));
 			jobInfo.add(calendarToString(job.getEndDate()));
 			jobInfo.add(job.getPark().getName());
 			jobInfo.add(job.getManager());
 			
-			for(String volunteer : job.getVolunteerList()) {
-				jobInfo.add(volunteer);
+			for(ArrayList<String> volunteer : job.getVolunteerList()) {
+				jobInfo.add(volunteer.get(0)); //Volunteer Email
+				jobInfo.add(volunteer.get(1)); //Work Grade
 			}
 			
 			jobInfo.add("End Volunteer List");
@@ -326,10 +325,10 @@ public class SaveManager {
 		return true;
 	}
 	
-	/**
+	/*
 	 * Copy UserList into an Array, line-by-line.
 	 */
-	public List<String> extractUserInfo(UserList theUserList) {
+	private List<String> extractUserInfo(UserList theUserList) {
 		List<String> userInfo = new ArrayList<String>();
 		
 		for(Volunteer volunteer : theUserList.getVolunteerCopyList()) {

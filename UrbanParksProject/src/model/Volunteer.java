@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -187,14 +188,19 @@ public class Volunteer {
 		int jobID = myUI.getJobID();
 
 		if(!checkPark(jobID)) { //enter this if park ID is NOT valid.
-			myUI.showJobIDError();	//the code for checkPark() is not yet written, we have to write it.
+			myUI.showJobIDError();
 			return;
 		}
 
-		int level = myUI.getDifficultyLevel();
+		String level = myUI.getDifficultyLevel();
 
 		try {	//attempt to add this volunteer
-			mySchedule.addVolunteerToJob(this.myEmail, jobID, level);
+			ArrayList<String> volunteer = new ArrayList<String>();
+			
+			volunteer.add(this.myEmail);
+			volunteer.add(level);
+			
+			mySchedule.addVolunteerToJob(volunteer, jobID);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			return;
@@ -208,10 +214,11 @@ public class Volunteer {
 
 		//go through each job in the list and see if the volunteer has signed up for that job.
 		for(Job job : jobList) {
-			List<String> volunteerEmailList = job.getVolunteerList();
+			ArrayList<ArrayList<String>> volunteerList = job.getVolunteerList();
 			
-			for(String volunteerEmail : volunteerEmailList) {
-				if(volunteerEmail.equals(this.myEmail)) printJobInfo(job);
+			
+			for(ArrayList<String> volunteer : volunteerList) {
+				if(volunteer.get(0).equals(this.myEmail)) printJobInfo(job);
 			}
 		}
 	}
@@ -246,6 +253,7 @@ public class Volunteer {
 	}
 
 
+	//TODO: Should be a Schedule method
 	/**
 	 * Check to make sure that the Job ID is valid.
 	 * @return True if valid, false if not.

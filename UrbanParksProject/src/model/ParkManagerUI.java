@@ -49,8 +49,7 @@ public class ParkManagerUI {
 	private String getUserString() {		
 		String userInput = myScanner.nextLine();
 		
-		if(userInput.equals("")) { //TODO, maybe make this a while so that it will continuously 
-									//prompt the user, instead of just once? - Reid agrees.
+		if(userInput.equals("")) {
 			userInput = myScanner.nextLine();
 		}
 		return userInput;
@@ -61,7 +60,8 @@ public class ParkManagerUI {
 	 * Prompt the user to enter the ID of a Job, and then return it.
 	 */
 	public int getJobID() {
-		System.out.println("------------------------------------------\n\nPlease input the ID of the job whose volunteers you would"
+		System.out.println("------------------------------------------\n\n"
+				+ "Please input the ID of the job whose volunteers you would"
 				+ " like to view.");
 		int myJobID = getUserInt();
 		return myJobID;
@@ -101,7 +101,7 @@ public class ParkManagerUI {
 	
 	/**
 	 * Prompt the user to enter when they want to start the job, then return it.
-	 * @return The start date in format ddmmyyyy
+	 * @return The start date in format mmddyyyy
 	 */
 	public String getStartDate() {
 		System.out.println("Please enter the start date of the job in the following format:"
@@ -137,7 +137,6 @@ public class ParkManagerUI {
 	 * Display all of the parks that the Park Manager manages in the console.
 	 */
 	public void displayParks(List<Park> myManagedParks) {
-		System.out.println();
 		int i;
 		for(i = 0; i < myManagedParks.size(); i++) {
 			System.out.println(i + ") " + myManagedParks.get(i).getName());
@@ -199,6 +198,7 @@ public class ParkManagerUI {
 	/**
 	 * Take an ArrayList of Volunteers, and display their names to the console.
 	 */
+
 	public void displayVolunteers(List<String> theVolunteerList, DataPollster thePollster) {
 		if (!theVolunteerList.isEmpty()) {
 			for(String volunteerString : theVolunteerList) {
@@ -208,6 +208,18 @@ public class ParkManagerUI {
 			}
 		} else {
 			System.out.println("There are no Volunteers associated with this Job.");
+		}
+	}
+
+	public void displayVolunteers(ArrayList<ArrayList<String>> theVolunteerList, DataPollster thePollster) {
+		if(theVolunteerList.isEmpty()) {
+			System.out.println("There are no Volunteers associated with this Job.");
+		} else {
+			for(ArrayList<String> volunteerArray : theVolunteerList) {
+				Volunteer volunteer = thePollster.getVolunteer(volunteerArray.get(0));
+				System.out.println(volunteer.getFirstName() + " " + volunteer.getLastName());
+				System.out.println("Email: " + volunteer.getEmail() + "\n");
+			}
 		}
 	}
 	

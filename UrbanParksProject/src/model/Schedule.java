@@ -1,6 +1,8 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
@@ -45,10 +47,36 @@ public class Schedule {
 		// Checks the fields of the object to make sure they're valid.
 		boolean okToAdd = true;
 		
+		
+		//BIZ rule 1. A job may not be added if the total number of pending jobs is currently 30. 
+		if (myJobList.getCopyList().size() >= 30) {
+			okToAdd = false;
+		}
+		//BIZ rule 2. A job may not be added if the total number of pending jobs during that week 
+			//(3 days on either side of the job days) is currently 5.
+		if (!checkThisWeek(theJob)) {
+			okToAdd = false; //this is entered if checkThisWeek() returns false;
+		} 
+		
+		
+		//BIZ rule 5. A job may not be added that is in the past or more than three months in the future. 
+				//I am going to say that the manager can only create a job on a date after today.
+		Calendar now = new GregorianCalendar();
+		if (!theJob.getStartDate().after(now)) {
+			okToAdd = false;
+		}
+		now.add(Calendar.DAY_OF_MONTH, 90);
+		if (theJob.getStartDate().after(now)) {
+			okToAdd = false;
+		}
+		
+		
+
 		// checks if date range is valid
 		if (theJob.getStartDate().after(theJob.getEndDate())) {
 			okToAdd = false;
 		}
+		
 		
 		// checks that the job id is valid
 		if (theJob.getJobID() < Integer.MIN_VALUE || theJob.getJobID() > Integer.MAX_VALUE) {
@@ -96,6 +124,49 @@ public class Schedule {
 		}
 
 		return okToAdd;
+	}
+
+	/**
+	 * This method is made for business rule 2.
+	 * It checks either side of the jobs date and returns false if there are already
+	 * 5 jobs set up for that 7 day period.
+	 * @return true if this job is in the clear (there are less than 5 jobs in a 7 day period), false otherwise
+	 */
+	private boolean checkThisWeek(Job theJob) {
+		//count increases for every other job that is within 3 days before start and 3 days after end.
+		int count = 0;
+		
+		//3 days before start and 3 days after end
+		Calendar aStart = (Calendar) theJob.getStartDate().clone();
+		
+		aStart.add(Calendar.DAY_OF_MONTH, -3);
+
+		Calendar aEnd = (Calendar) theJob.getEndDate().clone();
+		aEnd.add(Calendar.DAY_OF_MONTH, 3);
+		
+		List<Job> aList = myJobList.getCopyList();
+		for (Job j: aList) {
+			
+			long difference =  j.getEndDate().getTimeInMillis() - aStart.getTimeInMillis();
+			difference /= (3600*24*1000); //change value to days instead of milliseconds
+			long difference2 =  aEnd.getTimeInMillis() - j.getStartDate().getTimeInMillis();
+			difference2 /= (3600*24*1000); //change value to days instead of milliseconds
+			
+			//System.out.println(j.getPark() + " " + j.getStartDate() + " " + j.getEndDate());
+			//System.out.println(difference);
+			//System.out.println(difference2);
+			
+			//if ending date of j is within 3 days before theJob, increment count
+			//if starting date of j is within 3 days after theJob, increment count
+			if ((difference <= 3 && difference >= 0)|| (difference2 <= 3 && difference2 >= 0)) {
+				count++;
+			}
+			//System.out.println("Count is " + count);
+			if (count >= 5) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	/**
