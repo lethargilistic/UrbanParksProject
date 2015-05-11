@@ -165,6 +165,10 @@ public class ParkManagerUI {
 	 */
 	public void displayJobs(List<Job> theJobList) {
 		
+		if(theJobList.size() == 0) {
+			System.out.println("\nYou do not have any upcoming jobs to display.");
+		}
+		
 		for(Job job : theJobList) {
 			String startDate = calendarToString(job.getStartDate());
 			String endDate = calendarToString(job.getEndDate());

@@ -194,12 +194,14 @@ public class Volunteer {
 			System.out.println(e.getMessage());
 			return;
 		}
-		//if the volunteer is added successfully then addVolunteerToJob() will print out a success message.
+		
+		myUI.displaySuccessMessage();
 	}
 
 
 	private void viewMyJobs() {
 		List<Job> jobList = mySchedule.getJobList().getCopyList(); //get the list of jobs so we can traverse it.
+		boolean jobFound = false;
 
 		//go through each job in the list and see if the volunteer has signed up for that job.
 		for(Job job : jobList) {
@@ -207,8 +209,15 @@ public class Volunteer {
 			
 			
 			for(ArrayList<String> volunteer : volunteerList) {
-				if(volunteer.get(0).equals(this.myEmail)) printJobInfo(job);
+				if(volunteer.get(0).equals(this.myEmail)) {
+					printJobInfo(job);
+					jobFound = true;
+				}
 			}
+		}
+		
+		if(!jobFound) {
+			System.out.println("\nYou are not signed up for any upcoming jobs.");
 		}
 	}
 
