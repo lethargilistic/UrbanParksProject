@@ -3,7 +3,6 @@ package model.test;
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 import model.DataPollster;
@@ -30,7 +29,7 @@ public class DataPollsterTest {
 	private UserList ul;
 	private DataPollster dp;
 	private Schedule s;
-	private List<Volunteer> vBank;
+	private List<String> vBank;
 	/**
 	 * @throws java.lang.Exception
 	 */
@@ -40,43 +39,64 @@ public class DataPollsterTest {
 		List<Park> pList = new ArrayList<>();
 		pList.add(p);
 		
+		vBank = new ArrayList<>();
+		vBank.add("moverby@gmail.com");
+		vBank.add("senorreido@gmail.com");
+		vBank.add("classmate1@gmail.com");
+		vBank.add("refactoreverything@gmail.com");
+		vBank.add("classmate2@gmail.com");
+		vBank.add("internetfail@gmail.com");
+		vBank.add("classmate3@gmail.com");
+		
 		jl = new JobList();
 		List<Job> jBank = jl.getJobList();
-		jBank.add(new Job(p, 5, 5, 5, 
-				new GregorianCalendar(2015, 6, 15), 
-				new GregorianCalendar(2015, 6, 15), 
-				"senorreido@gmail.com"));
-		jBank.add(new Job(p, 5, 5, 5, 
-				new GregorianCalendar(2015, 6, 16), 
-				new GregorianCalendar(2015, 6, 16), 
-				"senorreido@gmail.com"));
-		jBank.add(new Job(p, 5, 5, 5, 
-				new GregorianCalendar(2015, 6, 17), 
-				new GregorianCalendar(2015, 6, 17),
-				"senorreido@gmail.com"));
-		jBank.add(new Job(p, 5, 5, 5, 
-				new GregorianCalendar(2015, 6, 18), 
-				new GregorianCalendar(2015, 6, 18), 
-				"senorreido@gmail.com"));
-		jBank.add(new Job(p, 5, 5, 5, 
-				new GregorianCalendar(2015, 6, 19), 
-				new GregorianCalendar(2015, 6, 19),
-				"senorreido@gmail.com"));
-		jBank.add(new Job(p, 5, 5, 5, 
-				new GregorianCalendar(2015, 6, 20), 
-				new GregorianCalendar(2015, 6, 20), 
-				"senorreido@gmail.com"));
+		jBank.add(new Job(p, 
+						  0, 5,
+						  0, 5,
+						  0, 5,
+						  "06152015", 
+						  "06152015", 
+						  "senorreido@gmail.com", new ArrayList<>()));
+
+		jBank.add(new Job(p, 
+				  		  0, 5,
+				  		  0, 5,
+				  		  0, 5,
+				  		  "06162015", 
+				  		  "06162015", 
+				  		  "senorreido@gmail.com", vBank));
+
+		jBank.add(new Job(p, 
+				  		  0, 5,
+				  		  0, 5,
+				  		  0, 5,
+				  		  "06172015", 
+				  		  "06172015", 
+				  		  "senorreido@gmail.com", vBank));
+		jBank.add(new Job(p, 
+					 	  0, 5,
+						  0, 5,
+						  0, 5,
+						  "06182015", 
+						  "06182015", 
+						  "senorreido@gmail.com", vBank));
+		jBank.add(new Job(p, 
+				  		  0, 5,
+				  		  0, 5,
+				  		  0, 5,
+				  		  "06192015", 
+				  		  "06192015", 
+				  		  "senorreido@gmail.com", vBank));
+		jBank.add(new Job(p, 
+				  		  0, 5,
+				  		  0, 5,
+				  		  0, 5,
+				  		  "06202015", 
+				  		  "06202015", 
+				  		  "senorreido@gmail.com", vBank));
 		
 		dp = new DataPollster(jl, ul);
-		s = new Schedule(jl);
-		vBank = new ArrayList<>();
-		vBank.add(new Volunteer("moverby@gmail.com", "Mike", "Overby"));
-		vBank.add(new Volunteer("senorreido@gmail.com", "Reid", "Thompson"));
-		vBank.add(new Volunteer("classmate1@gmail.com", "Ariel", "McNamera"));
-		vBank.add(new Volunteer("refactoreverything@gmail.com", "Taylor", "Gorman"));
-		vBank.add(new Volunteer("classmate2@gmail.com", "Jasmine", "Pederson"));
-		vBank.add(new Volunteer("internetfail@gmail.com", "Arshdeep", "Singh"));
-		vBank.add(new Volunteer("classmate3@gmail.com", "Samantha", "Kuk"));
+		s = new Schedule(jl, ul);
 }
 
 	/**
@@ -86,7 +106,7 @@ public class DataPollsterTest {
 	@Test
 	public void testGetPendingJobs() throws Exception {
 		List<Job> jobs = jl.getJobList();
-		assertEquals("Empty list problem.", jobs, dp.getPendingJobs(vBank.get(0)));
+		assertEquals("Empty list problem.", jobs, dp.getPendingJobs(new Volunteer(vBank.get(0))));
 		
 		
 		//TODO: So why don't we just pass the Job in here instead of the ID?
@@ -99,7 +119,7 @@ public class DataPollsterTest {
 		pendJob.add(jobs.get(4));
 		pendJob.add(jobs.get(5));
 		
-		assertEquals("The List filled incorrectly.", pendJob, dp.getPendingJobs(vBank.get(0)));
+		assertEquals("The List filled incorrectly.", pendJob, dp.getPendingJobs(new Volunteer(vBank.get(0))));
 	}
 
 	/**
@@ -109,7 +129,7 @@ public class DataPollsterTest {
 	@Test
 	public void testGetVolunteerJobs() throws Exception {
 		List<Job> jobs = jl.getJobList();
-		assertEquals("Empty list problem.", new ArrayList<Job>(), dp.getVolunteerJobs(vBank.get(0)));
+		assertEquals("Empty list problem.", new ArrayList<Job>(), dp.getVolunteerJobs(new Volunteer("nobody@yahoo.com")));
 		
 		
 		//TODO: So why don't we just pass the Job in here instead of the ID?
@@ -118,13 +138,13 @@ public class DataPollsterTest {
 		s.addVolunteerToJob(vBank.get(0), jobs.get(2).getJobID(), 1);//NOTE: I added @throws exception
 		s.addVolunteerToJob(vBank.get(0), jobs.get(3).getJobID(), 1);//NOTE: I added @throws exception
 		
-		List<Job> vsJob = new ArrayList<Job>();
+		List<Job> vsJob = new ArrayList<Job>(); //Volunteer's Jobs
 		vsJob.add(jobs.get(0));
 		vsJob.add(jobs.get(1));
 		vsJob.add(jobs.get(2));
 		vsJob.add(jobs.get(3));
 		
-		assertEquals("The List filled incorrectly.", vsJob, dp.getVolunteerJobs(vBank.get(0)));
+		assertEquals("The List filled incorrectly.", vsJob, dp.getVolunteerJobs(new Volunteer(vBank.get(0))));
 	}
 
 	/**
@@ -141,10 +161,13 @@ public class DataPollsterTest {
 		
 		Park p2 = new Park("Foolly Park", "Portland", 98232);
 		List<Job> jobs = jl.getJobList();
-		jobs.add(new Job(p2, 5, 5, 5, 
-				new GregorianCalendar(2015, 6, 15), 
-				new GregorianCalendar(2015, 6, 15),
-				"senorreido@gmail.com"));
+		jobs.add(new Job(1006, p2, 
+				  		 0, 5,
+				  		 0, 5,
+				  		 0, 5,
+				  		 "06192015", 
+				  		 "06192015", 
+				  		 "senorreido@gmail.com", vBank));
 		
 		
 		assertEquals("A job at another park affected the return value.", pmJobs, dp.getManagerJobs(pm));
@@ -159,9 +182,9 @@ public class DataPollsterTest {
 		List<Job> jobs = jl.getJobList();
 		assertEquals("Empty list problem.", new ArrayList<Job>(), dp.getVolunteerList(jobs.get(0).getJobID()));
 		
-		List<Volunteer> vList = new ArrayList<>();
+		List<String> vList = new ArrayList<>();
 		
-		for (int i = 0; i <5; i++)
+		for (int i = 0; i < 5; i++)
 		{
 			s.addVolunteerToJob(vBank.get(i), jobs.get(0).getJobID(), 1); //NOTE: I added @throws exception
 			vList.add(vBank.get(i));

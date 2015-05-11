@@ -27,13 +27,17 @@ public class SaveManager {
 		ArrayList<String> jobFileList = new ArrayList<String>();
 		ArrayList<Job> myParsedList = new ArrayList<Job>();
 		
-		File jobFile = new File("rsc\\jobList.txt");
+		File inFile = new File("rsc/jobList.txt");
 		
-		if(jobFile.exists() && !jobFile.isDirectory()) {
+		if(!inFile.exists()) {
+			inFile = new File("rsc\\jobList.txt");
+		}
+		
+		if(inFile.exists() && !inFile.isDirectory()) {
 			try {
-				jobFileList = loadJobFile(jobFile);
+				jobFileList = loadJobFile(inFile);
 			} catch (FileNotFoundException e) {
-				System.err.println("jobFile.txt was detected, but could not be loaded. Please delete jobFile.txt and restart the program.");
+				System.err.println("jobList.txt was detected, but could not be loaded. Please delete jobFile.txt and restart the program.");
 			}
 		}
 		
@@ -52,14 +56,18 @@ public class SaveManager {
 		ArrayList<String> userFileList = new ArrayList<String>();
 		ArrayList myParsedList = new ArrayList();
 		
-		File userFile = new File("rsc\\userList.txt");
+		File inFile = new File("rsc/userList.txt");
+		
+		if(!inFile.exists()) {
+			inFile = new File("rsc\\userList.txt");
+		}
 		
 		
-		if(userFile.exists() && !userFile.isDirectory()) {
+		if(inFile.exists() && !inFile.isDirectory()) {
 			try {
-				userFileList = loadUserFile(userFile);
+				userFileList = loadUserFile(inFile);
 			} catch (FileNotFoundException e) {
-				System.err.println("userFile.txt was detected, but could not be loaded. Please delete userFile.txt and restart the program.");
+				System.err.println("userList.txt was detected, but could not be loaded. Please delete userFile.txt and restart the program.");
 			}
 		}
 		
@@ -75,7 +83,7 @@ public class SaveManager {
 	private ArrayList<String> loadJobFile(File jobFile) throws FileNotFoundException {
 		ArrayList<String> jobFileList = new ArrayList<String>();
 		
-		Scanner myScanner = new Scanner(new File("rsc\\jobList.txt"));
+		Scanner myScanner = new Scanner(jobFile);
 		while(myScanner.hasNextLine()) {
 			jobFileList.add(myScanner.nextLine());
 		}
@@ -87,7 +95,7 @@ public class SaveManager {
 	private ArrayList loadUserFile(File userFile) throws FileNotFoundException {
 		ArrayList userFileList = new ArrayList();
 		
-		Scanner myScanner = new Scanner(new File("rsc\\userList.txt"));
+		Scanner myScanner = new Scanner(userFile);
 		while(myScanner.hasNextLine()) {
 			userFileList.add(myScanner.nextLine());
 		}
@@ -143,7 +151,7 @@ public class SaveManager {
 		
 		//Remove "End Volunteer List"
 		jobFileList.remove(0);
-		Park newPark = new Park("Happy Park", "Tacoma", 98335);
+		Park newPark = new Park(myPark, "Tacoma", 98335);
 		
 		//Construct the new job, and then add it to the list.
 		Job myJob = new Job(myJobID, newPark, myLightCurrent, myLightMax, myMediumCurrent, myMediumMax, myHeavyCurrent, myHeavyMax, 
@@ -232,9 +240,14 @@ public class SaveManager {
 	public boolean saveJobList(JobList theJobList) {
 		List<String> jobInfo = extractJobInfo(theJobList);
 		
+		File outFile = new File("rsc/jobList.txt");
+		
+		if(!outFile.exists()) {
+			outFile = new File("rsc\\jobList.txt");
+		}
+		
 		try {
-			//TODO change to jobList.txt once we verify there aren't any inconsistencies
-			FileWriter fw = new FileWriter("rsc\\jobListOut.txt");
+			FileWriter fw = new FileWriter(outFile);
 			BufferedWriter bw = new BufferedWriter(fw);
 			
 			for(int i = 0; i < jobInfo.size(); i++) {
@@ -288,11 +301,16 @@ public class SaveManager {
 	 */
 	public boolean saveUserList(UserList theUserList) {
 		
+		File outFile = new File("rsc/userList.txt");
+		
+		if(!outFile.exists()) {
+			outFile = new File("rsc\\userList.txt");
+		}
+		
 		List<String> userInfo = extractUserInfo(theUserList);
 		
 		try {
-			//TODO change to userList.txt once we verify there aren't any inconsistencies
-			FileWriter fw = new FileWriter("rsc\\userListOut.txt");
+			FileWriter fw = new FileWriter(outFile);
 			BufferedWriter bw = new BufferedWriter(fw);
 			
 			for(int i = 0; i < userInfo.size(); i++) {

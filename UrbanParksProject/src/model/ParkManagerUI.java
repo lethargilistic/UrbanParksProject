@@ -36,8 +36,6 @@ public class ParkManagerUI {
 	public int getUserInt() {
 		int userInput = 0;
 
-		// Reid: shouldn't this be in a loop?
-		// you'd want to iterate over the whole line to see if any #s were entered
 		if(myScanner.hasNextInt()) {
 			userInput = myScanner.nextInt();
 		} else {
@@ -139,16 +137,33 @@ public class ParkManagerUI {
 	 */
 	public void displayParks(List<Park> myManagedParks) {
 		System.out.println();
-		for(int i = 0; i < myManagedParks.size(); i++) {
-			System.out.println(i + "    " + myManagedParks.get(i).getName());
+		int i;
+		for(i = 0; i < myManagedParks.size(); i++) {
+			System.out.println(i + ") " + myManagedParks.get(i).getName());
 		}		
+		System.out.println(i + ") Add New Park...");
+	}
+	
+	public Park createNewPark() {
+		System.out.println("\n------------------------------------------");
+		
+		System.out.println("What is the name of the park?");
+		String parkName = getUserString();
+		
+		System.out.println("\nIn what city is the park located?");		
+		String cityName = getUserString();
+		
+		System.out.println("\nWhat is the zipcode of the city?");
+		int zipCode = getUserInt();
+		
+		return new Park(parkName, cityName, zipCode);
 	}
 	
 	
 	/**
 	 * Take an ArrayList of Jobs, parse them, and then display their information in the console.
 	 */
-	public void displayJobs(ArrayList<Job> theJobList) {
+	public void displayJobs(List<Job> theJobList) {
 		
 		for(Job job : theJobList) {
 			String startDate = calendarToString(job.getStartDate());
@@ -183,7 +198,7 @@ public class ParkManagerUI {
 	/**
 	 * Take an ArrayList of Volunteers, and display their names to the console.
 	 */
-	public void displayVolunteers(ArrayList<String> myVolunteerList, DataPollster thePollster) {
+	public void displayVolunteers(List<String> myVolunteerList, DataPollster thePollster) {
 		System.out.println(myVolunteerList.size());
 		
 		for(String volunteerString : myVolunteerList) {

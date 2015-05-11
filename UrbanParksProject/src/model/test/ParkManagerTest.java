@@ -27,28 +27,25 @@ public class ParkManagerTest {
 	@Before
 	public void setUp() throws Exception {
 		myList = new JobList();
-		mySchedule = new Schedule(myList);
+		mySchedule = new Schedule(myList, userList);
 		myPollster = new DataPollster(myList, userList);
 		myParks = new ArrayList<Park>();
 		myParks.add(new Park("Bobcat Park", "Seattle", 98304));
 		myManager = new ParkManager(mySchedule, myPollster, myParks, "arshdeep@gmail.com");
 	}
 
-	//TODO: Should be removed in favor of having the commands be processed in the UI.
-	@Test
-	public void parseCommandTest() {
-		assertFalse(myManager.parseCommand("quit"));
-		assertFalse(myManager.parseCommand("Quit"));
-		assertFalse(myManager.parseCommand("q  uit"));
-		
-		assertTrue(myManager.parseCommand("new job"));
-		assertTrue(myManager.parseCommand("NEW job"));
-		assertTrue(myManager.parseCommand("new"));
-		assertFalse(myManager.parseCommand("new jobzo"));
-	}
-
-	@Test
-	public void testCreateJob() {
-		fail("Not yet implemented");
-	}
+//TODO: This is not testable automatically. It requires humaninput at several points.
+	//Next time, we can't have the model containing the UI.
+//	//TODO: Should be removed in favor of having the commands be processed in the UI.
+//	@Test
+//	public void parseCommandTest() {
+//		assertFalse(myManager.parseCommand("quit"));
+//		assertFalse(myManager.parseCommand("Quit"));
+//		assertFalse(myManager.parseCommand("q  uit"));
+//		
+//		assertTrue(myManager.parseCommand("new job"));
+//		assertTrue(myManager.parseCommand("NEW job"));
+//		assertTrue(myManager.parseCommand("new"));
+//		assertFalse(myManager.parseCommand("new jobzo"));
+//	}
 }

@@ -21,7 +21,7 @@ public class Job {
 	/**
 	 * This is the list which holds the e-mail addresses of all volunteers that have signed up to participate in this job.
 	 */
-    public List<String> myVolunteerList; // Reid: why is this not private?
+    private List<String> myVolunteerList; // Reid: why is this not private?
     
     /**
      * This is the start date of the job.
@@ -104,6 +104,27 @@ public class Job {
     	this.myVolunteerList = theVolunteerList;
     }
     
+    public Job(Park thePark, int theLightCurrent, int theLightMax, int theMediumCurrent, int theMediumMax,
+    		int theHeavyCurrent, int theHeavyMax, String theStartDate, String theEndDate, String theManagerEmail, 
+    		List<String> theVolunteerList) {
+    	
+    	this.myJobID = nextJobID++;
+    	this.myPark = thePark;
+    	
+    	this.myLightCurrent = theLightCurrent;
+    	this.myLightMax = theLightMax;
+    	this.myMediumCurrent = theMediumCurrent;
+    	this.myMediumMax = theMediumMax;
+    	this.myHeavyCurrent = theHeavyCurrent;
+    	this.myHeavyMax = theHeavyMax;
+    	
+    	this.myStartDate = stringToCalendar(theStartDate);
+    	this.myEndDate = stringToCalendar(theEndDate);
+    	
+    	this.myManager = theManagerEmail;
+    	this.myVolunteerList = theVolunteerList;
+    }
+    
     /**
      * Convert a date string to a Gregorian Calendar object.
 	 * @param stringDate A string representing a date, of format mmddyyyy
@@ -119,12 +140,6 @@ public class Job {
 		
 		return new GregorianCalendar(myYear, myDay, myMonth);
     }
-    
-    
-	public static void setNextJobID(int theID)
-	{
-		nextJobID = 0;
-	}
     
     /**
      * This is used to return the starting date of the job.
@@ -224,6 +239,10 @@ public class Job {
     			&& (myHeavyMax - myHeavyCurrent) == 0;
     }
 
+    public static void setNextJobID(int theID){
+    	nextJobID = theID;
+    }
+    
 	public int getJobID() {
 		return myJobID;
 	}

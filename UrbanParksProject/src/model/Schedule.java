@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,8 +28,9 @@ public class Schedule {
 	/**
 	 * Constructs a Schedule object.
 	 */
-	public Schedule(JobList theJobList) {
-		myJobList = theJobList;
+	public Schedule(JobList theJobList, UserList theUserList) {
+		this.myJobList = theJobList;
+		this.myUserList = theUserList;
 	}
 
 	/**
@@ -54,7 +56,7 @@ public class Schedule {
 		}
 		
 		// checks if volunteer list is empty
-		if (!theJob.myVolunteerList.isEmpty()) {
+		if (!theJob.getVolunteerList().isEmpty()) {
 			okToAdd = false;
 		}
 		
@@ -169,9 +171,9 @@ public class Schedule {
 		}
 		
 		if (okToAdd && jobExists && openGrade) {
-			// If everything is okay, we add the Volunteer to the Jobâ€™s Volunteer List,
+			// If everything is okay, we add the Volunteer to the Job’s Volunteer List,
 			// increment the grade slot, and return.
-			j.myVolunteerList.add(theVolunteer);
+			j.getVolunteerList().add(theVolunteer);
 			
 			switch (theWorkGrade) {
 				case 1:
@@ -195,15 +197,48 @@ public class Schedule {
 	public JobList getJobList() {
 		return myJobList;
 	}
-	
-	public boolean checkUser(String theEmail) {
-		//TODO can someone java doc this method? I dont know what its supposed to do.
-		return true;
-	}
 
 	public void addUser(String theEmail, String theFirstName, String theLastName,
 			String theUserType) {
-		// TODO Auto-generated method stub
+
+		switch(theUserType) {
+			case "Administrator":
+				Administrator a = new Administrator(theFirstName, theLastName, theEmail);
+				List<Administrator> listAdmin = myUserList.getAdministratorCopyList();
+				listAdmin.add(a);
+				myUserList.setAdministratorList(listAdmin);
+				break;
+				
+			case "ParkManager":
+
+				ParkManager newManager = new ParkManager(theEmail, theFirstName, theLastName);
+				List<ParkManager> managerList = myUserList.getParkManagerCopyList();
+				managerList.add(newManager);
+				myUserList.setParkManagerList(managerList);
+				break;
+				
+			case "Volunteer":
+				Volunteer v = new Volunteer(theEmail, theFirstName, theLastName);
+				List<Volunteer> listVols = myUserList.getVolunteerCopyList();
+				listVols.add(v);
+				myUserList.setVolunteerList(listVols);
+				break;
+		}
+		
+	}
+	
+	/**
+	 * Update the list of managed parks of a Park Manager.
+	 * @author Taylor Gorman
+	 */
+	public void updateParkList(String theEmail, List<Park> theManagedParks) {
+		List<ParkManager> myManagerList = myUserList.getParkManagerCopyList();
+		
+		for(ParkManager manager : myManagerList) {
+			if(manager.getEmail().equals(theEmail)) {
+				manager.setManagedParks(theManagedParks);
+			}
+		}
 		
 	}
 

@@ -29,10 +29,15 @@ public class ParkManager {
 		myEmail = theEmail;
 	}
 	
-	public ParkManager(String theEmail, String theFirstName, String theLastName, List<Park> theParks) {
+	public ParkManager(String theEmail, String theFirstName, String theLastName) {
 		this.myEmail = theEmail;
 		this.myFirstName = theFirstName;
 		this.myLastName = theLastName;
+		myManagedParks = new ArrayList<Park>();
+	}
+	
+	public ParkManager(String theEmail, String theFirstName, String theLastName, List<Park> theParks) {
+		this(theEmail, theFirstName, theLastName);
 		this.myManagedParks = theParks;
 	}
 	
@@ -75,27 +80,29 @@ public class ParkManager {
 	 * @return Return true if we should continue the command loop, false if the user wants to logout.
 	 */
 	public boolean parseCommand(int choice) {
-		
+		boolean status = true;
 		switch(choice) { 
 			case 1:
 				createJob(); 
-				return true;
+				break;
 				
 			case 2:
 				viewUpcomingJobs();
-				return true;
+				break;
 			
 			case 3:
 				viewJobVolunteers();
-				return true;
+				break;
 			
 			case 4:
-				return false;
+				status = false;
 				
 			default: 
 				myUI.displayInvalidChoice();
-				return true;
+				break;
 		}
+		
+		return status;
 	}
 
 	
@@ -112,13 +119,25 @@ public class ParkManager {
 		System.out.println("\n------------------------------------------\nPlease select the number preceding the park where the job is located.");
 		myUI.displayParks(myManagedParks); //Show the parks to the user, including their IDs
 		
-		int parkNum = myUI.selectParkNum();
-		Park myPark = myManagedParks.get(parkNum);
+		int parkNum = myUI.getUserInt();
 		
-		Job job = constructJob(myPark);
+		if(parkNum < myManagedParks.size()) {
+			//ParkManager is assigning to an existing park.
+			Park myPark = myManagedParks.get(parkNum);
+			
+			Job job = constructJob(myPark);
+			
+			boolean added = mySchedule.receiveJob(job);
+			myUI.displayJobStatus(added);
+		} else {
+			//ParkManager is adding a new park
+			Park newPark = myUI.createNewPark();
+			myManagedParks.add(newPark);
+			mySchedule.updateParkList(myEmail, myManagedParks);
+			createJob();
+		}
 		
-		boolean added = mySchedule.receiveJob(job);
-		myUI.displayJobStatus(added);
+
 	}
 	
 	/**
@@ -127,7 +146,7 @@ public class ParkManager {
 	 * @return The constructed Job
 	 */
 	private Job constructJob(Park thePark) {	
-		int myJobID = DataPollster.getNextJobID();
+		int myJobID = myPollster.getNextJobID();
 		int myLight = myUI.getLightSlots();
 		int myMedium = myUI.getMediumSlots();
 		int myHeavy = myUI.getHeavySlots();	
@@ -161,7 +180,7 @@ public class ParkManager {
 		myUI.displayVolunteers(myVolunteerList, myPollster);		
 	}
 	
-	public void setManagedParks(ArrayList<Park> theManagedParks) {
+	public void setManagedParks(List<Park> theManagedParks) {
 		this.myManagedParks = theManagedParks;
 	}
 
@@ -171,9 +190,13 @@ public class ParkManager {
 	 * @return True if valid, false if not.
 	 */
 	private boolean checkPark(int theJobID) {
-		//TODO
-		return true; //Unsure of how to implement this at the moment. Will it be done through DataPollster?	
-	}
+		for (Job j : myPollster.getAllJobs())
+		{
+			if (j.getJobID() == theJobID && myManagedParks.contains(j.getPark()))
+				return true;
+		}
+		return false;
+		}
 
 	public List<Park> getManagedParks() {
 		return Collections.unmodifiableList(myManagedParks);

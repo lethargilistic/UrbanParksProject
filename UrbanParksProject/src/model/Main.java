@@ -1,50 +1,49 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 public class Main {
 
-	public static MainUI myUI;
+	public static MainUI UI;
 	
 
 	public static void main(String[] args) {
 		
-		SaveManager mySaveManager = new SaveManager();
-		JobList myJobList = mySaveManager.loadJobList();
-		UserList myUserList = mySaveManager.loadUserList();
+		SaveManager saveManager = new SaveManager();
 		String[] userInfo;
 		
-		Schedule mySchedule = new Schedule(myJobList);
-		DataPollster myPollster = new DataPollster(myJobList, myUserList);
-		myUI = new MainUI();
+		UI = new MainUI();
 		
-		myUI.initialize();
+		UI.initialize();
 		
 		//We return to the top of the loop whenever the user logs out, and prompt them to login again.
 		//The loop continues until the user selects Exit.
 		while(true) {
-			userInfo = directLogin(mySchedule, myPollster);
+			JobList jobList = saveManager.loadJobList();
+			UserList userList = saveManager.loadUserList();
+			Schedule schedule = new Schedule(jobList, userList);
+			DataPollster pollster = new DataPollster(jobList, userList);
+			
+			userInfo = directLogin(schedule, pollster);
 			
 			//If the command or information entered was invalid, we try again.
-			if(userInfo == null || mySchedule == null || myPollster == null) {
-				directLogin(mySchedule, myPollster);
+			if(userInfo == null || schedule == null || pollster == null) {
+				directLogin(schedule, pollster);
 			}
 			
 			if(userInfo[0].equals("login")) {
-				giveControl(userInfo, mySchedule, myPollster);
+				giveControl(userInfo, schedule, pollster);
 			}
 			
 			if(userInfo[0].equals("register")) {
-				mySchedule.addUser(userInfo[1], userInfo[2], userInfo[3], userInfo[4]);
-				giveControl(userInfo, mySchedule, myPollster);
+				schedule.addUser(userInfo[1], userInfo[2], userInfo[3], userInfo[4]);
+				giveControl(userInfo, schedule, pollster);
 			}
 			
-			mySaveManager.saveJobList(myJobList);
-			mySaveManager.saveUserList(myUserList);
+			saveManager.saveJobList(jobList);
+			saveManager.saveUserList(userList);
 			
-			myUI.greetUser();
+			UI.greetUser();
 		}
 		
 	}
@@ -55,15 +54,15 @@ public class Main {
 	 * Prompt the user to either login, register, or exit.<br>
 	 * Then, ask the user for login or register details.
 	 */
-	public static String[] directLogin(Schedule theSchedule, DataPollster thePollster) {
-		int loginCommand = myUI.getLoginChoice();
+	private static String[] directLogin(Schedule theSchedule, DataPollster thePollster) {
+		int loginCommand = UI.getLoginChoice();
 		String[] userInfo = null;
 		
 		switch (loginCommand) {
 			case 1: userInfo = loginUser(theSchedule, thePollster); break;
 			case 2: userInfo = registerUser(theSchedule, thePollster); break;
-			case 3: myUI.displayExit(); closeProgram(); break; //Ends program.
-			default: myUI.displayInvalidChoice(); break;
+			case 3: UI.displayExit(); closeProgram(); break; //Ends program.
+			default: UI.displayInvalidChoice(); break;
 		}
 		return userInfo;
 	}
@@ -73,7 +72,7 @@ public class Main {
 	 */
 	private static String[] loginUser(Schedule mySchedule, DataPollster myPollster) {
 		
-		String userEmail = myUI.getReturnEmail();
+		String userEmail = UI.getReturnEmail();
 		String[] userInfo = null;
 		
 		if(myPollster.checkEmail(userEmail)) {
@@ -82,7 +81,7 @@ public class Main {
 			userInfo[1] = userEmail;
 			
 		} else {
-			myUI.displayInvalidEmail();
+			UI.displayInvalidEmail();
 		}
 		return userInfo;
 	}
@@ -94,10 +93,10 @@ public class Main {
 		String[] userInfo = new String[5];
 		
 		userInfo[0] = "register";
-		userInfo[1] = myUI.getNewEmail();
-		userInfo[2] = myUI.getFirstName();
-		userInfo[3] = myUI.getLastName();
-		userInfo[4] = myUI.getUserType();
+		userInfo[1] = UI.getNewEmail();
+		userInfo[2] = UI.getFirstName();
+		userInfo[3] = UI.getLastName();
+		userInfo[4] = UI.getUserType();
 		
 		if(userInfo[4] == null) userInfo = null;
 		
@@ -105,27 +104,37 @@ public class Main {
 	}
 	
 	
-	/*
+	/**
 	 * Transfer control to the user, specified by their e-mail address.
 	 */
-	public static void giveControl(String[] theUserInfo, Schedule mySchedule, DataPollster myPollster) {
-		String userType = myPollster.getUserType(theUserInfo[1]);
+	private static void giveControl(String[] theUserInfo, Schedule theSchedule, DataPollster thePollster) {
+		String userType = thePollster.getUserType(theUserInfo[1]);
 		
 		if(userType.equals("ParkManager")) {
-			List<Park> myManagedParks = myPollster.getParkList(theUserInfo[1]);
-			String myEmail = theUserInfo[1];
-			ParkManager myManager = new ParkManager(mySchedule, myPollster, myManagedParks, myEmail);
-			myManager.initialize();
+			List<Park> managedParks = thePollster.getParkList(theUserInfo[1]);
+			String email = theUserInfo[1];
+			ParkManager manager = new ParkManager(theSchedule, thePollster, managedParks, email);
+			manager.initialize();
 		}
 		
-		//TODO for Volunteer and Administrator
+		if(userType.equals("Volunteer")) {
+			String email = theUserInfo[1];
+			Volunteer volunteer = new Volunteer(theSchedule, thePollster, email);
+			volunteer.initialize();
+		}
+		
+		if(userType.equals("Administrator")) {
+			String email = theUserInfo[1];
+			Administrator administrator = new Administrator(thePollster, email);
+			administrator.initialize();
+		}
 	}
 	
 	
-	
-	
-	
-	public static void closeProgram() {
+	/**
+	 * Breaks out of infinite loop in main method.
+	 */
+	private static void closeProgram() {
 		System.exit(0);
 	}
 

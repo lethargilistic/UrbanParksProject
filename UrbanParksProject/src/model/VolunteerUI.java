@@ -7,28 +7,32 @@ import java.util.Scanner;
 
 public class VolunteerUI {
 
-	private Scanner in;
+
+	private Scanner myScanner;
 	
-	/**
-	 * 
-	 */
 	public VolunteerUI() {
-		in= new Scanner(System.in);
+		myScanner = new Scanner(System.in);
 	}
-	
+
 	
 	/**
 	 * Display the possible commands that the user could type. 
 	 */
 	public void listCommands() {
-		System.out.println("\n1.view jobs     2.sign up     3.view my jobs     4.quit\n");
-	}
+		System.out.println("\n------------------------------------------");
+		System.out.println("Volunteer Menu");
+		System.out.println("\nWhat would you like to do?");
+		System.out.println("1) View All Jobs");
+		System.out.println("2) Sign Up for a Job");
+		System.out.println("3) View My Jobs");
+		System.out.println("4) Logout");
+		}
 	
 	/**
 	 * Return the command that the user has typed.
 	 */
 	public String getCommand() {	
-		return in.nextLine();
+		return getUserString();
 	}
 
 	public void displayJobs(List<Job> theJobList) {
@@ -67,12 +71,10 @@ public class VolunteerUI {
 	 * @return ID number
 	 */
 	public int getJobID() {
-		System.out.println("To select a job to sign up for, please type its ID #.");
+		System.out.println("Please enter the Job ID of the job you would like to sign up for:");
 		int ID = 0;
 		
-		if(in.hasNextInt()) {
-			ID = in.nextInt();
-		}	
+		ID = getUserInt();
 		
 		return ID;
 	}
@@ -83,14 +85,14 @@ public class VolunteerUI {
 	 * @return difficulty level.
 	 */
 	public int getDifficultyLevel() {
-		System.out.println("\nWhat level of work do you want to sign up for?");
+		System.out.println("\nPlease enter the work intensity you would like to sign up for:");
 		int level = 0;
 		
-		System.out.println("Type 1 for light work, 2 for medium work, or 3 for heavy work.");
+		System.out.println("1) Light");
+		System.out.println("2) Medium");
+		System.out.println("3) Heavy");
 		
-		if(in.hasNextInt()) {
-			level = in.nextInt();
-		} 
+		level = getUserInt();
 		
 		return level;
 	}
@@ -105,6 +107,30 @@ public class VolunteerUI {
 		System.out.println("Sorry, but the Job ID was not recognized.");
 	}
 	
+	/**
+	 * Return an integer that the user has typed.
+	 */
+	public int getUserInt() {
+		int userInput = 0;
+
+		if(myScanner.hasNextInt()) {
+			userInput = myScanner.nextInt();
+		} else {
+			myScanner.next();
+		}
+
+		return userInput;
+	}
+	
+	private String getUserString() {		
+		String userInput = myScanner.nextLine();
+		
+		if(userInput.equals("")) { //TODO, maybe make this a while so that it will continuously 
+									//prompt the user, instead of just once? - Reid agrees.
+			userInput = myScanner.nextLine();
+		}
+		return userInput;
+	}
 	
 }
 
