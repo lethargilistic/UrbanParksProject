@@ -65,14 +65,11 @@ public class ScheduleTest {
 		DataPollster dp = new DataPollster(myJoblist, myUserList);
 	    myParkManager = new ParkManager(mySchedule, dp, pList, "tjsg1992@gmail.com");
 		myPark = new Park("Wright Park", "Tacoma", 98403);
-		myJob = new Job(myPark, 
-						0, 10,
-						0, 10,
-						0, 10,
+		myJob = new Job(myPark, 10, 10,10,
 						"06172015",
 						"06172015", 
 						"tjsg1992@gmail.com",
-						new ArrayList<String>());
+						new ArrayList<ArrayList<String>>());
 		
 		myVolunteer = new Volunteer("generic@gmail.com", "Bob", "Smith");
 	}
@@ -81,7 +78,7 @@ public class ScheduleTest {
 	 * Testing if a valid job can be received.
 	 */
 	@Test
-	public void test1ForReceiveJob() {
+	public void testForValidReceiveJob() {
 		mySchedule.receiveJob(myJob);
 		//TODO: that duplication definitely needs to be removed from the API
 		assertFalse("No job was added.", mySchedule.getJobList().getJobList().isEmpty());
@@ -92,15 +89,12 @@ public class ScheduleTest {
 	 * Testing with a Job having invalid dates.
 	 */
 	@Test
-	public void test2ForReceiveJob() {
-		Job badDates = new Job(myPark, 
-						0, 10,
-						0, 10,
-						0, 10,
+	public void testForInvalidDatesReceiveJob() {
+		Job badDates = new Job(myPark, 10, 10, 10,
 						"06172015",
 						"06152015", 
 						"tjsg1992@gmail.com",
-						new ArrayList<String>());
+						new ArrayList<ArrayList<String>>());
 		boolean bool1 = mySchedule.receiveJob(badDates);
 		assertFalse(bool1);
 	}
@@ -109,8 +103,14 @@ public class ScheduleTest {
 	 * Testing with a Job that doesn't have an empty Volunteer list.
 	 */
 	@Test
-	public void test4ForReceiveJob() {
-		myJob.getVolunteerList().add(myVolEmail);
+	public void testForEmptyVolListReceiveJob() {
+		ArrayList<String> temp = new ArrayList<>();
+		temp.add(myVolEmail);
+		temp.add("Light");
+		ArrayList<ArrayList<String>> temp2 = new ArrayList<>();
+		temp2.add(temp);
+		
+		myJob.getVolunteerList().add(temp);
 		boolean bool3 = mySchedule.receiveJob(myJob);
 		assertFalse(bool3);
 	}
@@ -120,77 +120,28 @@ public class ScheduleTest {
 	 * work grade amounts.
 	 */
 	@Test
-	public void test6ForReceiveJob() {
-		Job noSpace  =  new Job(myPark, 
-								0, 0,
-								0, 0,
-								0, 0,
+	public void testForNoWorkersReceiveJob() {
+		Job noSpace  =  new Job(myPark, 0, 0, 0,
 								"06172015",
 								"06172015", 
 								"tjsg1992@gmail.com",
-								new ArrayList<String>());
+								new ArrayList<ArrayList<String>>());
 		boolean bool5 = mySchedule.receiveJob(noSpace);
 		assertFalse(bool5);
-	}
-
-	//This is prevented by an exception in the incrementMethods. And a job shouldn't have Volunteers before it is received anyway. TODO: Discuss removal.
-	/**
-	 * Testing with a Job where the number of light volunteers exceeds its max.
-	 */
-	@Test
-	public void test7ForReceiveJob() {
-		int itrs = 5;
-		Job overflowed = new Job(myPark, 
-								 3, 2,
-								 0, 2,
-								 0, 2,
-								 "06172015",
-								 "06172015", 
-								 "tjsg1992@gmail.com",
-								 new ArrayList<String>());
-		boolean bool6 = mySchedule.receiveJob(overflowed);
-		assertFalse("Light overflow failed", bool6);
-		
-		overflowed = new Job(myPark, 
-				0, 2,
-				3, 2,
-				0, 2,
-				"06172015",
-				"06172015", 
-				"tjsg1992@gmail.com",
-				new ArrayList<String>());
-		bool6 = mySchedule.receiveJob(overflowed);
-		assertFalse("Medium overflow failed", bool6);
-		
-
-		overflowed = new Job(myPark, 
-				0, 2,
-				0, 2,
-				3, 2,
-				"06172015",
-				"06172015", 
-				"tjsg1992@gmail.com",
-				new ArrayList<String>());
-		
-		bool6 = mySchedule.receiveJob(overflowed);
-		assertFalse("Heavy overflow failed", bool6);
 	}
 	
 	/**
 	 * Testing with a Job with a null Park.
 	 */
 	@Test
-	public void test8ForReceiveJob() {
-		Job nullPark =  new Job(myPark, 
-								0, 2,
-								0, 2,
-								0, 2,
+	public void testForNullParkReceiveJob() {
+		Job nullPark =  new Job(myPark, 2, 2, 2,
 								"06172015",
 								"06172015", 
 								"tjsg1992@gmail.com",
 								null);
-		boolean bool7 = mySchedule.receiveJob(nullPark);
-		assertFalse(bool7);
+		boolean bool6 = mySchedule.receiveJob(nullPark);
+		assertFalse(bool6);
 	}
 	
 	//Park Manager is retrieved from park, so this test is unnecessary. TODO: Discuss removal
@@ -198,47 +149,44 @@ public class ScheduleTest {
 	 * Testing with a Job with a null ParkManager.
 	 */
 	@Test
-	public void test9ForReceiveJob() {
-		Job nullMngr =  new Job(myPark, 
-								0, 2,
-								0, 2,
-								0, 2,
+	public void testForNullParkManagerReceiveJob() {
+		Job nullMngr =  new Job(myPark, 2, 2, 2,
 								"06172015",
 								"06172015", 
 								null,
-								new ArrayList<String>());
-		boolean bool8 = mySchedule.receiveJob(nullMngr);
-		assertFalse(bool8);
+								new ArrayList<ArrayList<String>>());
+		boolean bool7 = mySchedule.receiveJob(nullMngr);
+		assertFalse(bool7);
 	}
 
 	/**
 	 * Testing with a negative job id number.
 	 */
 	@Test
-	public void test1ForAddVolunteerToJob() {
-		boolean bool1 = false; //an error was showing up so I had to initialize this to false.
+	public void testForAddNegJobIDVolunteerToJob() {
+		boolean bool9 = false; //an error was showing up so I had to initialize this to false.
 		try { //I added exceptions to addVolunteer so I put this into a try catch block.
-			bool1 = mySchedule.addVolunteerToJob(myVolEmail, -10, 2);
+			bool9 = mySchedule.addVolunteerToJob(myVolEmail, -10, 2);
 		} catch (Exception e) {
 			
 			//e.printStackTrace();
 		}
-		assertFalse(bool1);
+		assertFalse(bool9);
 	}
 	
 	/**
 	 * Testing with an invalid work grade number.
 	 */
 	@Test
-	public void test2ForAddVolunteerToJob() {
-		boolean bool2 = false; //an error was showing up so I had to initialize this to false.
+	public void testForInvalidWorkGradeAddVolunteerToJob() {
+		boolean bool1 = false; //an error was showing up so I had to initialize this to false.
 		try { //I added exceptions to addVolunteer so I put this into a try catch block.
-			bool2 = mySchedule.addVolunteerToJob(myVolEmail, 10, 4);
+			bool1 = mySchedule.addVolunteerToJob(myVolEmail, 10, 4);
 		} catch (Exception e) {
 			
 			e.printStackTrace();
 		}
-		assertFalse(bool2);
+		assertFalse(bool1);
 	}
 	
 	@After

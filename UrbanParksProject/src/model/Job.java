@@ -106,18 +106,15 @@ public class Job {
     	
     }
     
-    public Job(Park thePark, int theLightCurrent, int theLightMax, int theMediumCurrent, int theMediumMax,
-    		int theHeavyCurrent, int theHeavyMax, String theStartDate, String theEndDate, String theManagerEmail, 
+    public Job(Park thePark, int theLightMax, int theMediumMax, int theHeavyMax, 
+    		String theStartDate, String theEndDate, String theManagerEmail, 
     		ArrayList<ArrayList<String>> theVolunteerList) {
     	
     	this.myJobID = nextJobID++;
     	this.myPark = thePark;
     	
-    	this.myLightCurrent = theLightCurrent;
     	this.myLightMax = theLightMax;
-    	this.myMediumCurrent = theMediumCurrent;
     	this.myMediumMax = theMediumMax;
-    	this.myHeavyCurrent = theHeavyCurrent;
     	this.myHeavyMax = theHeavyMax;
     	
     	this.myStartDate = stringToCalendar(theStartDate);
