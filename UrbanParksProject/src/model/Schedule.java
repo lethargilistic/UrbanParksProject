@@ -244,27 +244,44 @@ public class Schedule {
 		if (okToAdd && jobExists && openGrade) {
 			// If everything is okay, we add the Volunteer to the Job’s Volunteer List,
 			// increment the grade slot, and return.
-			j.getVolunteerList().add(theVolunteer);
-			
+
+			ArrayList<String> volArray = new ArrayList<String>();
+			volArray.add(theVolunteer);
 			switch (theWorkGrade) {
-				case 1:
-					j.incrementLight();
-					break;
-				case 2:
-					j.incrementMedium();
-					break;
-				case 3:
-					j.incrementHeavy();
-					break;
+			case 1:
+				volArray.add("Light");
+				break;
+			case 2:
+				volArray.add("Medium");
+				break;
+			case 3:
+				volArray.add("Heavy");
+				break;
+			}
+
+			j.getVolunteerList().add(volArray);
+
+			
+			//increment the value of the grade because a person has been added to it.
+			switch (theWorkGrade) {
+			case 1:
+				j.incrementLight();
+				break;
+			case 2:
+				j.incrementMedium();
+				break;
+			case 3:
+				j.incrementHeavy();
+				break;
 			}
 		} else {
 			// If either of these are false, we print to the console and return
 			System.out.println("Error with given data. Volunteer was not added to Job.");
 		}
-		
+
 		return okToAdd && jobExists && openGrade;
 	}
-	
+
 	public JobList getJobList() {
 		return myJobList;
 	}
