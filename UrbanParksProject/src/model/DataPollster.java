@@ -181,17 +181,48 @@ public class DataPollster {
 	
 	/**
 	 * Check the e-mail address of a user logging in to see if they exist in the system.
+	 * @author Reid Thompson
 	 */
 	public boolean checkEmail(String theEmail) {
-		if(myUserList.getVolunteerCopyList().contains(theEmail) 
-				|| myUserList.getParkManagerCopyList().contains(theEmail)
-				|| myUserList.getAdministratorCopyList().contains(theEmail))
-			return true;
-		return false;
+		boolean result = false;
+		List<Volunteer> vols = myUserList.getVolunteerCopyList();
+
+		for (int i = 0; i < vols.size(); i++) {
+			final Volunteer v = vols.get(i);
+			if (v.getEmail().equals(theEmail)) {
+				result = true;
+				break;
+			}
+		}
+
+		if (!result) {
+			List<ParkManager> mngrs = myUserList.getParkManagerCopyList();
+			for (int i = 0; i < mngrs.size(); i++) {
+				final ParkManager pm = mngrs.get(i);
+				if (pm.getEmail().equals(theEmail)) {
+					result = true;
+					break;
+				}
+			}
+		}
+
+		if (!result) {
+			List<Administrator> admins = myUserList.getAdministratorCopyList();
+			for (int i = 0; i < admins.size(); i++) {
+				final Administrator a = admins.get(i);
+				if (a.getEmail().equals(theEmail)) {
+					result = true;
+					break;
+				}
+			}
+		}
+
+		return result;
 	}
 
 	/**
 	 * Return the user type associated with the e-mail as a String.
+	 * @author Taylor Gorman
 	 */
 	public String getUserType(String theEmail) {
 		String userType = "";
