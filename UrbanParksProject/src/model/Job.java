@@ -22,6 +22,7 @@ public class Job {
 	 * This is the list which holds the e-mail addresses of all volunteers that have signed up to participate in this job.
 	 */
     private ArrayList<ArrayList<String>> myVolunteerList;
+
     
     /**
      * This is the start date of the job.

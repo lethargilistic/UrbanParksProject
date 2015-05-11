@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -118,7 +119,8 @@ public class ParkManager {
 	 * 5. Tell the user if the new job was successfully added.
 	 */
 	public void createJob() {	
-		System.out.println("\n------------------------------------------\nPlease select the number preceding the park where the job is located.");
+		System.out.println("\n------------------------------------------\n"
+				+ "Please select the number preceding the park where the job is located.");
 		myUI.displayParks(myManagedParks); //Show the parks to the user, including their IDs
 		
 		int parkNum = myUI.getUserInt();
@@ -129,8 +131,15 @@ public class ParkManager {
 			
 			Job job = constructJob(myPark);
 			
-			boolean added = mySchedule.receiveJob(job);
-			myUI.displayJobStatus(added);
+			// ENFORCING BUSINESS RULE #4 - A job may not be scheduled if it lasts more than 2 days.
+			boolean okToAdd = getDays(job.getStartDate(), job.getEndDate()) <= 2;
+			
+			if (okToAdd) {
+				boolean added = mySchedule.receiveJob(job);
+				myUI.displayJobStatus(added);
+			} else {
+				System.out.println("A job may not be scheduled if it lasts more than 2 days");
+			}
 		} else {
 			//ParkManager is adding a new park
 			Park newPark = myUI.createNewPark();
@@ -138,8 +147,41 @@ public class ParkManager {
 			mySchedule.updateParkList(myEmail, myManagedParks);
 			createJob();
 		}
-		
-
+	}
+	
+	/**
+	 * Returns the number of days between 2 GregorianCalendar objects.
+	 * 
+	 * @author http://stackoverflow.com/questions/10624229/compare-dates-using-calendar-class-using-java
+	 * 
+	 * @param theG1 the first GregorianCalendar object.
+	 * @param theG2 the second GregorianCalendar object.
+	 * @return the number of days between 2 GregorianCalendar objects.
+	 */
+	public int getDays(GregorianCalendar theG1, GregorianCalendar theG2) {
+		int elapsed = 0;
+		GregorianCalendar gc1, gc2;
+		if (theG2.after(theG1)) {
+			gc2 = (GregorianCalendar) theG2.clone();
+			gc1 = (GregorianCalendar) theG1.clone();
+		}
+		else   {
+			gc2 = (GregorianCalendar) theG1.clone();
+			gc1 = (GregorianCalendar) theG2.clone();
+		}
+		gc1.clear(Calendar.MILLISECOND);
+		gc1.clear(Calendar.SECOND);
+		gc1.clear(Calendar.MINUTE);
+		gc1.clear(Calendar.HOUR_OF_DAY);
+		gc2.clear(Calendar.MILLISECOND);
+		gc2.clear(Calendar.SECOND);
+		gc2.clear(Calendar.MINUTE);
+		gc2.clear(Calendar.HOUR_OF_DAY);
+		while ( gc1.before(gc2) ) {
+			gc1.add(Calendar.DATE, 1);
+			elapsed++;
+		}
+		return elapsed;
 	}
 	
 	/**
