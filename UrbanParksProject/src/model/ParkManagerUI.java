@@ -101,7 +101,7 @@ public class ParkManagerUI {
 	
 	/**
 	 * Prompt the user to enter when they want to start the job, then return it.
-	 * @return The start date in format ddmmyyyy
+	 * @return The start date in format mmddyyyy
 	 */
 	public String getStartDate() {
 		System.out.println("Please enter the start date of the job in the following format:"
