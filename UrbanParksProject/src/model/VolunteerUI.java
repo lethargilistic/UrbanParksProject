@@ -170,6 +170,11 @@ public class VolunteerUI {
 	}
 
 	public void displayJobs(List<Job> theJobList) {
+		
+		if(theJobList.size() == 0) {
+			System.out.println("\nThere are no upcoming jobs to display..");
+		}
+		
 		for(Job job : theJobList) {
 			String startDate = calendarToString(job.getStartDate());
 			String endDate = calendarToString(job.getEndDate());
@@ -245,7 +250,7 @@ public class VolunteerUI {
 	 * Display an error in the console that the Job ID was not recognized.
 	 */
 	public void showJobIDError() {
-		System.out.println("Sorry, but the Job ID was not recognized.");
+		System.out.println("\nSorry, but the Job ID was not recognized.");
 	}
 	
 	/**
@@ -271,6 +276,12 @@ public class VolunteerUI {
 			userInput = myScanner.nextLine();
 		}
 		return userInput;
+	}
+	
+	public void displaySuccessMessage() {
+		System.out.println("\nYou were successfully added to the job!\nThank you for helping to make the world a better place,"
+				+ " one park at a time!");
+		
 	}
 	
 }

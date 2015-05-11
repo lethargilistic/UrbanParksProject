@@ -165,6 +165,10 @@ public class ParkManagerUI {
 	 */
 	public void displayJobs(List<Job> theJobList) {
 		
+		if(theJobList.size() == 0) {
+			System.out.println("\nYou do not have any upcoming jobs to display.");
+		}
+		
 		for(Job job : theJobList) {
 			String startDate = calendarToString(job.getStartDate());
 			String endDate = calendarToString(job.getEndDate());
@@ -235,7 +239,7 @@ public class ParkManagerUI {
 	 * Display an error in the console that the Job ID was not recognized.
 	 */
 	public void showJobIDError() {
-		System.out.println("Sorry, but the Job ID was not recognized.");
+		System.out.println("\nSorry, but this Job ID belongs to a park that you do not manage.");
 	}
 	
 	
