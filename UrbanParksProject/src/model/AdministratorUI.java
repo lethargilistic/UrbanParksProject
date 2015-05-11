@@ -156,8 +156,7 @@ public class AdministratorUI {
 	 * @return a String of the last name of the Volunteer to search for.
 	 */
 	public String promptForVolsLastName() {
-		System.out.println("Option 1 selected.\n"
-				+ "Please enter the last name of the Volunteer to search for: \n");
+		System.out.println("Please enter the last name of the Volunteer to search for: \n");
 		return getUserString();
 	}
 	
