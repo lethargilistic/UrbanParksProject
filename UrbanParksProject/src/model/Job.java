@@ -21,7 +21,8 @@ public class Job {
 	/**
 	 * This is the list which holds the e-mail addresses of all volunteers that have signed up to participate in this job.
 	 */
-    private List<String> myVolunteerList; // Reid: why is this not private?
+    private ArrayList<ArrayList<String>> myVolunteerList;
+
     
     /**
      * This is the start date of the job.
@@ -85,7 +86,7 @@ public class Job {
      */
     public Job(int theJobID, Park thePark, int theLightCurrent, int theLightMax, int theMediumCurrent, int theMediumMax,
     		int theHeavyCurrent, int theHeavyMax, String theStartDate, String theEndDate, String theManagerEmail, 
-    		List<String> theVolunteerList) {
+    		ArrayList<ArrayList<String>> theVolunteerList) {
     	
     	this.myJobID = theJobID;
     	this.myPark = thePark;
@@ -106,7 +107,7 @@ public class Job {
     
     public Job(Park thePark, int theLightCurrent, int theLightMax, int theMediumCurrent, int theMediumMax,
     		int theHeavyCurrent, int theHeavyMax, String theStartDate, String theEndDate, String theManagerEmail, 
-    		List<String> theVolunteerList) {
+    		ArrayList<ArrayList<String>> theVolunteerList) {
     	
     	this.myJobID = nextJobID++;
     	this.myPark = thePark;
@@ -247,7 +248,7 @@ public class Job {
 		return myJobID;
 	}
 
-	public List<String> getVolunteerList() {
+	public ArrayList<ArrayList<String>> getVolunteerList() {
 		return myVolunteerList;
 	}
 

@@ -141,11 +141,16 @@ public class SaveManager {
 			jobFileList.remove(0); 
 		}
 		
-		List<String> myVolunteerList = new ArrayList<String>();
+		ArrayList<ArrayList<String>> myVolunteerList = new ArrayList<ArrayList<String>>();
 		
 		//Add the volunteer to the volunteer list, then remove it from the file list.
 		while(!jobFileList.get(0).equals("End Volunteer List")) {
-			myVolunteerList.add(jobFileList.get(0)); 
+			ArrayList<String> volunteer = new ArrayList<String>();
+			volunteer.add(jobFileList.get(0));
+			volunteer.add(jobFileList.get(1));
+			myVolunteerList.add(volunteer); 
+			
+			jobFileList.remove(0);
 			jobFileList.remove(0);
 		}
 		
@@ -282,8 +287,9 @@ public class SaveManager {
 			jobInfo.add(job.getPark().getName());
 			jobInfo.add(job.getManager());
 			
-			for(String volunteer : job.getVolunteerList()) {
-				jobInfo.add(volunteer);
+			for(ArrayList<String> volunteer : job.getVolunteerList()) {
+				jobInfo.add(volunteer.get(0)); //Volunteer Email
+				jobInfo.add(volunteer.get(1)); //Work Grade
 			}
 			
 			jobInfo.add("End Volunteer List");

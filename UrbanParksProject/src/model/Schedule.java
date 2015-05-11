@@ -110,7 +110,7 @@ public class Schedule {
 	 * @return true if the Volunteer was added to the Job and false otherwise.
 	 * @throws Exception 
 	 */
-	public boolean addVolunteerToJob(String theVolunteer, int theJobID, int theWorkGrade) throws Exception {
+	public boolean addVolunteerToJob(ArrayList<String> theVolunteer, int theJobID) throws Exception {
 		boolean okToAdd = true;
 		
 		//Schedule will check to make sure the Job ID is valid
@@ -120,10 +120,6 @@ public class Schedule {
 			throw new IllegalArgumentException("This job ID does not exist");
 																	//NOTE: this exception is thrown if the user enters
 																	//an invalid ID. It will be caught in a try-catch block.
-		}
-		
-		if (theWorkGrade < 1 || theWorkGrade > 3) {
-			okToAdd = false;
 		}
 		
 		//Calls JobList.getJobList() to get the master job list which is editable
@@ -147,7 +143,11 @@ public class Schedule {
 		
 		// Schedule will check to make sure there is a slot open in the grade using 
 		// the Job object from before
-		boolean openGrade = false;
+		boolean openGrade = true;
+		
+		/*
+		 * 
+		 * TODO CHANGE PLEASE THANKS
 		switch (theWorkGrade) {
 			case 1:
 				if (j.hasLightRoom()) {
@@ -169,23 +169,13 @@ public class Schedule {
 												//This will be caught in a try-catch block when the volunteer attempts
 												//to join a job grade that is not available.
 		}
+		*/
 		
 		if (okToAdd && jobExists && openGrade) {
 			// If everything is okay, we add the Volunteer to the Job’s Volunteer List,
 			// increment the grade slot, and return.
 			j.getVolunteerList().add(theVolunteer);
 			
-			switch (theWorkGrade) {
-				case 1:
-					j.incrementLight();
-					break;
-				case 2:
-					j.incrementMedium();
-					break;
-				case 3:
-					j.incrementHeavy();
-					break;
-			}
 		} else {
 			// If either of these are false, we print to the console and return
 			System.out.println("Error with given data. Volunteer was not added to Job.");
