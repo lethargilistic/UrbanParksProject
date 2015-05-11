@@ -30,7 +30,7 @@ public class DataPollsterTest {
 	private UserList ul;
 	private DataPollster dp;
 	private Schedule s;
-	private List<Volunteer> vBank;
+	private List<String> vBank;
 	/**
 	 * @throws java.lang.Exception
 	 */
@@ -41,13 +41,13 @@ public class DataPollsterTest {
 		pList.add(p);
 		
 		vBank = new ArrayList<>();
-		vBank.add(new Volunteer("moverby@gmail.com"));
-		vBank.add(new Volunteer("senorreido@gmail.com"));
-		vBank.add(new Volunteer("classmate1@gmail.com"));
-		vBank.add(new Volunteer("refactoreverything@gmail.com"));
-		vBank.add(new Volunteer("classmate2@gmail.com"));
-		vBank.add(new Volunteer("internetfail@gmail.com"));
-		vBank.add(new Volunteer("classmate3@gmail.com"));
+		vBank.add("moverby@gmail.com");
+		vBank.add("senorreido@gmail.com");
+		vBank.add("classmate1@gmail.com");
+		vBank.add("refactoreverything@gmail.com");
+		vBank.add("classmate2@gmail.com");
+		vBank.add("internetfail@gmail.com");
+		vBank.add("classmate3@gmail.com");
 		
 		jl = new JobList();
 		List<Job> jBank = jl.getJobList();
@@ -107,7 +107,7 @@ public class DataPollsterTest {
 	@Test
 	public void testGetPendingJobs() throws Exception {
 		List<Job> jobs = jl.getJobList();
-		assertEquals("Empty list problem.", jobs, dp.getPendingJobs(vBank.get(0)));
+		assertEquals("Empty list problem.", jobs, dp.getPendingJobs(new Volunteer(vBank.get(0))));
 		
 		
 		//TODO: So why don't we just pass the Job in here instead of the ID?
@@ -120,7 +120,7 @@ public class DataPollsterTest {
 		pendJob.add(jobs.get(4));
 		pendJob.add(jobs.get(5));
 		
-		assertEquals("The List filled incorrectly.", pendJob, dp.getPendingJobs(vBank.get(0)));
+		assertEquals("The List filled incorrectly.", pendJob, dp.getPendingJobs(new Volunteer(vBank.get(0))));
 	}
 
 	/**
@@ -130,7 +130,7 @@ public class DataPollsterTest {
 	@Test
 	public void testGetVolunteerJobs() throws Exception {
 		List<Job> jobs = jl.getJobList();
-		assertEquals("Empty list problem.", new ArrayList<Job>(), dp.getVolunteerJobs("nobody@yahoo.com"));
+		assertEquals("Empty list problem.", new ArrayList<Job>(), dp.getVolunteerJobs(new Volunteer("nobody@yahoo.com")));
 		
 		
 		//TODO: So why don't we just pass the Job in here instead of the ID?
@@ -145,7 +145,7 @@ public class DataPollsterTest {
 		vsJob.add(jobs.get(2));
 		vsJob.add(jobs.get(3));
 		
-		assertEquals("The List filled incorrectly.", vsJob, dp.getVolunteerJobs(vBank.get(0)));
+		assertEquals("The List filled incorrectly.", vsJob, dp.getVolunteerJobs(new Volunteer(vBank.get(0))));
 	}
 
 	/**

@@ -104,6 +104,27 @@ public class Job {
     	this.myVolunteerList = theVolunteerList;
     }
     
+    public Job(Park thePark, int theLightCurrent, int theLightMax, int theMediumCurrent, int theMediumMax,
+    		int theHeavyCurrent, int theHeavyMax, String theStartDate, String theEndDate, String theManagerEmail, 
+    		List<String> theVolunteerList) {
+    	
+    	this.myJobID = nextJobID++;
+    	this.myPark = thePark;
+    	
+    	this.myLightCurrent = theLightCurrent;
+    	this.myLightMax = theLightMax;
+    	this.myMediumCurrent = theMediumCurrent;
+    	this.myMediumMax = theMediumMax;
+    	this.myHeavyCurrent = theHeavyCurrent;
+    	this.myHeavyMax = theHeavyMax;
+    	
+    	this.myStartDate = stringToCalendar(theStartDate);
+    	this.myEndDate = stringToCalendar(theEndDate);
+    	
+    	this.myManager = theManagerEmail;
+    	this.myVolunteerList = theVolunteerList;
+    }
+    
     /**
      * Convert a date string to a Gregorian Calendar object.
 	 * @param stringDate A string representing a date, of format mmddyyyy
@@ -218,6 +239,10 @@ public class Job {
     			&& (myHeavyMax - myHeavyCurrent) == 0;
     }
 
+    public static void setNextJobID(int theID){
+    	nextJobID = theID;
+    }
+    
 	public int getJobID() {
 		return myJobID;
 	}

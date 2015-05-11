@@ -27,12 +27,12 @@ public class JobTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		GregorianCalendar startDate = new GregorianCalendar(6, 11, 1992);
-		GregorianCalendar endDate = new GregorianCalendar(6, 11, 1992);
+		String startDate = "06111992";
+		String endDate = "06111992";
 		
 		JobList jl = new JobList();
 		UserList ul = new UserList();
-		Schedule s = new Schedule(jl);
+		Schedule s = new Schedule(jl, ul);
 		DataPollster dp = new DataPollster(jl, ul);
 		
 		Park p = new Park ("Boolean Park", "Tacoma", 19222);
@@ -41,7 +41,14 @@ public class JobTest {
 		
 		myParkManager = new ParkManager(s, dp, pList, "tjsg1992@gmail.com");
 		
-		myJob = new Job(myPark, 2, 3, 4, startDate, endDate, myParkManager.getEmail());
+		
+		myJob = new Job(myPark, 
+					    0, 2,
+					    0, 3,
+					    0, 4, 
+					    startDate, endDate,
+					    myParkManager.getEmail(),
+					    new ArrayList<String>());
 	}
 
 	@Test
@@ -56,9 +63,13 @@ public class JobTest {
 		
 		for (int i = 1; i <= 5; i++)
 		{
-			Job j = new Job(myPark, 2, 3, 4, 
-							new GregorianCalendar(6, 11+i, 1992), 
-							new GregorianCalendar(6, 11+i, 1992), "moverby@gmail.com");
+			Job j = new Job(myPark, 
+							0, 2,
+							0, 3,
+							0, 4, 
+							"06" + Integer.toString(11+i) + 1992, 
+							"06" + Integer.toString(11+i) + 1992, 
+							"moverby@gmail.com", new ArrayList<String>());
 			assertEquals(i, j.getJobID());
 		}
 	}
