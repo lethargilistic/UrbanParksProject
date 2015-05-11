@@ -183,43 +183,26 @@ public class DataPollster {
 	 * Check the e-mail address of a user logging in to see if they exist in the system.
 	 */
 	public boolean checkEmail(String theEmail) {
-		//TODO
-		return true;
+		if(myUserList.getVolunteerCopyList().contains(theEmail) 
+				|| myUserList.getParkManagerCopyList().contains(theEmail)
+				|| myUserList.getAdministratorCopyList().contains(theEmail))
+			return true;
+		return false;
 	}
 
 	/**
 	 * Return the user type associated with the e-mail as a String.
 	 */
 	public String getUserType(String theEmail) {
-		//in this method, search each of the three lists in myUserList.
-				//depending on which of the lists theEmail is found in, return the related string.
+		String userType = "";
+		if(myUserList.getVolunteerCopyList().contains(theEmail))
+			userType = "Volunteer";
+		else if(myUserList.getParkManagerCopyList().contains(theEmail))
+			userType = "ParkManager";
+		else if (myUserList.getAdministratorCopyList().contains(theEmail))
+			userType = "Administrator";
 		
-		String user = "";
-		
-		List<Volunteer> vList = myUserList.getVolunteerCopyList();
-		for (Volunteer v : vList) {
-			if (v.getEmail().equals(theEmail)) {
-				user = "Volunteer";
-			}
-		}
-		
-		List<ParkManager> pList = myUserList.getParkManagerCopyList();
-		for (ParkManager p: pList) {
-			if (p.getEmail().equals(theEmail)) {
-				user = "ParkManager";
-			}
-		}
-		
-		List<Administrator> aList = myUserList.getAdministratorCopyList();
-		for (Administrator a : aList) {
-			if (a.getEmail().equals(theEmail)) {
-				user = "Administrator";
-			}
-		}
-
-		return user;
-		
-		
+		return userType;
 	}
 
 	/**
