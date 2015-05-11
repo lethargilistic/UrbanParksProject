@@ -181,6 +181,19 @@ public class Volunteer {
 			myUI.showJobIDError();
 			return;
 		}
+		
+		Job addJob = null;
+		
+		for(Job job : myPollster.getAllJobs()) {
+			if(job.getJobID() == jobID) addJob = job;
+		}
+		
+		Calendar currentDate = new GregorianCalendar();
+			
+			if(currentDate.getTimeInMillis() + 2670040009l > addJob.getStartDate().getTimeInMillis()) {
+				System.out.println("Sorry, but this job has already been completed.");
+				return;
+			}
 
 		String level = myUI.getDifficultyLevel();
 
