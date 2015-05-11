@@ -41,34 +41,16 @@ public class Job {
     private int myLightMax;
 
     /**
-     * This value holds the current number of people who have signed for the light portion
-     * of this job.
-     */
-    private int myLightCurrent;
-
-    /**
      * This value holds the maximum number of people who can sign up for the medium portion
      * of this job.
      */
     private int myMediumMax;
 
     /**
-     * This value holds the current number of people who have signed for the medium portion
-     * of this job.
-     */
-    private int myMediumCurrent;
-
-    /**
      * This value holds the maximum number of people who can sign up for the heavy portion
      * of this job.
      */
     private int myHeavyMax;
-
-    /**
-     * This value holds the current number of people who have signed for the heavy portion
-     * of this job.
-     */
-    private int myHeavyCurrent;
 
     /**
      * This value holds the park that the job will be located at.
@@ -96,10 +78,6 @@ public class Job {
        	
     	this.myManager = theManagerEmail;
     	this.myVolunteerList = theVolunteerList;
-    	
-    	this.myLightCurrent = getNumberOfSlots(0);
-    	this.myMediumCurrent = getNumberOfSlots(1);
-    	this.myHeavyCurrent = getNumberOfSlots(2);
     	
     	this.myStartDate = stringToCalendar(theStartDate);
     	this.myEndDate = stringToCalendar(theEndDate);
@@ -164,7 +142,7 @@ public class Job {
      */
     public boolean hasLightRoom()
     {
-    	return (myLightMax - myLightCurrent) > 0;
+    	return (myLightMax - getNumberOfSlots(0)) > 0;
     }
     
     /**
@@ -175,7 +153,7 @@ public class Job {
      */
     public boolean hasMediumRoom()
     {
-    	return (myMediumMax - myMediumCurrent) > 0;
+    	return (myMediumMax - getNumberOfSlots(1)) > 0;
     }
     
 
@@ -187,7 +165,7 @@ public class Job {
      */
     public boolean hasHeavyRoom()
     {
-    	return (myHeavyMax - myHeavyCurrent) > 0;
+    	return (myHeavyMax - getNumberOfSlots(2)) > 0;
     }
 
     /**
@@ -197,9 +175,7 @@ public class Job {
      */
     public boolean hasRoom()
     {
-    	return (myLightMax - myLightCurrent) == 0
-    			&& (myMediumMax + myMediumCurrent) == 0 
-    			&& (myHeavyMax - myHeavyCurrent) == 0;
+    	return hasLightRoom() && hasMediumRoom() && hasHeavyRoom();
     }
     
     /**
@@ -224,10 +200,6 @@ public class Job {
     			numHeavy++;
     		}
     	}
-    	
-    	myLightCurrent = numLight;
-    	myMediumCurrent = numMedium;
-    	myHeavyCurrent = numHeavy;
     	
     	//Return the appropriate count.
     	switch(theGradeType) {
