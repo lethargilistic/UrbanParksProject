@@ -205,7 +205,7 @@ public class Administrator {
 					System.out.println("\tJob ID #" + job.getJobID());
 				}
 			} else {
-				System.out.println("This volunteer has not signed up for any jobs.");
+				System.out.println("This volunteer has not signed up for any jobs.\n");
 			}
 		}
 	}
