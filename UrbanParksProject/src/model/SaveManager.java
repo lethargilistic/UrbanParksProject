@@ -48,7 +48,7 @@ public class SaveManager {
 	 * Return the File to load/save job data to.
 	 */
 	private File getJobFile() {
-		File jobFile = new File("rsc/jobList.txt");
+		File jobFile;
 		
 		jobFile = new File("rsc/jobList.txt"); //Try iOS
 		if(jobFile.exists()) return jobFile;
@@ -57,15 +57,21 @@ public class SaveManager {
 		if(jobFile.exists()) return jobFile;
 		
 		try {
-			jobFile = new File(SaveManager.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath()); //Try jar
+			jobFile = new File(SaveManager.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath()); 
 		} catch (URISyntaxException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
-		}
+		}		
 		
+		File copyFile = jobFile;	//Backup the File path before we start appending to it.	
 		jobFile = jobFile.getParentFile();		
-		jobFile = new File(jobFile.toString() + "\\jobList.txt");		
+		jobFile = new File(jobFile.toString() + "/jobList.txt");		
 		
+		if(jobFile.exists()) return jobFile; //Try jar on iOS
+		
+		jobFile = copyFile;		
+		jobFile = jobFile.getParentFile();		
+		jobFile = new File(jobFile.toString() + "\\jobList.txt");	//Try jar on Windows
 		return jobFile;
 	}
 	
