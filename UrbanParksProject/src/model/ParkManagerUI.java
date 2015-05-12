@@ -14,11 +14,18 @@ import java.util.Scanner;
  */
 public class ParkManagerUI {
 	
+	//Class Variables
 	private Scanner myScanner;
 	
+	//Constructor
 	public ParkManagerUI() {
 		myScanner = new Scanner(System.in);
 	}
+	
+	
+	/*===========*
+	 * Main Menu *
+	 *===========*/
 	
 	/**
 	 * Display the possible commands that the user could type. 
@@ -31,30 +38,46 @@ public class ParkManagerUI {
 		System.out.println("4) Logout");
 	}
 	
+	
+	
+	/*===============*
+	 * View All Jobs *
+	 *===============*/
+	
 	/**
-	 * Return an integer that the user has typed.
+	 * Take an ArrayList of Jobs, parse them, and then display their information in the console.
 	 */
-	public int getUserInt() {
-		int userInput = 0;
-
-		if(myScanner.hasNextInt()) {
-			userInput = myScanner.nextInt();
-		} else {
-			myScanner.next();
-		}
-
-		return userInput;
-	}
-	
-	private String getUserString() {		
-		String userInput = myScanner.nextLine();
+	public void displayJobs(List<Job> theJobList) {
 		
-		if(userInput.equals("")) {
-			userInput = myScanner.nextLine();
+		if(theJobList.size() == 0) {
+			System.out.println("\nYou do not have any upcoming jobs to display.");
 		}
-		return userInput;
+		
+		for(Job job : theJobList) {
+			String startDate = calendarToString(job.getStartDate());
+			String endDate = calendarToString(job.getEndDate());
+			
+			String jobString = "\n";
+			jobString += "Job ID: " + job.getJobID();
+			jobString += "\n    " + job.getPark();
+			
+			jobString += "\n    Begins: " + startDate;
+			jobString += " , Ends: " + endDate;
+			
+			jobString += "\n    Light Slots: " + job.getLightCurrent() + "/" + job.getLightMax();
+			jobString += "\n    Medium Slots: " + job.getMediumCurrent() + "/" + job.getMediumMax();
+			jobString += "\n    Heavy Slots: " + job.getHeavyCurrent() + "/" + job.getHeavyMax() + "\n";
+			
+			System.out.println(jobString);
+		}
 	}
 	
+	
+	
+	
+	/*=====================*
+	 * View Job Volunteers *
+	 *=====================*/
 	
 	/**
 	 * Prompt the user to enter the ID of a Job, and then return it.
@@ -65,8 +88,26 @@ public class ParkManagerUI {
 				+ " like to view.");
 		int myJobID = getUserInt();
 		return myJobID;
-		
 	}
+	
+	/**
+	 * Take a List of Volunteers, and display their information to the console.
+	 */
+	public void displayVolunteers(List<Volunteer> theVolunteerList) {
+		if (!theVolunteerList.isEmpty()) {
+			for(Volunteer volunteer : theVolunteerList) {
+				System.out.println("Name: " + volunteer.getFirstName() + " " + volunteer.getLastName());
+				System.out.println("Email: " + volunteer.getEmail());
+			}
+		} else {
+			System.out.println("There are no Volunteers associated with this Job.");
+		}
+	}
+	
+	
+	/*==============*
+	 * Job Creation *
+	 *==============*/
 	
 	/**
 	 * Prompt the user to enter how many volunteers they want for light grade work, then
@@ -165,62 +206,18 @@ public class ParkManagerUI {
 		
 		return new Park(parkName, cityName, zipCode);
 	}
-	
-	
-	/**
-	 * Take an ArrayList of Jobs, parse them, and then display their information in the console.
-	 */
-	public void displayJobs(List<Job> theJobList) {
-		
-		if(theJobList.size() == 0) {
-			System.out.println("\nYou do not have any upcoming jobs to display.");
-		}
-		
-		for(Job job : theJobList) {
-			String startDate = calendarToString(job.getStartDate());
-			String endDate = calendarToString(job.getEndDate());
-			
-			String jobString = "\n";
-			jobString += "Job ID: " + job.getJobID();
-			jobString += "\n    " + job.getPark();
-			
-			jobString += "\n    Begins: " + startDate;
-			jobString += " , Ends: " + endDate;
-			
-			jobString += "\n    Light Slots: " + job.getLightCurrent() + "/" + job.getLightMax();
-			jobString += "\n    Medium Slots: " + job.getMediumCurrent() + "/" + job.getMediumMax();
-			jobString += "\n    Heavy Slots: " + job.getHeavyCurrent() + "/" + job.getHeavyMax() + "\n";
-			
-			System.out.println(jobString);
-		}
-	}
-	
-	/**
-	 * Convert a GregorianCalendar object to string of format mmddyyyy
-	 */
-	private String calendarToString(GregorianCalendar theCalendar) {
-		String returnString = theCalendar.get(Calendar.MONTH) + "/" +
-				theCalendar.get(Calendar.DAY_OF_MONTH) + "/" +
-				theCalendar.get(Calendar.YEAR);
-		return returnString;
-	}
-	
-	
-	/**
-	 * Take a List of Volunteers, and display their information to the console.
-	 */
-	public void displayVolunteers(List<Volunteer> theVolunteerList) {
-		if (!theVolunteerList.isEmpty()) {
-			for(Volunteer volunteer : theVolunteerList) {
-				System.out.println("Name: " + volunteer.getFirstName() + " " + volunteer.getLastName());
-				System.out.println("Email: " + volunteer.getEmail());
-			}
-		} else {
-			System.out.println("There are no Volunteers associated with this Job.");
-		}
-	}
 
 	
+	
+	
+
+	/*================*
+	 * Display Errors *
+	 *================*/
+	
+	/**
+	 * Display an error in the console that the user made an invalid command choice.
+	 */
 	public void displayInvalidChoiceError() {
 		System.out.println("\nSorry, but your choice was invalid.");
 	}
@@ -232,6 +229,9 @@ public class ParkManagerUI {
 		System.out.println("\nSorry, but this Job ID belongs to a park that you do not manage.");
 	}
 	
+	/**
+	 * Display an error in the console signifying that the entered job lasts more than two days.
+	 */
 	public void displayTwoDayError() {
 		System.out.println("\nSorry, but your job lasts more than two days, and could not be scheduled.");
 	}
@@ -244,5 +244,49 @@ public class ParkManagerUI {
 		
 		int myParkNum = getUserInt();
 		return myParkNum;
+	}
+	
+
+	
+	
+	/*================*
+	 * Helper Classes *
+	 *================*/
+	
+	/**
+	 * Convert a GregorianCalendar object to string of format mmddyyyy
+	 */
+	private String calendarToString(GregorianCalendar theCalendar) {
+		String returnString = theCalendar.get(Calendar.MONTH) + "/" +
+				theCalendar.get(Calendar.DAY_OF_MONTH) + "/" +
+				theCalendar.get(Calendar.YEAR);
+		return returnString;
+	}
+	
+	/**
+	 * Return an integer that the user has typed.
+	 */
+	public int getUserInt() {
+		int userInput = 0;
+
+		if(myScanner.hasNextInt()) {
+			userInput = myScanner.nextInt();
+		} else {
+			myScanner.next();
+		}
+
+		return userInput;
+	}
+	
+	/**
+	 * Return a String that the user has typed.
+	 */
+	public String getUserString() {		
+		String userInput = myScanner.nextLine();
+		
+		if(userInput.equals("")) {
+			userInput = myScanner.nextLine();
+		}
+		return userInput;
 	}
 }
