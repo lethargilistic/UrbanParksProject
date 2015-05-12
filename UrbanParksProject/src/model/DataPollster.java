@@ -160,29 +160,22 @@ public class DataPollster {
 	}
 	
 	
-
-	public ArrayList<ArrayList<String>> getVolunteerList(int theJobID) {
-		//USER STORY 6
-		// Called by ParkManager.viewJobVolunteers()
-
-		//Calls JobList.getCopyList() to get a copy of myJobList
-
-		//Create an empty list for returning.
-		ArrayList<ArrayList<String>> retVols = new ArrayList<ArrayList<String>>();
-		// Check through the myJobList and select the Job with that jobID
-		for (Job j : myJobList.getCopyList())
-		{
-			if (j.getJobID() == theJobID)
-			{
-				// Use that Job object to get a copied list of associated Volunteers
-				for(ArrayList<String> volunteer : j.getVolunteerList()) {
-					retVols.add(volunteer);
-				}
+	/**
+	 * Return a list of all Volunteers for a given job.
+	 */
+	public List<Volunteer> getJobVolunteerList(int theJobID) {
+		
+		List<Volunteer> returnList = new ArrayList<Volunteer>();
+		Job job = myJobList.getJobCopy(theJobID);
+		
+		if(job != null) {
+			for(ArrayList<String> volunteer : job.getVolunteerList()) {
+				String volunteerEmail = volunteer.get(0);
+				returnList.add(getVolunteer(volunteerEmail));
 			}
 		}
 		
-		// Return that copied list of Volunteers
-		return retVols;
+		return returnList;
 	}
 	
 	/**

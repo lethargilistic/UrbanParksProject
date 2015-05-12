@@ -207,36 +207,19 @@ public class ParkManagerUI {
 	
 	
 	/**
-	 * Take an ArrayList of Volunteers, and display their names to the console.
+	 * Take a List of Volunteers, and display their information to the console.
 	 */
-
-	public void displayVolunteers(List<String> theVolunteerList, DataPollster thePollster) {
+	public void displayVolunteers(List<Volunteer> theVolunteerList) {
 		if (!theVolunteerList.isEmpty()) {
-			for(String volunteerString : theVolunteerList) {
-				Volunteer volunteer = thePollster.getVolunteer(volunteerString);
-				System.out.println(volunteer.getFirstName() + " " + volunteer.getLastName());
-				System.out.println("Email: " + volunteer.getEmail() + "\n");
+			for(Volunteer volunteer : theVolunteerList) {
+				System.out.println("Name: " + volunteer.getFirstName() + " " + volunteer.getLastName());
+				System.out.println("Email: " + volunteer.getEmail());
 			}
 		} else {
 			System.out.println("There are no Volunteers associated with this Job.");
 		}
 	}
 
-	public void displayVolunteers(ArrayList<ArrayList<String>> theVolunteerList, DataPollster thePollster) {
-		if(theVolunteerList.isEmpty()) {
-			System.out.println("There are no Volunteers associated with this Job.");
-		} else {
-			System.out.println("\n");
-			
-			for(ArrayList<String> volunteerArray : theVolunteerList) {
-				Volunteer volunteer = thePollster.getVolunteer(volunteerArray.get(0));
-				
-				System.out.println("Name: " + volunteer.getFirstName() + " " + volunteer.getLastName());
-				System.out.println("Email: " + volunteerArray.get(0));
-				System.out.println("Grade: " + volunteerArray.get(1) + "\n");
-			}
-		}
-	}
 	
 	public void displayInvalidChoiceError() {
 		System.out.println("\nSorry, but your choice was invalid.");

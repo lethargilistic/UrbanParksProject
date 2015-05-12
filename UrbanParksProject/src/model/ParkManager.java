@@ -190,9 +190,9 @@ public class ParkManager {
 		int jobID = myUI.getJobID();
 		
 		if(jobInManagedParks(jobID)) {
-			//Get Volunteer List and display it.			
-			ArrayList<ArrayList<String>> myVolunteerList = myPollster.getVolunteerList(jobID);
-			myUI.displayVolunteers(myVolunteerList, myPollster);	
+			//Get Volunteer List and display it.
+			List<Volunteer> volunteerList = myPollster.getJobVolunteerList(jobID);			
+			myUI.displayVolunteers(volunteerList);	
 			
 		} else {
 			myUI.showJobIDError();
