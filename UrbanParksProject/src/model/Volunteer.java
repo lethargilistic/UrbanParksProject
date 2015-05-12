@@ -5,6 +5,12 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+/**
+ * 
+ * 
+ * @author Reid Thompson
+ * @version 5.10.2015
+ */
 public class Volunteer {
 	
 	private String myFirstName;
