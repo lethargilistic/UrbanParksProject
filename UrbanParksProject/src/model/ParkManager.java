@@ -33,7 +33,11 @@ public class ParkManager {
 		this.myEmail = theEmail;
 		this.myFirstName = theFirstName;
 		this.myLastName = theLastName;
-		this.myManagedParks = theParkList;
+		
+		//theParkList is an Unmodifiable List, so we cannot cast it to ArrayList. So we copy it over instead.
+		List<Park> copiedParks = new ArrayList<Park>();
+		copiedParks.addAll(theParkList);
+		this.myManagedParks = copiedParks;
 	}
 
 	
@@ -136,7 +140,6 @@ public class ParkManager {
 			
 		} else {
 			//ParkManager is adding a new park
-			
 			Park newPark = myUI.createNewPark();
 			myManagedParks.add(newPark);
 			mySchedule.updateParkList(myEmail, myManagedParks);
