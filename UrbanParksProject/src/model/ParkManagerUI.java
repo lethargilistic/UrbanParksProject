@@ -132,6 +132,13 @@ public class ParkManagerUI {
 		}
 	}
 	
+	/**
+	 * Request the user to select the appropriate park number.
+	 */
+	public void displayParkNumberRequest() {
+		System.out.println("\n------------------------------------------\n"
+				+ "Please select the number preceding the park where the job is located.");
+	}
 	
 	/**
 	 * Display all of the parks that the Park Manager manages in the console.
@@ -231,7 +238,7 @@ public class ParkManagerUI {
 		}
 	}
 	
-	public void displayInvalidChoice() {
+	public void displayInvalidChoiceError() {
 		System.out.println("\nSorry, but your choice was invalid.");
 	}
 	
@@ -240,6 +247,10 @@ public class ParkManagerUI {
 	 */
 	public void showJobIDError() {
 		System.out.println("\nSorry, but this Job ID belongs to a park that you do not manage.");
+	}
+	
+	public void displayTwoDayError() {
+		System.out.println("\nSorry, but your job lasts more than two days, and could not be scheduled.");
 	}
 	
 	

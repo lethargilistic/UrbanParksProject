@@ -35,15 +35,15 @@ public class ParkManager {
 		this.myManagedParks = theParkList;
 	}
 
-	//TODO: Should be removed in favor of having the commands be processed in the UI.
+	/**
+	 * Give control of Schedule and DataPollster to the ParkManager and initialize its UI.
+	 */
 	public void initialize(Schedule theSchedule, DataPollster thePollster) {
 		mySchedule = theSchedule;
 		myPollster = thePollster;
 		commandLoop();
 	}
 
-	//TODO: Should be removed in favor of having the commands be processed in the UI.
-	// Reid: you mean having the commands processed in the UI class?
 	/**
 	 * The main loop for Park Manager.<br>
 	 * Lists possible commands, prompts the user for one, and then acts on it.<br>
@@ -58,7 +58,6 @@ public class ParkManager {
 		}
 	}
 	
-	//TODO: Should be removed in favor of having the commands be processed in the UI.
 	/**
 	 * Parse a command, and call other methods to execute the command.
 	 * @return Return true if we should continue the command loop, false if the user wants to logout.
@@ -82,7 +81,7 @@ public class ParkManager {
 				status = false;
 				break;
 			default: 
-				myUI.displayInvalidChoice();
+				myUI.displayInvalidChoiceError();
 				break;
 		}
 		
@@ -93,36 +92,37 @@ public class ParkManager {
 	/**
 	 * Create a new job by:<p>
 	 * 
-	 * 1. Display all managed parks.<br>
-	 * 2. Ask the user for the desired park number.<br>
-	 * 3. Ask the user for all other details about the job.<br>
-	 * 4. Pass the Job to Schedule.<br>
-	 * 5. Tell the user if the new job was successfully added.
+	 * 1. Ask the user for the desired Park.<br>
+	 * 2. Ask the user for all other details about the Job.<br>
+	 * 3. Pass the Job to Schedule.
 	 */
 	public void createJob() {	
-		System.out.println("\n------------------------------------------\n"
-				+ "Please select the number preceding the park where the job is located.");
-		myUI.displayParks(myManagedParks); //Show the parks to the user, including their IDs
 		
+		//Show Parks to ParkManager and ask for selection.
+		myUI.displayParkNumberRequest();
+		myUI.displayParks(myManagedParks);
 		int parkNum = myUI.getUserInt();
 		
+		//ParkManager may request to first add a new park at this point.
 		if(parkNum < myManagedParks.size()) {
 			//ParkManager is assigning to an existing park.
-			Park myPark = myManagedParks.get(parkNum);
 			
-			Job job = constructJob(myPark);
+			Park myPark = myManagedParks.get(parkNum);			
+			Job thisJob = constructJob(myPark);
 			
-			// ENFORCING BUSINESS RULE #4 - A job may not be scheduled if it lasts more than 2 days.
-			boolean okToAdd = getDays(job.getStartDate(), job.getEndDate()) <= 2;
+			//Check if the job lasts longer than two days. Add if it does not.
+			boolean lessThanTwoDays = getDays(thisJob.getStartDate(), thisJob.getEndDate()) <= 2;		
 			
-			if (okToAdd) {
-				boolean added = mySchedule.receiveJob(job);
-				myUI.displayJobStatus(added);
+			if(lessThanTwoDays) {
+				boolean addedFlag = mySchedule.receiveJob(thisJob);
+				myUI.displayJobStatus(addedFlag);
 			} else {
-				System.out.println("A job may not be scheduled if it lasts more than 2 days");
-			}
+				myUI.displayTwoDayError();
+			}			
+			
 		} else {
 			//ParkManager is adding a new park
+			
 			Park newPark = myUI.createNewPark();
 			myManagedParks.add(newPark);
 			mySchedule.updateParkList(myEmail, myManagedParks);
