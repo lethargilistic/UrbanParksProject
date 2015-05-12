@@ -41,6 +41,7 @@ public class ParkManager {
 	public void initialize(Schedule theSchedule, DataPollster thePollster) {
 		mySchedule = theSchedule;
 		myPollster = thePollster;
+		myUI = new ParkManagerUI();
 		commandLoop();
 	}
 
@@ -111,7 +112,7 @@ public class ParkManager {
 			Job thisJob = constructJob(myPark);
 			
 			//Check if the job lasts longer than two days. Add if it does not.
-			boolean lessThanTwoDays = getDays(thisJob.getStartDate(), thisJob.getEndDate()) <= 2;		
+			boolean lessThanTwoDays = getDays(thisJob.getStartDate(), thisJob.getEndDate()) < 2;		
 			
 			if(lessThanTwoDays) {
 				boolean addedFlag = mySchedule.receiveJob(thisJob);
@@ -131,38 +132,11 @@ public class ParkManager {
 	}
 	
 	/**
-	 * Returns the number of days between 2 GregorianCalendar objects.
-	 * 
-	 * @author http://stackoverflow.com/questions/10624229/compare-dates-using-calendar-class-using-java
-	 * 
-	 * @param theG1 the first GregorianCalendar object.
-	 * @param theG2 the second GregorianCalendar object.
-	 * @return the number of days between 2 GregorianCalendar objects.
+	 * Returns the number of days between two GregorianCalendars.
 	 */
-	public int getDays(GregorianCalendar theG1, GregorianCalendar theG2) {
-		int elapsed = 0;
-		GregorianCalendar gc1, gc2;
-		if (theG2.after(theG1)) {
-			gc2 = (GregorianCalendar) theG2.clone();
-			gc1 = (GregorianCalendar) theG1.clone();
-		}
-		else   {
-			gc2 = (GregorianCalendar) theG1.clone();
-			gc1 = (GregorianCalendar) theG2.clone();
-		}
-		gc1.clear(Calendar.MILLISECOND);
-		gc1.clear(Calendar.SECOND);
-		gc1.clear(Calendar.MINUTE);
-		gc1.clear(Calendar.HOUR_OF_DAY);
-		gc2.clear(Calendar.MILLISECOND);
-		gc2.clear(Calendar.SECOND);
-		gc2.clear(Calendar.MINUTE);
-		gc2.clear(Calendar.HOUR_OF_DAY);
-		while ( gc1.before(gc2) ) {
-			gc1.add(Calendar.DATE, 1);
-			elapsed++;
-		}
-		return elapsed;
+	private int getDays(GregorianCalendar theStartDate, GregorianCalendar theEndDate) {
+		long timeDifference = Math.abs(theEndDate.getTimeInMillis() - theStartDate.getTimeInMillis());
+		return (int) (timeDifference / 86400000l);
 	}
 	
 	/**
