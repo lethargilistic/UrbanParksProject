@@ -287,16 +287,19 @@ public class DataPollster {
 	 */
 	public ParkManager getParkManager(String theParkManagerEmail) {
 		
-		ParkManager defaultManager = new ParkManager(theParkManagerEmail); //Default case if the Park Manager is not found.
 		List<ParkManager> managerCopyList = myUserList.getParkManagerCopyList();
 		
 		for(ParkManager manager : managerCopyList) {
 			if(manager.getEmail().equals(theParkManagerEmail)) {
-				return manager;
+				//Manager found, so we copy the data over and return it.
+				String firstName = manager.getFirstName();
+				String lastName = manager.getLastName();
+				List<Park> parkList = manager.getManagedParks();
+				return new ParkManager(theParkManagerEmail, firstName, lastName, parkList);
 			}
 		}
 
-		return defaultManager;
+		return null;
 	}
 	
 	/**

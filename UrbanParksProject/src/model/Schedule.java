@@ -311,8 +311,7 @@ public class Schedule {
 				break;
 				
 			case "ParkManager":
-
-				ParkManager newManager = new ParkManager(theEmail, theFirstName, theLastName);
+				ParkManager newManager = new ParkManager(theEmail, theFirstName, theLastName, new ArrayList<Park>());
 				List<ParkManager> managerList = myUserList.getParkManagerCopyList();
 				managerList.add(newManager);
 				myUserList.setParkManagerList(managerList);

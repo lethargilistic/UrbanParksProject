@@ -136,8 +136,8 @@ public class Main {
 		if(userType.equals("ParkManager")) {
 			List<Park> managedParks = thePollster.getParkList(theUserInfo[1]);
 			String email = theUserInfo[1];
-			ParkManager manager = new ParkManager(theSchedule, thePollster, managedParks, email);
-			manager.initialize();
+			ParkManager manager = thePollster.getParkManager(email);
+			manager.initialize(theSchedule, thePollster);
 		}
 		
 		if(userType.equals("Volunteer")) {
