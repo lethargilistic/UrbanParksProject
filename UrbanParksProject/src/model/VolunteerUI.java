@@ -40,7 +40,15 @@ public class VolunteerUI {
 			System.out.println("\nThere are no upcoming jobs to display..");
 		}
 		
+		GregorianCalendar currentDate = new GregorianCalendar();
+		
 		for(Job job : theJobList) {
+			
+			if(currentDate.getTimeInMillis() + 2670040009l > job.getStartDate().getTimeInMillis()) {
+				continue;
+			}
+			
+			
 			String startDate = calendarToString(job.getStartDate());
 			String endDate = calendarToString(job.getEndDate());
 			

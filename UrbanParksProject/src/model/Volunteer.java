@@ -78,20 +78,10 @@ public class Volunteer {
 		
 		Volunteer theOther = (Volunteer) theO;
 		
-		return this.myFirstName.equals(theOther.myFirstName)
-			   && this.myLastName.equals(theOther.myLastName);
+		return (this.myFirstName.equals(theOther.myFirstName)
+			   && this.myLastName.equals(theOther.myLastName)) 
+			   || myEmail.equals(theOther.getEmail());
 				
-	}
-	
-	public boolean equals2(Object theO) {
-		
-		if (!(theO instanceof Volunteer))
-			return false;
-		
-		Volunteer theOther = (Volunteer) theO;
-		
-		return myEmail.equals(theOther.getEmail());
-		
 	}
 	
 	@Override
@@ -177,7 +167,7 @@ public class Volunteer {
 	 * This method gives a list of all the jobs to the UI for this class.
 	 */
 	public void viewAvailableJobs() {
-		myUI.displayJobs(myPollster.getAllJobs());
+		myUI.displayJobs(myPollster.getJobListCopy());
 	}
 
 
@@ -191,6 +181,19 @@ public class Volunteer {
 			myUI.showJobIDError();
 			return;
 		}
+		
+		Job addJob = null;
+		
+		for(Job job : myPollster.getJobListCopy()) {
+			if(job.getJobID() == jobID) addJob = job;
+		}
+		
+		Calendar currentDate = new GregorianCalendar();
+			
+			if(currentDate.getTimeInMillis() + 2670040009l > addJob.getStartDate().getTimeInMillis()) {
+				System.out.println("Sorry, but this job has already been completed.");
+				return;
+			}
 
 		String level = myUI.getDifficultyLevel();
 
@@ -200,13 +203,13 @@ public class Volunteer {
 			volunteer.add(this.myEmail);
 			volunteer.add(level);
 			
-			mySchedule.addVolunteerToJob(volunteer, jobID);
+			if(mySchedule.addVolunteerToJob(volunteer, jobID)) {
+				myUI.displaySuccessMessage();
+			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			return;
 		}
-		
-		myUI.displaySuccessMessage();
 	}
 
 

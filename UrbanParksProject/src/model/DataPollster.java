@@ -36,16 +36,11 @@ public class DataPollster {
 	//TODO: test all possible conflicts
 		//Don't have a job they've already signed up for on that day
 		//Job has no room.
-		//TODO:The job's start date has not passed.
 			//Not sure where we're storing the current date. Do we use the System time?
 	public List<Job> getPendingJobs(Volunteer theVolunteer) {
 		//USER STORY 2
 
 		//Called by Volunteer.viewUpcomingJobs()
-
-		//Calls JobList.getCopyList() to get a copy of myJobList
-			//TODO: clear this up with the others.
-			//It already has a reference to the joblist, though?
 		
 		//Check through myJobList and select all Jobs that the Volunteer can sign
 		//up for
@@ -147,38 +142,40 @@ public class DataPollster {
 		return jobReturnList;
 	}
 	
+	public Job getJobCopy(int theJobID) {
+		for(Job job : getJobListCopy()) {
+			if(job.getJobID() == theJobID) return job;
+		}
+		
+		return null;
+	}
+	
+	
 	/**
 	 * This method returns a list of all of the jobs.
 	 * It is called when volunteer wants to see a list of jobs so that he can sign up.
 	 */
-	public List<Job> getAllJobs() {
+	public List<Job> getJobListCopy() {
 		return new ArrayList<Job>(myJobList.getCopyList());
 	}
 	
 	
-
-	public ArrayList<ArrayList<String>> getVolunteerList(int theJobID) {
-		//USER STORY 6
-		// Called by ParkManager.viewJobVolunteers()
-
-		//Calls JobList.getCopyList() to get a copy of myJobList
-
-		//Create an empty list for returning.
-		ArrayList<ArrayList<String>> retVols = new ArrayList<ArrayList<String>>();
-		// Check through the myJobList and select the Job with that jobID
-		for (Job j : myJobList.getCopyList())
-		{
-			if (j.getJobID() == theJobID)
-			{
-				// Use that Job object to get a copied list of associated Volunteers
-				for(ArrayList<String> volunteer : j.getVolunteerList()) {
-					retVols.add(volunteer);
-				}
+	/**
+	 * Return a list of all Volunteers for a given job.
+	 */
+	public List<Volunteer> getJobVolunteerList(int theJobID) {
+		
+		List<Volunteer> returnList = new ArrayList<Volunteer>();
+		Job job = myJobList.getJobCopy(theJobID);
+		
+		if(job != null) {
+			for(ArrayList<String> volunteer : job.getVolunteerList()) {
+				String volunteerEmail = volunteer.get(0);
+				returnList.add(getVolunteer(volunteerEmail));
 			}
 		}
 		
-		// Return that copied list of Volunteers
-		return retVols;
+		return returnList;
 	}
 	
 	/**
@@ -292,16 +289,19 @@ public class DataPollster {
 	 */
 	public ParkManager getParkManager(String theParkManagerEmail) {
 		
-		ParkManager defaultManager = new ParkManager(theParkManagerEmail); //Default case if the Park Manager is not found.
 		List<ParkManager> managerCopyList = myUserList.getParkManagerCopyList();
 		
 		for(ParkManager manager : managerCopyList) {
 			if(manager.getEmail().equals(theParkManagerEmail)) {
-				return manager;
+				//Manager found, so we copy the data over and return it.
+				String firstName = manager.getFirstName();
+				String lastName = manager.getLastName();
+				List<Park> parkList = manager.getManagedParks();
+				return new ParkManager(theParkManagerEmail, firstName, lastName, parkList);
 			}
 		}
 
-		return defaultManager;
+		return null;
 	}
 	
 	/**

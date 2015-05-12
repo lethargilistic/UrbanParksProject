@@ -44,5 +44,18 @@ public class JobList {
 	public int getNumberJobs() {
 		return myJobList.size();
 	}
+	
+	/**
+	 * Return a copy of a job given its Job ID.
+	 */
+	public Job getJobCopy(int theJobID) {
+		Job returnJob = null;
+		
+		for(Job job : myJobList) {
+			if(job.getJobID() == theJobID) returnJob = job;
+		}
+		
+		return returnJob;
+	}
 }
 
