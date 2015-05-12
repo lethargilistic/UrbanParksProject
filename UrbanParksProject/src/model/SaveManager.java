@@ -206,7 +206,7 @@ public class SaveManager {
 		
 		//Remove "End Volunteer List"
 		jobFileList.remove(0);
-		Park newPark = new Park(myPark, "Tacoma", 98335);
+		String newPark = myPark;
 		
 		//Construct the new job, and then add it to the list.
 		Job myJob = new Job(myJobID, newPark, myLightMax, myMediumMax, myHeavyMax, myStartDate, myEndDate, myManager, myVolunteerList);
@@ -263,11 +263,11 @@ public class SaveManager {
 		}
 		
 		if(myRole.equals("ParkManager")) {
-			List<Park> myParkList = new ArrayList<Park>();
+			List<String> myParkList = new ArrayList<String>();
 			
 			//Add the parks associated with the ParkManager, and remove them from the file list as we go.
 			while(!theUserFileList.get(0).equals("End Park List")) {
-				Park myPark = new Park(theUserFileList.get(0));
+				String myPark = theUserFileList.get(0);
 				myParkList.add(myPark);
 				theUserFileList.remove(0);
 			}			
@@ -326,7 +326,7 @@ public class SaveManager {
 			jobInfo.add(String.valueOf(job.getHeavyMax()));
 			jobInfo.add(calendarToString(job.getStartDate()));
 			jobInfo.add(calendarToString(job.getEndDate()));
-			jobInfo.add(job.getPark().getName());
+			jobInfo.add(job.getPark());
 			jobInfo.add(job.getManager());
 			
 			for(ArrayList<String> volunteer : job.getVolunteerList()) {
@@ -389,8 +389,8 @@ public class SaveManager {
 			userInfo.add(manager.getFirstName());
 			userInfo.add(manager.getLastName());
 			
-			for(Park park : manager.getManagedParks()) {
-				userInfo.add(park.getName());
+			for(String park : manager.getManagedParks()) {
+				userInfo.add(park);
 			}
 			userInfo.add("End Park List");
 		}

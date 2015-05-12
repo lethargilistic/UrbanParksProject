@@ -55,7 +55,7 @@ public class Job {
     /**
      * This value holds the park that the job will be located at.
      */
-    private Park myPark;
+    private String myPark;
 
     /**
      * The email address of the Park Manager in charge of the job.
@@ -66,7 +66,7 @@ public class Job {
      * Constructor for job, taking several arguments of integers, Calendar Strings, and e-mails.
      * @author Taylor Gorman
      */
-    public Job(int theJobID, Park thePark, int theLightMax, int theMediumMax, int theHeavyMax, String theStartDate,
+    public Job(int theJobID, String thePark, int theLightMax, int theMediumMax, int theHeavyMax, String theStartDate,
     		String theEndDate, String theManagerEmail, ArrayList<ArrayList<String>> theVolunteerList) {
     	
     	this.myJobID = theJobID;
@@ -84,7 +84,7 @@ public class Job {
     	
     }
     
-    public Job(Park thePark, int theLightMax, int theMediumMax, int theHeavyMax, 
+    public Job(String thePark, int theLightMax, int theMediumMax, int theHeavyMax, 
     		String theStartDate, String theEndDate, String theManagerEmail, 
     		ArrayList<ArrayList<String>> theVolunteerList) {
     	
@@ -246,7 +246,7 @@ public class Job {
 		return getNumberOfSlots(2);
 	}
 
-	public Park getPark() {
+	public String getPark() {
 		return myPark;
 	}
 	

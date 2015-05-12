@@ -139,7 +139,7 @@ public class Main {
 		String userType = thePollster.getUserType(theUserInfo[1]);
 		
 		if(userType.equals("ParkManager")) {
-			List<Park> managedParks = thePollster.getParkList(theUserInfo[1]);
+			List<String> managedParks = thePollster.getParkList(theUserInfo[1]);
 			String email = theUserInfo[1];
 			ParkManager manager = thePollster.getParkManager(email);
 			manager.initialize(theSchedule, thePollster);
