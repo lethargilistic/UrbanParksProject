@@ -116,10 +116,16 @@ public class SaveManager {
 			e1.printStackTrace();
 		}
 		
+		File copyFile = userFile;
+		
 		userFile = userFile.getParentFile();		
-		userFile = new File(userFile.toString() + "\\userList.txt");
+		userFile = new File(userFile.toString() + "/userList.txt");		
+		if(userFile.exists()) return userFile; //Try iOS Jar
 
-		return userFile;
+		userFile = copyFile;
+		userFile = userFile.getParentFile();		
+		userFile = new File(userFile.toString() + "\\userList.txt");		
+		return userFile; //Try Windows Jar
 	}
 	
 	
