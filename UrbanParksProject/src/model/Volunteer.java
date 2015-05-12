@@ -167,7 +167,7 @@ public class Volunteer {
 	 * This method gives a list of all the jobs to the UI for this class.
 	 */
 	public void viewAvailableJobs() {
-		myUI.displayJobs(myPollster.getAllJobs());
+		myUI.displayJobs(myPollster.getJobListCopy());
 	}
 
 
@@ -184,7 +184,7 @@ public class Volunteer {
 		
 		Job addJob = null;
 		
-		for(Job job : myPollster.getAllJobs()) {
+		for(Job job : myPollster.getJobListCopy()) {
 			if(job.getJobID() == jobID) addJob = job;
 		}
 		

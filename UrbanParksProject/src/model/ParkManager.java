@@ -28,6 +28,7 @@ public class ParkManager {
 	
 	private String myEmail;
 
+	//Constructor
 	public ParkManager(String theEmail, String theFirstName, String theLastName, List<Park> theParkList) {
 		this.myEmail = theEmail;
 		this.myFirstName = theFirstName;
@@ -35,6 +36,12 @@ public class ParkManager {
 		this.myManagedParks = theParkList;
 	}
 
+	
+	
+	/*============*
+	 * UI Control *
+	 *============*/
+	
 	/**
 	 * Give control of Schedule and DataPollster to the ParkManager and initialize its UI.
 	 */
@@ -89,6 +96,12 @@ public class ParkManager {
 		return status;
 	}
 
+	
+	
+	
+	/*==============*
+	 * Job Creation *
+	 *==============*/
 	
 	/**
 	 * Create a new job by:<p>
@@ -156,12 +169,18 @@ public class ParkManager {
 		return new Job(myJobID, thePark, myLight, myMedium, myHeavy, myStartDate, myEndDate, myEmail, myVolunteerList);
 	}
 	
+	
+	
+	/*==========================*
+	 * View Jobs and Volunteers *
+	 *==========================*/
+	
 	/**
 	 * Print a list of all upcoming jobs for every Park that the ParkManager manages.
 	 */
 	public void viewUpcomingJobs() {
-		ArrayList<Job> myJobList = (ArrayList<Job>) myPollster.getManagerJobs(this);
-		myUI.displayJobs(myJobList);	
+		List<Job> myJobList = myPollster.getManagerJobs(this);
+		myUI.displayJobs(myJobList);
 	}
 	
 	/**
@@ -170,41 +189,47 @@ public class ParkManager {
 	public void viewJobVolunteers() {
 		int jobID = myUI.getJobID();
 		
-		if(!checkPark(jobID)) { //enter this if park ID is NOT valid.
-			myUI.showJobIDError();
-		} else {
+		if(jobInManagedParks(jobID)) {
+			//Get Volunteer List and display it.			
 			ArrayList<ArrayList<String>> myVolunteerList = myPollster.getVolunteerList(jobID);
 			myUI.displayVolunteers(myVolunteerList, myPollster);	
+			
+		} else {
+			myUI.showJobIDError();
 		}
 	}
-	
-	public void setManagedParks(List<Park> theManagedParks) {
-		this.myManagedParks = theManagedParks;
-	}
 
-	//TODO: What is the user story for this method?
-	// user story #6
 	/**
 	 * Check to make sure that the Job ID is valid.
 	 * @return True if valid, false if not.
 	 */
-	private boolean checkPark(int theJobID) {
-		boolean result = false;
-
-		for (Job j : myPollster.getAllJobs()) {
-			if(j.getJobID() == theJobID) {
-				for(Park park : myManagedParks) {
-					if(park.getName().equals(j.getPark().getName())) return true;
-				}
+	private boolean jobInManagedParks(int theJobID) {		
+		Job foundJob = myPollster.getJobCopy(theJobID);
+		
+		//If we found the job, then check to see if it is in one of our parks.
+		if(foundJob != null) {
+			for(Park park : myManagedParks) {
+				if(park.getName().equals(foundJob.getPark().getName())) return true;
 			}
-
-		}
-		return result;
+		}		
+		
+		return false;
 	}
 
+	
+	
+	
+	/*=====================*
+	 * Getters and Setters *
+	 *=====================*/	
+	
+	public void setManagedParks(List<Park> theManagedParks) {
+		this.myManagedParks = theManagedParks;
+	}
+	
 	public List<Park> getManagedParks() {
 		return Collections.unmodifiableList(myManagedParks);
-	}	
+	}
 	
 	public String getEmail() {
 		return myEmail;

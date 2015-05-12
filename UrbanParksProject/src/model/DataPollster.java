@@ -142,11 +142,20 @@ public class DataPollster {
 		return jobReturnList;
 	}
 	
+	public Job getJobCopy(int theJobID) {
+		for(Job job : getJobListCopy()) {
+			if(job.getJobID() == theJobID) return job;
+		}
+		
+		return null;
+	}
+	
+	
 	/**
 	 * This method returns a list of all of the jobs.
 	 * It is called when volunteer wants to see a list of jobs so that he can sign up.
 	 */
-	public List<Job> getAllJobs() {
+	public List<Job> getJobListCopy() {
 		return new ArrayList<Job>(myJobList.getCopyList());
 	}
 	
