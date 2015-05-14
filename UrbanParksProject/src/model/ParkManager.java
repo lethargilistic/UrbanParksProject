@@ -250,24 +250,25 @@ public class ParkManager {
 	
 	
 	public Object[][] getJobArray() {
+		JobList myJobList = new JobList();
+		UserList myUserList = new UserList();
+		myPollster = new DataPollster(myJobList, myUserList);
+		myManagedParks = myPollster.getParkList("moverby@gmail.com");
 		
+		ArrayList<Job> jobs = (ArrayList<Job>) myPollster.getManagerJobs(this);
 		
-		//myPollster.getManagerJobs("moverby@gmail.com");
+		Object[][] jobArray = new Object[jobs.size()][5];
+		int jobNumber = 0;
 		
-		Object[][] tempObject = {
-		    {"Kathy", "Smith",
-			     "Snowboarding", new Integer(5), new Boolean(false)},
-			    {"John", "Doe",
-			     "Rowing", new Integer(3), new Boolean(true)},
-			    {"Sue", "Black",
-			     "Knitting", new Integer(2), new Boolean(false)},
-			    {"Jane", "White",
-			     "Speed reading", new Integer(20), new Boolean(true)},
-			    {"Joe", "Brown",
-			     "Pool", new Integer(10), new Boolean(false)}
-			};
+		for(Job thisJob : jobs) {
+			jobArray[jobNumber][0] = thisJob.getJobID();
+			jobArray[jobNumber][1] = thisJob.getPark().getName();
+			jobArray[jobNumber][2] = thisJob.getLightCurrent() + "/" + thisJob.getLightMax();
+			jobArray[jobNumber][3] = thisJob.getMediumCurrent() + "/" + thisJob.getMediumMax();
+			jobArray[jobNumber][4] = thisJob.getHeavyCurrent() + "/" + thisJob.getHeavyMax();
+		}
 		
-		return tempObject;
+		return jobArray;
 	}
 	
 }

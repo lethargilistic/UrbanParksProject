@@ -23,6 +23,7 @@ import javax.swing.JTextArea;
 import java.awt.Window.Type;
 import java.awt.Font;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ParkManagerGUI extends JFrame {
 	private JTable jobTable;
@@ -33,7 +34,10 @@ public class ParkManagerGUI extends JFrame {
 	 * Create the frame.
 	 */
 	public ParkManagerGUI() {
-		myManager = new ParkManager("moverby@gmail.com", "Mike", "Overby", new ArrayList<Park>());
+		List<Park> myParkList = new ArrayList<Park>();
+		Park myPark = new Park("Happy Park Land", "Tacoma", 98335);
+		myParkList.add(myPark);
+		myManager = new ParkManager("moverby@gmail.com", "Mike", "Overby", myParkList);
 		
 		setTitle("Welcome!");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

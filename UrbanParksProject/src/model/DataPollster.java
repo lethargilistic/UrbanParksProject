@@ -250,6 +250,7 @@ public class DataPollster {
 	 * @author Taylor Gorman
 	 */
 	public List<Park> getParkList(String theEmail) {		
+		System.out.println(theEmail);
 		List<ParkManager> managerList = myUserList.getParkManagerCopyList();
 		
 		for(ParkManager manager : managerList) {
