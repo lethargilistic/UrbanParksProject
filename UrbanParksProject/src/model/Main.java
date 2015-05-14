@@ -9,6 +9,9 @@ public class Main {
 
 	public static void main(String[] args) {
 		
+		ParkManagerGUI parkManagerFrame = new ParkManagerGUI();
+		parkManagerFrame.setVisible(true);
+		
 		SaveManager saveManager = new SaveManager();
 		String[] userInfo;
 		

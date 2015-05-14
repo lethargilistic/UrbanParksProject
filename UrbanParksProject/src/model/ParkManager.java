@@ -39,6 +39,7 @@ public class ParkManager {
 		copiedParks.addAll(theParkList);
 		this.myManagedParks = copiedParks;
 	}
+	
 
 	
 	
@@ -243,6 +244,30 @@ public class ParkManager {
 	
 	public String getLastName() {
 		return this.myLastName;
+	}
+	
+	
+	
+	
+	public Object[][] getJobArray() {
+		
+		
+		//myPollster.getManagerJobs("moverby@gmail.com");
+		
+		Object[][] tempObject = {
+		    {"Kathy", "Smith",
+			     "Snowboarding", new Integer(5), new Boolean(false)},
+			    {"John", "Doe",
+			     "Rowing", new Integer(3), new Boolean(true)},
+			    {"Sue", "Black",
+			     "Knitting", new Integer(2), new Boolean(false)},
+			    {"Jane", "White",
+			     "Speed reading", new Integer(20), new Boolean(true)},
+			    {"Joe", "Brown",
+			     "Pool", new Integer(10), new Boolean(false)}
+			};
+		
+		return tempObject;
 	}
 	
 }
