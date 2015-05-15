@@ -20,6 +20,11 @@ import java.util.Scanner;
  */
 public class SaveManager {
 	
+	
+	/*============*
+	 * Load Lists *
+	 *============*/	
+	
 	/**
 	 * Read jobList.txt, and generate from it a JobList containing all Jobs and their information.
 	 */
@@ -42,8 +47,7 @@ public class SaveManager {
 		myJobList.setJobList(myParsedList);
 		
 		return myJobList;		
-	}
-	
+	}	
 	
 	/**
 	 * Read userList.txt, and generate from it a UserList containing all Users and their information.
@@ -65,6 +69,7 @@ public class SaveManager {
 		myUserList = parseUserFile(userFileList, myUserList);		
 		return myUserList;
 	}
+	
 	
 	
 	/*
@@ -107,6 +112,7 @@ public class SaveManager {
 	}
 	
 	
+	
 	/*
 	 * Read the contents of the Job or User file, line by line, into an array.
 	 */
@@ -121,6 +127,7 @@ public class SaveManager {
 		myScanner.close();	
 		return jobFileList;
 	}	
+
 	
 	
 	//Recursively parse the array version of the Job File, construct Jobs from the information, and pass back a list of those jobs.
@@ -185,8 +192,6 @@ public class SaveManager {
 		//Recursively make calls until jobFileList is empty.
 		return parseJobFile(jobFileList, theParsedList);
 	}
-	
-	
 	
 	
 	/*
@@ -271,11 +276,18 @@ public class SaveManager {
 	
 	
 	
+	
+	
+	/*============*
+	 * Save Lists *
+	 *============*/
 
 	/**
 	 * Parse a JobList and write its contents to a text file.
 	 */
 	public boolean saveJobList(JobList theJobList) {
+		
+		//jobInfo contains a String Array of Jobs from JobList to be written to the text file.
 		List<String> jobInfo = extractJobInfo(theJobList);
 		
 		File outFile = getListFile("jobList.txt");
@@ -284,11 +296,13 @@ public class SaveManager {
 			FileWriter fw = new FileWriter(outFile);
 			BufferedWriter bw = new BufferedWriter(fw);
 			
+			//Write jobInfo to outFile.
 			for(int i = 0; i < jobInfo.size(); i++) {
 				bw.write(jobInfo.get(i));
 				bw.newLine();
 			}
 			bw.close();
+			
 		} catch (IOException e) {
 			System.out.println("Job List could not be saved.");
 			return false;
@@ -302,19 +316,22 @@ public class SaveManager {
 	 */
 	public boolean saveUserList(UserList theUserList) {
 		
-		File outFile = getListFile("userList.txt");
-		
+		//userInfo contains a String Array of Users from UserList to be written to the text file.
 		List<String> userInfo = extractUserInfo(theUserList);
+		
+		File outFile = getListFile("userList.txt");
 		
 		try {
 			FileWriter fw = new FileWriter(outFile);
 			BufferedWriter bw = new BufferedWriter(fw);
 			
+			//Write userInfo to outFile.
 			for(int i = 0; i < userInfo.size(); i++) {
 				bw.write(userInfo.get(i));
 				bw.newLine();
 			}
 			bw.close();
+			
 		} catch (IOException e) {
 			System.out.println("User List could not be saved.");
 			return false;
@@ -323,13 +340,17 @@ public class SaveManager {
 		return true;
 	}
 	
+	
+	
+	
 	/*
-	 * Copy JobList into an Array, line-by-line.
+	 * Copy JobList into an Array, line-by-line, that is ready to be printed to a text file.
 	 */
 	private List<String> extractJobInfo(JobList theJobList) {
 		List<String> jobInfo = new ArrayList<String>();
 		
 		for(Job job : theJobList.getCopyList()) {
+			//Extract Job details.
 			jobInfo.add(String.valueOf(job.getJobID()));
 			jobInfo.add(String.valueOf(job.getLightMax()));
 			jobInfo.add(String.valueOf(job.getMediumMax()));
@@ -339,6 +360,7 @@ public class SaveManager {
 			jobInfo.add(job.getPark().getName());
 			jobInfo.add(job.getManager());
 			
+			//Extract Volunteer List.
 			for(ArrayList<String> volunteer : job.getVolunteerList()) {
 				jobInfo.add(volunteer.get(0)); //Volunteer Email
 				jobInfo.add(volunteer.get(1)); //Work Grade
@@ -351,30 +373,22 @@ public class SaveManager {
 		return jobInfo;
 	}
 	
-	
 	/*
-	 * Copy UserList into an Array, line-by-line.
+	 * Copy UserList into an Array, line-by-line, that is ready to be printed to a text file.
 	 */
 	private List<String> extractUserInfo(UserList theUserList) {
 		List<String> userInfo = new ArrayList<String>();
+		
+		/*
+		 * We separately iterate through each of the three sub-lists of UserList, and write their contents
+		 * to userInfo.
+		 */
 		
 		for(Volunteer volunteer : theUserList.getVolunteerCopyList()) {
 			userInfo.add(volunteer.getEmail());
 			userInfo.add("Volunteer");
 			userInfo.add(volunteer.getFirstName());
 			userInfo.add(volunteer.getLastName());
-		}
-		
-		for(ParkManager manager : theUserList.getParkManagerCopyList()) {
-			userInfo.add(manager.getEmail());
-			userInfo.add("ParkManager");
-			userInfo.add(manager.getFirstName());
-			userInfo.add(manager.getLastName());
-			
-			for(Park park : manager.getManagedParks()) {
-				userInfo.add(park.getName());
-			}
-			userInfo.add("End Park List");
 		}
 		
 		for(Administrator admin : theUserList.getAdministratorCopyList()) {
@@ -384,11 +398,28 @@ public class SaveManager {
 			userInfo.add(admin.getLastName());
 		}
 		
+		for(ParkManager manager : theUserList.getParkManagerCopyList()) {
+			userInfo.add(manager.getEmail());
+			userInfo.add("ParkManager");
+			userInfo.add(manager.getFirstName());
+			userInfo.add(manager.getLastName());
+			
+			//Load Parks.
+			for(Park park : manager.getManagedParks()) {
+				userInfo.add(park.getName());
+			}
+			userInfo.add("End Park List");
+		}
+		
 		userInfo.add("End User List");	
 		return userInfo;
 	}
 	
 	
+	
+	/*================*
+	 * Helper Classes *
+	 *================*/
 	
 	/*
 	 * Convert a GregorianCalendar object to string of format mmddyyyy
