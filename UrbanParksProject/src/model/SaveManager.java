@@ -53,7 +53,6 @@ public class SaveManager {
 		
 		UserList myUserList = new UserList();
 		ArrayList<String> userFileList = new ArrayList<String>();
-		ArrayList myParsedList = new ArrayList();
 		
 		if(inFile.exists() && !inFile.isDirectory()) {
 			try {
@@ -62,7 +61,7 @@ public class SaveManager {
 				System.err.println("userList.txt was detected, but could not be loaded. Please delete userFile.txt and restart the program.");
 			}
 		}
-				
+			
 		myUserList = parseUserFile(userFileList, myUserList);		
 		return myUserList;
 	}
@@ -76,15 +75,15 @@ public class SaveManager {
 	 */
 	private File getListFile(String fileName) {
 		
-		File listFile;
+		File dataFile;
 		
 		//Try iOS (Console)
-		listFile = new File("rsc/" + fileName);
-		if(listFile.exists()) return listFile;
+		dataFile = new File("rsc/" + fileName);
+		if(dataFile.exists()) return dataFile;
 		
 		//Try Windows (Console)
-		listFile = new File("rsc\\" + fileName);
-		if(listFile.exists()) return listFile;
+		dataFile = new File("rsc\\" + fileName);
+		if(dataFile.exists()) return dataFile;
 		
 		File jarFile;
 		
@@ -98,16 +97,14 @@ public class SaveManager {
 		
 		//Try iOS (Jar)
 		jarFile = jarFile.getParentFile();		
-		listFile = new File(jarFile.toString() + "/" + fileName);		
-		if(listFile.exists()) return listFile;
+		dataFile = new File(jarFile.toString() + "/" + fileName);		
+		if(dataFile.exists()) return dataFile;
 		
 		//Try Windows (Jar)	
-		listFile = new File(jarFile.toString() + "\\" + fileName);
+		dataFile = new File(jarFile.toString() + "\\" + fileName);
 		
-		return listFile;
+		return dataFile;
 	}
-	
-	
 	
 	
 	/*
@@ -126,22 +123,25 @@ public class SaveManager {
 	}	
 	
 	
-
-
 	//Recursively parse the array version of the Job File, construct Jobs from the information, and pass back a list of those jobs.
-	
 	private ArrayList<Job> parseJobFile(ArrayList<String> jobFileList, ArrayList<Job> theParsedList) {		
-		//jobList.txt was not found, which is normal if the program has not been executed before.
+		
+		//jobList.txt was not found, which is normal if the program has not been executed before. So we just return an empty list.
 		if(jobFileList.size() < 1) {
 			return theParsedList;
 		}
 
-		//If jobFileList has ended, then return our parsed list.		 
+		//If jobFileList has ended, then return our parsed list.
 		if(jobFileList.get(0).equals("End Job List")) {
 			return theParsedList;
 		}
 		
-		//Construct Job
+		/*
+		 * Each Job in jobList.txt has 8 lines containing Job data, followed by a list of Volunteers
+		 * for the job and their grade of work.
+		 */
+		
+		//Construct Job from the 8 lines containing Job data.
 		int myJobID = Integer.parseInt(jobFileList.get(0));
 		
 		int myLightMax = Integer.parseInt(jobFileList.get(1));
@@ -153,18 +153,20 @@ public class SaveManager {
 		String myPark = jobFileList.get(6);
 		String myManager = jobFileList.get(7);
 		
-		//Remove all added elements from the file list.
+		//Remove the 8 lines containing Job data from the File List.
 		for(int i = 0; i < 8; i++) {
 			jobFileList.remove(0); 
 		}
 		
+		//With the Job detailed, we begin adding Volunteers.
 		ArrayList<ArrayList<String>> myVolunteerList = new ArrayList<ArrayList<String>>();
 		
-		//Add the volunteer to the volunteer list, then remove it from the file list.
+		//Add a volunteer to the Volunteer list for the Job, then remove it from the File List.
 		while(!jobFileList.get(0).equals("End Volunteer List")) {
 			ArrayList<String> volunteer = new ArrayList<String>();
-			volunteer.add(jobFileList.get(0));
-			volunteer.add(jobFileList.get(1));
+			
+			volunteer.add(jobFileList.get(0)); //Volunteer Name
+			volunteer.add(jobFileList.get(1)); //Volunteer Work Grade
 			myVolunteerList.add(volunteer); 
 			
 			jobFileList.remove(0);
@@ -173,6 +175,7 @@ public class SaveManager {
 		
 		//Remove "End Volunteer List"
 		jobFileList.remove(0);
+		
 		Park newPark = new Park(myPark, "Tacoma", 98335);
 		
 		//Construct the new job, and then add it to the list.
@@ -191,32 +194,54 @@ public class SaveManager {
 	 */
 	private UserList parseUserFile(ArrayList<String> theUserFileList, UserList theUserList) {
 		
-		//userList.txt was not found, which is normal if the program has not been executed before.
+		//userList.txt was not found, which is normal if the program has not been executed before. So we return an empty list.
 				if(theUserFileList.size() < 1) {
 					return theUserList;
 				}
 		
-		//If userFileList has ended, then return our parsed list.		 
+		//If userFileList has ended, then return our parsed list.
 		if(theUserFileList.get(0).equals("End User List")) {
 			return theUserList;
 		}
-
-		//Get basic user information.
+		
+		//Each User in userList.txt has 4 lines with details on the User.
+		
+		
+		//Construct User with the 4 lines detailing the user.
 		String myEmail = theUserFileList.get(0);
 		String myRole = theUserFileList.get(1);
 		String myFirstName = theUserFileList.get(2);
 		String myLastName = theUserFileList.get(3);
 
-		//Remove gathered information from file list.
+		//Remove the 4 lines with User information from the File List.
 		for(int i = 0; i < 4; i++) {
 			theUserFileList.remove(0);
 		}
 		
+		//Used only by ParkManager to store the list of Parks they are associated with.
+		List<Park> myParkList = new ArrayList<Park>();
+		
+		//If we are working with a ParkManager, we now load its Parks into myParkList.
+		if(myRole.equals("ParkManager")) {
+			
+			//Add the Parks associated with the ParkManager, and remove them from the File List as we go.
+			while(!theUserFileList.get(0).equals("End Park List")) {
+				Park myPark = new Park(theUserFileList.get(0));
+				myParkList.add(myPark);
+				theUserFileList.remove(0);
+			}			
+			
+			//Remove "End Park List"
+			theUserFileList.remove(0);
+		}
 		
 		
 		//For whichever role the user is, construct their corresponding Object and add it to the User List.
+		
 		if(myRole.equals("Volunteer")) {
-			Volunteer myVolunteer = new Volunteer(myEmail, myFirstName, myLastName);
+			Volunteer myVolunteer = new Volunteer(myEmail, myFirstName, myLastName);			
+			
+			//Get the Volunteer List, add the Volunteer to it, and then send it back to UserList.
 			List<Volunteer> myVolunteerList = theUserList.getVolunteerCopyList();
 			myVolunteerList.add(myVolunteer);
 			theUserList.setVolunteerList(myVolunteerList);
@@ -224,25 +249,17 @@ public class SaveManager {
 		
 		if(myRole.equals("Administrator")) {
 			Administrator myAdministrator = new Administrator(myFirstName, myLastName, myEmail);
+			
+			//Get the Administrator List, add the Administrator to it, and then send it back to UserList.
 			List<Administrator> myAdministratorList = theUserList.getAdministratorCopyList();
 			myAdministratorList.add(myAdministrator);
 			theUserList.setAdministratorList(myAdministratorList);
 		}
 		
 		if(myRole.equals("ParkManager")) {
-			List<Park> myParkList = new ArrayList<Park>();
-			
-			//Add the parks associated with the ParkManager, and remove them from the file list as we go.
-			while(!theUserFileList.get(0).equals("End Park List")) {
-				Park myPark = new Park(theUserFileList.get(0));
-				myParkList.add(myPark);
-				theUserFileList.remove(0);
-			}			
-			
-			theUserFileList.remove(0);
-			
 			ParkManager myManager = new ParkManager(myEmail, myFirstName, myLastName, myParkList);
 			
+			//Get the ParkManager List, add the ParkManager to it, and then send it back to UserList.
 			List<ParkManager> myManagerList = theUserList.getParkManagerCopyList();
 			myManagerList.add(myManager);
 			theUserList.setParkManagerList(myManagerList);		
@@ -280,6 +297,32 @@ public class SaveManager {
 		return true;
 	}
 	
+	/**
+	 * Parse a UserList and write its contents to a text file.
+	 */
+	public boolean saveUserList(UserList theUserList) {
+		
+		File outFile = getListFile("userList.txt");
+		
+		List<String> userInfo = extractUserInfo(theUserList);
+		
+		try {
+			FileWriter fw = new FileWriter(outFile);
+			BufferedWriter bw = new BufferedWriter(fw);
+			
+			for(int i = 0; i < userInfo.size(); i++) {
+				bw.write(userInfo.get(i));
+				bw.newLine();
+			}
+			bw.close();
+		} catch (IOException e) {
+			System.out.println("User List could not be saved.");
+			return false;
+		}		
+		
+		return true;
+	}
+	
 	/*
 	 * Copy JobList into an Array, line-by-line.
 	 */
@@ -308,34 +351,6 @@ public class SaveManager {
 		return jobInfo;
 	}
 	
-	
-	
-	
-	/**
-	 * Parse a UserList and write its contents to a text file.
-	 */
-	public boolean saveUserList(UserList theUserList) {
-		
-		File outFile = getListFile("userList.txt");
-		
-		List<String> userInfo = extractUserInfo(theUserList);
-		
-		try {
-			FileWriter fw = new FileWriter(outFile);
-			BufferedWriter bw = new BufferedWriter(fw);
-			
-			for(int i = 0; i < userInfo.size(); i++) {
-				bw.write(userInfo.get(i));
-				bw.newLine();
-			}
-			bw.close();
-		} catch (IOException e) {
-			System.out.println("User List could not be saved.");
-			return false;
-		}		
-		
-		return true;
-	}
 	
 	/*
 	 * Copy UserList into an Array, line-by-line.
@@ -375,9 +390,7 @@ public class SaveManager {
 	
 	
 	
-	
-	
-	/**
+	/*
 	 * Convert a GregorianCalendar object to string of format mmddyyyy
 	 */
 	private String calendarToString(GregorianCalendar theCalendar) {
