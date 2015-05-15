@@ -24,7 +24,7 @@ public class SaveManager {
 	 * Read jobList.txt, and generate from it a JobList containing all Jobs and their information.
 	 */
 	public JobList loadJobList() {
-		File inFile = getJobFile();
+		File inFile = getListFile("jobList.txt");
 		
 		JobList myJobList = new JobList();
 		ArrayList<String> jobFileList = new ArrayList<String>();
@@ -32,7 +32,7 @@ public class SaveManager {
 		
 		if(inFile.exists() && !inFile.isDirectory()) {
 			try {
-				jobFileList = loadJobFile(inFile);
+				jobFileList = loadFile(inFile);
 			} catch (FileNotFoundException e) {
 				System.err.println("jobList.txt was detected, but could not be loaded. Please delete jobFile.txt and restart the program.");
 			}
@@ -44,42 +44,12 @@ public class SaveManager {
 		return myJobList;		
 	}
 	
-	/*
-	 * Return the File to load/save job data to.
-	 */
-	private File getJobFile() {
-		File jobFile;
-		
-		jobFile = new File("rsc/jobList.txt"); //Try iOS
-		if(jobFile.exists()) return jobFile;
-		
-		jobFile = new File("rsc\\jobList.txt"); //Try Windows
-		if(jobFile.exists()) return jobFile;
-		
-		try {
-			jobFile = new File(SaveManager.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath()); 
-		} catch (URISyntaxException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}		
-		
-		File copyFile = jobFile;	//Backup the File path before we start appending to it.	
-		jobFile = jobFile.getParentFile();		
-		jobFile = new File(jobFile.toString() + "/jobList.txt");		
-		
-		if(jobFile.exists()) return jobFile; //Try jar on iOS
-		
-		jobFile = copyFile;		
-		jobFile = jobFile.getParentFile();		
-		jobFile = new File(jobFile.toString() + "\\jobList.txt");	//Try jar on Windows
-		return jobFile;
-	}
 	
 	/**
 	 * Read userList.txt, and generate from it a UserList containing all Users and their information.
 	 */
 	public UserList loadUserList() {
-		File inFile = getUserFile();
+		File inFile = getListFile("userList.txt");
 		
 		UserList myUserList = new UserList();
 		ArrayList<String> userFileList = new ArrayList<String>();
@@ -87,7 +57,7 @@ public class SaveManager {
 		
 		if(inFile.exists() && !inFile.isDirectory()) {
 			try {
-				userFileList = loadUserFile(inFile);
+				userFileList = loadFile(inFile);
 			} catch (FileNotFoundException e) {
 				System.err.println("userList.txt was detected, but could not be loaded. Please delete userFile.txt and restart the program.");
 			}
@@ -97,43 +67,53 @@ public class SaveManager {
 		return myUserList;
 	}
 	
+	
 	/*
-	 * Return the File to load/save user data to.
+	 * Return the File to load/save job or user data to.
+	 * We make four different attempts, to account for iOS and Windows, on both Console and Jar.
+	 * 
+	 * Return null in the case that the file could not be found.
 	 */
-	private File getUserFile() {
-		File userFile = new File("rsc/userList.txt");
+	private File getListFile(String fileName) {
 		
-		userFile = new File("rsc/userList.txt"); //Try iOS
-		if(userFile.exists()) return userFile;
+		File listFile;
 		
-		userFile = new File("rsc\\jobList.txt"); //Try Windows
-		if(userFile.exists()) return userFile;
+		//Try iOS (Console)
+		listFile = new File("rsc/" + fileName);
+		if(listFile.exists()) return listFile;
 		
+		//Try Windows (Console)
+		listFile = new File("rsc\\" + fileName);
+		if(listFile.exists()) return listFile;
+		
+		File jarFile;
+		
+		//Generate path of the current file; used by the Jar file for detecting local text files.
 		try {
-			userFile = new File(SaveManager.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath()); //Try jar
+			jarFile = new File(SaveManager.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath()); 
 		} catch (URISyntaxException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+			System.out.println("Sorry, but this program could not detect its location. Please close the program and try again.");
+			return null;
+		}		
 		
-		File copyFile = userFile;
+		//Try iOS (Jar)
+		jarFile = jarFile.getParentFile();		
+		listFile = new File(jarFile.toString() + "/" + fileName);		
+		if(listFile.exists()) return listFile;
 		
-		userFile = userFile.getParentFile();		
-		userFile = new File(userFile.toString() + "/userList.txt");		
-		if(userFile.exists()) return userFile; //Try iOS Jar
-
-		userFile = copyFile;
-		userFile = userFile.getParentFile();		
-		userFile = new File(userFile.toString() + "\\userList.txt");		
-		return userFile; //Try Windows Jar
+		//Try Windows (Jar)	
+		listFile = new File(jarFile.toString() + "\\" + fileName);
+		
+		return listFile;
 	}
+	
 	
 	
 	
 	/*
 	 * Read the contents of the Job or User file, line by line, into an array.
 	 */
-	private ArrayList<String> loadJobFile(File jobFile) throws FileNotFoundException {
+	private ArrayList<String> loadFile(File jobFile) throws FileNotFoundException {
 		ArrayList<String> jobFileList = new ArrayList<String>();
 		
 		Scanner myScanner = new Scanner(jobFile);
@@ -143,20 +123,7 @@ public class SaveManager {
 
 		myScanner.close();	
 		return jobFileList;
-	}
-	
-	private ArrayList loadUserFile(File userFile) throws FileNotFoundException {
-		ArrayList userFileList = new ArrayList();
-		
-		Scanner myScanner = new Scanner(userFile);
-		while(myScanner.hasNextLine()) {
-			userFileList.add(myScanner.nextLine());
-		}
-		
-		myScanner.close();			
-		return userFileList;
-	}
-	
+	}	
 	
 	
 
@@ -294,7 +261,7 @@ public class SaveManager {
 	public boolean saveJobList(JobList theJobList) {
 		List<String> jobInfo = extractJobInfo(theJobList);
 		
-		File outFile = getJobFile();
+		File outFile = getListFile("jobList.txt");
 		
 		try {
 			FileWriter fw = new FileWriter(outFile);
@@ -349,7 +316,7 @@ public class SaveManager {
 	 */
 	public boolean saveUserList(UserList theUserList) {
 		
-		File outFile = getUserFile();
+		File outFile = getListFile("userList.txt");
 		
 		List<String> userInfo = extractUserInfo(theUserList);
 		
