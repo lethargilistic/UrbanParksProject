@@ -21,7 +21,7 @@ public class ParkManager {
 	private ParkManagerUI myUI;	
 	private Schedule mySchedule;
 	private DataPollster myPollster;
-	private List<Park> myManagedParks;	
+	private List<String> myManagedParks;	
 	
 	private String myFirstName;
 	private String myLastName;
@@ -29,13 +29,13 @@ public class ParkManager {
 	private String myEmail;
 
 	//Constructor
-	public ParkManager(String theEmail, String theFirstName, String theLastName, List<Park> theParkList) {
+	public ParkManager(String theEmail, String theFirstName, String theLastName, List<String> theParkList) {
 		this.myEmail = theEmail;
 		this.myFirstName = theFirstName;
 		this.myLastName = theLastName;
 		
 		//theParkList is an Unmodifiable List, so we cannot cast it to ArrayList. So we copy it over instead.
-		List<Park> copiedParks = new ArrayList<Park>();
+		List<String> copiedParks = new ArrayList<String>();
 		copiedParks.addAll(theParkList);
 		this.myManagedParks = copiedParks;
 	}
@@ -126,7 +126,7 @@ public class ParkManager {
 		if(parkNum < myManagedParks.size()) {
 			//ParkManager is assigning to an existing park.
 			
-			Park myPark = myManagedParks.get(parkNum);			
+			String myPark = myManagedParks.get(parkNum);			
 			Job thisJob = constructJob(myPark);
 			
 			//Check if the job lasts longer than two days. Add if it does not.
@@ -141,7 +141,7 @@ public class ParkManager {
 			
 		} else {
 			//ParkManager is adding a new park
-			Park newPark = myUI.createNewPark();
+			String newPark = myUI.createNewPark();
 			myManagedParks.add(newPark);
 			mySchedule.updateParkList(myEmail, myManagedParks);
 			createJob();
@@ -161,7 +161,7 @@ public class ParkManager {
 	 * @param thePark The park where the job will occur.
 	 * @return The constructed Job
 	 */
-	private Job constructJob(Park thePark) {	
+	private Job constructJob(String thePark) {	
 		int myJobID = myPollster.getNextJobID();
 		int myLight = myUI.getLightSlots();
 		int myMedium = myUI.getMediumSlots();
@@ -212,8 +212,8 @@ public class ParkManager {
 		
 		//If we found the job, then check to see if it is in one of our parks.
 		if(foundJob != null) {
-			for(Park park : myManagedParks) {
-				if(park.getName().equals(foundJob.getPark().getName())) return true;
+			for(String managedPark : myManagedParks) {
+				if(managedPark.equals(foundJob.getPark())) return true;
 			}
 		}		
 		
@@ -226,11 +226,11 @@ public class ParkManager {
 	 * Getters and Setters *
 	 *=====================*/	
 	
-	public void setManagedParks(List<Park> theManagedParks) {
+	public void setManagedParks(List<String> theManagedParks) {
 		this.myManagedParks = theManagedParks;
 	}
 	
-	public List<Park> getManagedParks() {
+	public List<String> getManagedParks() {
 		return Collections.unmodifiableList(myManagedParks);
 	}
 	
@@ -262,7 +262,7 @@ public class ParkManager {
 		
 		for(Job thisJob : jobs) {
 			jobArray[jobNumber][0] = thisJob.getJobID();
-			jobArray[jobNumber][1] = thisJob.getPark().getName();
+			jobArray[jobNumber][1] = thisJob.getPark();
 			jobArray[jobNumber][2] = thisJob.getLightCurrent() + "/" + thisJob.getLightMax();
 			jobArray[jobNumber][3] = thisJob.getMediumCurrent() + "/" + thisJob.getMediumMax();
 			jobArray[jobNumber][4] = thisJob.getHeavyCurrent() + "/" + thisJob.getHeavyMax();

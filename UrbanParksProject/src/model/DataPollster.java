@@ -124,16 +124,15 @@ public class DataPollster {
 	 */
 	public List<Job> getManagerJobs(ParkManager theManager){
 		List<Job> jobReturnList = new ArrayList<Job>();
-		List<Park> managedParks = theManager.getManagedParks();
+		List<String> managedParks = theManager.getManagedParks();
 
 		//Select all jobs in JobList with the same name as a Park that ParkManager manages.
 		for (Job job : myJobList.getCopyList())	{
-			String jobParkName = job.getPark().getName();
+			String jobParkName = job.getPark();
 			
-			for(Park park : managedParks) {						
-				String managedParkName = park.getName();
+			for(String managedPark : managedParks) {						
 				
-				if(jobParkName.equals(managedParkName)) {
+				if(jobParkName.equals(managedPark)) {
 					jobReturnList.add(job);
 				}
 			}
@@ -249,8 +248,7 @@ public class DataPollster {
 	 * Return the Park List associated with a ParkManager's e-mail.
 	 * @author Taylor Gorman
 	 */
-	public List<Park> getParkList(String theEmail) {		
-		System.out.println(theEmail);
+	public List<String> getParkList(String theEmail) {		
 		List<ParkManager> managerList = myUserList.getParkManagerCopyList();
 		
 		for(ParkManager manager : managerList) {
@@ -258,7 +256,7 @@ public class DataPollster {
 				return manager.getManagedParks();
 			}
 		}
-		return new ArrayList<Park>();
+		return new ArrayList<String>();
 	}
 
 	/**
@@ -297,7 +295,7 @@ public class DataPollster {
 				//Manager found, so we copy the data over and return it.
 				String firstName = manager.getFirstName();
 				String lastName = manager.getLastName();
-				List<Park> parkList = manager.getManagedParks();
+				List<String> parkList = manager.getManagedParks();
 				return new ParkManager(theParkManagerEmail, firstName, lastName, parkList);
 			}
 		}

@@ -34,8 +34,8 @@ public class ParkManagerGUI extends JFrame {
 	 * Create the frame.
 	 */
 	public ParkManagerGUI() {
-		List<Park> myParkList = new ArrayList<Park>();
-		Park myPark = new Park("Happy Park Land", "Tacoma", 98335);
+		List<String> myParkList = new ArrayList<String>();
+		String myPark = "Happy Park Land";
 		myParkList.add(myPark);
 		myManager = new ParkManager("moverby@gmail.com", "Mike", "Overby", myParkList);
 		

@@ -311,7 +311,7 @@ public class Schedule {
 				break;
 				
 			case "ParkManager":
-				ParkManager newManager = new ParkManager(theEmail, theFirstName, theLastName, new ArrayList<Park>());
+				ParkManager newManager = new ParkManager(theEmail, theFirstName, theLastName, new ArrayList<String>());
 				List<ParkManager> managerList = myUserList.getParkManagerCopyList();
 				managerList.add(newManager);
 				myUserList.setParkManagerList(managerList);
@@ -331,7 +331,7 @@ public class Schedule {
 	 * Update the list of managed parks of a Park Manager.
 	 * @author Taylor Gorman
 	 */
-	public void updateParkList(String theEmail, List<Park> theManagedParks) {
+	public void updateParkList(String theEmail, List<String> theManagedParks) {
 		List<ParkManager> myManagerList = myUserList.getParkManagerCopyList();
 		
 		for(ParkManager manager : myManagerList) {
