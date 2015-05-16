@@ -11,6 +11,7 @@ import java.awt.Font;
 import javax.swing.JSpinner;
 import javax.swing.JButton;
 import java.awt.Color;
+import javax.swing.DefaultComboBoxModel;
 
 
 public class NewJobFrame extends JFrame {
@@ -31,12 +32,12 @@ public class NewJobFrame extends JFrame {
 		contentPane.setLayout(null);
 		
 		JComboBox parkComboBox = new JComboBox();
-		parkComboBox.setBounds(31, 56, 136, 20);
+		parkComboBox.setBounds(31, 56, 195, 20);
 		contentPane.add(parkComboBox);
 		
-		JLabel selectParkLabel = new JLabel("Select a Park");
-		selectParkLabel.setBounds(31, 37, 85, 14);
-		contentPane.add(selectParkLabel);
+		JLabel parkLabel = new JLabel("Park");
+		parkLabel.setBounds(31, 37, 85, 14);
+		contentPane.add(parkLabel);
 		
 		JLabel volunteersLabel = new JLabel("Volunteers");
 		volunteersLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -86,19 +87,22 @@ public class NewJobFrame extends JFrame {
 		contentPane.add(startDayLabel);
 		
 		JLabel startYearLabel = new JLabel("Year");
-		startYearLabel.setBounds(154, 252, 46, 14);
+		startYearLabel.setBounds(167, 252, 46, 14);
 		contentPane.add(startYearLabel);
 		
 		JComboBox startMonthComboBox = new JComboBox();
-		startMonthComboBox.setBounds(31, 277, 28, 20);
+		startMonthComboBox.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"}));
+		startMonthComboBox.setBounds(31, 277, 40, 20);
 		contentPane.add(startMonthComboBox);
 		
 		JComboBox startDayComboBox = new JComboBox();
-		startDayComboBox.setBounds(98, 277, 28, 20);
+		startDayComboBox.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"}));
+		startDayComboBox.setBounds(98, 277, 40, 20);
 		contentPane.add(startDayComboBox);
 		
 		JComboBox startYearComboBox = new JComboBox();
-		startYearComboBox.setBounds(154, 277, 28, 20);
+		startYearComboBox.setModel(new DefaultComboBoxModel(new String[] {"2015", "2016", "2017", "2018"}));
+		startYearComboBox.setBounds(167, 277, 59, 20);
 		contentPane.add(startYearComboBox);
 		
 		JLabel endMonthLabel = new JLabel("Month");
@@ -110,28 +114,31 @@ public class NewJobFrame extends JFrame {
 		contentPane.add(endDayLabel);
 		
 		JLabel endYearLabel = new JLabel("Year");
-		endYearLabel.setBounds(154, 352, 46, 14);
+		endYearLabel.setBounds(167, 352, 46, 14);
 		contentPane.add(endYearLabel);
 		
 		JComboBox endMonthComboBox = new JComboBox();
-		endMonthComboBox.setBounds(31, 377, 28, 20);
+		endMonthComboBox.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"}));
+		endMonthComboBox.setBounds(31, 377, 40, 20);
 		contentPane.add(endMonthComboBox);
 		
 		JComboBox endDayComboBox = new JComboBox();
-		endDayComboBox.setBounds(98, 377, 28, 20);
+		endDayComboBox.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"}));
+		endDayComboBox.setBounds(98, 377, 40, 20);
 		contentPane.add(endDayComboBox);
 		
 		JComboBox endYearComboBox = new JComboBox();
-		endYearComboBox.setBounds(154, 377, 28, 20);
+		endYearComboBox.setModel(new DefaultComboBoxModel(new String[] {"2015", "2016", "2017", "2018"}));
+		endYearComboBox.setBounds(167, 377, 59, 20);
 		contentPane.add(endYearComboBox);
 		
 		JButton createJobButton = new JButton("Create Job");
-		createJobButton.setBounds(31, 476, 89, 23);
+		createJobButton.setBounds(31, 476, 113, 23);
 		contentPane.add(createJobButton);
 		
 		JLabel errorLabel = new JLabel("");
 		errorLabel.setForeground(Color.RED);
-		errorLabel.setBounds(31, 451, 46, 14);
+		errorLabel.setBounds(31, 414, 257, 51);
 		contentPane.add(errorLabel);
 	}
 }
