@@ -53,8 +53,8 @@ public class ParkManager {
 	public void initialize(Schedule theSchedule, DataPollster thePollster) {
 		mySchedule = theSchedule;
 		myPollster = thePollster;
-		myUI = new ParkManagerUI();
-		commandLoop();
+		//myUI = new ParkManagerUI();
+		//commandLoop();
 	}
 
 	/**
@@ -250,10 +250,6 @@ public class ParkManager {
 	
 	
 	public Object[][] getJobArray() {
-		JobList myJobList = new JobList();
-		UserList myUserList = new UserList();
-		myPollster = new DataPollster(myJobList, myUserList);
-		myManagedParks = myPollster.getParkList("moverby@gmail.com");
 		
 		ArrayList<Job> jobs = (ArrayList<Job>) myPollster.getManagerJobs(this);
 		
@@ -266,6 +262,7 @@ public class ParkManager {
 			jobArray[jobNumber][2] = thisJob.getLightCurrent() + "/" + thisJob.getLightMax();
 			jobArray[jobNumber][3] = thisJob.getMediumCurrent() + "/" + thisJob.getMediumMax();
 			jobArray[jobNumber][4] = thisJob.getHeavyCurrent() + "/" + thisJob.getHeavyMax();
+			jobNumber++;
 		}
 		
 		return jobArray;

@@ -33,22 +33,19 @@ public class ParkManagerGUI extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ParkManagerGUI() {
-		List<String> myParkList = new ArrayList<String>();
-		String myPark = "Happy Park Land";
-		myParkList.add(myPark);
-		myManager = new ParkManager("moverby@gmail.com", "Mike", "Overby", myParkList);
+	public ParkManagerGUI(ParkManager theManager) {
+		this.myManager = theManager;
+		createFrame();		
+	}
+	
+	private void createFrame() {
 		
-		setTitle("Welcome!");
+		setTitle("Welcome " + myManager.getFirstName() + " " + myManager.getLastName() + "!");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 865, 475);
-		getContentPane().setLayout(null);
-		
+		getContentPane().setLayout(null);		
 	
 		createTable();
-		
-
-	
 		
 		JButton newJobButton = new JButton("Create New Job");
 		newJobButton.setFont(new Font("Arial", Font.PLAIN, 18));
@@ -63,8 +60,7 @@ public class ParkManagerGUI extends JFrame {
 		volunteerListPane.setViewportView(volunteerListArea);
 		volunteerListArea.setEditable(false);
 		
-	}
-		
+	}		
 	
 	
 	private void createTable() {
@@ -73,9 +69,9 @@ public class ParkManagerGUI extends JFrame {
 		getContentPane().add(scrollPane);
 		String[] columnNames = {"Job ID",
                 "Park",
-                "Light Slots",
-                "Medium Slots",
-                "Heavy Slots"};
+                "Light",
+                "Medium",
+                "Heavy"};
 		
 		
 		
