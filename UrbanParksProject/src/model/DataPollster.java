@@ -331,4 +331,16 @@ public class DataPollster {
 	public UserList getUserList() {
 		return this.myUserList;
 	}
+	
+	/**
+	 * Return the work grade of a Volunteer for a given job.
+	 * @author Taylor Gorman
+	 */
+	public String getVolunteerGrade(int theJobID, String theVolunteerEmail) {
+		for(ArrayList<String> volunteer : myJobList.getJobCopy(theJobID).getVolunteerList()) {
+			if(volunteer.get(0).equals(theVolunteerEmail)) return volunteer.get(1);
+		}
+		
+		return null;
+	}
 }

@@ -137,22 +137,21 @@ public class Main {
 	 */
 	private static void giveControl(String[] theUserInfo, Schedule theSchedule, DataPollster thePollster) {
 		String userType = thePollster.getUserType(theUserInfo[1]);
+		String email = theUserInfo[1];
 		
 		if(userType.equals("ParkManager")) {
-			List<String> managedParks = thePollster.getParkList(theUserInfo[1]);
-			String email = theUserInfo[1];
 			ParkManager manager = thePollster.getParkManager(email);
 			manager.initialize(theSchedule, thePollster);
+			ParkManagerGUI managerGUI = new ParkManagerGUI(manager);
+			managerGUI.setVisible(true);
 		}
 		
 		if(userType.equals("Volunteer")) {
-			String email = theUserInfo[1];
 			Volunteer volunteer = new Volunteer(theSchedule, thePollster, email);
 			volunteer.initialize();
 		}
 		
 		if(userType.equals("Administrator")) {
-			String email = theUserInfo[1];
 			Administrator administrator = new Administrator(thePollster, email);
 			administrator.initialize();
 		}

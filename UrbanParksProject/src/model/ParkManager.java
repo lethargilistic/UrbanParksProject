@@ -39,6 +39,7 @@ public class ParkManager {
 		copiedParks.addAll(theParkList);
 		this.myManagedParks = copiedParks;
 	}
+	
 
 	
 	
@@ -52,8 +53,8 @@ public class ParkManager {
 	public void initialize(Schedule theSchedule, DataPollster thePollster) {
 		mySchedule = theSchedule;
 		myPollster = thePollster;
-		myUI = new ParkManagerUI();
-		commandLoop();
+		//myUI = new ParkManagerUI();
+		//commandLoop();
 	}
 
 	/**
@@ -243,6 +244,55 @@ public class ParkManager {
 	
 	public String getLastName() {
 		return this.myLastName;
+	}
+	
+	
+	
+	
+	public Object[][] getJobArray() {
+		
+		ArrayList<Job> jobs = (ArrayList<Job>) myPollster.getManagerJobs(this);
+		
+		Object[][] jobArray = new Object[jobs.size()][7];
+		int jobNumber = 0;
+		
+		for(Job thisJob : jobs) {
+			jobArray[jobNumber][0] = thisJob.getJobID();
+			jobArray[jobNumber][1] = thisJob.getPark();
+			jobArray[jobNumber][2] = thisJob.getLightCurrent() + "/" + thisJob.getLightMax();
+			jobArray[jobNumber][3] = thisJob.getMediumCurrent() + "/" + thisJob.getMediumMax();
+			jobArray[jobNumber][4] = thisJob.getHeavyCurrent() + "/" + thisJob.getHeavyMax();
+			jobArray[jobNumber][5] = calendarToString(thisJob.getStartDate());
+			jobArray[jobNumber][6] = calendarToString(thisJob.getEndDate());
+			
+			jobNumber++;
+		}
+		
+		return jobArray;
+	}
+	
+	public String getVolunteerString(int theJobID) {
+		String volunteerString = "";
+
+		List<Volunteer> volunteerList = myPollster.getJobVolunteerList(theJobID);
+		
+		for(Volunteer volunteer : volunteerList) {
+			volunteerString += volunteer.getFirstName() + " " + volunteer.getLastName() + "\n";
+			volunteerString += volunteer.getEmail() + "\n";
+			volunteerString += myPollster.getVolunteerGrade(theJobID, volunteer.getEmail()) + "\n\n";
+		}
+		
+		return volunteerString;
+	}
+	
+	
+	private String calendarToString(GregorianCalendar theCalendar) {
+		String returnString = "";
+		returnString += theCalendar.get(Calendar.MONTH) + "/";
+		returnString += theCalendar.get(Calendar.DAY_OF_MONTH) + "/";
+		returnString += theCalendar.get(Calendar.YEAR);
+		
+		return returnString;		
 	}
 	
 }

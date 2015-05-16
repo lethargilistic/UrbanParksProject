@@ -15,7 +15,7 @@ import java.util.Scanner;
 /**
  * Handles both saving and loading from the jobList.txt and userList.txt files.
  * @author Taylor Gorman
- * @version 9 May 2015
+ * @version 13 May 2015
  *
  */
 public class SaveManager {
@@ -413,6 +413,7 @@ public class SaveManager {
 		}
 		
 		userInfo.add("End User List");	
+		
 		return userInfo;
 	}
 	
