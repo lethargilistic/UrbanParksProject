@@ -209,7 +209,7 @@ public class Job {
     		default: return 0;
     	}
     }
-
+    
     public static void setNextJobID(int theID){
     	nextJobID = theID;
     }
