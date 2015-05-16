@@ -392,18 +392,6 @@ public class SaveManager {
 			userInfo.add(volunteer.getLastName());
 		}
 		
-		for(ParkManager manager : theUserList.getParkManagerCopyList()) {
-			userInfo.add(manager.getEmail());
-			userInfo.add("ParkManager");
-			userInfo.add(manager.getFirstName());
-			userInfo.add(manager.getLastName());
-			
-			for(String park : manager.getManagedParks()) {
-				userInfo.add(park);
-			}
-			userInfo.add("End Park List");
-		}
-		
 		for(Administrator admin : theUserList.getAdministratorCopyList()) {
 			userInfo.add(admin.getEmail());
 			userInfo.add("Administrator");
