@@ -12,17 +12,36 @@ import javax.swing.JSpinner;
 import javax.swing.JButton;
 
 import java.awt.Color;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
 
 import model.ParkManager;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
 
 public class NewJobFrame extends JFrame {
 
-	private JPanel contentPane;
 	private ParkManager myManager;
+	
+	private JPanel contentPane;	
+
+	private JComboBox<String> parkComboBox;
+	
+	private JSpinner lightSpinner;
+	private JSpinner mediumSpinner;
+	private JSpinner heavySpinner;
+	
+	private JComboBox<Integer> startMonthComboBox;
+	private JComboBox<Integer> startDayComboBox;
+	private JComboBox<Integer> startYearComboBox;
+	private JComboBox<Integer> endMonthComboBox;
+	private JComboBox<Integer> endDayComboBox;
+	private JComboBox<Integer> endYearComboBox;
 
 	/**
 	 * Create the frame.
@@ -54,7 +73,7 @@ public class NewJobFrame extends JFrame {
 		List<String> managedParksList = myManager.getManagedParks();
 		String[] managedParksArray = managedParksList.toArray(new String[managedParksList.size()]);
 		
-		JComboBox<String> parkComboBox = new JComboBox<String>();
+		parkComboBox = new JComboBox<String>();
 		parkComboBox.setModel(new DefaultComboBoxModel<String>(managedParksArray));
 		parkComboBox.setBounds(31, 56, 195, 20);
 		contentPane.add(parkComboBox);
@@ -84,15 +103,15 @@ public class NewJobFrame extends JFrame {
 		heavyLabel.setBounds(180, 146, 46, 14);
 		contentPane.add(heavyLabel);
 		
-		JSpinner lightSpinner = new JSpinner();
+		lightSpinner = new JSpinner();
 		lightSpinner.setBounds(31, 171, 40, 20);
 		contentPane.add(lightSpinner);
 		
-		JSpinner mediumSpinner = new JSpinner();
+		mediumSpinner = new JSpinner();
 		mediumSpinner.setBounds(98, 171, 40, 20);
 		contentPane.add(mediumSpinner);
 		
-		JSpinner heavySpinner = new JSpinner();
+		heavySpinner = new JSpinner();
 		heavySpinner.setBounds(180, 171, 40, 20);
 		contentPane.add(heavySpinner);
 		
@@ -129,17 +148,17 @@ public class NewJobFrame extends JFrame {
 			dayList[i - 1] = i;
 		}
 		
-		JComboBox<Integer> startMonthComboBox = new JComboBox<Integer>();
+		startMonthComboBox = new JComboBox<Integer>();
 		startMonthComboBox.setModel(new DefaultComboBoxModel<Integer>(monthList));
 		startMonthComboBox.setBounds(31, 277, 40, 20);
 		contentPane.add(startMonthComboBox);
 		
-		JComboBox<Integer> startDayComboBox = new JComboBox<Integer>();
+		startDayComboBox = new JComboBox<Integer>();
 		startDayComboBox.setModel(new DefaultComboBoxModel<Integer>(dayList));
 		startDayComboBox.setBounds(98, 277, 40, 20);
 		contentPane.add(startDayComboBox);
 		
-		JComboBox<Integer> startYearComboBox = new JComboBox<Integer>();
+		startYearComboBox = new JComboBox<Integer>();
 		startYearComboBox.setModel(new DefaultComboBoxModel<Integer>(new Integer[] {2015, 2016, 2017, 2018}));
 		startYearComboBox.setBounds(167, 277, 59, 20);
 		contentPane.add(startYearComboBox);
@@ -156,17 +175,17 @@ public class NewJobFrame extends JFrame {
 		endYearLabel.setBounds(167, 352, 46, 14);
 		contentPane.add(endYearLabel);
 		
-		JComboBox<Integer> endMonthComboBox = new JComboBox<Integer>();
+		endMonthComboBox = new JComboBox<Integer>();
 		endMonthComboBox.setModel(new DefaultComboBoxModel<Integer>(monthList));
 		endMonthComboBox.setBounds(31, 377, 40, 20);
 		contentPane.add(endMonthComboBox);
 		
-		JComboBox<Integer> endDayComboBox = new JComboBox<Integer>();
+		endDayComboBox = new JComboBox<Integer>();
 		endDayComboBox.setModel(new DefaultComboBoxModel<Integer>(dayList));
 		endDayComboBox.setBounds(98, 377, 40, 20);
 		contentPane.add(endDayComboBox);
 		
-		JComboBox<Integer> endYearComboBox = new JComboBox<Integer>();
+		endYearComboBox = new JComboBox<Integer>();
 		endYearComboBox.setModel(new DefaultComboBoxModel<Integer>(new Integer[] {2015, 2016, 2017, 2018}));
 		endYearComboBox.setBounds(167, 377, 59, 20);
 		contentPane.add(endYearComboBox);
@@ -176,6 +195,28 @@ public class NewJobFrame extends JFrame {
 	private void createJobButton() {
 		
 		JButton createJobButton = new JButton("Create Job");
+		createJobButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				String park = (String) parkComboBox.getSelectedItem();
+				
+				int lightSlots = (int) lightSpinner.getValue();
+				int mediumSlots = (int) mediumSpinner.getValue();
+				int heavySlots = (int) heavySpinner.getValue();
+				
+				GregorianCalendar startDate = new GregorianCalendar();
+				startDate.set(Calendar.MONTH, (int) startMonthComboBox.getSelectedItem());
+				startDate.set(Calendar.DAY_OF_MONTH, (int) startDayComboBox.getSelectedItem());
+				startDate.set(Calendar.YEAR, (int) startYearComboBox.getSelectedItem());
+				
+				GregorianCalendar endDate = new GregorianCalendar();
+				endDate.set(Calendar.MONTH, (int) endMonthComboBox.getSelectedItem());
+				endDate.set(Calendar.DAY_OF_MONTH, (int) endDayComboBox.getSelectedItem());
+				endDate.set(Calendar.YEAR, (int) endYearComboBox.getSelectedItem());
+				
+				myManager.createJob(park, lightSlots, mediumSlots, heavySlots, startDate, endDate);
+			}
+		});
 		createJobButton.setBounds(31, 476, 113, 23);
 		contentPane.add(createJobButton);
 		

@@ -236,7 +236,6 @@ public class DataPollster {
 
 		for(Administrator administrator : myUserList.getAdministratorCopyList()) {
 			if(administrator.getEmail().equals(theEmail)) userType = "Administrator";
-
 		}
 
 

@@ -82,24 +82,10 @@ public class Job {
     	this.myStartDate = stringToCalendar(theStartDate);
     	this.myEndDate = stringToCalendar(theEndDate);
     	
-    }
-    
-    public Job(String thePark, int theLightMax, int theMediumMax, int theHeavyMax, 
-    		String theStartDate, String theEndDate, String theManagerEmail, 
-    		ArrayList<ArrayList<String>> theVolunteerList) {
-    	
-    	this.myJobID = nextJobID++;
-    	this.myPark = thePark;
-    	
-    	this.myLightMax = theLightMax;
-    	this.myMediumMax = theMediumMax;
-    	this.myHeavyMax = theHeavyMax;
-    	
-    	this.myStartDate = stringToCalendar(theStartDate);
-    	this.myEndDate = stringToCalendar(theEndDate);
-    	
-    	this.myManager = theManagerEmail;
-    	this.myVolunteerList = theVolunteerList;
+    	System.out.println(theJobID);
+    	System.out.println(thePark);
+    	System.out.println(theStartDate);
+    	System.out.println(theEndDate + "\n");
     }
     
     /**

@@ -81,7 +81,7 @@ public class ParkManager extends User {
 		boolean status = true;
 		switch(choice) { 
 			case 1:
-				createJob(); 
+				createJobOld(); 
 				break;
 				
 			case 2:
@@ -110,6 +110,30 @@ public class ParkManager extends User {
 	 * Job Creation *
 	 *==============*/
 	
+	public void createJob(String thePark, int theLightSlots, int theMediumSlots, int theHeavySlots,
+			GregorianCalendar theStartDate, GregorianCalendar theEndDate) {
+		
+		ArrayList<ArrayList<String>> volunteerList = new ArrayList<>();
+		int jobID = myPollster.getNextJobID();
+		String startDateString = calendarToArgument(theStartDate);
+		String endDateString = calendarToArgument(theEndDate);
+		
+		Job addJob = new Job(jobID, thePark, theLightSlots, theMediumSlots, theHeavySlots,
+				startDateString, endDateString, super.getEmail(), volunteerList);
+		
+		boolean lessThanTwoDays = getDays(theStartDate, theEndDate) < 2;		
+		
+		if(lessThanTwoDays) {
+			boolean addedFlag = mySchedule.receiveJob(addJob);
+			System.out.println(addedFlag);
+			//myUI.displayJobStatus(addedFlag);
+		} else {
+			//myUI.displayTwoDayError();
+		}
+		
+		
+	}
+	
 	/**
 	 * Create a new job by:<p>
 	 * 
@@ -117,7 +141,7 @@ public class ParkManager extends User {
 	 * 2. Ask the user for all other details about the Job.<br>
 	 * 3. Pass the Job to Schedule.
 	 */
-	public void createJob() {	
+	public void createJobOld() {	
 		
 		//Show Parks to ParkManager and ask for selection.
 		myUI.displayParkNumberRequest();
@@ -146,7 +170,7 @@ public class ParkManager extends User {
 			String newPark = myUI.createNewPark();
 			myManagedParks.add(newPark);
 			mySchedule.updateParkList(super.getEmail(), myManagedParks);
-			createJob();
+			createJobOld();
 		}
 	}
 	
@@ -293,8 +317,30 @@ public class ParkManager extends User {
 		returnString += theCalendar.get(Calendar.MONTH) + "/";
 		returnString += theCalendar.get(Calendar.DAY_OF_MONTH) + "/";
 		returnString += theCalendar.get(Calendar.YEAR);
+
+		return returnString;
+	}
+	
+	/*
+	 * A slight variation on calendarToString. I am so sorry for doing something this stupid but it works.
+	 */
+	private String calendarToArgument(GregorianCalendar theCalendar) {
+		//TODO see if there's some more elegant way to do this with calendarToString or something.
+		String returnString = "";
 		
-		return returnString;		
+		if(theCalendar.get(Calendar.MONTH) < 10) {
+			returnString += "0";
+		}		
+		returnString += theCalendar.get(Calendar.MONTH);
+		
+		if(theCalendar.get(Calendar.DAY_OF_MONTH) < 10) {
+			returnString += "0";
+		}
+		returnString += theCalendar.get(Calendar.DAY_OF_MONTH);
+		
+		returnString += theCalendar.get(Calendar.YEAR);
+		
+		return returnString;
 	}
 	
 }
