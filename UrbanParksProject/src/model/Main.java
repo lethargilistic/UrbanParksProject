@@ -116,21 +116,28 @@ public class Main {
 	 * Check if the email is already being used. If so, return true. If not, return false.
 	 */
 	private static boolean checkDuplicate(DataPollster thePollster, String theEmail) {
+		boolean status = false;
 		
-		for(Volunteer volunteer : thePollster.getUserList().getVolunteerCopyList()) {
-			if(volunteer.getEmail().equals(theEmail)) return true;
+		for (User user : thePollster.getUserList().getUserListCopy()) {
+			if (user.getEmail().equals(theEmail)) {
+				status = true;
+			}
 		}
 		
-		for(ParkManager parkManager : thePollster.getUserList().getParkManagerCopyList()) {
-			if(parkManager.getEmail().equals(theEmail)) return true;
-		}
+//		for(Volunteer volunteer : thePollster.getUserList().getVolunteerCopyList()) {
+//			if(volunteer.getEmail().equals(theEmail)) return true;
+//		}
+//		
+//		for(ParkManager parkManager : thePollster.getUserList().getParkManagerCopyList()) {
+//			if(parkManager.getEmail().equals(theEmail)) return true;
+//		}
+//		
+//		for(Administrator administrator : thePollster.getUserList().getAdministratorCopyList()) {
+//			if(administrator.getEmail().equals(theEmail)) return true;
+//		}
 		
-		for(Administrator administrator : thePollster.getUserList().getAdministratorCopyList()) {
-			if(administrator.getEmail().equals(theEmail)) return true;
-		}
 		
-		
-		return false;
+		return status;
 	}
 	
 	

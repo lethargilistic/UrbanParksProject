@@ -18,7 +18,7 @@ public class Administrator extends User {
 	
 	// This is a test!
 	
-	private static final int MAX_NUM_VOLS = 1000;
+//	private static final int MAX_NUM_VOLS = 1000;
 	
 	//Class Variables
 	
@@ -123,12 +123,12 @@ public class Administrator extends User {
 		} else { // valid input was given
 			switch(theChoice) { // no default case needed because of original if test
 				case 1: // list all volunteers by last name, first name (sorted ascending)
-					List<Volunteer> allVols = myPollster.getUserList().getVolunteerCopyList();
-					Collections.sort(allVols, new Comparator<Volunteer>() {
+					List<User> allVols = myPollster.getUserList().getVolunteerListCopy();
+					Collections.sort(allVols, new Comparator<User>() {
 						
 						// to sort Volunteers by last name ascending and then by first name ascending
 						@Override
-						public int compare(Volunteer theVol1, Volunteer theVol2) {
+						public int compare(User theVol1, User theVol2) {
 							int result = theVol1.getLastName().compareTo(theVol2.getLastName());
 							if (result == 0) {
 								result = theVol1.getFirstName().compareTo(theVol2.getFirstName());
@@ -149,13 +149,13 @@ public class Administrator extends User {
 						lastNameValid = !lastName.equals("");
 					} // lastName is valid now
 					// get and output list of Volunteers with matching last names
-					List<Volunteer> matchingVols = getMatchingVolunteers(lastName);
+					List<User> matchingVols = getMatchingVolunteers(lastName);
 					if (!matchingVols.isEmpty()) {
-						Collections.sort(matchingVols, new Comparator<Volunteer>() {
+						Collections.sort(matchingVols, new Comparator<User>() {
 	
 							// to sort Volunteers in ascending order based on first name
 							@Override
-							public int compare(final Volunteer theVol1, final Volunteer theVol2) {
+							public int compare(final User theVol1, final User theVol2) {
 								return theVol1.getFirstName().compareTo(theVol2.getFirstName());
 							}
 							
@@ -183,12 +183,12 @@ public class Administrator extends User {
 	 * @param theLastName is the last name by which to search for Volunteer matches.
 	 * @return a List of Volunteers with the same last name as theLastName.
 	 */
-	private List<Volunteer> getMatchingVolunteers(String theLastName) {
-		List<Volunteer> matchingVols = new ArrayList<>(MAX_NUM_VOLS);
-		List<Volunteer> allVols = myPollster.getUserList().getVolunteerCopyList();
+	private List<User> getMatchingVolunteers(String theLastName) {
+		List<User> matchingVols = new ArrayList<>();
+		List<User> allVols = myPollster.getUserList().getVolunteerListCopy();
 		
 		for (int i = 0; i < allVols.size(); i++) {
-			final Volunteer currVol = allVols.get(i);
+			final User currVol = allVols.get(i);
 			if (currVol.getLastName().equals(theLastName)) {
 				matchingVols.add(currVol);
 			}
@@ -204,14 +204,14 @@ public class Administrator extends User {
 	 * @param theLastName is the last name used for matching.
 	 * @param theMatchingVols is the list of Volunteers with matching last names.
 	 */
-	private void displayMatchingVolunteers(final String theLastName, final List<Volunteer> theMatchingVols) {
+	private void displayMatchingVolunteers(final String theLastName, final List<User> theMatchingVols) {
 		System.out.println("Here are all of the Volunteers whose last name matches " + theLastName);
 		
 		for (int i = 0; i < theMatchingVols.size(); i++) {
-			final Volunteer v = theMatchingVols.get(i);
+			final User v = theMatchingVols.get(i);
 			System.out.println(v.getFirstName() + " " + v.getLastName());
 			System.out.println("Email: " + v.getEmail());
-			List<Job> jobs = myPollster.getVolunteerJobs(v);
+			List<Job> jobs = myPollster.getVolunteerJobs((Volunteer) v);
 			if (!jobs.isEmpty()) {
 				System.out.println("Jobs signed up for: ");
 				for (int j = 0; j < jobs.size(); j++) {
@@ -229,11 +229,11 @@ public class Administrator extends User {
 	/**
 	 * 
 	 */
-	private void displayAllVolunteersLNFN(final List<Volunteer> theVols) {
+	private void displayAllVolunteersLNFN(final List<User> theVols) {
 		System.out.println("Here is the list of all Volunteers: Last name, First name\n");
 		
 		for (int i = 0; i < theVols.size(); i++) {
-			final Volunteer v = theVols.get(i);
+			final User v = theVols.get(i);
 			System.out.println(v.getLastName() + ", " + v.getFirstName());
 		}
 		
