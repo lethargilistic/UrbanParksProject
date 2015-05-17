@@ -77,6 +77,7 @@ public class ParkManagerGUI extends JFrame {
 		logoutButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
+				closeFrame();
 			}
 		});
 		logoutButton.setFont(new Font("Arial", Font.PLAIN, 18));
@@ -138,5 +139,10 @@ public class ParkManagerGUI extends JFrame {
 		newJobButton.setFont(new Font("Arial", Font.PLAIN, 18));
 		newJobButton.setBounds(10, 366, 209, 46);
 		getContentPane().add(newJobButton);
+	}
+	
+	
+	private void closeFrame() {
+		super.dispose();
 	}
 }

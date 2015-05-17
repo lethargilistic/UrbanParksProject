@@ -153,6 +153,8 @@ public class Main {
 			manager.initialize(theSchedule, thePollster);
 			ParkManagerGUI managerGUI = new ParkManagerGUI(manager);
 			managerGUI.setVisible(true);
+			
+			stallMainLoop(managerGUI);
 		}
 		
 		// These need to be changed with GUI object instantiations - need to call diff constructors!
@@ -166,6 +168,25 @@ public class Main {
 //			Administrator administrator = new Administrator(thePollster, email);
 //			administrator.initialize();
 		}
+	
+	}
+	
+	private static void stallMainLoop(ParkManagerGUI theManagerGUI) {
+		
+		while(true) {
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			if(!theManagerGUI.isDisplayable()) {
+				return;
+			} 
+		}
+			
+		
 	}
 	
 	

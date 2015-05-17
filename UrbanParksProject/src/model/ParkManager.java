@@ -110,7 +110,7 @@ public class ParkManager extends User {
 	 * Job Creation *
 	 *==============*/
 	
-	public void createJob(String thePark, int theLightSlots, int theMediumSlots, int theHeavySlots,
+	public boolean createJob(String thePark, int theLightSlots, int theMediumSlots, int theHeavySlots,
 			GregorianCalendar theStartDate, GregorianCalendar theEndDate) {
 		
 		ArrayList<ArrayList<String>> volunteerList = new ArrayList<>();
@@ -122,13 +122,16 @@ public class ParkManager extends User {
 				startDateString, endDateString, super.getEmail(), volunteerList);
 		
 		boolean lessThanTwoDays = getDays(theStartDate, theEndDate) < 2;		
+		boolean addedFlag = false;
 		
 		if(lessThanTwoDays) {
-			boolean addedFlag = mySchedule.receiveJob(addJob);
+			addedFlag = mySchedule.receiveJob(addJob);
 			//myUI.displayJobStatus(addedFlag);
 		} else {
 			//myUI.displayTwoDayError();
 		}
+		
+		return addedFlag;
 		
 		
 	}
