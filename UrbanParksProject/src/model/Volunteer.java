@@ -28,6 +28,7 @@ public class Volunteer extends User {
 	
 	public Volunteer(String theEmail, String theFirstName, String theLastName) {
 		super(theFirstName, theLastName, theEmail);
+		super.setUserType("Volunteer");
 //		this.myEmail = theEmail;
 //		myFirstName = firstName;
 //		myLastName = lastName;
@@ -287,4 +288,5 @@ public class Volunteer extends User {
 
 		return status; //if true was never return within the for-each loop then return false
 	}
+
 }

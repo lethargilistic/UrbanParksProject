@@ -31,6 +31,7 @@ public class ParkManager extends User {
 	//Constructor
 	public ParkManager(String theEmail, String theFirstName, String theLastName, List<String> theParkList) {
 		super(theFirstName, theLastName, theEmail);
+		super.setUserType("ParkManager");
 //		this.myEmail = theEmail;
 //		this.myFirstName = theFirstName;
 //		this.myLastName = theLastName;

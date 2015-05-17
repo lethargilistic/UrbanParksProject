@@ -14,11 +14,10 @@ public abstract class User {
 	private String myEmail;
 	private String myUserType;
 	
-	public User(String theFirstName, String theLastName, String theEmail, String theUserType) {
+	public User(String theFirstName, String theLastName, String theEmail) {
 		myFirstName = theFirstName;
 		myLastName = theLastName;
 		myEmail = theEmail;
-		myUserType = theUserType;
 	}
 	
 	public String getFirstName() {
@@ -31,6 +30,10 @@ public abstract class User {
 	
 	public String getEmail() {
 		return myEmail;
+	}
+	
+	protected void setUserType(String theUserType) {
+		myUserType = theUserType;
 	}
 	
 	public String getUserType() {
