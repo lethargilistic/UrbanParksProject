@@ -14,22 +14,26 @@ import java.util.List;
  * @author Taylor Gorman
  * @version 8 May 2015
  */
-public class Administrator {
+public class Administrator extends User {
 	
 	// This is a test!
 	
-	private static final int MAX_NUM_VOLS = 1000;
+//	private static final int MAX_NUM_VOLS = 1000;
 	
 	//Class Variables
-	private String myFirstName;
-	private String myLastName;
-	private String myEmail;
+	
+	// These can be deleted b/c of inheritance from User
+//	private String myFirstName;
+//	private String myLastName;
+//	private String myEmail;
+	
+	// these 2 fields MUST GO!
 	private AdministratorUI myUI;
 	private DataPollster myPollster;
 	
-	public Administrator(String theEmail) {
-		this.myEmail = theEmail;
-	}
+//	public Administrator(String theEmail) {
+//		this.myEmail = theEmail;
+//	}
 	
 	
 	/**
@@ -40,9 +44,11 @@ public class Administrator {
 	 * @param theEmail The email of the Administrator.
 	 */
 	public Administrator(String theFirstName, String theLastName, String theEmail) {
-		this.myFirstName = theFirstName;
-		this.myLastName = theLastName;
-		this.myEmail = theEmail;
+		super(theFirstName, theLastName, theEmail);
+		super.setUserType("Administrator");
+//		this.myFirstName = theFirstName;
+//		this.myLastName = theLastName;
+//		this.myEmail = theEmail;
 		this.myUI = new AdministratorUI();
 	}
 	
@@ -56,35 +62,37 @@ public class Administrator {
 		this.myUI = new AdministratorUI();
 	}
 	
-	public Administrator(DataPollster thePollster, String theEmail) {
-		this.myPollster = thePollster;
-		this.myEmail = theEmail;
-		this.myUI = new AdministratorUI();
-	}
+//	public Administrator(DataPollster thePollster, String theEmail) {
+//		this.myPollster = thePollster;
+//		this.myEmail = theEmail;
+//		this.myUI = new AdministratorUI();
+//	}
 	
-	/**
-	 * Returns the email address of this Administrator.
-	 * @return the email address of this Administrator.
-	 */
-	public String getEmail() {
-		return this.myEmail;
-	}
+//	/**
+//	 * Returns the email address of this Administrator.
+//	 * @return the email address of this Administrator.
+//	 */
+//	public String getEmail() {
+//		return this.myEmail;
+//	}
+//	
+//	/**
+//	 * Returns the first name of this Administrator.
+//	 * @return the first name of this Administrator.
+//	 */
+//	public String getFirstName() {
+//		return this.myFirstName;
+//	}
+//	
+//	/**
+//	 * Returns the last name of this Administrator.
+//	 * @return the last name of this Administrator.
+//	 */
+//	public String getLastName() {
+//		return this.myLastName;
+//	}
 	
-	/**
-	 * Returns the first name of this Administrator.
-	 * @return the first name of this Administrator.
-	 */
-	public String getFirstName() {
-		return this.myFirstName;
-	}
-	
-	/**
-	 * Returns the last name of this Administrator.
-	 * @return the last name of this Administrator.
-	 */
-	public String getLastName() {
-		return this.myLastName;
-	}
+	// this work will be done by GUI
 	
 	/**
 	 * Initializes the UI for the Administrator user.
@@ -97,6 +105,8 @@ public class Administrator {
 			initialize();
 		} // the implied else would return control back to whatever method called initializeUI() - probably mainUI
 	}
+	
+	// this work will be done by GUI
 	
 	/**
 	 * Calls appropriate methods if valid input is given. Otherwise, it
@@ -113,12 +123,12 @@ public class Administrator {
 		} else { // valid input was given
 			switch(theChoice) { // no default case needed because of original if test
 				case 1: // list all volunteers by last name, first name (sorted ascending)
-					List<Volunteer> allVols = myPollster.getUserList().getVolunteerCopyList();
-					Collections.sort(allVols, new Comparator<Volunteer>() {
+					List<User> allVols = myPollster.getUserList().getVolunteerListCopy();
+					Collections.sort(allVols, new Comparator<User>() {
 						
 						// to sort Volunteers by last name ascending and then by first name ascending
 						@Override
-						public int compare(Volunteer theVol1, Volunteer theVol2) {
+						public int compare(User theVol1, User theVol2) {
 							int result = theVol1.getLastName().compareTo(theVol2.getLastName());
 							if (result == 0) {
 								result = theVol1.getFirstName().compareTo(theVol2.getFirstName());
@@ -139,13 +149,13 @@ public class Administrator {
 						lastNameValid = !lastName.equals("");
 					} // lastName is valid now
 					// get and output list of Volunteers with matching last names
-					List<Volunteer> matchingVols = getMatchingVolunteers(lastName);
+					List<User> matchingVols = getMatchingVolunteers(lastName);
 					if (!matchingVols.isEmpty()) {
-						Collections.sort(matchingVols, new Comparator<Volunteer>() {
+						Collections.sort(matchingVols, new Comparator<User>() {
 	
 							// to sort Volunteers in ascending order based on first name
 							@Override
-							public int compare(final Volunteer theVol1, final Volunteer theVol2) {
+							public int compare(final User theVol1, final User theVol2) {
 								return theVol1.getFirstName().compareTo(theVol2.getFirstName());
 							}
 							
@@ -165,18 +175,20 @@ public class Administrator {
 		return stayLoggedIn;
 	}
 	
+	// this work will be done by GUI
+	
 	/**
 	 * Returns a List of all Volunteers matching the given last name.
 	 * 
 	 * @param theLastName is the last name by which to search for Volunteer matches.
 	 * @return a List of Volunteers with the same last name as theLastName.
 	 */
-	private List<Volunteer> getMatchingVolunteers(String theLastName) {
-		List<Volunteer> matchingVols = new ArrayList<>(MAX_NUM_VOLS);
-		List<Volunteer> allVols = myPollster.getUserList().getVolunteerCopyList();
+	private List<User> getMatchingVolunteers(String theLastName) {
+		List<User> matchingVols = new ArrayList<>();
+		List<User> allVols = myPollster.getUserList().getVolunteerListCopy();
 		
 		for (int i = 0; i < allVols.size(); i++) {
-			final Volunteer currVol = allVols.get(i);
+			final User currVol = allVols.get(i);
 			if (currVol.getLastName().equals(theLastName)) {
 				matchingVols.add(currVol);
 			}
@@ -185,19 +197,21 @@ public class Administrator {
 		return matchingVols;
 	}
 	
+	// this work will be done by GUI
+	
 	/**
 	 * Outputs the list of Volunteers with matching last names sorted by first name in ascending order.
 	 * @param theLastName is the last name used for matching.
 	 * @param theMatchingVols is the list of Volunteers with matching last names.
 	 */
-	private void displayMatchingVolunteers(final String theLastName, final List<Volunteer> theMatchingVols) {
+	private void displayMatchingVolunteers(final String theLastName, final List<User> theMatchingVols) {
 		System.out.println("Here are all of the Volunteers whose last name matches " + theLastName);
 		
 		for (int i = 0; i < theMatchingVols.size(); i++) {
-			final Volunteer v = theMatchingVols.get(i);
+			final User v = theMatchingVols.get(i);
 			System.out.println(v.getFirstName() + " " + v.getLastName());
 			System.out.println("Email: " + v.getEmail());
-			List<Job> jobs = myPollster.getVolunteerJobs(v);
+			List<Job> jobs = myPollster.getVolunteerJobs((Volunteer) v);
 			if (!jobs.isEmpty()) {
 				System.out.println("Jobs signed up for: ");
 				for (int j = 0; j < jobs.size(); j++) {
@@ -210,14 +224,16 @@ public class Administrator {
 		}
 	}
 	
+	// this work will be done by GUI
+	
 	/**
 	 * 
 	 */
-	private void displayAllVolunteersLNFN(final List<Volunteer> theVols) {
+	private void displayAllVolunteersLNFN(final List<User> theVols) {
 		System.out.println("Here is the list of all Volunteers: Last name, First name\n");
 		
 		for (int i = 0; i < theVols.size(); i++) {
-			final Volunteer v = theVols.get(i);
+			final User v = theVols.get(i);
 			System.out.println(v.getLastName() + ", " + v.getFirstName());
 		}
 		

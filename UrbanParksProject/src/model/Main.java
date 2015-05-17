@@ -2,6 +2,8 @@ package model;
 
 import java.util.List;
 
+import view.ParkManagerGUI;
+
 public class Main {
 
 	public static MainUI UI;
@@ -114,21 +116,28 @@ public class Main {
 	 * Check if the email is already being used. If so, return true. If not, return false.
 	 */
 	private static boolean checkDuplicate(DataPollster thePollster, String theEmail) {
+		boolean status = false;
 		
-		for(Volunteer volunteer : thePollster.getUserList().getVolunteerCopyList()) {
-			if(volunteer.getEmail().equals(theEmail)) return true;
+		for (User user : thePollster.getUserList().getUserListCopy()) {
+			if (user.getEmail().equals(theEmail)) {
+				status = true;
+			}
 		}
 		
-		for(ParkManager parkManager : thePollster.getUserList().getParkManagerCopyList()) {
-			if(parkManager.getEmail().equals(theEmail)) return true;
-		}
+//		for(Volunteer volunteer : thePollster.getUserList().getVolunteerCopyList()) {
+//			if(volunteer.getEmail().equals(theEmail)) return true;
+//		}
+//		
+//		for(ParkManager parkManager : thePollster.getUserList().getParkManagerCopyList()) {
+//			if(parkManager.getEmail().equals(theEmail)) return true;
+//		}
+//		
+//		for(Administrator administrator : thePollster.getUserList().getAdministratorCopyList()) {
+//			if(administrator.getEmail().equals(theEmail)) return true;
+//		}
 		
-		for(Administrator administrator : thePollster.getUserList().getAdministratorCopyList()) {
-			if(administrator.getEmail().equals(theEmail)) return true;
-		}
 		
-		
-		return false;
+		return status;
 	}
 	
 	
@@ -146,14 +155,16 @@ public class Main {
 			managerGUI.setVisible(true);
 		}
 		
+		// These need to be changed with GUI object instantiations - need to call diff constructors!
+		
 		if(userType.equals("Volunteer")) {
-			Volunteer volunteer = new Volunteer(theSchedule, thePollster, email);
-			volunteer.initialize();
+//			Volunteer volunteer = new Volunteer(theSchedule, thePollster, email);
+//			volunteer.initialize();
 		}
 		
 		if(userType.equals("Administrator")) {
-			Administrator administrator = new Administrator(thePollster, email);
-			administrator.initialize();
+//			Administrator administrator = new Administrator(thePollster, email);
+//			administrator.initialize();
 		}
 	}
 	

@@ -179,41 +179,41 @@ public class DataPollster {
 	
 	/**
 	 * Check the e-mail address of a user logging in to see if they exist in the system.
-	 * @author Reid Thompson
+	 * @author Reid Thompson - initial implementation and changed for User functionality.
 	 */
 	public boolean checkEmail(String theEmail) {
 		boolean result = false;
-		List<Volunteer> vols = myUserList.getVolunteerCopyList();
+		List<User> allUsers = myUserList.getUserListCopy();
 
-		for (int i = 0; i < vols.size(); i++) {
-			final Volunteer v = vols.get(i);
-			if (v.getEmail().equals(theEmail)) {
+		for (int i = 0; i < allUsers.size(); i++) {
+			final User u = allUsers.get(i);
+			if (u.getEmail().equals(theEmail)) {
 				result = true;
 				break;
 			}
 		}
 
-		if (!result) {
-			List<ParkManager> mngrs = myUserList.getParkManagerCopyList();
-			for (int i = 0; i < mngrs.size(); i++) {
-				final ParkManager pm = mngrs.get(i);
-				if (pm.getEmail().equals(theEmail)) {
-					result = true;
-					break;
-				}
-			}
-		}
-
-		if (!result) {
-			List<Administrator> admins = myUserList.getAdministratorCopyList();
-			for (int i = 0; i < admins.size(); i++) {
-				final Administrator a = admins.get(i);
-				if (a.getEmail().equals(theEmail)) {
-					result = true;
-					break;
-				}
-			}
-		}
+//		if (!result) {
+//			List<ParkManager> mngrs = myUserList.getParkManagerCopyList();
+//			for (int i = 0; i < mngrs.size(); i++) {
+//				final ParkManager pm = mngrs.get(i);
+//				if (pm.getEmail().equals(theEmail)) {
+//					result = true;
+//					break;
+//				}
+//			}
+//		}
+//
+//		if (!result) {
+//			List<Administrator> admins = myUserList.getAdministratorCopyList();
+//			for (int i = 0; i < admins.size(); i++) {
+//				final Administrator a = admins.get(i);
+//				if (a.getEmail().equals(theEmail)) {
+//					result = true;
+//					break;
+//				}
+//			}
+//		}
 
 		return result;
 	}
@@ -221,24 +221,32 @@ public class DataPollster {
 	/**
 	 * Return the user type associated with the e-mail as a String.
 	 * @author Taylor Gorman
+	 * @author Reid Thompson - added User functionality
+	 * @return null if there is no user associated with this email in the system,
+	 * and "ParkManager", "Volunteer", or "Administrator" otherwise.
 	 */
 	public String getUserType(String theEmail) {
-		String userType = "";
+		String userType = null;
 		
-		for(Volunteer volunteer : myUserList.getVolunteerCopyList()) {
-			if(volunteer.getEmail().equals(theEmail)) userType = "Volunteer";
+		for (User user : myUserList.getUserListCopy()) {
+			if (user.getEmail().equals(theEmail)) {
+				userType = user.getUserType();
+			}
 		}
 		
-		for(ParkManager manager : myUserList.getParkManagerCopyList()) {
-			if(manager.getEmail().equals(theEmail)) userType = "ParkManager";
-		}
-		
-
-		for(Administrator administrator : myUserList.getAdministratorCopyList()) {
-			if(administrator.getEmail().equals(theEmail)) userType = "Administrator";
-
-		}
-
+//		for(Volunteer volunteer : myUserList.getVolunteerCopyList()) {
+//			if(volunteer.getEmail().equals(theEmail)) userType = "Volunteer";
+//		}
+//		
+//		for(ParkManager manager : myUserList.getParkManagerCopyList()) {
+//			if(manager.getEmail().equals(theEmail)) userType = "ParkManager";
+//		}
+//		
+//
+//		for(Administrator administrator : myUserList.getAdministratorCopyList()) {
+//			if(administrator.getEmail().equals(theEmail)) userType = "Administrator";
+//
+//		}
 
 		return userType;
 
@@ -246,19 +254,23 @@ public class DataPollster {
 
 	/**
 	 * Return the Park List associated with a ParkManager's e-mail.
-	 * @author Taylor Gorman
+	 * @author Taylor Gorman - initial implementation
+	 * @author Reid Thompson - added User functionality.
 	 */
 	public List<String> getParkList(String theEmail) {		
-		List<ParkManager> managerList = myUserList.getParkManagerCopyList();
+		List<User> managerList = myUserList.getParkManagerListCopy();
 		
-		for(ParkManager manager : managerList) {
+		for(User manager : managerList) {
 			if(manager.getEmail().equals(theEmail)) {
-				return manager.getManagedParks();
+				return ((ParkManager) manager).getManagedParks();
 			}
 		}
 		return new ArrayList<String>();
 	}
 
+	// Reid: we should be returning null and handling it wherever this method is called.
+	// Reid: we shouldn't be constructing a "default" volunteer, in my opinion.
+	
 	/**
 	 * Given a volunteer's email, construct the Volunteer and return it.
 	 * 
@@ -266,17 +278,18 @@ public class DataPollster {
 	 * @return a new Volunteer object with the given email address.
 	 * @author Taylor Gorman
 	 */
-	public Volunteer getVolunteer(String theVolunteerEmail) { // Reid: why do we need this method? where is it used?
-		Volunteer defaultVolunteer = new Volunteer(theVolunteerEmail); //Default case if the Park Volunteer is not found.
-		List<Volunteer> volunteerCopyList = myUserList.getVolunteerCopyList();
+	public Volunteer getVolunteer(String theVolunteerEmail) { 		   // Reid: why do we need this method? where is it used?
+//		Volunteer defaultVolunteer = new Volunteer(theVolunteerEmail); // Default case if the Park Volunteer is not found.
+		Volunteer volToReturn = null;
+		List<User> volunteerCopyList = myUserList.getVolunteerListCopy();
 		
-		for(Volunteer volunteer : volunteerCopyList) {
+		for(User volunteer : volunteerCopyList) {
 			if(volunteer.getEmail().equals(theVolunteerEmail)) {
-				return volunteer;
+				volToReturn = (Volunteer) volunteer;
 			}
 		}
 
-		return defaultVolunteer;
+		return volToReturn;
 	}
 	
 	/**
@@ -288,20 +301,23 @@ public class DataPollster {
 	 */
 	public ParkManager getParkManager(String theParkManagerEmail) {
 		
-		List<ParkManager> managerCopyList = myUserList.getParkManagerCopyList();
+		List<User> managerCopyList = myUserList.getParkManagerListCopy();
 		
-		for(ParkManager manager : managerCopyList) {
+		for(User manager : managerCopyList) {
 			if(manager.getEmail().equals(theParkManagerEmail)) {
 				//Manager found, so we copy the data over and return it.
 				String firstName = manager.getFirstName();
 				String lastName = manager.getLastName();
-				List<String> parkList = manager.getManagedParks();
+				List<String> parkList = ((ParkManager) manager).getManagedParks();
 				return new ParkManager(theParkManagerEmail, firstName, lastName, parkList);
 			}
 		}
 
 		return null;
 	}
+	
+	// Reid: again, same thing - I see no reason to have "default" users.
+	// Reid: let's just return null and have the caller handle that case...
 	
 	/**
 	 * Given a administrator's email, construct the Administrator and return it.
@@ -310,17 +326,18 @@ public class DataPollster {
 	 * @return a new Administrator object with the given email address.
 	 * @author Taylor Gorman
 	 */
-	public Administrator getAdministrator(String theAdministratorEmail) { // Reid: why do we need this method? where is it used?
-		Administrator defaultAdministrator = new Administrator(theAdministratorEmail); //Default case if the Park Administrator is not found.
-		List<Administrator> administratorCopyList = myUserList.getAdministratorCopyList();
+	public Administrator getAdministrator(String theAdministratorEmail) { 			   // Reid: why do we need this method? where is it used?
+//		Administrator defaultAdministrator = new Administrator(theAdministratorEmail); // Default case if the Park Administrator is not found.
+		Administrator adminToReturn = null;
+		List<User> administratorCopyList = myUserList.getAdministratorListCopy();
 		
-		for(Administrator administrator : administratorCopyList) {
+		for(User administrator : administratorCopyList) {
 			if(administrator.getEmail().equals(theAdministratorEmail)) {
-				return administrator;
+				adminToReturn = (Administrator) administrator;
 			}
 		}
 
-		return defaultAdministrator;
+		return adminToReturn;
 	}
 	
 	/**

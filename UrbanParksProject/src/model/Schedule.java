@@ -305,23 +305,26 @@ public class Schedule {
 		switch(theUserType) {
 			case "Administrator":
 				Administrator a = new Administrator(theFirstName, theLastName, theEmail);
-				List<Administrator> listAdmin = myUserList.getAdministratorCopyList();
-				listAdmin.add(a);
-				myUserList.setAdministratorList(listAdmin);
+				myUserList.addNewAdministrator(a);
+//				List<User> listAdmin = myUserList.getAdministratorListCopy()
+//				listAdmin.add(a);
+//				myUserList.setAdministratorList(listAdmin);
 				break;
 				
 			case "ParkManager":
-				ParkManager newManager = new ParkManager(theEmail, theFirstName, theLastName, new ArrayList<String>());
-				List<ParkManager> managerList = myUserList.getParkManagerCopyList();
-				managerList.add(newManager);
-				myUserList.setParkManagerList(managerList);
+				ParkManager pm = new ParkManager(theEmail, theFirstName, theLastName, new ArrayList<String>());
+				myUserList.addNewParkManager(pm);
+//				List<ParkManager> managerList = myUserList.getParkManagerCopyList();
+//				managerList.add(newManager);
+//				myUserList.setParkManagerList(managerList);
 				break;
 				
 			case "Volunteer":
 				Volunteer v = new Volunteer(theEmail, theFirstName, theLastName);
-				List<Volunteer> listVols = myUserList.getVolunteerCopyList();
-				listVols.add(v);
-				myUserList.setVolunteerList(listVols);
+				myUserList.addNewVolunteer(v);
+//				List<Volunteer> listVols = myUserList.getVolunteerCopyList();
+//				listVols.add(v);
+//				myUserList.setVolunteerList(listVols);
 				break;
 		}
 		
@@ -332,11 +335,11 @@ public class Schedule {
 	 * @author Taylor Gorman
 	 */
 	public void updateParkList(String theEmail, List<String> theManagedParks) {
-		List<ParkManager> myManagerList = myUserList.getParkManagerCopyList();
+		List<User> myManagerList = myUserList.getParkManagerListCopy();
 		
-		for(ParkManager manager : myManagerList) {
+		for(User manager : myManagerList) {
 			if(manager.getEmail().equals(theEmail)) {
-				manager.setManagedParks(theManagedParks);
+				((ParkManager) manager).setManagedParks(theManagedParks);
 			}
 		}
 		

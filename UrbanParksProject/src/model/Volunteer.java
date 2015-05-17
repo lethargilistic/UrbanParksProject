@@ -11,69 +11,70 @@ import java.util.List;
  * @author Reid Thompson
  * @version 5.10.2015
  */
-public class Volunteer {
+public class Volunteer extends User {
 	
-	private String myFirstName;
-	private String myLastName;
-	private String myEmail;
+//	private String myFirstName;
+//	private String myLastName;
+//	private String myEmail;
 	
 	private VolunteerUI myUI;
 	private DataPollster myPollster;
 	private Schedule mySchedule;
 	
 	
-	public Volunteer(String theEmail) {
-		this.myEmail = theEmail;
-	}
+//	public Volunteer(String theEmail) {
+//		this.myEmail = theEmail;
+//	}
 	
-	public Volunteer(String theEmail, String firstName, String lastName)
-	{
-		this.myEmail = theEmail;
-		myFirstName = firstName;
-		myLastName = lastName;
+	public Volunteer(String theEmail, String theFirstName, String theLastName) {
+		super(theFirstName, theLastName, theEmail);
+		super.setUserType("Volunteer");
+//		this.myEmail = theEmail;
+//		myFirstName = firstName;
+//		myLastName = lastName;
 	}
 	
 	//TODO remove this constructor, implement getters and setters for First and Last name instead.
-	public Volunteer(String firstName, String lastName, DataPollster thePoll, Schedule theSched) {
-		myFirstName = firstName;
-		myLastName = lastName;
-		
-		myPollster = thePoll;
-		mySchedule = theSched;
-		myUI = new VolunteerUI();
-	}
+//	public Volunteer(String firstName, String lastName, DataPollster thePoll, Schedule theSched) {
+//		myFirstName = firstName;
+//		myLastName = lastName;
+//		
+//		myPollster = thePoll;
+//		mySchedule = theSched;
+//		myUI = new VolunteerUI();
+//	}
 	
-	public Volunteer(Schedule theSchedule, DataPollster thePollster, String theEmail) {
-		this.mySchedule = theSchedule;
-		this.myPollster = thePollster;
-		this.myEmail = theEmail;
-		myUI = new VolunteerUI();
-	}
+//	public Volunteer(Schedule theSchedule, DataPollster thePollster, String theEmail) {
+//		this.mySchedule = theSchedule;
+//		this.myPollster = thePollster;
+//		this.myEmail = theEmail;
+//		myUI = new VolunteerUI();
+//	}
 	
-	public String getFirstName() {
-		return this.myFirstName;
-	}
-	
-	public String getLastName() {
-		return this.myLastName;
-	}
-	
-	
-	public String getEmail() {
-		return myEmail;
-	}
-
-	public void setEmail(String theEmail) {
-		myEmail = theEmail;
-	}
-
-	public void setFirstName(String theFirstName) {
-		myFirstName = theFirstName;
-	}
-
-	public void setLastName(String theLastName) {
-		myLastName = theLastName;
-	}
+//	public String getFirstName() {
+//		return this.myFirstName;
+//	}
+//	
+//	public String getLastName() {
+//		return this.myLastName;
+//	}
+//	
+//	
+//	public String getEmail() {
+//		return myEmail;
+//	}
+//
+//	public void setEmail(String theEmail) {
+//		myEmail = theEmail;
+//	}
+//
+//	public void setFirstName(String theFirstName) {
+//		myFirstName = theFirstName;
+//	}
+//
+//	public void setLastName(String theLastName) {
+//		myLastName = theLastName;
+//	}
 	
 	// is this a necessary method? when are we comparing vols for equality?
 	@Override
@@ -84,16 +85,16 @@ public class Volunteer {
 		
 		Volunteer theOther = (Volunteer) theO;
 		
-		return (this.myFirstName.equals(theOther.myFirstName)
-			   && this.myLastName.equals(theOther.myLastName)) 
-			   || myEmail.equals(theOther.getEmail());
+		return (super.getFirstName().equals(theOther.getFirstName())
+			   && super.getLastName().equals(theOther.getLastName())) 
+			   || super.getEmail().equals(theOther.getEmail());
 				
 	}
 	
 	@Override
 	public String toString()
 	{
-		return myFirstName + " " + myLastName;
+		return super.getFirstName() + " " + super.getLastName();
 	}
 	
 	
@@ -226,7 +227,7 @@ public class Volunteer {
 		try {	//attempt to add this volunteer
 			ArrayList<String> volunteer = new ArrayList<String>();
 			
-			volunteer.add(this.myEmail);
+			volunteer.add(super.getEmail());
 			volunteer.add(level);
 			
 			if(mySchedule.addVolunteerToJob(volunteer, jobID)) {
@@ -249,7 +250,7 @@ public class Volunteer {
 			
 			
 			for(ArrayList<String> volunteer : volunteerList) {
-				if(volunteer.get(0).equals(this.myEmail)) {
+				if(volunteer.get(0).equals(super.getEmail())) {
 					printJobInfo(job);
 					jobFound = true;
 				}
@@ -307,4 +308,5 @@ public class Volunteer {
 
 		return status; //if true was never return within the for-each loop then return false
 	}
+
 }
