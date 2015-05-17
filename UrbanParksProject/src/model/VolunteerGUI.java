@@ -58,7 +58,8 @@ public class VolunteerGUI extends JFrame{
 
 
 
-
+	//NOTE: to merge guiMaster into guiMasterArsh: right click on guimasterArsh project,
+	//then team > merge. Then click origin/guiMaster in remote tracking folder.
 
 
 
