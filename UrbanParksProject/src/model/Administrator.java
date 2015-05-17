@@ -16,25 +16,9 @@ import java.util.List;
  */
 public class Administrator extends User {
 	
-	// This is a test!
-	
-//	private static final int MAX_NUM_VOLS = 1000;
-	
-	//Class Variables
-	
-	// These can be deleted b/c of inheritance from User
-//	private String myFirstName;
-//	private String myLastName;
-//	private String myEmail;
-	
 	// these 2 fields MUST GO!
 	private AdministratorUI myUI;
-	private DataPollster myPollster;
-	
-//	public Administrator(String theEmail) {
-//		this.myEmail = theEmail;
-//	}
-	
+	private DataPollster myPollster;	
 	
 	/**
 	 * Constructs an Administrator object.
@@ -46,51 +30,8 @@ public class Administrator extends User {
 	public Administrator(String theFirstName, String theLastName, String theEmail) {
 		super(theFirstName, theLastName, theEmail);
 		super.setUserType("Administrator");
-//		this.myFirstName = theFirstName;
-//		this.myLastName = theLastName;
-//		this.myEmail = theEmail;
 		this.myUI = new AdministratorUI();
 	}
-	
-	/**
-	 * Constructs an Administrator object, also initializing its DataPollster field.
-	 */
-	public Administrator(String theFirstName, String theLastName, String theEmail, DataPollster thePollster) {
-		//TODO remove this constructor, implement getters and setters for First and Last name instead.
-		this(theFirstName, theLastName, theEmail);
-		this.myPollster = thePollster;
-		this.myUI = new AdministratorUI();
-	}
-	
-//	public Administrator(DataPollster thePollster, String theEmail) {
-//		this.myPollster = thePollster;
-//		this.myEmail = theEmail;
-//		this.myUI = new AdministratorUI();
-//	}
-	
-//	/**
-//	 * Returns the email address of this Administrator.
-//	 * @return the email address of this Administrator.
-//	 */
-//	public String getEmail() {
-//		return this.myEmail;
-//	}
-//	
-//	/**
-//	 * Returns the first name of this Administrator.
-//	 * @return the first name of this Administrator.
-//	 */
-//	public String getFirstName() {
-//		return this.myFirstName;
-//	}
-//	
-//	/**
-//	 * Returns the last name of this Administrator.
-//	 * @return the last name of this Administrator.
-//	 */
-//	public String getLastName() {
-//		return this.myLastName;
-//	}
 	
 	// this work will be done by GUI
 	
@@ -238,33 +179,4 @@ public class Administrator extends User {
 		}
 		
 	}
-	
-	
-//	/**
-//	 * Display a list of all volunteers, sorted in alphabetical order by email address.
-//	 */
-//	public List<String> displayVolunteers() {
-//		List<Job> jobs = myPollster.getAllJobs();
-//		List<String> vols = new ArrayList<>(MAX_NUM_VOLS);
-//		
-//		// get list of volunteers' email addresses
-//		for (Job j : jobs) {
-//			for (String s : j.myVolunteerList) {
-//				if (!vols.contains(s)) {
-//					vols.add(s);
-//				}
-//			}
-//		}
-//
-//		// sort
-//		Collections.sort(vols);
-//		
-//		// output
-//		for (int i = 0; i < vols.size(); i++) {
-//			System.out.println(vols.get(i));
-//		}
-//		
-//		return vols; // why do we need to return this data?
-//					 // also, I made the List be of Strings not of Volunteers...
-//	}
 }
