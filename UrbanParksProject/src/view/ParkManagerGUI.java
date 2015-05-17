@@ -1,4 +1,4 @@
-package model;
+package view;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -25,6 +25,9 @@ import javax.swing.JLabel;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
+
+import model.NewJobFrame;
+import model.ParkManager;
 
 import java.awt.Window.Type;
 import java.awt.Font;
