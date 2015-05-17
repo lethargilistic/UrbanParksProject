@@ -51,8 +51,11 @@ public class NewJobFrame extends JFrame {
 	}
 	
 	private void createParkSelector() {
+		List<String> managedParksList = myManager.getManagedParks();
+		String[] managedParksArray = managedParksList.toArray(new String[managedParksList.size()]);
 		
 		JComboBox<String> parkComboBox = new JComboBox<String>();
+		parkComboBox.setModel(new DefaultComboBoxModel<String>(managedParksArray));
 		parkComboBox.setBounds(31, 56, 195, 20);
 		contentPane.add(parkComboBox);
 		
@@ -121,9 +124,9 @@ public class NewJobFrame extends JFrame {
 		Integer[] monthList = new Integer[12];
 		Integer[] dayList = new Integer[31];
 		
-		for(int i = 0; i < 32; i++) {
-			if(i < 13) monthList[i] = i;
-			dayList[i] = i;
+		for(int i = 1; i < 32; i++) {
+			if(i < 13) monthList[i - 1] = i;
+			dayList[i - 1] = i;
 		}
 		
 		JComboBox<Integer> startMonthComboBox = new JComboBox<Integer>();
