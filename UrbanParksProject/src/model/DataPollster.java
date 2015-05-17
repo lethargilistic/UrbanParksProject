@@ -259,6 +259,9 @@ public class DataPollster {
 		return new ArrayList<String>();
 	}
 
+	// Reid: we should be returning null and handling it wherever this method is called.
+	// Reid: we shouldn't be constructing a "default" volunteer, in my opinion.
+	
 	/**
 	 * Given a volunteer's email, construct the Volunteer and return it.
 	 * 
@@ -266,17 +269,18 @@ public class DataPollster {
 	 * @return a new Volunteer object with the given email address.
 	 * @author Taylor Gorman
 	 */
-	public Volunteer getVolunteer(String theVolunteerEmail) { // Reid: why do we need this method? where is it used?
-		Volunteer defaultVolunteer = new Volunteer(theVolunteerEmail); //Default case if the Park Volunteer is not found.
+	public Volunteer getVolunteer(String theVolunteerEmail) { 		   // Reid: why do we need this method? where is it used?
+//		Volunteer defaultVolunteer = new Volunteer(theVolunteerEmail); // Default case if the Park Volunteer is not found.
+		Volunteer volToReturn = null;
 		List<Volunteer> volunteerCopyList = myUserList.getVolunteerCopyList();
 		
 		for(Volunteer volunteer : volunteerCopyList) {
 			if(volunteer.getEmail().equals(theVolunteerEmail)) {
-				return volunteer;
+				volToReturn = volunteer;
 			}
 		}
 
-		return defaultVolunteer;
+		return volToReturn;
 	}
 	
 	/**
@@ -303,6 +307,9 @@ public class DataPollster {
 		return null;
 	}
 	
+	// Reid: again, same thing - I see no reason to have "default" users.
+	// Reid: let's just return null and have the caller handle that case...
+	
 	/**
 	 * Given a administrator's email, construct the Administrator and return it.
 	 * 
@@ -310,17 +317,18 @@ public class DataPollster {
 	 * @return a new Administrator object with the given email address.
 	 * @author Taylor Gorman
 	 */
-	public Administrator getAdministrator(String theAdministratorEmail) { // Reid: why do we need this method? where is it used?
-		Administrator defaultAdministrator = new Administrator(theAdministratorEmail); //Default case if the Park Administrator is not found.
+	public Administrator getAdministrator(String theAdministratorEmail) { 			   // Reid: why do we need this method? where is it used?
+//		Administrator defaultAdministrator = new Administrator(theAdministratorEmail); // Default case if the Park Administrator is not found.
+		Administrator adminToReturn = null;
 		List<Administrator> administratorCopyList = myUserList.getAdministratorCopyList();
 		
 		for(Administrator administrator : administratorCopyList) {
 			if(administrator.getEmail().equals(theAdministratorEmail)) {
-				return administrator;
+				adminToReturn = administrator;
 			}
 		}
 
-		return defaultAdministrator;
+		return adminToReturn;
 	}
 	
 	/**

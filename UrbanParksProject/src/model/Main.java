@@ -148,14 +148,16 @@ public class Main {
 			managerGUI.setVisible(true);
 		}
 		
+		// These need to be changed with GUI object instantiations - need to call diff constructors!
+		
 		if(userType.equals("Volunteer")) {
-			Volunteer volunteer = new Volunteer(theSchedule, thePollster, email);
-			volunteer.initialize();
+//			Volunteer volunteer = new Volunteer(theSchedule, thePollster, email);
+//			volunteer.initialize();
 		}
 		
 		if(userType.equals("Administrator")) {
-			Administrator administrator = new Administrator(thePollster, email);
-			administrator.initialize();
+//			Administrator administrator = new Administrator(thePollster, email);
+//			administrator.initialize();
 		}
 	}
 	

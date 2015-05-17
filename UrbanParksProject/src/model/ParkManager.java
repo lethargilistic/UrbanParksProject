@@ -15,7 +15,7 @@ import java.util.List;
  * @version 9 May 2015
  *
  */
-public class ParkManager {
+public class ParkManager extends User {
 	
 	//Class Variables
 	private ParkManagerUI myUI;	
@@ -23,16 +23,17 @@ public class ParkManager {
 	private DataPollster myPollster;
 	private List<String> myManagedParks;	
 	
-	private String myFirstName;
-	private String myLastName;
-	
-	private String myEmail;
+	// These fields can be deleted b/c of inheritance from User
+//	private String myFirstName;
+//	private String myLastName;
+//	private String myEmail;
 
 	//Constructor
 	public ParkManager(String theEmail, String theFirstName, String theLastName, List<String> theParkList) {
-		this.myEmail = theEmail;
-		this.myFirstName = theFirstName;
-		this.myLastName = theLastName;
+		super(theFirstName, theLastName, theEmail);
+//		this.myEmail = theEmail;
+//		this.myFirstName = theFirstName;
+//		this.myLastName = theLastName;
 		
 		//theParkList is an Unmodifiable List, so we cannot cast it to ArrayList. So we copy it over instead.
 		List<String> copiedParks = new ArrayList<String>();
@@ -143,7 +144,7 @@ public class ParkManager {
 			//ParkManager is adding a new park
 			String newPark = myUI.createNewPark();
 			myManagedParks.add(newPark);
-			mySchedule.updateParkList(myEmail, myManagedParks);
+			mySchedule.updateParkList(super.getEmail(), myManagedParks);
 			createJob();
 		}
 	}
@@ -170,7 +171,7 @@ public class ParkManager {
 		String myEndDate = myUI.getEndDate();		
 		ArrayList<ArrayList<String>> myVolunteerList = new ArrayList<>();
 		
-		return new Job(myJobID, thePark, myLight, myMedium, myHeavy, myStartDate, myEndDate, myEmail, myVolunteerList);
+		return new Job(myJobID, thePark, myLight, myMedium, myHeavy, myStartDate, myEndDate, super.getEmail(), myVolunteerList);
 	}
 	
 	
@@ -234,17 +235,17 @@ public class ParkManager {
 		return Collections.unmodifiableList(myManagedParks);
 	}
 	
-	public String getEmail() {
-		return myEmail;
-	}
-
-	public String getFirstName() {
-		return this.myFirstName;
-	}
-	
-	public String getLastName() {
-		return this.myLastName;
-	}
+//	public String getEmail() {
+//		return myEmail;
+//	}
+//
+//	public String getFirstName() {
+//		return this.myFirstName;
+//	}
+//	
+//	public String getLastName() {
+//		return this.myLastName;
+//	}
 	
 	
 	

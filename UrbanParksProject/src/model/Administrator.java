@@ -14,22 +14,26 @@ import java.util.List;
  * @author Taylor Gorman
  * @version 8 May 2015
  */
-public class Administrator {
+public class Administrator extends User {
 	
 	// This is a test!
 	
 	private static final int MAX_NUM_VOLS = 1000;
 	
 	//Class Variables
-	private String myFirstName;
-	private String myLastName;
-	private String myEmail;
+	
+	// These can be deleted b/c of inheritance from User
+//	private String myFirstName;
+//	private String myLastName;
+//	private String myEmail;
+	
+	// these 2 fields MUST GO!
 	private AdministratorUI myUI;
 	private DataPollster myPollster;
 	
-	public Administrator(String theEmail) {
-		this.myEmail = theEmail;
-	}
+//	public Administrator(String theEmail) {
+//		this.myEmail = theEmail;
+//	}
 	
 	
 	/**
@@ -40,9 +44,10 @@ public class Administrator {
 	 * @param theEmail The email of the Administrator.
 	 */
 	public Administrator(String theFirstName, String theLastName, String theEmail) {
-		this.myFirstName = theFirstName;
-		this.myLastName = theLastName;
-		this.myEmail = theEmail;
+		super(theFirstName, theLastName, theEmail);
+//		this.myFirstName = theFirstName;
+//		this.myLastName = theLastName;
+//		this.myEmail = theEmail;
 		this.myUI = new AdministratorUI();
 	}
 	
@@ -56,35 +61,37 @@ public class Administrator {
 		this.myUI = new AdministratorUI();
 	}
 	
-	public Administrator(DataPollster thePollster, String theEmail) {
-		this.myPollster = thePollster;
-		this.myEmail = theEmail;
-		this.myUI = new AdministratorUI();
-	}
+//	public Administrator(DataPollster thePollster, String theEmail) {
+//		this.myPollster = thePollster;
+//		this.myEmail = theEmail;
+//		this.myUI = new AdministratorUI();
+//	}
 	
-	/**
-	 * Returns the email address of this Administrator.
-	 * @return the email address of this Administrator.
-	 */
-	public String getEmail() {
-		return this.myEmail;
-	}
+//	/**
+//	 * Returns the email address of this Administrator.
+//	 * @return the email address of this Administrator.
+//	 */
+//	public String getEmail() {
+//		return this.myEmail;
+//	}
+//	
+//	/**
+//	 * Returns the first name of this Administrator.
+//	 * @return the first name of this Administrator.
+//	 */
+//	public String getFirstName() {
+//		return this.myFirstName;
+//	}
+//	
+//	/**
+//	 * Returns the last name of this Administrator.
+//	 * @return the last name of this Administrator.
+//	 */
+//	public String getLastName() {
+//		return this.myLastName;
+//	}
 	
-	/**
-	 * Returns the first name of this Administrator.
-	 * @return the first name of this Administrator.
-	 */
-	public String getFirstName() {
-		return this.myFirstName;
-	}
-	
-	/**
-	 * Returns the last name of this Administrator.
-	 * @return the last name of this Administrator.
-	 */
-	public String getLastName() {
-		return this.myLastName;
-	}
+	// this work will be done by GUI
 	
 	/**
 	 * Initializes the UI for the Administrator user.
@@ -97,6 +104,8 @@ public class Administrator {
 			initialize();
 		} // the implied else would return control back to whatever method called initializeUI() - probably mainUI
 	}
+	
+	// this work will be done by GUI
 	
 	/**
 	 * Calls appropriate methods if valid input is given. Otherwise, it
@@ -165,6 +174,8 @@ public class Administrator {
 		return stayLoggedIn;
 	}
 	
+	// this work will be done by GUI
+	
 	/**
 	 * Returns a List of all Volunteers matching the given last name.
 	 * 
@@ -184,6 +195,8 @@ public class Administrator {
 		
 		return matchingVols;
 	}
+	
+	// this work will be done by GUI
 	
 	/**
 	 * Outputs the list of Volunteers with matching last names sorted by first name in ascending order.
@@ -209,6 +222,8 @@ public class Administrator {
 			}
 		}
 	}
+	
+	// this work will be done by GUI
 	
 	/**
 	 * 
