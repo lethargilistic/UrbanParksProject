@@ -18,7 +18,7 @@ import java.util.Scanner;
  * @version 13 May 2015
  *
  */
-public class SaveManager {
+public class SaveLoad {
 	
 	
 	/*============*
@@ -94,7 +94,7 @@ public class SaveManager {
 		
 		//Generate path of the current file; used by the Jar file for detecting local text files.
 		try {
-			jarFile = new File(SaveManager.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath()); 
+			jarFile = new File(SaveLoad.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath()); 
 		} catch (URISyntaxException e1) {
 			System.out.println("Sorry, but this program could not detect its location. Please close the program and try again.");
 			return null;

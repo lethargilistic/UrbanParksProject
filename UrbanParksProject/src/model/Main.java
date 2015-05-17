@@ -11,7 +11,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		
-		SaveManager saveManager = new SaveManager();
+		SaveLoad saveManager = new SaveLoad();
 		String[] userInfo;
 		
 		UI = new MainUI();

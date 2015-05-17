@@ -7,8 +7,8 @@ import java.util.List;
 /**
  * A class to poll our data-containing classes on behalf of our users.
  * 
- * @author Mike Overby
- * @author Reid Thompson
+ * @author Mike Overby - initial implementation
+ * @author Reid Thompson - added User functionality.
  * @version 5.10.2015
  */
 public class DataPollster {
