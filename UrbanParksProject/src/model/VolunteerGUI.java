@@ -53,6 +53,8 @@ public class VolunteerGUI extends JFrame{
 	//NOTE: create a volunteer class method which gets info from data pollster using getJobListCopy()
 	//then list the jobs on the screen that are in the future.
 
+	
+	
 
 
 

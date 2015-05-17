@@ -62,6 +62,14 @@ public class Job {
      */
     private String myManager;
     
+    
+    /**
+     * This field is used by volunteer class to determine if a job's start date is in the past
+     * (compared to the current time).
+     */
+    private boolean myPast = false;
+    
+    
     /**
      * Constructor for job, taking several arguments of integers, Calendar Strings, and e-mails.
      * @author Taylor Gorman
@@ -258,5 +266,13 @@ public class Job {
 	public String toString()
 	{
 		return myPark.toString();
+	}
+
+	public boolean isInPast() {
+		return myPast;
+	}
+
+	public void setIfPast(boolean myPast) {
+		this.myPast = myPast;
 	}
 }

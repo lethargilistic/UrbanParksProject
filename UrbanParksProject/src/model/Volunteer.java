@@ -175,6 +175,26 @@ public class Volunteer {
 	public void viewAvailableJobs() {
 		myUI.displayJobs(myPollster.getJobListCopy());
 	}
+	
+	
+	/**
+	 * This method gets the list of jobs from DataPollster and sends it on to
+	 * wherever its needed.
+	 */
+	public List<Job> getTheJobs() {
+		List<Job> daJobs = myPollster.getJobListCopy();
+		Calendar currentDate = new GregorianCalendar();
+		
+		for (Job j: daJobs) { //go through each job and find out what job is in the past.
+								//then change that job's JobID to -1 so that it can be
+								//checked for and ignored when displaying the jobs.
+			if(currentDate.getTimeInMillis() + 2670040009l > j.getStartDate().getTimeInMillis()) {
+				j.setIfPast(true);
+			}
+		}
+
+		return daJobs;
+	}
 
 
 	/**
