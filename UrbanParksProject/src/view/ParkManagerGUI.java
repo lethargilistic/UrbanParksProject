@@ -26,7 +26,6 @@ import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 
-import model.NewJobFrame;
 import model.ParkManager;
 
 import java.awt.Window.Type;
@@ -52,7 +51,7 @@ public class ParkManagerGUI extends JFrame {
 		createFrame();		
 	}
 	
-	private void createFrame() {
+	public void createFrame() {
 		
 		setTitle("Welcome " + myManager.getFirstName() + " " + myManager.getLastName() + "!");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -73,6 +72,16 @@ public class ParkManagerGUI extends JFrame {
 		volunteerListArea = new JTextArea();
 		volunteerListPane.setViewportView(volunteerListArea);
 		volunteerListArea.setEditable(false);
+		
+		JButton logoutButton = new JButton("Logout");
+		logoutButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+			}
+		});
+		logoutButton.setFont(new Font("Arial", Font.PLAIN, 18));
+		logoutButton.setBounds(281, 366, 209, 46);
+		getContentPane().add(logoutButton);
 		
 	}		
 	
@@ -122,16 +131,12 @@ public class ParkManagerGUI extends JFrame {
 		newJobButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				NewJobFrame frame = new NewJobFrame();
+				NewJobFrame frame = new NewJobFrame(myManager);
 				frame.setVisible(true);
 			}
 		});
 		newJobButton.setFont(new Font("Arial", Font.PLAIN, 18));
-		newJobButton.setBounds(133, 366, 209, 46);
+		newJobButton.setBounds(10, 366, 209, 46);
 		getContentPane().add(newJobButton);
 	}
-	
-	
-	
-
 }
