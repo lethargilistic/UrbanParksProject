@@ -26,7 +26,6 @@ import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 
-import model.NewJobFrame;
 import model.ParkManager;
 
 import java.awt.Window.Type;
@@ -122,7 +121,7 @@ public class ParkManagerGUI extends JFrame {
 		newJobButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				NewJobFrame frame = new NewJobFrame();
+				NewJobFrame frame = new NewJobFrame(myManager);
 				frame.setVisible(true);
 			}
 		});
