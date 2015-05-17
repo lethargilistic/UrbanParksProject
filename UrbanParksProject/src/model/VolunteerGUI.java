@@ -1,5 +1,10 @@
 package model;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -41,22 +46,61 @@ public class VolunteerGUI extends JFrame{
 	 */
 	private void startUp() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-
+		setResizable(false);
 
 
 	}
 
+	/**
+	 * Creates a button to view all available jobs.
+	 */
+	private void createViewJobsButton() {
+		JButton b = new JButton("View Available Jobs");
+		getContentPane().add(b);
+		
+		b.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(final MouseEvent theEvent) {
+            	
+            }
+            });
+		
+            
+	}
 	
+	/**
+	 * Creates a button to sign up for a job.
+	 */
+	private void createSignUpButton() {
+		
+	}
+	
+	/**
+	 * Creates a button to view the jobs the volunteer have signed up for.
+	 */
+	private void createMyJobsButton() {
+		
+	}
 
+	/**
+	 * Creates a back button.
+	 */
+	private void createBackButton() {
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	//NOTE: create a volunteer class method which gets info from data pollster using getJobListCopy()
 	//then list the jobs on the screen that are in the future.
 
 	
-	
-
-
 
 	//NOTE: to merge guiMaster into guiMasterArsh: right click on guimasterArsh project,
 	//then team > merge. Then click origin/guiMaster in remote tracking folder.
