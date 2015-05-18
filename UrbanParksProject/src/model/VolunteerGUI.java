@@ -92,7 +92,7 @@ public class VolunteerGUI extends JFrame{
 	
 	
 	
-	
+	//NOTE: USE WINDOW BUILDER!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	
 	
 	
