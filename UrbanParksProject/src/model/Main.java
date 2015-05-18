@@ -116,7 +116,7 @@ public class Main {
 	private static boolean checkDuplicate(DataPollster thePollster, String theEmail) {
 		boolean status = false;
 		
-		for (User user : thePollster.getUserList().getUserListCopy()) {
+		for (User user : thePollster.getUserListCopy()) {
 			if (user.getEmail().equals(theEmail)) {
 				status = true;
 			}

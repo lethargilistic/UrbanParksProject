@@ -278,8 +278,6 @@ public class DataPollster {
 		return prkMngrToReturn;
 	}
 	
-	// TODO: Reid stopped working here!!!
-	
 	/**
 	 * Given a administrator's email, construct the Administrator and return it.
 	 * 
@@ -301,23 +299,40 @@ public class DataPollster {
 	}
 	
 	/**
-	 * Returns the UserList field.
+	 * Returns a copied list of Volunteer Users.
 	 * 
-	 * @return the UserList field.
+	 * @author Reid Thompson
+	 * @return a copied list of Volunteer Users.
 	 */
-	public UserList getUserList() {
-		return this.myUserList;
+	public List<User> getVolunteerListCopy() {
+		return myUserList.getVolunteerListCopy();
+	}
+	
+	/**
+	 * Returns a copied list of all Users.
+	 * 
+	 * @author Reid Thompson
+	 * @return a copied list of all Users.
+	 */
+	public List<User> getUserListCopy() {
+		return myUserList.getUserListCopy();
 	}
 	
 	/**
 	 * Return the work grade of a Volunteer for a given job.
-	 * @author Taylor Gorman
+	 * @author Taylor Gorman - initial implementation
+	 * @author Reid Thompson - single exit point of method.
+	 * @return the work grade of a Volunteer for a given job.
 	 */
 	public String getVolunteerGrade(int theJobID, String theVolunteerEmail) {
+		String gradeToReturn = null;
+		
 		for(ArrayList<String> volunteer : myJobList.getJobCopy(theJobID).getVolunteerList()) {
-			if(volunteer.get(0).equals(theVolunteerEmail)) return volunteer.get(1);
+			if(volunteer.get(0).equals(theVolunteerEmail)) {
+				gradeToReturn = volunteer.get(1);
+			}
 		}
 		
-		return null;
+		return gradeToReturn;
 	}
 }
