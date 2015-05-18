@@ -57,15 +57,24 @@ public class VolunteerGUI extends JFrame{
 	private void createViewJobsButton() {
 		JButton b = new JButton("View Available Jobs");
 		getContentPane().add(b);
-		
+
 		b.addMouseListener(new MouseAdapter() {
-            public void mouseClicked(final MouseEvent theEvent) {
-            	
-            }
-            });
-		
-            
+			public void mouseClicked(final MouseEvent theEvent) {
+				showJobs();
+			}
+		});
 	}
+	
+	
+	/**
+	 * This shows all of the jobs that are available to sign up for.
+	 */
+	private void showJobs() {
+		
+	}
+	
+	
+	
 	
 	/**
 	 * Creates a button to sign up for a job.
