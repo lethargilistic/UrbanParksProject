@@ -27,89 +27,73 @@ public class DataPollster {
 		return myJobList.getNumberJobs();
 	}
 	
-	public DataPollster(JobList theJoblist, UserList theUserList)
-	{
+	public DataPollster(JobList theJoblist, UserList theUserList) {
 		myJobList = theJoblist;
 		this.myUserList = theUserList;
 	}
 	
 	//TODO: test all possible conflicts
-		//Don't have a job they've already signed up for on that day
-		//Job has no room.
-			//Not sure where we're storing the current date. Do we use the System time?
+	//TODO: Not sure where we're storing the current date. Do we use the System time? - Gregorian Calendar, I think...
+	
+	/**
+	 * Checks if job has no room or if they don't have a job that they've already signed up for on that day.
+	 * 
+	 * Returns a List of Jobs that are pending for theVolunteer.
+	 * 
+	 * @author Mike Overby - initial implementation.
+	 * @param theVolunteer
+	 * @return
+	 */
 	public List<Job> getPendingJobs(Volunteer theVolunteer) {
-		//USER STORY 2
-
-		//Called by Volunteer.viewUpcomingJobs()
-		
-		//Check through myJobList and select all Jobs that the Volunteer can sign
-		//up for
-
+		//Check through myJobList and select all Jobs that the Volunteer can sign up for
 		List<Job> applicableJobs = new ArrayList<>();
 		List<Job> volsJobs = getVolunteerJobs(theVolunteer);
 		List<Job> jobs = myJobList.getCopyList();
-		for (Job j : jobs)
-		{
+		for (Job j : jobs) {
 			//TODO, need to review the requirements for signing up for job
 			int i = volsJobs.indexOf(j);
-			if (i != -1) //if volunteer is not signed up for the job already
-			{
-				//Job has no room.
-				if(!j.hasRoom())
-				{
+			if (i != -1) { // if volunteer is not signed up for the job already
+				// Job has no room.
+				if(!j.hasRoom()) {
 					continue;
 				}
 			}
 			
-			//Test for conflicts with jobs the volunteer has already signed up for.
+			// Test for conflicts with jobs the volunteer has already signed up for.
 			boolean dayConflict = false;
-			for (Job anyVjob: volsJobs)
-			{
-				//Don't have a job they've already signed up for on that day
+			for (Job anyVjob: volsJobs) {
+				// Don't have a job they've already signed up for on that day
 				if (anyVjob.getStartDate().equals(j.getStartDate()) 
 						|| anyVjob.getStartDate().equals(j.getEndDate())
 						|| anyVjob.getEndDate().equals(j.getStartDate())
-						|| anyVjob.getEndDate().equals(j.getEndDate()))
-				{
+						|| anyVjob.getEndDate().equals(j.getEndDate())) {
 					dayConflict = true;
 					break;
 				}
 			}
-			if (dayConflict)
-			{
+			if (dayConflict) {
 				continue;
 			}
-			
+			// Make a copy of each selected Job, and put it into a Job List.
 			applicableJobs.add(j);
 		}
-		//Make a copy of each selected Job, and put it into a Job List.
-
-		//May or may not hide Jobs sharing the date of a Job that the Volunteer has 
-		//already signed up for
-
-		//Return the list of copied Jobs to the Volunteer
-		return applicableJobs;
+		
+		return applicableJobs; //Return the list of copied Jobs
 	}
 
+	/**
+	 * For user story 4. 
+	 * 
+	 * @param theVolunteer
+	 * @return
+	 */
 	public List<Job> getVolunteerJobs(Volunteer theVolunteer) {
-		//USER STORY 4
-
-		//Called by Volunteer.viewMyJobs()
-
-		//Calls JobList.getCopyList() to get a copy of myJobList
-			//It already has a reference to the joblist
-
-		// Create a new list of Jobs with copies of the Jobs from Schedule�s master 
-		// list
+		// Create a new list of Jobs with copies of the Jobs from Schedule's master list
 		List<Job> jobsSignedUpFor = new ArrayList<Job>();
 		
-		//Checks through myJobList and finds all jobs for which the volunteer has
-		// signed up for
-		for (Job j : myJobList.getCopyList())
-		{
-			//TODO: Should I get the job's list via a method?
-			if (j.getVolunteerList().contains(theVolunteer))
-			{
+		//Checks through myJobList and finds all jobs for which the volunteer has signed up for
+		for (Job j : myJobList.getCopyList()) {
+			if (j.getVolunteerList().contains(theVolunteer)) {
 				jobsSignedUpFor.add(j);
 			}
 		}
@@ -140,22 +124,33 @@ public class DataPollster {
 
 		return jobReturnList;
 	}
-	
+
+	/**
+	 * Returns a copy of the Job matching theJobID
+	 * 
+	 * @author Reid Thompson - changed to have only one exit point.
+	 * @param theJobID
+	 * @return a copy of the Job matching theJobID or null otherwise.
+	 */
 	public Job getJobCopy(int theJobID) {
+		Job jobToReturn = null;
+		
 		for(Job job : getJobListCopy()) {
-			if(job.getJobID() == theJobID) return job;
+			if(job.getJobID() == theJobID) {
+				jobToReturn = job;
+			}
 		}
 		
-		return null;
+		return jobToReturn;
 	}
 	
 	
 	/**
 	 * This method returns a list of all of the jobs.
-	 * It is called when volunteer wants to see a list of jobs so that he can sign up.
+	 * It is called when volunteer wants to see a list of jobs so that he/she can sign up.
 	 */
 	public List<Job> getJobListCopy() {
-		return new ArrayList<Job>(myJobList.getCopyList());
+		return myJobList.getCopyList();
 	}
 	
 	
@@ -193,28 +188,6 @@ public class DataPollster {
 			}
 		}
 
-//		if (!result) {
-//			List<ParkManager> mngrs = myUserList.getParkManagerCopyList();
-//			for (int i = 0; i < mngrs.size(); i++) {
-//				final ParkManager pm = mngrs.get(i);
-//				if (pm.getEmail().equals(theEmail)) {
-//					result = true;
-//					break;
-//				}
-//			}
-//		}
-//
-//		if (!result) {
-//			List<Administrator> admins = myUserList.getAdministratorCopyList();
-//			for (int i = 0; i < admins.size(); i++) {
-//				final Administrator a = admins.get(i);
-//				if (a.getEmail().equals(theEmail)) {
-//					result = true;
-//					break;
-//				}
-//			}
-//		}
-
 		return result;
 	}
 
@@ -234,27 +207,13 @@ public class DataPollster {
 			}
 		}
 		
-//		for(Volunteer volunteer : myUserList.getVolunteerCopyList()) {
-//			if(volunteer.getEmail().equals(theEmail)) userType = "Volunteer";
-//		}
-//		
-//		for(ParkManager manager : myUserList.getParkManagerCopyList()) {
-//			if(manager.getEmail().equals(theEmail)) userType = "ParkManager";
-//		}
-//		
-//
-//		for(Administrator administrator : myUserList.getAdministratorCopyList()) {
-//			if(administrator.getEmail().equals(theEmail)) userType = "Administrator";
-//
-//		}
-
-
 		return userType;
 
 	}
 
 	/**
 	 * Return the Park List associated with a ParkManager's e-mail.
+	 * 
 	 * @author Taylor Gorman - initial implementation
 	 * @author Reid Thompson - added User functionality.
 	 */
@@ -268,9 +227,6 @@ public class DataPollster {
 		}
 		return new ArrayList<String>();
 	}
-
-	// Reid: we should be returning null and handling it wherever this method is called.
-	// Reid: we shouldn't be constructing a "default" volunteer, in my opinion.
 	
 	/**
 	 * Given a volunteer's email, construct the Volunteer and return it.
@@ -279,14 +235,17 @@ public class DataPollster {
 	 * @return a new Volunteer object with the given email address.
 	 * @author Taylor Gorman
 	 */
-	public Volunteer getVolunteer(String theVolunteerEmail) { 		   // Reid: why do we need this method? where is it used?
-//		Volunteer defaultVolunteer = new Volunteer(theVolunteerEmail); // Default case if the Park Volunteer is not found.
+	public Volunteer getVolunteer(String theVolunteerEmail) { // Reid: Removed "default" volunteer from being returned.
 		Volunteer volToReturn = null;
 		List<User> volunteerCopyList = myUserList.getVolunteerListCopy();
 		
 		for(User volunteer : volunteerCopyList) {
 			if(volunteer.getEmail().equals(theVolunteerEmail)) {
-				volToReturn = (Volunteer) volunteer;
+				final String firstName = volunteer.getFirstName();
+				final String lastName = volunteer.getLastName();
+				final String email = volunteer.getEmail();
+				
+				volToReturn = new Volunteer(email, firstName, lastName);
 			}
 		}
 
@@ -298,9 +257,11 @@ public class DataPollster {
 	 * 
 	 * @param theParkManagerEmail is the email address of the Park Manager.
 	 * @return a new ParkManager object with the given email address.
+	 * 
 	 * @author Taylor Gorman
 	 */
 	public ParkManager getParkManager(String theParkManagerEmail) {
+		ParkManager prkMngrToReturn = null;
 		
 		List<User> managerCopyList = myUserList.getParkManagerListCopy();
 		
@@ -310,15 +271,14 @@ public class DataPollster {
 				String firstName = manager.getFirstName();
 				String lastName = manager.getLastName();
 				List<String> parkList = ((ParkManager) manager).getManagedParks();
-				return new ParkManager(theParkManagerEmail, firstName, lastName, parkList);
+				prkMngrToReturn = new ParkManager(theParkManagerEmail, firstName, lastName, parkList);
 			}
 		}
 
-		return null;
+		return prkMngrToReturn;
 	}
 	
-	// Reid: again, same thing - I see no reason to have "default" users.
-	// Reid: let's just return null and have the caller handle that case...
+	// TODO: Reid stopped working here!!!
 	
 	/**
 	 * Given a administrator's email, construct the Administrator and return it.
@@ -327,8 +287,7 @@ public class DataPollster {
 	 * @return a new Administrator object with the given email address.
 	 * @author Taylor Gorman
 	 */
-	public Administrator getAdministrator(String theAdministratorEmail) { 			   // Reid: why do we need this method? where is it used?
-//		Administrator defaultAdministrator = new Administrator(theAdministratorEmail); // Default case if the Park Administrator is not found.
+	public Administrator getAdministrator(String theAdministratorEmail) { // Reid: Removed "default" admin from being returned.
 		Administrator adminToReturn = null;
 		List<User> administratorCopyList = myUserList.getAdministratorListCopy();
 		

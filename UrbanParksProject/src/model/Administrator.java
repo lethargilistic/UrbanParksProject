@@ -16,9 +16,8 @@ import java.util.List;
  */
 public class Administrator extends User {
 	
-	// these 2 fields MUST GO!
-	private AdministratorUI myUI;
-	private DataPollster myPollster;	
+	private AdministratorUI myUI; // AdminGUI should have an Admin field
+	private DataPollster myPollster; // this needs to stay!
 	
 	/**
 	 * Constructs an Administrator object.
