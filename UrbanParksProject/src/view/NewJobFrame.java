@@ -42,6 +42,8 @@ public class NewJobFrame extends JFrame {
 	private JComboBox<Integer> endMonthComboBox;
 	private JComboBox<Integer> endDayComboBox;
 	private JComboBox<Integer> endYearComboBox;
+	
+	private JLabel errorLabel;
 
 	/**
 	 * Create the frame.
@@ -214,15 +216,30 @@ public class NewJobFrame extends JFrame {
 				endDate.set(Calendar.DAY_OF_MONTH, (int) endDayComboBox.getSelectedItem());
 				endDate.set(Calendar.YEAR, (int) endYearComboBox.getSelectedItem());
 				
-				myManager.createJob(park, lightSlots, mediumSlots, heavySlots, startDate, endDate);
+				boolean addedFlag = myManager.createJob(park, lightSlots, mediumSlots, heavySlots, startDate, endDate);
+				
+				if(addedFlag) {
+					closeFrame();
+				} else {
+					showError();
+				}
 			}
 		});
 		createJobButton.setBounds(31, 476, 113, 23);
 		contentPane.add(createJobButton);
 		
-		JLabel errorLabel = new JLabel("");
+		errorLabel = new JLabel("");
 		errorLabel.setForeground(Color.RED);
 		errorLabel.setBounds(31, 414, 257, 51);
 		contentPane.add(errorLabel);
+	}
+	
+	
+	private void closeFrame() {
+		super.dispose();
+	}
+	
+	private void showError() {
+		errorLabel.setText("The job was not added successfully.");
 	}
 }

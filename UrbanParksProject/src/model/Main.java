@@ -1,7 +1,5 @@
 package model;
 
-import java.util.List;
-
 import view.ParkManagerGUI;
 
 public class Main {
@@ -11,7 +9,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		
-		SaveManager saveManager = new SaveManager();
+		SaveLoad saveManager = new SaveLoad();
 		String[] userInfo;
 		
 		UI = new MainUI();
@@ -118,7 +116,7 @@ public class Main {
 	private static boolean checkDuplicate(DataPollster thePollster, String theEmail) {
 		boolean status = false;
 		
-		for (User user : thePollster.getUserList().getUserListCopy()) {
+		for (User user : thePollster.getUserListCopy()) {
 			if (user.getEmail().equals(theEmail)) {
 				status = true;
 			}
@@ -153,6 +151,8 @@ public class Main {
 			manager.initialize(theSchedule, thePollster);
 			ParkManagerGUI managerGUI = new ParkManagerGUI(manager);
 			managerGUI.setVisible(true);
+			
+			stallMainLoop(managerGUI);
 		}
 		
 		// These need to be changed with GUI object instantiations - need to call diff constructors!
@@ -166,6 +166,25 @@ public class Main {
 //			Administrator administrator = new Administrator(thePollster, email);
 //			administrator.initialize();
 		}
+	
+	}
+	
+	private static void stallMainLoop(ParkManagerGUI theManagerGUI) {
+		
+		while(true) {
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			if(!theManagerGUI.isDisplayable()) {
+				return;
+			} 
+		}
+			
+		
 	}
 	
 	

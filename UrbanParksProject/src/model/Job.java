@@ -2,7 +2,6 @@ package model;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
-import java.util.List;
 
 /**
  * This class is used to create an instance of a Job.
@@ -11,15 +10,14 @@ import java.util.List;
  */
 public class Job {
 	
-	protected static int nextJobID = 0;
-	
 	/**
 	 * This value is the identification number of a job.
 	 */
 	private int myJobID;
 
 	/**
-	 * This is the list which holds the e-mail addresses of all volunteers that have signed up to participate in this job.
+	 * This is the list which holds the e-mail addresses of all volunteers 
+	 * that have signed up to participate in this job.
 	 */
     private ArrayList<ArrayList<String>> myVolunteerList;
 
@@ -197,10 +195,6 @@ public class Job {
     		case 2: return numHeavy;
     		default: return 0;
     	}
-    }
-    
-    public static void setNextJobID(int theID){
-    	nextJobID = theID;
     }
     
 	public int getJobID() {
