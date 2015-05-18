@@ -198,10 +198,11 @@ public class DataPollsterTest {
 		assertEquals("The List filled incorrectly.", vList, dp.getVolunteerList(jobs.get(0).getJobID()));
 	}
 	
+	// Reid: removed this method call b/c I didn't know if it was necessary.
 	@After
 	public void teardown()
 	{
-		Job.setNextJobID(0);
+//		Job.setNextJobID(0);
 	}
 
 }

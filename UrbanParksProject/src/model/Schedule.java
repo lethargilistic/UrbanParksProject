@@ -18,7 +18,7 @@ public class Schedule {
 	/**
 	 * An integer representing the total number of jobs 
 	 */
-	private static final int MAX_TOTAL_NUM_JOBS = 1000; // before it was Integer.MAX_VALUE
+	private static final int MAX_TOTAL_NUM_JOBS = 10000;
 	
 	/**
 	 * This is the Schedule's master job list.
