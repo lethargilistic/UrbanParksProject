@@ -1,7 +1,5 @@
 package model;
 
-import java.util.List;
-
 import view.ParkManagerGUI;
 
 public class Main {
