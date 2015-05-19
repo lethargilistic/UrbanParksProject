@@ -9,6 +9,7 @@ import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -31,8 +32,13 @@ public class VolunteerGUI extends JFrame{
 	 * This is an instance of a volunteer. It is used when a volunteer logs in.
 	 */
 	private Volunteer myVol;
-
 	
+	/**
+	 * This is an instance of the schedule where a volunteer would be added if they
+	 * sign up for a job.
+	 */
+	private Schedule mySched;
+
 	
 	
 	
@@ -44,10 +50,11 @@ public class VolunteerGUI extends JFrame{
 	/**
 	 * This is the constructor.
 	 */
-	public VolunteerGUI(Volunteer theVol) {
+	public VolunteerGUI(Volunteer theVol, Schedule theSched) {
 		super("Volunteer");
 
 		myVol = theVol;
+		mySched = theSched;
 		
 		startUp();
 	}
@@ -126,6 +133,8 @@ public class VolunteerGUI extends JFrame{
 		List<Job> jList = myVol.getTheJobs();
 		for (Job j: jList) {
 
+			//TODO dont let volunteer view a job that they have already signed up for.
+			
 			if (!j.isInPast()) {
 				theArea.append("Job ID: " + j.getJobID() + "\n");
 				theArea.append("     Start Date: " + j.getStartDate() + "\n");
@@ -179,24 +188,65 @@ public class VolunteerGUI extends JFrame{
 		JLabel label = new JLabel("Sign up for a job by typing in the Job ID below.");
 		panel.add(label, BorderLayout.NORTH);     
 		
-		JTextField field = new JTextField();
-		panel.add(field, BorderLayout.CENTER);
+		JPanel centerPan = new JPanel();	//this panel will hold two text fields
 		
-		JButton b = new JButton("Sign Up");
-		panel.add(b, BorderLayout.SOUTH);
-		b.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(final MouseEvent theEvent) {
-				String ID = field.getText();
-				
-				//TODO change this ID string to an ID int.
-				//NOTE: dont let a volunteer sign up for the same job twice
-				//NOTE: dont let a volunteer sign up for a past job.
-			}
-		});
+		JTextField fieldID = new JTextField(); //user enters job ID here
+		JTextField fieldLevel = new JTextField(); //user enters difficulty here
+		centerPan.add(fieldID, BorderLayout.NORTH); 
+		centerPan.add(fieldLevel, BorderLayout.SOUTH);
+		
+		JLabel label2 = new JLabel("What difficulty would you like to join? \n"
+				+ "Enter 1 for Light \n Enter 2 for Medium \n Enter 3 for Heavy");
+		centerPan.add(label2, BorderLayout.CENTER); //add label2 above the field text box
+		
+		JButton b = createSubmitButton(fieldID, fieldLevel); //create a button which will store info once clicked.
+		panel.add(b, BorderLayout.SOUTH); //add the button to the bottom
 		
 		
 	}
 	
+	/**
+	 * This creates a submit button that will read from two text boxes and then
+	 * figure out what to do.
+	 * @param theID is the Job ID of the Job that the user wants to join.
+	 * @param theLev is the difficulty level (or grade) that the user wants to do.
+	 * @return a JButton.
+	 */
+	private JButton createSubmitButton(JTextField theID, JTextField theLev) {
+		JButton b = new JButton("Submit");
+		b.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(final MouseEvent theEvent) {
+				int ID = Integer.parseInt((theID.getText()));
+				int lev = Integer.parseInt(theLev.getText());
+
+				ArrayList<String> volArray = new ArrayList<String>();
+				volArray.add(myVol.getEmail());
+				switch(lev) {
+				case 1:
+					volArray.add("Light");
+					break;
+				case 2: 
+					volArray.add("Medium");
+					break;
+				case 3:
+					volArray.add("Heavy");
+					break;
+				default:
+						volArray.add("blablabla"); //this will cause an exception to be thrown by the 
+													//addVolunteerToJob method in Schedule.
+				}
+				
+				try {
+					mySched.addVolunteerToJob(volArray, ID);
+				} catch (Exception e) {
+					//this will create a popup box to explain what went wrong.
+					JOptionPane.showMessageDialog(null, e.getMessage());
+					
+				}
+			}
+		});
+		return b;
+	}
 	
 	
 
@@ -292,10 +342,6 @@ public class VolunteerGUI extends JFrame{
 	private void closeOut() {
 		super.dispose();
 	}
-
-
-	//NOTE: USE WINDOW BUILDER!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
 
 
 	//NOTE: to merge guiMaster into guiMasterArsh: right click on guimasterArsh project,

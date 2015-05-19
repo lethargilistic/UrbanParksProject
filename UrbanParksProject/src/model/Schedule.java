@@ -181,7 +181,7 @@ public class Schedule {
 	 * 
 	 * @param theVolunteer the Volunteer to add to a particular job.
 	 * @param theJobID the ID number for the Job to which the Volunteer will be added.
-	 * @param theWorkGrade the work grade selected by the Volunteer for a particular Job.
+	 * @param theWorkGrade the work grade selected by the Volunteer for a particular Job. //TODO change this javadoc!
 	 * I'm assuming this value would be 1 = light, 2 = medium, or 3 = heavy.
 	 * @return true if the Volunteer was added to the Job and false otherwise.
 	 * @throws Exception 
