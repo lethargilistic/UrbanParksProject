@@ -157,10 +157,6 @@ public class Schedule {
 			long difference2 =  aEnd.getTimeInMillis() - j.getStartDate().getTimeInMillis();
 			difference2 /= (3600*24*1000); //change value to days instead of milliseconds
 			
-			//System.out.println(j.getPark() + " " + j.getStartDate() + " " + j.getEndDate());
-			//System.out.println(difference);
-			//System.out.println(difference2);
-			
 			//if ending date of j is within 3 days before theJob, increment count
 			//if starting date of j is within 3 days after theJob, increment count
 			if ((difference <= 3 && difference >= 0)|| (difference2 <= 3 && difference2 >= 0)) {
@@ -306,25 +302,16 @@ public class Schedule {
 			case "Administrator":
 				Administrator a = new Administrator(theFirstName, theLastName, theEmail);
 				myUserList.addNewAdministrator(a);
-//				List<User> listAdmin = myUserList.getAdministratorListCopy()
-//				listAdmin.add(a);
-//				myUserList.setAdministratorList(listAdmin);
 				break;
 				
 			case "ParkManager":
 				ParkManager pm = new ParkManager(theEmail, theFirstName, theLastName, new ArrayList<String>());
 				myUserList.addNewParkManager(pm);
-//				List<ParkManager> managerList = myUserList.getParkManagerCopyList();
-//				managerList.add(newManager);
-//				myUserList.setParkManagerList(managerList);
 				break;
 				
 			case "Volunteer":
 				Volunteer v = new Volunteer(theEmail, theFirstName, theLastName);
 				myUserList.addNewVolunteer(v);
-//				List<Volunteer> listVols = myUserList.getVolunteerCopyList();
-//				listVols.add(v);
-//				myUserList.setVolunteerList(listVols);
 				break;
 		}
 		

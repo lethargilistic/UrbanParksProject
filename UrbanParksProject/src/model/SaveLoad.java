@@ -244,36 +244,18 @@ public class SaveLoad {
 		//For whichever role the user is, construct their corresponding Object and add it to the User List.
 		
 		if(myRole.equals("Volunteer")) {
-			Volunteer myVolunteer = new Volunteer(myEmail, myFirstName, myLastName);			
-			
-			//Get the Volunteer List, add the Volunteer to it, and then send it back to UserList.
-//			List<Volunteer> myVolunteerList = theUserList.getVolunteerCopyList();
-//			myVolunteerList.add(myVolunteer);
-//			theUserList.setVolunteerList(myVolunteerList);
-			
+			Volunteer myVolunteer = new Volunteer(myEmail, myFirstName, myLastName);						
 			theUserList.addNewVolunteer(myVolunteer);
 		}
 		
 		if(myRole.equals("Administrator")) {
-			Administrator myAdministrator = new Administrator(myFirstName, myLastName, myEmail);
-			
-			//Get the Administrator List, add the Administrator to it, and then send it back to UserList.
-//			List<Administrator> myAdministratorList = theUserList.getAdministratorCopyList();
-//			myAdministratorList.add(myAdministrator);
-//			theUserList.setAdministratorList(myAdministratorList);
-			
+			Administrator myAdministrator = new Administrator(myFirstName, myLastName, myEmail);			
 			theUserList.addNewAdministrator(myAdministrator);
 		}
 		
 		if(myRole.equals("ParkManager")) {
 
-			ParkManager myManager = new ParkManager(myEmail, myFirstName, myLastName, myParkList);
-			
-			//Get the ParkManager List, add the ParkManager to it, and then send it back to UserList.
-//			List<ParkManager> myManagerList = theUserList.getParkManagerCopyList();
-//			myManagerList.add(myManager);
-//			theUserList.setParkManagerList(myManagerList);	
-			
+			ParkManager myManager = new ParkManager(myEmail, myFirstName, myLastName, myParkList);			
 			theUserList.addNewParkManager(myManager);
 		}
 		
@@ -404,29 +386,8 @@ public class SaveLoad {
 				userInfo.add("End Park List");
 			}
 		}
-		
-//		for(Volunteer volunteer : theUserList.getVolunteerCopyList()) {
-//			userInfo.add(volunteer.getEmail());
-//			userInfo.add("Volunteer");
-//			userInfo.add(volunteer.getFirstName());
-//			userInfo.add(volunteer.getLastName());
-//		}
-//		
-//		for(Administrator admin : theUserList.getAdministratorCopyList()) {
-//			userInfo.add(admin.getEmail());
-//			userInfo.add("Administrator");
-//			userInfo.add(admin.getFirstName());
-//			userInfo.add(admin.getLastName());
-//		}
-//		
-//		for(ParkManager manager : theUserList.getParkManagerCopyList()) {
-//			userInfo.add(manager.getEmail());
-//			userInfo.add("ParkManager");
-//			userInfo.add(manager.getFirstName());
-//			userInfo.add(manager.getLastName());
 			
-		userInfo.add("End User List");	
-		
+		userInfo.add("End User List");			
 		return userInfo;
 	}
 	

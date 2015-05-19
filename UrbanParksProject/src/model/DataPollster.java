@@ -310,16 +310,6 @@ public class DataPollster {
 	}
 	
 	/**
-	 * Returns a copied list of all Users.
-	 * 
-	 * @author Reid Thompson
-	 * @return a copied list of all Users.
-	 */
-	public List<User> getUserListCopy() {
-		return myUserList.getUserListCopy();
-	}
-	
-	/**
 	 * Return the work grade of a Volunteer for a given job.
 	 * @author Taylor Gorman - initial implementation
 	 * @author Reid Thompson - single exit point of method.

@@ -24,10 +24,6 @@ public class UserList {
 		
 	public UserList() {
 		myUserList = new ArrayList<User>(MAX_NUM_USERS);
-		
-//		myVolunteerList = new ArrayList<Volunteer>();
-//		myParkManagerList = new ArrayList<ParkManager>();
-//		myAdministratorList = new ArrayList<Administrator>();
 	}
 	
 	
@@ -35,27 +31,6 @@ public class UserList {
 	 * List Getters.
 	 * Returns copies of lists so that they cannot be changed without passing them to a setter.	
 	 */
-	
-//	/**
-//	 * Return a copy of the Volunteer List.
-//	 */
-//	public List<Volunteer> getVolunteerCopyList() {
-//		return new ArrayList<Volunteer>(myVolunteerList);
-//	}
-//	
-//	/**
-//	 * Return a copy of the ParkManager List.
-//	 */
-//	public List<ParkManager> getParkManagerCopyList() {
-//		return new ArrayList<ParkManager>(myParkManagerList);
-//	}
-//	
-//	/**
-//	 * Return a copy of the Administrator List.
-//	 */
-//	public List<Administrator> getAdministratorCopyList() {
-//		return new ArrayList<Administrator>(myAdministratorList);
-//	}
 		
 	public List<User> getUserListCopy() {
 		return new ArrayList<User>(myUserList);
@@ -198,26 +173,5 @@ public class UserList {
 		
 		return parkMngrs;
 	}
-	
-//	/**
-//	 * Update the Volunteer List with a new version.
-//	 */
-//	public void setVolunteerList(List<Volunteer> theVolunteerList) {
-//		this.myVolunteerList = theVolunteerList;
-//	}
-//	
-//	/**
-//	 * Update the ParkManager List with a new version.
-//	 */
-//	public void setParkManagerList(List<ParkManager> theParkManagerList) {
-//		this.myParkManagerList = theParkManagerList;
-//	}
-//	
-//	/**
-//	 * Update the Administrator List with a new version.
-//	 */
-//	public void setAdministratorList(List<Administrator> theAdministratorList) {
-//		this.myAdministratorList = theAdministratorList;
-//	}
 
 }
