@@ -299,6 +299,7 @@ public class DataPollster {
 	}
 	
 	/**
+
 	 * Returns a copied list of Volunteer Users.
 	 * 
 	 * @author Reid Thompson
@@ -334,5 +335,21 @@ public class DataPollster {
 		}
 		
 		return gradeToReturn;
+	}
+
+	public List<User> getAllUserList() {
+		return myUserList.getUserListCopy();
+	}
+	
+	public List<User> getAllVolunteerList() {
+		return myUserList.getVolunteerListCopy();
+	}
+	
+	public List<User> getAllManagerList() {
+		return myUserList.getParkManagerListCopy();
+	}
+	
+	public List<User> getAllAdministratorList() {
+		return myUserList.getAdministratorListCopy();
 	}
 }
