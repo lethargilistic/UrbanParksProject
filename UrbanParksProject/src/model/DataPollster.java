@@ -342,15 +342,6 @@ public class DataPollster {
 	}
 	
 	/**
-	 * Returns the UserList field.
-	 * 
-	 * @return the UserList field.
-	 */
-	public UserList getUserList() {
-		return this.myUserList;
-	}
-	
-	/**
 	 * Return the work grade of a Volunteer for a given job.
 	 * @author Taylor Gorman
 	 */
@@ -360,5 +351,21 @@ public class DataPollster {
 		}
 		
 		return null;
+	}
+
+	public List<User> getAllUserList() {
+		return myUserList.getUserListCopy();
+	}
+	
+	public List<User> getAllVolunteerList() {
+		return myUserList.getVolunteerListCopy();
+	}
+	
+	public List<User> getAllManagerList() {
+		return myUserList.getParkManagerListCopy();
+	}
+	
+	public List<User> getAllAdministratorList() {
+		return myUserList.getAdministratorListCopy();
 	}
 }

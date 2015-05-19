@@ -19,6 +19,7 @@ public class Administrator extends User {
 	// these 2 fields MUST GO!
 	private AdministratorUI myUI;
 	private DataPollster myPollster;	
+	private Schedule mySchedule;
 	
 	/**
 	 * Constructs an Administrator object.
@@ -36,15 +37,11 @@ public class Administrator extends User {
 	// this work will be done by GUI
 	
 	/**
-	 * Initializes the UI for the Administrator user.
+	 * Initializes the Schedule and Pollster for the Administrator user.
 	 */
-	public void initialize() {
-		myUI.listCommands();
-		int choice = myUI.getUserInt();
-		boolean stayLoggedIn = executeOptionChosen(choice);
-		if (stayLoggedIn) { // reprompt user to with list of commands - continuing their interaction with the UI
-			initialize();
-		} // the implied else would return control back to whatever method called initializeUI() - probably mainUI
+	public void initialize(Schedule theSchedule, DataPollster thePollster) {
+		mySchedule = theSchedule;
+		myPollster = thePollster;
 	}
 	
 	// this work will be done by GUI
@@ -64,7 +61,7 @@ public class Administrator extends User {
 		} else { // valid input was given
 			switch(theChoice) { // no default case needed because of original if test
 				case 1: // list all volunteers by last name, first name (sorted ascending)
-					List<User> allVols = myPollster.getUserList().getVolunteerListCopy();
+					List<User> allVols = myPollster.getAllVolunteerList();
 					Collections.sort(allVols, new Comparator<User>() {
 						
 						// to sort Volunteers by last name ascending and then by first name ascending
@@ -78,7 +75,7 @@ public class Administrator extends User {
 						}
 						
 					});
-					displayAllVolunteersLNFN(allVols);
+//					displayAllVolunteersLNFN(allVols);
 					break;
 				case 2: // search volunteers by last name
 					System.out.println("Option 2 selected.\n");
@@ -126,7 +123,7 @@ public class Administrator extends User {
 	 */
 	private List<User> getMatchingVolunteers(String theLastName) {
 		List<User> matchingVols = new ArrayList<>();
-		List<User> allVols = myPollster.getUserList().getVolunteerListCopy();
+		List<User> allVols = myPollster.getAllVolunteerList();
 		
 		for (int i = 0; i < allVols.size(); i++) {
 			final User currVol = allVols.get(i);
@@ -165,18 +162,24 @@ public class Administrator extends User {
 		}
 	}
 	
-	// this work will be done by GUI
-	
 	/**
-	 * 
+	 * Returns a list of all the Volunteers in the system.
 	 */
-	private void displayAllVolunteersLNFN(final List<User> theVols) {
-		System.out.println("Here is the list of all Volunteers: Last name, First name\n");
+	public Object[][] getVolunteersArray() {
 		
-		for (int i = 0; i < theVols.size(); i++) {
-			final User v = theVols.get(i);
-			System.out.println(v.getLastName() + ", " + v.getFirstName());
+		List<User> volunteer = myPollster.getAllVolunteerList();
+		
+		Object[][] volunteerArray = new Object[volunteer.size()][7];
+		int volunteerNumber = 0;
+		
+		for(User v : volunteer) {
+			volunteerArray[volunteerNumber][0] = v.getLastName();
+			volunteerArray[volunteerNumber][1] = v.getFirstName();
+			volunteerArray[volunteerNumber][2] = v.getEmail();
+			
+			volunteerNumber++;
 		}
 		
+		return volunteerArray;
 	}
 }

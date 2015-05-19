@@ -16,27 +16,27 @@ import model.Administrator;
 @SuppressWarnings("serial")
 public class AdministratorGUI extends JFrame {
 	private Administrator myAdmin;
-
-	private JScrollPane tablePane;
+	
 	private JTextField txtSearchName;
 	private final JScrollPane scrollPane = new JScrollPane();
 	private JTable table;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					AdministratorGUI frame = new AdministratorGUI(null);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+//	/**
+//	 * TODO: Remove
+//	 * Launch the application.
+//	 */
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					AdministratorGUI frame = new AdministratorGUI(null);
+//					frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
 	/**
 	 * Create the frame.
@@ -70,6 +70,7 @@ public class AdministratorGUI extends JFrame {
 	
 	private void createFrame(){
 
+		setTitle("Welcome " + myAdmin.getFirstName() + " " + myAdmin.getLastName() + "!");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(null);
@@ -78,33 +79,12 @@ public class AdministratorGUI extends JFrame {
 		scrollPane.setBounds(0, 26, 434, 235);
 		getContentPane().add(scrollPane);
 		
+		String[] columnNames = {"First Name", "Last Name", "Email"};
+		Object[][] volunteers = myAdmin.getVolunteersArray();
+		
 		table = new JTable();
 		table.setModel(new DefaultTableModel(
-			new Object[][] {
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-			},
-			new String[] {
-				"First Name", "Last Name", "Email"
-			}
+			volunteers, columnNames
 		));
 		scrollPane.setViewportView(table);
 	}
