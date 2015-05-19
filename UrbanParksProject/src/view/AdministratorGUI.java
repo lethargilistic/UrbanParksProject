@@ -1,7 +1,6 @@
 package view;
 
 import java.awt.Button;
-import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -16,27 +15,12 @@ import model.Administrator;
 @SuppressWarnings("serial")
 public class AdministratorGUI extends JFrame {
 	private Administrator myAdmin;
+	private String[][] myVolunteers;
+	private String[][] myDisplayVolunteers;
 	
 	private JTextField txtSearchName;
 	private final JScrollPane scrollPane = new JScrollPane();
 	private JTable table;
-
-//	/**
-//	 * TODO: Remove
-//	 * Launch the application.
-//	 */
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					AdministratorGUI frame = new AdministratorGUI(null);
-//					frame.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
 
 	/**
 	 * Create the frame.
@@ -61,7 +45,8 @@ public class AdministratorGUI extends JFrame {
 		Button button = new Button("Search");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println(txtSearchName.getText()); //TODO: this is a placeholder
+				String searchedLastName = txtSearchName.getText();
+				myDisplayVolunteers = myAdmin.searchVolunteers(searchedLastName);
 			}
 		});
 		button.setBounds(349, 0, 85, 26);
@@ -69,7 +54,6 @@ public class AdministratorGUI extends JFrame {
 	}
 	
 	private void createFrame(){
-
 		setTitle("Welcome " + myAdmin.getFirstName() + " " + myAdmin.getLastName() + "!");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -80,11 +64,12 @@ public class AdministratorGUI extends JFrame {
 		getContentPane().add(scrollPane);
 		
 		String[] columnNames = {"First Name", "Last Name", "Email"};
-		Object[][] volunteers = myAdmin.getVolunteersArray();
+		myVolunteers = myAdmin.getVolunteersArray();
+		myDisplayVolunteers = myVolunteers;
 		
 		table = new JTable();
 		table.setModel(new DefaultTableModel(
-			volunteers, columnNames
+			myDisplayVolunteers, columnNames
 		));
 		scrollPane.setViewportView(table);
 	}

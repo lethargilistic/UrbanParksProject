@@ -57,7 +57,7 @@ public class Administrator extends User {
 		boolean stayLoggedIn = true;
 		if (theChoice <= 0 || theChoice > 3) {
 			System.out.println("Invalid command selected. Please try again.\n");
-			initialize(); // restart UI interaction
+//			initialize(); // restart UI interaction
 		} else { // valid input was given
 			switch(theChoice) { // no default case needed because of original if test
 				case 1: // list all volunteers by last name, first name (sorted ascending)
@@ -165,11 +165,11 @@ public class Administrator extends User {
 	/**
 	 * Returns a list of all the Volunteers in the system.
 	 */
-	public Object[][] getVolunteersArray() {
+	public String[][] getVolunteersArray() {
 		
 		List<User> volunteer = myPollster.getAllVolunteerList();
 		
-		Object[][] volunteerArray = new Object[volunteer.size()][7];
+		String[][] volunteerArray = new String[volunteer.size()][7];
 		int volunteerNumber = 0;
 		
 		for(User v : volunteer) {
@@ -181,5 +181,36 @@ public class Administrator extends User {
 		}
 		
 		return volunteerArray;
+	}
+	
+	/**
+	 * Return an array of the volunteers that have theLastName.
+	 */
+	public String[][] searchVolunteers(String theLastName)
+	{		
+		// get and output list of Volunteers with matching last names
+		List<User> matchingVols = getMatchingVolunteers(theLastName);
+		if (!matchingVols.isEmpty()) {
+			Collections.sort(matchingVols, new Comparator<User>() {
+
+				// to sort Volunteers in ascending order based on first name
+				@Override
+				public int compare(final User theVol1, final User theVol2) {
+					return theVol1.getFirstName().compareTo(theVol2.getFirstName());
+				}
+				
+			});
+		}
+		
+		String[][] theVolunteerInfo = new String[matchingVols.size()][3];
+		
+		for (int i = 0; i < matchingVols.size(); i++)
+		{
+			theVolunteerInfo[i][0] = matchingVols.get(i).getLastName();
+			theVolunteerInfo[i][1] = matchingVols.get(i).getFirstName();
+			theVolunteerInfo[i][2] = matchingVols.get(i).getEmail();
+		}
+		
+		return theVolunteerInfo;
 	}
 }
