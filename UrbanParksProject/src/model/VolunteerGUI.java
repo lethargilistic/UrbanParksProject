@@ -189,6 +189,8 @@ public class VolunteerGUI extends JFrame{
 				String ID = field.getText();
 				
 				//TODO change this ID string to an ID int.
+				//NOTE: dont let a volunteer sign up for the same job twice
+				//NOTE: dont let a volunteer sign up for a past job.
 			}
 		});
 		
