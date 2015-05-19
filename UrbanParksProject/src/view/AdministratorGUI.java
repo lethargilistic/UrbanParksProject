@@ -19,8 +19,8 @@ public class AdministratorGUI extends JFrame {
 
 	private JScrollPane tablePane;
 	private JTextField txtSearchName;
+	private final JScrollPane scrollPane = new JScrollPane();
 	private JTable table;
-	private JTable tableLabels;
 
 	/**
 	 * Launch the application.
@@ -75,10 +75,19 @@ public class AdministratorGUI extends JFrame {
 		getContentPane().setLayout(null);
 		
 		createSearchBar();
+		scrollPane.setBounds(0, 26, 434, 235);
+		getContentPane().add(scrollPane);
 		
 		table = new JTable();
 		table.setModel(new DefaultTableModel(
-			new String[][] {
+			new Object[][] {
+				{null, null, null},
+				{null, null, null},
+				{null, null, null},
+				{null, null, null},
+				{null, null, null},
+				{null, null, null},
+				{null, null, null},
 				{null, null, null},
 				{null, null, null},
 				{null, null, null},
@@ -94,36 +103,9 @@ public class AdministratorGUI extends JFrame {
 				{null, null, null},
 			},
 			new String[] {
-				"First name", "Last name", "Email"
+				"First Name", "Last Name", "Email"
 			}
-		) {
-			Class[] columnTypes = new Class[] {
-				String.class, String.class, String.class
-			};
-			public Class getColumnClass(int columnIndex) {
-				return columnTypes[columnIndex];
-			}
-		});
-		table.setBounds(0, 46, 434, 215);
-		getContentPane().add(table);
-		
-		tableLabels = new JTable();
-		tableLabels.setModel(new DefaultTableModel(
-			new String[][] {
-				{"First Name", "Last Name", "Email"},
-			},
-			new String[] {
-				"New column", "New column", "New column"
-			}
-		) {
-			Class[] columnTypes = new Class[] {
-				String.class, String.class, String.class
-			};
-			public Class<String> getColumnClass(int columnIndex) {
-				return columnTypes[columnIndex];
-			}
-		});
-		tableLabels.setBounds(0, 26, 434, 16);
-		getContentPane().add(tableLabels);
+		));
+		scrollPane.setViewportView(table);
 	}
 }
