@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 /**
  * This class is the gui for the volunteer.
@@ -21,6 +22,11 @@ import javax.swing.JTextArea;
  */
 public class VolunteerGUI extends JFrame{
 
+	//=================================
+	//FIELDS
+	//=================================
+		
+	
 	/**
 	 * This is an instance of a volunteer. It is used when a volunteer logs in.
 	 */
@@ -28,7 +34,12 @@ public class VolunteerGUI extends JFrame{
 
 	
 	
-
+	
+	
+	//=================================
+	//METHODS
+	//=================================
+	
 
 	/**
 	 * This is the constructor.
@@ -139,11 +150,53 @@ public class VolunteerGUI extends JFrame{
 	private JButton createSignUpButton() {
 		JButton b = new JButton("Sign up");
 
-		//TODO
+		getContentPane().add(b);
+		
+		b.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(final MouseEvent theEvent) {
+				joinJob();
+			}
+		});
 
 
 		return b;
 	}
+	
+	
+	/** This method creates a new panel which will ask the user for
+	 * what job they want to join.
+	 */
+	private void joinJob() {
+		JFrame frame2 = new JFrame("Sign up for job");
+		frame2.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frame2.setVisible(true);
+		frame2.setSize(600, 400);
+		
+		JPanel panel = new JPanel();
+		frame2.setContentPane(panel);
+		panel.setLayout(new BorderLayout());
+
+		JLabel label = new JLabel("Sign up for a job by typing in the Job ID below.");
+		panel.add(label, BorderLayout.NORTH);     
+		
+		JTextField field = new JTextField();
+		panel.add(field, BorderLayout.CENTER);
+		
+		JButton b = new JButton("Sign Up");
+		panel.add(b, BorderLayout.SOUTH);
+		b.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(final MouseEvent theEvent) {
+				String ID = field.getText();
+				
+				//TODO change this ID string to an ID int.
+			}
+		});
+		
+		
+	}
+	
+	
+	
 
 	/**
 	 * Creates a button to view the jobs the volunteer have signed up for.
