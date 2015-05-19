@@ -1,4 +1,4 @@
-package model;
+package view;
 
 import java.awt.BorderLayout;
 import java.awt.event.MouseAdapter;
@@ -14,6 +14,10 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+
+import model.Job;
+import model.Schedule;
+import model.Volunteer;
 
 /**
  * This class is the gui for the volunteer.
