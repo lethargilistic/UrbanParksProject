@@ -1,12 +1,13 @@
 package model;
 
+import javax.swing.JFrame;
+
+import view.AdministratorGUI;
 import view.ParkManagerGUI;
 
 public class Main {
-
 	public static MainUI UI;
 	
-
 	public static void main(String[] args) {
 		
 		SaveLoad saveManager = new SaveLoad();
@@ -51,8 +52,6 @@ public class Main {
 		}
 		
 	}
-	
-	
 	
 	/**
 	 * Prompt the user to either login, register, or exit.<br>
@@ -116,28 +115,14 @@ public class Main {
 	private static boolean checkDuplicate(DataPollster thePollster, String theEmail) {
 		boolean status = false;
 		
-		for (User user : thePollster.getUserListCopy()) {
+		for (User user : thePollster.getAllUserList()) {
 			if (user.getEmail().equals(theEmail)) {
 				status = true;
 			}
 		}
 		
-//		for(Volunteer volunteer : thePollster.getUserList().getVolunteerCopyList()) {
-//			if(volunteer.getEmail().equals(theEmail)) return true;
-//		}
-//		
-//		for(ParkManager parkManager : thePollster.getUserList().getParkManagerCopyList()) {
-//			if(parkManager.getEmail().equals(theEmail)) return true;
-//		}
-//		
-//		for(Administrator administrator : thePollster.getUserList().getAdministratorCopyList()) {
-//			if(administrator.getEmail().equals(theEmail)) return true;
-//		}
-		
-		
 		return status;
 	}
-	
 	
 	/**
 	 * Transfer control to the user, specified by their e-mail address.
@@ -163,13 +148,16 @@ public class Main {
 		}
 		
 		if(userType.equals("Administrator")) {
-//			Administrator administrator = new Administrator(thePollster, email);
-//			administrator.initialize();
+			Administrator admin = thePollster.getAdministrator(email);
+			admin.initialize(theSchedule, thePollster);
+			AdministratorGUI adminGUI = new AdministratorGUI(admin);
+			adminGUI.setVisible(true);
+			
+			stallMainLoop(adminGUI);
 		}
-	
 	}
 	
-	private static void stallMainLoop(ParkManagerGUI theManagerGUI) {
+	private static void stallMainLoop(JFrame theGUI) {
 		
 		while(true) {
 			try {
@@ -179,14 +167,11 @@ public class Main {
 				e.printStackTrace();
 			}
 			
-			if(!theManagerGUI.isDisplayable()) {
+			if(!theGUI.isDisplayable()) {
 				return;
 			} 
 		}
-			
-		
 	}
-	
 	
 	/**
 	 * Breaks out of infinite loop in main method.
@@ -194,5 +179,4 @@ public class Main {
 	 private static void closeProgram() {
 		System.exit(0);
 	}
-
 }

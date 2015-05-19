@@ -33,15 +33,12 @@ public class ParkManager extends User {
 		this.myManagedParks = copiedParks;
 	}
 	
-
-	
-	
 	/*============*
 	 * UI Control *
 	 *============*/
 	
 	/**
-	 * Give control of Schedule and DataPollster to the ParkManager and initialize its UI.
+	 * Give control of Schedule and DataPollster to the ParkManager.
 	 */
 	public void initialize(Schedule theSchedule, DataPollster thePollster) {
 		mySchedule = theSchedule;

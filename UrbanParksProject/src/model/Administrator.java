@@ -16,8 +16,10 @@ import java.util.List;
  */
 public class Administrator extends User {
 	
-	private AdministratorUI myUI; // AdminGUI should have an Admin field
-	private DataPollster myPollster; // this needs to stay!
+	// these 2 fields MUST GO!
+	private AdministratorUI myUI;
+	private DataPollster myPollster;	
+	private Schedule mySchedule;
 	
 	/**
 	 * Constructs an Administrator object.
@@ -35,15 +37,11 @@ public class Administrator extends User {
 	// this work will be done by GUI
 	
 	/**
-	 * Initializes the UI for the Administrator user.
+	 * Initializes the Schedule and Pollster for the Administrator user.
 	 */
-	public void initialize() {
-		myUI.listCommands();
-		int choice = myUI.getUserInt();
-		boolean stayLoggedIn = executeOptionChosen(choice);
-		if (stayLoggedIn) { // reprompt user to with list of commands - continuing their interaction with the UI
-			initialize();
-		} // the implied else would return control back to whatever method called initializeUI() - probably mainUI
+	public void initialize(Schedule theSchedule, DataPollster thePollster) {
+		mySchedule = theSchedule;
+		myPollster = thePollster;
 	}
 	
 	// this work will be done by GUI
@@ -59,11 +57,13 @@ public class Administrator extends User {
 		boolean stayLoggedIn = true;
 		if (theChoice <= 0 || theChoice > 3) {
 			System.out.println("Invalid command selected. Please try again.\n");
-			initialize(); // restart UI interaction
+//			initialize(); // restart UI interaction
 		} else { // valid input was given
 			switch(theChoice) { // no default case needed because of original if test
 				case 1: // list all volunteers by last name, first name (sorted ascending)
-					List<User> allVols = myPollster.getVolunteerListCopy();
+					
+					List<User> allVols = myPollster.getAllVolunteerList();
+
 					Collections.sort(allVols, new Comparator<User>() {
 						
 						// to sort Volunteers by last name ascending and then by first name ascending
@@ -77,7 +77,7 @@ public class Administrator extends User {
 						}
 						
 					});
-					displayAllVolunteersLNFN(allVols);
+//					displayAllVolunteersLNFN(allVols);
 					break;
 				case 2: // search volunteers by last name
 					System.out.println("Option 2 selected.\n");
@@ -125,7 +125,8 @@ public class Administrator extends User {
 	 */
 	private List<User> getMatchingVolunteers(String theLastName) {
 		List<User> matchingVols = new ArrayList<>();
-		List<User> allVols = myPollster.getVolunteerListCopy();
+
+		List<User> allVols = myPollster.getAllVolunteerList();
 		
 		for (int i = 0; i < allVols.size(); i++) {
 			final User currVol = allVols.get(i);
@@ -164,18 +165,55 @@ public class Administrator extends User {
 		}
 	}
 	
-	// this work will be done by GUI
-	
 	/**
-	 * 
+	 * Returns a list of all the Volunteers in the system.
 	 */
-	private void displayAllVolunteersLNFN(final List<User> theVols) {
-		System.out.println("Here is the list of all Volunteers: Last name, First name\n");
+	public String[][] getVolunteersArray() {
 		
-		for (int i = 0; i < theVols.size(); i++) {
-			final User v = theVols.get(i);
-			System.out.println(v.getLastName() + ", " + v.getFirstName());
+		List<User> volunteer = myPollster.getAllVolunteerList();
+		
+		String[][] volunteerArray = new String[volunteer.size()][7];
+		int volunteerNumber = 0;
+		
+		for(User v : volunteer) {
+			volunteerArray[volunteerNumber][0] = v.getLastName();
+			volunteerArray[volunteerNumber][1] = v.getFirstName();
+			volunteerArray[volunteerNumber][2] = v.getEmail();
+			
+			volunteerNumber++;
 		}
 		
+		return volunteerArray;
+	}
+	
+	/**
+	 * Return an array of the volunteers that have theLastName.
+	 */
+	public String[][] searchVolunteers(String theLastName)
+	{		
+		// get and output list of Volunteers with matching last names
+		List<User> matchingVols = getMatchingVolunteers(theLastName);
+		if (!matchingVols.isEmpty()) {
+			Collections.sort(matchingVols, new Comparator<User>() {
+
+				// to sort Volunteers in ascending order based on first name
+				@Override
+				public int compare(final User theVol1, final User theVol2) {
+					return theVol1.getFirstName().compareTo(theVol2.getFirstName());
+				}
+				
+			});
+		}
+		
+		String[][] theVolunteerInfo = new String[matchingVols.size()][3];
+		
+		for (int i = 0; i < matchingVols.size(); i++)
+		{
+			theVolunteerInfo[i][0] = matchingVols.get(i).getLastName();
+			theVolunteerInfo[i][1] = matchingVols.get(i).getFirstName();
+			theVolunteerInfo[i][2] = matchingVols.get(i).getEmail();
+		}
+		
+		return theVolunteerInfo;
 	}
 }
