@@ -61,7 +61,9 @@ public class Administrator extends User {
 		} else { // valid input was given
 			switch(theChoice) { // no default case needed because of original if test
 				case 1: // list all volunteers by last name, first name (sorted ascending)
+					
 					List<User> allVols = myPollster.getAllVolunteerList();
+
 					Collections.sort(allVols, new Comparator<User>() {
 						
 						// to sort Volunteers by last name ascending and then by first name ascending
@@ -123,6 +125,7 @@ public class Administrator extends User {
 	 */
 	private List<User> getMatchingVolunteers(String theLastName) {
 		List<User> matchingVols = new ArrayList<>();
+
 		List<User> allVols = myPollster.getAllVolunteerList();
 		
 		for (int i = 0; i < allVols.size(); i++) {

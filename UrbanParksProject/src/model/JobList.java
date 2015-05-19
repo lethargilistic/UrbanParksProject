@@ -11,10 +11,12 @@ import java.util.List;
  */
 public class JobList {
 	
+	private static final int MAX_NUM_JOBS = 10000;
+	
 	private List<Job> myJobList;
 	
 	public JobList() {
-		myJobList = new ArrayList<Job>();		
+		myJobList = new ArrayList<Job>(MAX_NUM_JOBS);		
 	}
 	
 	/**

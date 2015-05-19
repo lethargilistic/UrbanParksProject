@@ -195,9 +195,10 @@ public class ScheduleTest {
 		assertFalse(bool1);
 	}
 	
+	// Reid: removed this method call b/c I didn't know if it was necessary.
 	@After
 	public void tearDown()
 	{
-		Job.setNextJobID(0);
+//		Job.setNextJobID(0);
 	}
 }

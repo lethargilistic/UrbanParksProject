@@ -121,19 +121,6 @@ public class Main {
 			}
 		}
 		
-//		for(Volunteer volunteer : thePollster.getUserList().getVolunteerCopyList()) {
-//			if(volunteer.getEmail().equals(theEmail)) return true;
-//		}
-//		
-//		for(ParkManager parkManager : thePollster.getUserList().getParkManagerCopyList()) {
-//			if(parkManager.getEmail().equals(theEmail)) return true;
-//		}
-//		
-//		for(Administrator administrator : thePollster.getUserList().getAdministratorCopyList()) {
-//			if(administrator.getEmail().equals(theEmail)) return true;
-//		}
-		
-		
 		return status;
 	}
 	
