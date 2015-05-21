@@ -3,13 +3,13 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
-//TODO: we definitely need getters for the other classes, like Park and Job.
 /**
  * A class to poll our data-containing classes on behalf of our users.
  * 
  * @author Mike Overby - initial implementation
  * @author Reid Thompson - added User functionality.
- * @version 5.10.2015
+ * @author Taylor Gomran - Several new method and rewrites
+ * @version 5.21.2015
  */
 public class DataPollster {
 
@@ -20,14 +20,15 @@ public class DataPollster {
 	
 	//Constructor
 	private DataPollster() {
-		//Not to be instantiated; Singleton
+		//Not to be instantiated more than once; Singleton
 	}
 	
-	//Instance
+	//Singleton Instance
 	public static DataPollster getInstance() {
 		return dataPollster;
 	}
 
+	
 	
 	/*=================*
 	 * JobList Subsets *
@@ -95,6 +96,7 @@ public class DataPollster {
 	}
 	
 
+	
 
 	/*==============*
 	 * Job Handling *
@@ -227,6 +229,7 @@ public class DataPollster {
 	
 	
 	
+	
 	/*==============*
 	 * User Getters *
 	 *==============*/
@@ -329,8 +332,9 @@ public class DataPollster {
 	
 	
 	
+	
 	/*================*
-	 * Helper Classes *
+	 * Helper Methods *
 	 *================*/
 	
 	/*
@@ -346,7 +350,7 @@ public class DataPollster {
 		//The job has no room.
 		if(!theJob.hasRoom()) isVisible = false;
 		
-		//The Volunteer has already signed up for a job on the same date.
+		//Volunteer has already signed up for a job on the same date.
 		for(Job volunteerJob : volunteerJobs) {
 			if(shareSameDate(volunteerJob, theJob)) isVisible = false;
 		}
