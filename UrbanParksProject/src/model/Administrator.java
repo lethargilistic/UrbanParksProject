@@ -16,10 +16,10 @@ import java.util.List;
  */
 public class Administrator extends User {
 	
-	// these 2 fields MUST GO!
+	// this field MUST GO!
 	private AdministratorUI myUI;
-	private DataPollster myPollster;	
-	private Schedule mySchedule;
+	
+	private DataPollster myPollster = DataPollster.getInstance();
 	
 	/**
 	 * Constructs an Administrator object.
@@ -32,16 +32,6 @@ public class Administrator extends User {
 		super(theFirstName, theLastName, theEmail);
 		super.setUserType("Administrator");
 		this.myUI = new AdministratorUI();
-	}
-	
-	// this work will be done by GUI
-	
-	/**
-	 * Initializes the Schedule and Pollster for the Administrator user.
-	 */
-	public void initialize(Schedule theSchedule, DataPollster thePollster) {
-		mySchedule = theSchedule;
-		myPollster = thePollster;
 	}
 	
 	// this work will be done by GUI

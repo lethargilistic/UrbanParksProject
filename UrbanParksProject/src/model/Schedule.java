@@ -15,24 +15,20 @@ import java.util.List;
  */
 public class Schedule {
 	
-	/**
-	 * An integer representing the total number of jobs 
-	 */
-	private static final int MAX_TOTAL_NUM_JOBS = 10000;
-	
-	/**
-	 * This is the Schedule's master job list.
-	 */
-	private JobList myJobList;
-	
+	private static Schedule schedule = new Schedule();	
+	private static final int MAX_TOTAL_NUM_JOBS = 10000;	
+	private JobList myJobList;	
 	private UserList myUserList;
 	
 	/**
 	 * Constructs a Schedule object.
 	 */
-	public Schedule(JobList theJobList, UserList theUserList) {
-		this.myJobList = theJobList;
-		this.myUserList = theUserList;
+	private Schedule() {
+		//Not to be instantiated; Singleton
+	}
+	
+	public static Schedule getInstance() {
+		return schedule;
 	}
 
 	/**
@@ -330,6 +326,14 @@ public class Schedule {
 			}
 		}
 		
+	}
+	
+	public void setJobList(JobList theJobList) {
+		this.myJobList = theJobList;
+	}
+	
+	public void setUserList(UserList theUserList) {
+		this.myUserList = theUserList;
 	}
 
 }

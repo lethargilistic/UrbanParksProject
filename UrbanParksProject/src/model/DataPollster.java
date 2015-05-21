@@ -13,23 +13,23 @@ import java.util.List;
  */
 public class DataPollster {
 
-	/**
-	 * A reference to a list of jobs in memory.
-	 */
+	private static DataPollster dataPollster = new DataPollster();
 	private JobList myJobList;
-	
 	private UserList myUserList;
+	
+	private DataPollster() {
+		//Not to be instantiated; Singleton
+	}
+	
+	public static DataPollster getInstance() {
+		return dataPollster;
+	}
 	
 	/**
 	 * Return the next available Job ID to be used during the creation of a new job.
 	 */
 	public int getNextJobID() {
 		return myJobList.getNumberJobs();
-	}
-	
-	public DataPollster(JobList theJoblist, UserList theUserList) {
-		myJobList = theJoblist;
-		this.myUserList = theUserList;
 	}
 	
 	//TODO: test all possible conflicts
@@ -341,5 +341,13 @@ public class DataPollster {
 	
 	public List<User> getAllAdministratorList() {
 		return myUserList.getAdministratorListCopy();
+	}
+	
+	public void setJobList(JobList theJobList) {
+		this.myJobList = theJobList;
+	}
+	
+	public void setUserList(UserList theUserList) {
+		this.myUserList = theUserList;
 	}
 }

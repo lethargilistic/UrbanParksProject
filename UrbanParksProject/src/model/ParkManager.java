@@ -18,9 +18,9 @@ import java.util.List;
 public class ParkManager extends User {
 	
 	//Class Variables
-	private Schedule mySchedule;
-	private DataPollster myPollster;
-	private List<String> myManagedParks;	
+	private Schedule mySchedule = Schedule.getInstance();
+	private DataPollster myPollster = DataPollster.getInstance();
+	private List<String> myManagedParks;
 
 	//Constructor
 	public ParkManager(String theEmail, String theFirstName, String theLastName, List<String> theParkList) {
@@ -31,18 +31,6 @@ public class ParkManager extends User {
 		List<String> copiedParks = new ArrayList<String>();
 		copiedParks.addAll(theParkList);
 		this.myManagedParks = copiedParks;
-	}
-	
-	/*============*
-	 * UI Control *
-	 *============*/
-	
-	/**
-	 * Give control of Schedule and DataPollster to the ParkManager.
-	 */
-	public void initialize(Schedule theSchedule, DataPollster thePollster) {
-		mySchedule = theSchedule;
-		myPollster = thePollster;
 	}
 	
 	

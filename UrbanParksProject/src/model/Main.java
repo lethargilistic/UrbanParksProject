@@ -6,7 +6,10 @@ import view.AdministratorGUI;
 import view.ParkManagerGUI;
 
 public class Main {
+	
 	public static MainUI UI;
+	private static DataPollster myPollster = DataPollster.getInstance();
+	private static Schedule mySchedule = Schedule.getInstance();
 	
 	public static void main(String[] args) {
 		
@@ -22,27 +25,32 @@ public class Main {
 		while(true) {
 			JobList jobList = saveManager.loadJobList();
 			UserList userList = saveManager.loadUserList();
-			Schedule schedule = new Schedule(jobList, userList);
-			DataPollster pollster = new DataPollster(jobList, userList);
-			userInfo = directLogin(schedule, pollster);
+			
+			mySchedule.setJobList(jobList);
+			mySchedule.setUserList(userList);
+			
+			myPollster.setJobList(jobList);
+			myPollster.setUserList(userList);
+			
+			userInfo = directLogin();
 			
 			//If the command or information entered was invalid, we try again.
-			if(userInfo == null || schedule == null || pollster == null) {
-				directLogin(schedule, pollster);
+			if(userInfo == null) {
+				directLogin();
 			}
 			
 			try {
 				if(userInfo[0].equals("login")) {
-					giveControl(userInfo, schedule, pollster);
+					giveControl(userInfo);
 				}
 			} catch (NullPointerException e) {
 				System.out.println("\nWe ran into a problem while logging you in. Please try again.");
-				directLogin(schedule,pollster);
+				directLogin();
 			}
 			
 			if(userInfo[0].equals("register")) {
-				schedule.addUser(userInfo[1], userInfo[2], userInfo[3], userInfo[4]);
-				giveControl(userInfo, schedule, pollster);
+				mySchedule.addUser(userInfo[1], userInfo[2], userInfo[3], userInfo[4]);
+				giveControl(userInfo);
 			}
 			
 			saveManager.saveJobList(jobList);
@@ -57,12 +65,12 @@ public class Main {
 	 * Prompt the user to either login, register, or exit.<br>
 	 * Then, ask the user for login or register details.
 	 */
-	private static String[] directLogin(Schedule theSchedule, DataPollster thePollster) {
+	private static String[] directLogin() {
 		int loginCommand = UI.getLoginChoice();
 		String[] userInfo = null;
 		switch (loginCommand) {
-			case 1: userInfo = loginUser(theSchedule, thePollster); break;
-			case 2: userInfo = registerUser(theSchedule, thePollster); break;
+			case 1: userInfo = loginUser(); break;
+			case 2: userInfo = registerUser(); break;
 			case 3: UI.displayExit(); closeProgram(); break; //Ends program.
 			default: UI.displayInvalidChoice(); break;
 		}
@@ -72,7 +80,7 @@ public class Main {
 	/*
 	 * Return a String array that specifies the user as logging in, and the e-mail of the user.
 	 */
-	private static String[] loginUser(Schedule mySchedule, DataPollster myPollster) {
+	private static String[] loginUser() {
 		
 		String userEmail = UI.getReturnEmail();
 		String[] userInfo = null;
@@ -91,7 +99,7 @@ public class Main {
 	/*
 	 * Return a String array that specifies the user as registering, along with info on that user.
 	 */
-	private static String[] registerUser(Schedule mySchedule, DataPollster myPollster) {
+	private static String[] registerUser() {
 		String[] userInfo = new String[5];
 		
 		userInfo[0] = "register";
@@ -100,7 +108,7 @@ public class Main {
 		userInfo[3] = UI.getLastName();
 		userInfo[4] = UI.getUserType();
 		
-		if(checkDuplicate(myPollster, userInfo[1])) {
+		if(checkDuplicate(userInfo[1])) {
 			userInfo = null;
 			UI.displayDuplicateError();
 		}
@@ -112,10 +120,10 @@ public class Main {
 	/*
 	 * Check if the email is already being used. If so, return true. If not, return false.
 	 */
-	private static boolean checkDuplicate(DataPollster thePollster, String theEmail) {
+	private static boolean checkDuplicate(String theEmail) {
 		boolean status = false;
 		
-		for (User user : thePollster.getAllUserList()) {
+		for (User user : myPollster.getAllUserList()) {
 			if (user.getEmail().equals(theEmail)) {
 				status = true;
 			}
@@ -127,13 +135,14 @@ public class Main {
 	/**
 	 * Transfer control to the user, specified by their e-mail address.
 	 */
-	private static void giveControl(String[] theUserInfo, Schedule theSchedule, DataPollster thePollster) {
-		String userType = thePollster.getUserType(theUserInfo[1]);
+	private static void giveControl(String[] theUserInfo) {
+		DataPollster pollster = myPollster;
+		
+		String userType = pollster.getUserType(theUserInfo[1]);
 		String email = theUserInfo[1];
 		
 		if(userType.equals("ParkManager")) {
-			ParkManager manager = thePollster.getParkManager(email);
-			manager.initialize(theSchedule, thePollster);
+			ParkManager manager = pollster.getParkManager(email);
 			ParkManagerGUI managerGUI = new ParkManagerGUI(manager);
 			managerGUI.setVisible(true);
 			
@@ -148,8 +157,7 @@ public class Main {
 		}
 		
 		if(userType.equals("Administrator")) {
-			Administrator admin = thePollster.getAdministrator(email);
-			admin.initialize(theSchedule, thePollster);
+			Administrator admin = pollster.getAdministrator(email);
 			AdministratorGUI adminGUI = new AdministratorGUI(admin);
 			adminGUI.setVisible(true);
 			

@@ -18,8 +18,8 @@ public class Volunteer extends User {
 //	private String myEmail;
 	
 	private VolunteerUI myUI;
-	private DataPollster myPollster;
-	private Schedule mySchedule;
+	private DataPollster myPollster = DataPollster.getInstance();
+	private Schedule mySchedule = Schedule.getInstance();
 	
 	
 //	public Volunteer(String theEmail) {
