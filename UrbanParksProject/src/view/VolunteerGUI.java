@@ -151,11 +151,11 @@ public class VolunteerGUI extends JFrame{
 				theArea.append("\n");
 			}
 		}
-
+ 
 	}
 
 
-
+ 
 	/**
 	 * Creates a button to sign up for a job.
 	 * @return 
