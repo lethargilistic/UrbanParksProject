@@ -52,7 +52,7 @@ public class Administrator extends User {
 			switch(theChoice) { // no default case needed because of original if test
 				case 1: // list all volunteers by last name, first name (sorted ascending)
 					
-					List<User> allVols = myPollster.getAllVolunteerList();
+					List<User> allVols = myPollster.getVolunteerListCopy();
 
 					Collections.sort(allVols, new Comparator<User>() {
 						
@@ -116,7 +116,7 @@ public class Administrator extends User {
 	private List<User> getMatchingVolunteers(String theLastName) {
 		List<User> matchingVols = new ArrayList<>();
 
-		List<User> allVols = myPollster.getAllVolunteerList();
+		List<User> allVols = myPollster.getVolunteerListCopy();
 		
 		for (int i = 0; i < allVols.size(); i++) {
 			final User currVol = allVols.get(i);
@@ -160,7 +160,7 @@ public class Administrator extends User {
 	 */
 	public String[][] getVolunteersArray() {
 		
-		List<User> volunteer = myPollster.getAllVolunteerList();
+		List<User> volunteer = myPollster.getVolunteerListCopy();
 		
 		String[][] volunteerArray = new String[volunteer.size()][7];
 		int volunteerNumber = 0;

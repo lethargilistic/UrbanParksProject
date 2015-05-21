@@ -13,124 +13,96 @@ import java.util.List;
  */
 public class DataPollster {
 
+	//Class Variables
 	private static DataPollster dataPollster = new DataPollster();
 	private JobList myJobList;
 	private UserList myUserList;
 	
+	//Constructor
 	private DataPollster() {
 		//Not to be instantiated; Singleton
 	}
 	
+	//Instance
 	public static DataPollster getInstance() {
 		return dataPollster;
 	}
+
+	
+	/*=================*
+	 * JobList Subsets *
+	 *=================*/
 	
 	/**
-	 * Return the next available Job ID to be used during the creation of a new job.
-	 */
-	public int getNextJobID() {
-		return myJobList.getNumberJobs();
-	}
-	
-	//TODO: test all possible conflicts
-	//TODO: Not sure where we're storing the current date. Do we use the System time? - Gregorian Calendar, I think...
-	
-	/**
-	 * Checks if job has no room or if they don't have a job that they've already signed up for on that day.
-	 * 
-	 * Returns a List of Jobs that are pending for theVolunteer.
+	 * Return a list of all Jobs that are visible to the Volunteer. This excludes:<br>
+	 * 1. Jobs that have no room.<br>
+	 * 2. Jobs that occur on the same date as a job the Volunteer is already signed up for.
 	 * 
 	 * @author Mike Overby - initial implementation.
-	 * @param theVolunteer
-	 * @return
+	 * @author Taylor Gorman - refactor
 	 */
 	public List<Job> getPendingJobs(Volunteer theVolunteer) {
-		//Check through myJobList and select all Jobs that the Volunteer can sign up for
-		List<Job> applicableJobs = new ArrayList<>();
-		List<Job> volsJobs = getVolunteerJobs(theVolunteer);
-		List<Job> jobs = myJobList.getCopyList();
-		for (Job j : jobs) {
-			//TODO, need to review the requirements for signing up for job
-			int i = volsJobs.indexOf(j);
-			if (i != -1) { // if volunteer is not signed up for the job already
-				// Job has no room.
-				if(!j.hasRoom()) {
-					continue;
-				}
+		List<Job> visibleJobs = new ArrayList<>();
+		List<Job> allJobs = myJobList.getCopyList();
+		
+		//Check through myJobList and select all Jobs that the Volunteer can sign up ("visible").
+		for (Job j : allJobs) {
+			if(visibleToVolunteer(theVolunteer, j)) {
+				visibleJobs.add(j);
 			}
-			
-			// Test for conflicts with jobs the volunteer has already signed up for.
-			boolean dayConflict = false;
-			for (Job anyVjob: volsJobs) {
-				// Don't have a job they've already signed up for on that day
-				if (anyVjob.getStartDate().equals(j.getStartDate()) 
-						|| anyVjob.getStartDate().equals(j.getEndDate())
-						|| anyVjob.getEndDate().equals(j.getStartDate())
-						|| anyVjob.getEndDate().equals(j.getEndDate())) {
-					dayConflict = true;
-					break;
-				}
-			}
-			if (dayConflict) {
-				continue;
-			}
-			// Make a copy of each selected Job, and put it into a Job List.
-			applicableJobs.add(j);
 		}
 		
-		return applicableJobs; //Return the list of copied Jobs
+		return visibleJobs; //Return the list of visible Jobs.
 	}
+	
 
 	/**
-	 * For user story 4. 
-	 * 
-	 * @param theVolunteer
-	 * @return
+	 * Return a list of all jobs that the Volunteer is signed up for.
 	 */
 	public List<Job> getVolunteerJobs(Volunteer theVolunteer) {
-		// Create a new list of Jobs with copies of the Jobs from Schedule's master list
-		List<Job> jobsSignedUpFor = new ArrayList<Job>();
+		List<Job> volunteerJobs = new ArrayList<Job>();
 		
-		//Checks through myJobList and finds all jobs for which the volunteer has signed up for
-		for (Job j : myJobList.getCopyList()) {
-			if (j.getVolunteerList().contains(theVolunteer)) {
-				jobsSignedUpFor.add(j);
+		//Select all Jobs in JobList that the Volunteer is signed up for.
+		for (Job job : myJobList.getCopyList()) {
+			if (job.getVolunteerList().contains(theVolunteer)) {
+				volunteerJobs.add(job);
 			}
 		}
 
-		// Return new list of copied Jobs
-		return jobsSignedUpFor;
+		return volunteerJobs;
 	}
 
 	/**
-	 * Return a list of all jobs associated with a given ParkManager.
+	 * Return a list of all jobs associated with the ParkManager.
 	 * @author Taylor Gorman
 	 */
-	public List<Job> getManagerJobs(ParkManager theManager){
-		List<Job> jobReturnList = new ArrayList<Job>();
+	public List<Job> getManagerJobs(ParkManager theManager){		
+		List<Job> managerJobs = new ArrayList<Job>();
 		List<String> managedParks = theManager.getManagedParks();
 
-		//Select all jobs in JobList with the same name as a Park that ParkManager manages.
+		//Select all Jobs in JobList with the same name as a Park that ParkManager manages.
 		for (Job job : myJobList.getCopyList())	{
 			String jobParkName = job.getPark();
 			
-			for(String managedPark : managedParks) {						
-				
-				if(jobParkName.equals(managedPark)) {
-					jobReturnList.add(job);
+			for(String park : managedParks) {			
+				if(jobParkName.equals(park)) {
+					managerJobs.add(job);
 				}
 			}
 		}
 
-		return jobReturnList;
+		return managerJobs;
 	}
+	
 
+
+	/*==============*
+	 * Job Handling *
+	 *==============*/
+	
 	/**
-	 * Returns a copy of the Job matching theJobID
-	 * 
-	 * @author Reid Thompson - changed to have only one exit point.
-	 * @param theJobID
-	 * @return a copy of the Job matching theJobID or null otherwise.
+	 * Return a copy of the Job matching theJobID 
+	 * @author Reid Thompson
 	 */
 	public Job getJobCopy(int theJobID) {
 		Job jobToReturn = null;
@@ -139,38 +111,49 @@ public class DataPollster {
 			if(job.getJobID() == theJobID) {
 				jobToReturn = job;
 			}
-		}
-		
+		}		
 		return jobToReturn;
 	}
 	
-	
 	/**
-	 * This method returns a list of all of the jobs.
-	 * It is called when volunteer wants to see a list of jobs so that he/she can sign up.
+	 * Return the next available Job ID to be used during the creation of a new job.
+	 * @author Taylor Gorman
 	 */
-	public List<Job> getJobListCopy() {
-		return myJobList.getCopyList();
+	public int getNextJobID() {
+		int nextID = 0;
+		
+		for(Job job : getJobListCopy()) {
+			if(job.getJobID() >= nextID) {
+				nextID = job.getJobID() + 1;
+			}
+		}		
+		return nextID;
 	}
-	
 	
 	/**
 	 * Return a list of all Volunteers for a given job.
 	 */
 	public List<Volunteer> getJobVolunteerList(int theJobID) {
 		
-		List<Volunteer> returnList = new ArrayList<Volunteer>();
+		List<Volunteer> volunteerList = new ArrayList<Volunteer>();
 		Job job = myJobList.getJobCopy(theJobID);
 		
 		if(job != null) {
 			for(ArrayList<String> volunteer : job.getVolunteerList()) {
 				String volunteerEmail = volunteer.get(0);
-				returnList.add(getVolunteer(volunteerEmail));
+				volunteerList.add(getVolunteer(volunteerEmail));
 			}
 		}
 		
-		return returnList;
+		return volunteerList;
 	}
+	
+	
+	
+	
+	/*===============*
+	 * User Handling *
+	 *===============*/
 	
 	/**
 	 * Check the e-mail address of a user logging in to see if they exist in the system.
@@ -195,8 +178,7 @@ public class DataPollster {
 	 * Return the user type associated with the e-mail as a String.
 	 * @author Taylor Gorman
 	 * @author Reid Thompson - added User functionality
-	 * @return null if there is no user associated with this email in the system,
-	 * and "ParkManager", "Volunteer", or "Administrator" otherwise.
+	 * @return Null if there is no user associated with this email in the system; "ParkManager", "Volunteer", or "Administrator" otherwise.
 	 */
 	public String getUserType(String theEmail) {
 		String userType = null;
@@ -208,12 +190,27 @@ public class DataPollster {
 		}
 		
 		return userType;
-
+	}
+	
+	/**
+	 * Return the work grade of a Volunteer for a given job.
+	 * @author Taylor Gorman - initial implementation
+	 * @author Reid Thompson - single exit point of method.
+	 */
+	public String getVolunteerGrade(int theJobID, String theVolunteerEmail) {
+		String gradeToReturn = null;
+		
+		for(ArrayList<String> volunteer : myJobList.getJobCopy(theJobID).getVolunteerList()) {
+			if(volunteer.get(0).equals(theVolunteerEmail)) {
+				gradeToReturn = volunteer.get(1);
+			}
+		}
+		
+		return gradeToReturn;
 	}
 
 	/**
-	 * Return the Park List associated with a ParkManager's e-mail.
-	 * 
+	 * Return the Park List associated with a ParkManager's e-mail. 
 	 * @author Taylor Gorman - initial implementation
 	 * @author Reid Thompson - added User functionality.
 	 */
@@ -228,15 +225,18 @@ public class DataPollster {
 		return new ArrayList<String>();
 	}
 	
+	
+	
+	/*==============*
+	 * User Getters *
+	 *==============*/
+	
 	/**
 	 * Given a volunteer's email, construct the Volunteer and return it.
-	 * 
-	 * @param theVolunteerEmail is the email address of the Volunteer.
-	 * @return a new Volunteer object with the given email address.
 	 * @author Taylor Gorman
 	 */
 	public Volunteer getVolunteer(String theVolunteerEmail) { // Reid: Removed "default" volunteer from being returned.
-		Volunteer volToReturn = null;
+		Volunteer returnVolunteer = null;
 		List<User> volunteerCopyList = myUserList.getVolunteerListCopy();
 		
 		for(User volunteer : volunteerCopyList) {
@@ -245,23 +245,19 @@ public class DataPollster {
 				final String lastName = volunteer.getLastName();
 				final String email = volunteer.getEmail();
 				
-				volToReturn = new Volunteer(email, firstName, lastName);
+				returnVolunteer = new Volunteer(email, firstName, lastName);
 			}
 		}
 
-		return volToReturn;
+		return returnVolunteer;
 	}
 	
 	/**
-	 * Given a park manager's email, construct the Park Manager and return it.
-	 * 
-	 * @param theParkManagerEmail is the email address of the Park Manager.
-	 * @return a new ParkManager object with the given email address.
-	 * 
+	 * Given a park manager's email, construct the Park Manager and return it. 
 	 * @author Taylor Gorman
 	 */
 	public ParkManager getParkManager(String theParkManagerEmail) {
-		ParkManager prkMngrToReturn = null;
+		ParkManager returnManager = null;
 		
 		List<User> managerCopyList = myUserList.getParkManagerListCopy();
 		
@@ -271,75 +267,55 @@ public class DataPollster {
 				String firstName = manager.getFirstName();
 				String lastName = manager.getLastName();
 				List<String> parkList = ((ParkManager) manager).getManagedParks();
-				prkMngrToReturn = new ParkManager(theParkManagerEmail, firstName, lastName, parkList);
+				returnManager = new ParkManager(theParkManagerEmail, firstName, lastName, parkList);
 			}
 		}
 
-		return prkMngrToReturn;
+		return returnManager;
 	}
 	
 	/**
-	 * Given a administrator's email, construct the Administrator and return it.
-	 * 
-	 * @param theAdministratorEmail is the email address of the Administrator.
-	 * @return a new Administrator object with the given email address.
+	 * Given an Administrator's email, construct the Administrator and return it.
 	 * @author Taylor Gorman
 	 */
-	public Administrator getAdministrator(String theAdministratorEmail) { // Reid: Removed "default" admin from being returned.
-		Administrator adminToReturn = null;
+	public Administrator getAdministrator(String theAdministratorEmail) {
+		Administrator returnAdministrator = null;
 		List<User> administratorCopyList = myUserList.getAdministratorListCopy();
 		
 		for(User administrator : administratorCopyList) {
 			if(administrator.getEmail().equals(theAdministratorEmail)) {
-				adminToReturn = (Administrator) administrator;
+				returnAdministrator = (Administrator) administrator;
 			}
 		}
 
-		return adminToReturn;
+		return returnAdministrator;
 	}
 	
-	/**
-
-	 * Returns a copied list of Volunteer Users.
-	 * 
-	 * @author Reid Thompson
-	 * @return a copied list of Volunteer Users.
-	 */
-	public List<User> getVolunteerListCopy() {
-		return myUserList.getVolunteerListCopy();
-	}
 	
-	/**
-	 * Return the work grade of a Volunteer for a given job.
-	 * @author Taylor Gorman - initial implementation
-	 * @author Reid Thompson - single exit point of method.
-	 * @return the work grade of a Volunteer for a given job.
-	 */
-	public String getVolunteerGrade(int theJobID, String theVolunteerEmail) {
-		String gradeToReturn = null;
-		
-		for(ArrayList<String> volunteer : myJobList.getJobCopy(theJobID).getVolunteerList()) {
-			if(volunteer.get(0).equals(theVolunteerEmail)) {
-				gradeToReturn = volunteer.get(1);
-			}
-		}
-		
-		return gradeToReturn;
+	
+	
+	
+	/*==============*
+	 * List Getters *
+	 *==============*/
+	
+	public List<Job> getJobListCopy() {
+		return myJobList.getCopyList();
 	}
 
 	public List<User> getAllUserList() {
 		return myUserList.getUserListCopy();
 	}
 	
-	public List<User> getAllVolunteerList() {
+	public List<User> getVolunteerListCopy() {
 		return myUserList.getVolunteerListCopy();
 	}
 	
-	public List<User> getAllManagerList() {
+	public List<User> getManagerListCopy() {
 		return myUserList.getParkManagerListCopy();
 	}
 	
-	public List<User> getAllAdministratorList() {
+	public List<User> getAdministratorListCopy() {
 		return myUserList.getAdministratorListCopy();
 	}
 	
@@ -350,4 +326,45 @@ public class DataPollster {
 	public void setUserList(UserList theUserList) {
 		this.myUserList = theUserList;
 	}
+	
+	
+	
+	/*================*
+	 * Helper Classes *
+	 *================*/
+	
+	/*
+	 * Return true if the job is visible to the volunteer; false otherwise.
+	 */
+	private boolean visibleToVolunteer(Volunteer theVolunteer, Job theJob) {
+		List<Job> volunteerJobs = getVolunteerJobs(theVolunteer);
+		boolean isVisible = true;
+		
+		//Volunteer is already signed up for the job.
+		if(volunteerJobs.indexOf(theJob) != -1) isVisible = false;
+		
+		//The job has no room.
+		if(!theJob.hasRoom()) isVisible = false;
+		
+		//The Volunteer has already signed up for a job on the same date.
+		for(Job volunteerJob : volunteerJobs) {
+			if(shareSameDate(volunteerJob, theJob)) isVisible = false;
+		}
+		
+		return isVisible;
+	}
+	
+	/*
+	 * Return true if the two jobs share a day; false otherwise.
+	 */
+	private boolean shareSameDate(Job job1, Job job2) {		
+		boolean hasSameDay = false;
+		
+		if(job1.getStartDate().equals(job2.getStartDate())) hasSameDay = true;
+		if(job1.getStartDate().equals(job2.getEndDate())) hasSameDay = true;
+		if(job1.getEndDate().equals(job2.getStartDate())) hasSameDay = true;
+		if(job1.getEndDate().equals(job2.getEndDate())) hasSameDay = true;
+		
+		return hasSameDay;		
+	}	
 }
