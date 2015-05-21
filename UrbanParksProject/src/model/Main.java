@@ -30,13 +30,8 @@ public class Main {
 				directLogin(schedule, pollster);
 			}
 			
-			try {
-				if(userInfo[0].equals("login")) {
-					giveControl(userInfo, schedule, pollster);
-				}
-			} catch (NullPointerException e) {
-				System.out.println("\nWe ran into a problem while logging you in. Please try again.");
-				directLogin(schedule,pollster);
+			if(userInfo[0].equals("login")) {
+				giveControl(userInfo, schedule, pollster);
 			}
 			
 			if(userInfo[0].equals("register")) {
