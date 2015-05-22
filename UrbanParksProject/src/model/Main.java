@@ -3,7 +3,6 @@ package model;
 import javax.swing.JFrame;
 
 import view.AdministratorGUI;
-import view.ParkManagerGUI;
 
 public class Main {
 	
@@ -136,17 +135,14 @@ public class Main {
 	 * Transfer control to the user, specified by their e-mail address.
 	 */
 	private static void giveControl(String[] theUserInfo) {
-		DataPollster pollster = myPollster;
 		
-		String userType = pollster.getUserType(theUserInfo[1]);
+		String userType = myPollster.getUserType(theUserInfo[1]);
 		String email = theUserInfo[1];
 		
 		if(userType.equals("ParkManager")) {
-			ParkManager manager = pollster.getParkManager(email);
-			ParkManagerGUI managerGUI = new ParkManagerGUI(manager);
-			managerGUI.setVisible(true);
-			
-			stallMainLoop(managerGUI);
+			ParkManager manager = myPollster.getParkManager(email);
+			ParkManagerUI managerUI = new ParkManagerUI(manager);
+			managerUI.commandLoop();
 		}
 		
 		// These need to be changed with GUI object instantiations - need to call diff constructors!
@@ -157,7 +153,7 @@ public class Main {
 		}
 		
 		if(userType.equals("Administrator")) {
-			Administrator admin = pollster.getAdministrator(email);
+			Administrator admin = myPollster.getAdministrator(email);
 			AdministratorGUI adminGUI = new AdministratorGUI(admin);
 			adminGUI.setVisible(true);
 			
