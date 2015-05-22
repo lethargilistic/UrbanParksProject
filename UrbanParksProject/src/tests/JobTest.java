@@ -5,12 +5,9 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import model.Job;
-import model.JobList;
 import model.ParkManager;
-import model.UserList;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -103,7 +100,6 @@ public class JobTest {
 		ArrayList<String> vol6 = new ArrayList<>();
 		ArrayList<String> vol7 = new ArrayList<>();
 		ArrayList<String> vol8 = new ArrayList<>();
-		ArrayList<String> vol9 = new ArrayList<>();
 		
 		vol6.add("whodunnit@gmail.com");
 		vol6.add("Heavy");
