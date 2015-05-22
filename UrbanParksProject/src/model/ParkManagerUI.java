@@ -136,13 +136,15 @@ public class ParkManagerUI {
 	 *==============*/
 	
 	public void createNewJob() {
-		List<String> managedParks = DataPollster.getInstance().getParkList(myManager.getEmail());
+		List<String> managedParks = new ArrayList<>();
+		managedParks.addAll(DataPollster.getInstance().getParkList(myManager.getEmail()));
+				
 		
 		displayParkNumberRequest();
 		displayParks(managedParks);
 		int parkNumber = getUserInt();
 		
-		if(parkNumber == managedParks.size()) {
+		if(parkNumber >= managedParks.size()) {
 			String newParkName = createNewPark();
 			managedParks.add(newParkName);
 			Schedule.getInstance().updateParkList(myManager.getEmail(), managedParks);
