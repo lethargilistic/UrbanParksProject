@@ -216,6 +216,7 @@ public class Schedule {
 			}
 		}
 		
+		//TODO: Needs to be exception
 		if(sameDate) {
 			System.out.println("\nSorry, but you are already signed up for a job that occurs the same date!");
 			return false;
@@ -278,7 +279,7 @@ public class Schedule {
 			// If everything is okay, we add the Volunteer to the Job�s Volunteer List,
 			// increment the grade slot, and return.
 
-			j.getVolunteerList().add(theVolunteer);
+			j.addVolunteer(theVolunteer);
 		} else {
 			// If either of these are false, we print to the console and return
 			System.out.println("Sorry, but the grade of work for this job is already full!");

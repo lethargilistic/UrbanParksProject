@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 /**
  * This class is used to create an instance of a Job.
@@ -162,7 +163,7 @@ public class Job {
      */
     public boolean hasRoom()
     {
-    	return hasLightRoom() && hasMediumRoom() && hasHeavyRoom();
+    	return hasLightRoom() || hasMediumRoom() || hasHeavyRoom();
     }
     
     /**
@@ -170,7 +171,7 @@ public class Job {
      * @param theGradeType 0 for Light, 1 for Medium, 2 for Heavy
      * @return
      */
-    public int getNumberOfSlots(int theGradeType) {
+    private int getNumberOfSlots(int theGradeType) {
     	int numLight = 0;
     	int numMedium = 0;
     	int numHeavy = 0;
@@ -235,6 +236,10 @@ public class Job {
 	
 	public String getManager() {
 		return myManager;
+	}
+	
+	public void addVolunteer(ArrayList<String> theV) {
+		myVolunteerList.add(theV);
 	}
 	
 	@Override
