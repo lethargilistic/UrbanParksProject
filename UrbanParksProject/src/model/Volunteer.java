@@ -281,6 +281,7 @@ public class Volunteer extends User {
 	}
 
 
+	//TODO: this method is repeated in SChedule. Should only appear once. Access statically?
 	/**
 	 * Convert a GregorianCalendar object to string of format mmddyyyy
 	 */
