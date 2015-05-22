@@ -1,8 +1,12 @@
-package model;
+package tests;
 
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+
+import model.Job;
+import model.JobList;
+import model.Volunteer;
 
 import org.junit.After;
 import org.junit.AfterClass;
