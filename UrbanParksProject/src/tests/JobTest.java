@@ -25,13 +25,6 @@ public class JobTest {
 		String startDate = "06111992";
 		String endDate = "06111992";
 		
-		List<String> pList = new ArrayList<String>();
-		pList.add("Ariel Park");
-		pList.add("Julia Park");
-		pList.add("Jasmine Park");
-
-		myParkManager = new ParkManager("tjsg1992@gmail.com", "Taylor", "Gorman", pList );
-		
 		myJob = new Job(1, "Ariel Park", 3, 3, 3, 
 					    startDate, endDate,
 					    myParkManager.getEmail(),
