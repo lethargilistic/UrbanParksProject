@@ -2,7 +2,6 @@ package model;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
-import java.util.List;
 
 /**
  * This class is used to create an instance of a Job.
