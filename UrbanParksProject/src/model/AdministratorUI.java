@@ -56,24 +56,21 @@ public class AdministratorUI {
 		else { // valid input was given
 			switch (theChoice) { // no default case needed because of original
 									// if test
-				case 1: // list all volunteers by last name, first name (sorted
-						// ascending)
-					myAdmin.getAllVolunteersByLNFN();
+				case 1: // list all volunteers by last name, first name (sorted ascending)
+					displayVolunteers(myAdmin.getAllVolunteersByLNFN());
 					break;
 				case 2: // search volunteers by last name
-					String name = getUserString();
-					searchByLastName(name);
+					searchByLastName();
 					break;
 				case 3: // logout
-					System.out.println("Option 3 selected.\n"
-							+ "Logging out now.\n");
+					System.out.println("Logging out now.\n");
 					stayLoggedIn = false;
 					break;
 			}
 		}
 		return stayLoggedIn;
 	}
-	
+
 	/**
 	 * Prints the commands that the Administrator can select.
 	 */
@@ -87,17 +84,10 @@ public class AdministratorUI {
 		System.out.println("3) Logout\n");
 	}
 	
-	private List<User> searchByLastName(String theLastName) {
-		System.out.println("Enter Last Name.\n");
-		String lastName = theLastName;
-		boolean lastNameValid = !lastName.equals(""); // other conditions to
-														// add?
-		while (!lastNameValid) {
-			System.out.println("No last name was entered. Please try again.\n");
-			lastName = theLastName;
-			lastNameValid = !lastName.equals("");
-		} // lastName is valid now
-			// get and output list of Volunteers with matching last names
+	private List<User> searchByLastName() {
+		String lastName = promptForVolsLastName();
+		
+		// get and output list of Volunteers with matching last names
 		List<User> matchingVols = myAdmin.getMatchingVolunteers(lastName);
 		if (!matchingVols.isEmpty()) {
 			Collections.sort(matchingVols, new Comparator<User>() {
@@ -110,8 +100,13 @@ public class AdministratorUI {
 				}
 
 			});
-			displayMatchingVolunteers(lastName, matchingVols);
-		} else {
+
+			System.out.println("Here is every Volunteer with the last name "
+							+ lastName +":");
+							
+			displayVolunteers(matchingVols);
+		} 
+		else {
 			System.out
 					.println("There were no Volunteers matching the last name "
 							+ lastName);
@@ -124,29 +119,24 @@ public class AdministratorUI {
 	 * Outputs the list of Volunteers with matching last names sorted by first
 	 * name in ascending order.
 	 * 
-	 * @param theLastName
-	 *            is the last name used for matching.
-	 * @param theMatchingVols
+	 * @param theVols
 	 *            is the list of Volunteers with matching last names.
 	 */
-	private void displayMatchingVolunteers(final String theLastName,
-			final List<User> theMatchingVols) {
-		System.out
-				.println("Here are all of the Volunteers whose last name matches "
-						+ theLastName);
+	private void displayVolunteers(final List<User> theMatchingVols) {
 
 		for (int i = 0; i < theMatchingVols.size(); i++) {
 			final User v = theMatchingVols.get(i);
 			System.out.println(v.getFirstName() + " " + v.getLastName());
 			System.out.println("Email: " + v.getEmail());
-			List<Job> jobs = myAdmin.getVolunteerJobs((Volunteer) v);
+			List<Job> jobs = DataPollster.getInstance().getVolunteerJobs((Volunteer) v);
 			if (!jobs.isEmpty()) {
 				System.out.println("Jobs signed up for: ");
 				for (int j = 0; j < jobs.size(); j++) {
 					final Job job = jobs.get(j);
 					System.out.println("\tJob ID #" + job.getJobID());
 				}
-			} else {
+			}
+			else {
 				System.out.println("This volunteer has not signed up for any jobs.\n");
 			}
 		}
@@ -166,6 +156,7 @@ public class AdministratorUI {
 			myIn.next();
 		}
 
+		System.out.println(); //Skip a line afterward
 		return userInput;
 	}
 	
@@ -180,6 +171,8 @@ public class AdministratorUI {
 									//prompt the user, instead of just once? - Reid agrees.
 			userInput = myIn.nextLine();
 		}
+
+		System.out.println(); //Skip a line afterward
 		return userInput;
 	}
 	
@@ -189,8 +182,19 @@ public class AdministratorUI {
 	 * @return a String of the last name of the Volunteer to search for.
 	 */
 	public String promptForVolsLastName() {
-		System.out.println("Please enter the last name of the Volunteer to search for: \n");
-		return getUserString();
+		System.out.print("Please enter the last name of the Volunteer to search for: ");
+		String lastName = getUserString();
+
+		boolean lastNameValid = !lastName.equals(""); // other conditions to
+		
+		// add?
+		while (!lastNameValid) {
+		System.out.println("No last name was entered. Please try again.\n");
+		lastName = getUserString();
+		lastNameValid = !lastName.equals("");
+		} // lastName is valid now
+		
+		return lastName;
 	}
 	
 	// access Vol list thru DataPollster thru UserList methods
