@@ -18,6 +18,9 @@ public abstract class BusinessRule {
 	 */
 	public boolean test(Object theTestedObject)
 	{
-		return false;
+		return false; //Default to false for unimplemented business rules.
 	}
+	
+	//In case we need to change this so there is more than one object brought in.
+	//public boolean test(Object... theTestedObject)
 }
