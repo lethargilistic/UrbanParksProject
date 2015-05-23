@@ -243,63 +243,51 @@ public class DataPollster {
 	}
 	
 	/**
-	 * Given a volunteer's email, construct the Volunteer and return it.
+	 * A protected variation of getUser that ensures that the returned User is a Volunteer.
 	 * @author Taylor Gorman
+	 * @param theEmail The email address of the Volunteer.
+	 * @return The Volunteer that matches the email, or null if such a Volunteer does not exist.
 	 */
-	public Volunteer getVolunteer(String theVolunteerEmail) { // Reid: Removed "default" volunteer from being returned.
-		Volunteer returnVolunteer = null;
-		List<User> volunteerCopyList = myUserList.getVolunteerListCopy();
+	public Volunteer getVolunteer(String theEmail) { // Reid: Removed "default" volunteer from being returned.
+		User volunteer = getUser(theEmail);
 		
-		for(User volunteer : volunteerCopyList) {
-			if(volunteer.getEmail().equals(theVolunteerEmail)) {
-				final String firstName = volunteer.getFirstName();
-				final String lastName = volunteer.getLastName();
-				final String email = volunteer.getEmail();
-				
-				returnVolunteer = new Volunteer(email, firstName, lastName);
-			}
+		if(volunteer != null && volunteer.isVolunteer()) {
+			return (Volunteer) volunteer;
+		} else {
+			return null;
 		}
-
-		return returnVolunteer;
 	}
 	
 	/**
-	 * Given a park manager's email, construct the Park Manager and return it. 
+	 * A protected variation of getUser that ensures that the returned User is a ParkManager.
 	 * @author Taylor Gorman
+	 * @param theEmail The email address of the ParkManager.
+	 * @return The ParkManager that matches the email, or null if such a ParkManager does not exist.
 	 */
-	public ParkManager getParkManager(String theParkManagerEmail) {
-		ParkManager returnManager = null;
-		
-		List<User> managerCopyList = myUserList.getParkManagerListCopy();
-		
-		for(User manager : managerCopyList) {
-			if(manager.getEmail().equals(theParkManagerEmail)) {
-				//Manager found, so we copy the data over and return it.
-				String firstName = manager.getFirstName();
-				String lastName = manager.getLastName();
-				List<String> parkList = ((ParkManager) manager).getManagedParks();
-				returnManager = new ParkManager(theParkManagerEmail, firstName, lastName, parkList);
-			}
+	public ParkManager getParkManager(String theEmail) {		
+		User parkManager = getUser(theEmail);
+	
+		if(parkManager != null && parkManager.isParkManager()) {
+			return (ParkManager) parkManager;
+		} else {
+			return null;
 		}
-
-		return returnManager;
 	}
 	
 	/**
-	 * Given an Administrator's email, construct the Administrator and return it.
+	 * A protected variation of getUser that ensures that the returned User is a Administrator.
 	 * @author Taylor Gorman
+	 * @param theEmail The email address of the Administrator.
+	 * @return The Administrator that matches the email, or null if such a Administrator does not exist.
 	 */
-	public Administrator getAdministrator(String theAdministratorEmail) {
-		Administrator returnAdministrator = null;
-		List<User> administratorCopyList = myUserList.getAdministratorListCopy();
+	public Administrator getAdministrator(String theEmail) {
+		User administrator = getUser(theEmail);
 		
-		for(User administrator : administratorCopyList) {
-			if(administrator.getEmail().equals(theAdministratorEmail)) {
-				returnAdministrator = (Administrator) administrator;
-			}
+		if(administrator != null && administrator.isParkManager()) {
+			return (Administrator) administrator;
+		} else {
+			return null;
 		}
-
-		return returnAdministrator;
 	}
 	
 	
