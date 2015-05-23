@@ -1,8 +1,5 @@
 package model;
 
-import javax.swing.JFrame;
-
-import view.AdministratorGUI;
 
 public class Main {
 	
@@ -154,26 +151,9 @@ public class Main {
 		
 		if(userType.equals("Administrator")) {
 			Administrator admin = myPollster.getAdministrator(email);
-			AdministratorGUI adminGUI = new AdministratorGUI(admin);
-			adminGUI.setVisible(true);
+			AdministratorUI adminUI = new AdministratorUI(admin);
+			adminUI.commandLoop();
 			
-			stallMainLoop(adminGUI);
-		}
-	}
-	
-	private static void stallMainLoop(JFrame theGUI) {
-		
-		while(true) {
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			if(!theGUI.isDisplayable()) {
-				return;
-			} 
 		}
 	}
 	
