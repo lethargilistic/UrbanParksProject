@@ -1,9 +1,15 @@
-package model;
+package view;
 
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
+
+import model.Administrator;
+import model.DataPollster;
+import model.Job;
+import model.User;
+import model.Volunteer;
 
 /**
  * A class for the console user interface for Administrators.

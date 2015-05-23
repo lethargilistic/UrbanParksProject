@@ -1,9 +1,6 @@
 package tests;
 
-import static org.junit.Assert.*;
-
-import java.util.ArrayList;
-
+import static org.junit.Assert.fail;
 import model.Job;
 import model.JobList;
 import model.Volunteer;

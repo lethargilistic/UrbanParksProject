@@ -1,10 +1,15 @@
-package model;
+package view;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Scanner;
+
+import model.DataPollster;
+import model.Job;
+import model.Schedule;
+import model.Volunteer;
 
 
 /**This is the user interface for volunteer.
