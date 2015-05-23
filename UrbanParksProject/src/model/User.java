@@ -57,4 +57,16 @@ public abstract class User {
 	public void setEmail(String theEmail) {
 		myEmail = theEmail;
 	}
+	
+	public boolean isVolunteer() {
+		return myUserType.equals("Volunteer");
+	}
+	
+	public boolean isParkManager() {
+		return myUserType.equals("Park Manager");
+	}
+	
+	public boolean isAdministrator() {
+		return myUserType.equals("Administrator");
+	}
 }
