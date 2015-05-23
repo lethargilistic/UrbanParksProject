@@ -35,11 +35,13 @@ public class VolunteerUI implements UI {
 	 * If the user chooses to quit, or inputs an invalid command, then the loop terminates.
 	 */
 	public void commandLoop() {
-		listCommands();
-		String command = getCommand();
-
-		if(parseCommand(command)) {
-			commandLoop();
+		boolean stayLoggedIn = true;
+		
+		while (stayLoggedIn) {
+			listCommands();
+			String command = getCommand();
+	
+			stayLoggedIn = parseCommand(command);
 		}
 	}
 	
