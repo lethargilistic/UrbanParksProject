@@ -213,7 +213,8 @@ public class DataPollster {
 	 * @author Taylor Gorman - initial implementation
 	 * @author Reid Thompson - added User functionality.
 	 */
-	public List<String> getParkList(String theEmail) {		
+	public List<String> getParkList(String theEmail) {
+		
 		List<User> managerList = myUserList.getParkManagerListCopy();
 		
 		for(User manager : managerList) {
@@ -231,14 +232,15 @@ public class DataPollster {
 	 * User Getters *
 	 *==============*/
 	
-	public User getUser(String theEmail) {
-		
+	/**
+	 * Return the User that matches the given email address, and null if one does not exist.
+	 */
+	public User getUser(String theEmail) {		
 		List<User> userList = myUserList.getUserListCopy();
 		
 		for(User user : userList) {
 			if(user.getEmail().equals(theEmail)) return user;
-		}
-		
+		}		
 		return null;
 	}
 	
