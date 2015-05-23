@@ -11,7 +11,7 @@ import java.util.Scanner;
  * @author Reid Thompson
  * @version 5.10.2015
  */
-public class AdministratorUI {
+public class AdministratorUI implements UI{
 	
 	/**
 	 * A Scanner object to read input for the Administrator's UI.

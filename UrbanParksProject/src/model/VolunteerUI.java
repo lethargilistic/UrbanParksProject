@@ -13,7 +13,7 @@ import java.util.Scanner;
  * 
  * @version 2 (May 22, 2015)
  */
-public class VolunteerUI {
+public class VolunteerUI implements UI {
 
 	private Scanner myScanner;
 	private Volunteer myVol;
@@ -31,17 +31,10 @@ public class VolunteerUI {
 	}
 	
 	/**
-	 * All this method does is start the command loop.
-	 */
-	public void initialize() {
-		commandLoop();
-	}
-	
-	/**
 	 * Lists possible commands, prompts the user for one, and then acts on it.<br>
 	 * If the user chooses to quit, or inputs an invalid command, then the loop terminates.
 	 */
-	private void commandLoop() {
+	public void commandLoop() {
 		listCommands();
 		String command = getCommand();
 

@@ -136,24 +136,25 @@ public class Main {
 		String userType = myPollster.getUserType(theUserInfo[1]);
 		String email = theUserInfo[1];
 		
+		UI userUI;
+		
 		if(userType.equals("ParkManager")) {
 			ParkManager manager = myPollster.getParkManager(email);
-			ParkManagerUI managerUI = new ParkManagerUI(manager);
-			managerUI.commandLoop();
-		}
-		
-		if(userType.equals("Volunteer")) {
-			Volunteer volunteer = myPollster.getVolunteer(email);
-			VolunteerUI volUI = new VolunteerUI(volunteer);
-			volUI.initialize();
+			userUI = new ParkManagerUI(manager);
 		}
 		
 		if(userType.equals("Administrator")) {
 			Administrator admin = myPollster.getAdministrator(email);
-			AdministratorUI adminUI = new AdministratorUI(admin);
-			adminUI.commandLoop();
-			
+			userUI = new AdministratorUI(admin);
+						
 		}
+		
+		else { // A Volunteer
+			Volunteer volunteer = myPollster.getVolunteer(email);
+			userUI = new VolunteerUI(volunteer);
+		}
+		
+		userUI.commandLoop();
 	}
 	
 	/**

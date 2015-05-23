@@ -12,7 +12,7 @@ import java.util.Scanner;
  * @author Reid Thompson
  * @version 6 May 2015
  */
-public class ParkManagerUI {
+public class ParkManagerUI implements UI{
 	
 	//Class Variables
 	private Scanner myScanner;
