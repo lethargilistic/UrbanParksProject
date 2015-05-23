@@ -43,7 +43,7 @@ public class JobList {
 	/**
 	 * Return the number of jobs contained within JobList.
 	 */
-	public int getNumberJobs() {
+	public int getNumberOfJobs() {
 		return myJobList.size();
 	}
 	

@@ -5,6 +5,8 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import model.businessRules.BusinessRule1;
+
 /**
  * Defines the Schedule object for an application.
  * This entity contains the master job list and enforces
@@ -49,7 +51,9 @@ public class Schedule {
 		
 		
 		//BIZ rule 1. A job may not be added if the total number of pending jobs is currently 30. 
-		if (myJobList.getCopyList().size() >= 30) {
+		BusinessRule1 br1 = new BusinessRule1();
+		
+		if (br1.test(myJobList)) { 
 			okToAdd = false;
 		}
 		//BIZ rule 2. A job may not be added if the total number of pending jobs during that week 
