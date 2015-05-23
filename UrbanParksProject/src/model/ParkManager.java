@@ -81,7 +81,7 @@ public class ParkManager extends User {
 	}
 	
 	public List<String> getManagedParks() {
-		return Collections.unmodifiableList(myManagedParks);
+		return DataPollster.getInstance().getParkList(super.getEmail());
 	}	
 	
 	
