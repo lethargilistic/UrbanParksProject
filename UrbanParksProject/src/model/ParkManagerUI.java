@@ -28,16 +28,16 @@ public class ParkManagerUI {
 	public void commandLoop() {
 		listCommands();		
 		int command = getUserInt();
-		boolean logout = false;
+		boolean stayLoggedIn = true;
 		
-		switch(command) {
-		case 1: createNewJob(); break;
-		case 2: displayJobs(); break;
-		case 3: viewJobVolunteers(); break;
-		case 4: logout = true; break;
+		while (stayLoggedIn) {
+			switch(command) {
+			case 1: createNewJob(); break;
+			case 2: displayJobs(); break;
+			case 3: viewJobVolunteers(); break;
+			case 4: stayLoggedIn = false; break;
+			}
 		}
-		
-		if(!logout) commandLoop();
 	}
 	
 	
