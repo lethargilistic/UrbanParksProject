@@ -5,6 +5,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import model.Job;
 import model.ParkManager;
@@ -21,6 +22,11 @@ public class JobTest {
 	public void setUp() throws Exception {
 		String startDate = "06111992";
 		String endDate = "06111992";
+		
+		List<String> pList = new ArrayList<String>();
+		pList.add("Foo Park");
+		
+		myParkManager = new ParkManager("tjsg1992@gmail.com", "Taylor", "Gorman", pList);
 		
 		myJob = new Job(1, "Ariel Park", 3, 3, 3, 
 					    startDate, endDate,
