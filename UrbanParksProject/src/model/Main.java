@@ -43,7 +43,7 @@ public class Main {
 			
 			try {
 				if(userInfo[0].equals("login")) {
-					giveControl(userInfo);
+					giveControl(userInfo[1]);
 				}
 			} catch (NullPointerException e) {
 				System.out.println("\nWe ran into a problem while logging you in. Please try again.");
@@ -52,7 +52,7 @@ public class Main {
 			
 			if(userInfo[0].equals("register")) {
 				mySchedule.addUser(userInfo[1], userInfo[2], userInfo[3], userInfo[4]);
-				giveControl(userInfo);
+				giveControl(userInfo[1]);
 			}
 			
 			saveManager.saveJobList(jobList);
@@ -137,30 +137,31 @@ public class Main {
 	/**
 	 * Transfer control to the user, specified by their e-mail address.
 	 */
-	private static void giveControl(String[] theUserInfo) {
+	private static void giveControl(String theEmail) {
 		
-		String userType = myPollster.getUserType(theUserInfo[1]);
-		String email = theUserInfo[1];
+		User user = myPollster.getUser(theEmail);
 		
-		UI userUI;
+		UI userUI = null;
 		
-		if(userType.equals("ParkManager")) {
-			ParkManager manager = myPollster.getParkManager(email);
+		
+		
+		if(user.isParkManager()) {
+			ParkManager manager = myPollster.getParkManager(theEmail);
 			userUI = new ParkManagerUI(manager);
 		}
 		
-		if(userType.equals("Administrator")) {
-			Administrator admin = myPollster.getAdministrator(email);
+		if(user.isAdministrator()) {
+			Administrator admin = myPollster.getAdministrator(theEmail);
 			userUI = new AdministratorUI(admin);
 						
 		}
 		
-		else { // A Volunteer
-			Volunteer volunteer = myPollster.getVolunteer(email);
+		if(user.isVolunteer()) {
+			Volunteer volunteer = myPollster.getVolunteer(theEmail);
 			userUI = new VolunteerUI(volunteer);
 		}
 		
-		userUI.commandLoop();
+		if(userUI != null) userUI.commandLoop();
 	}
 	
 	/**

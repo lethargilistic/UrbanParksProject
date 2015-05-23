@@ -63,7 +63,7 @@ public abstract class User {
 	}
 	
 	public boolean isParkManager() {
-		return myUserType.equals("Park Manager");
+		return myUserType.equals("ParkManager");
 	}
 	
 	public boolean isAdministrator() {
