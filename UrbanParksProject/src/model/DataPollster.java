@@ -185,12 +185,9 @@ public class DataPollster {
 	public String getUserType(String theEmail) {
 		String userType = null;
 		
-		for (User user : myUserList.getUserListCopy()) {
-			if (user.getEmail().equals(theEmail)) {
-				userType = user.getUserType();
-			}
-		}
-		
+		if(getUser(theEmail) != null) {
+			userType = getUser(theEmail).getUserType();
+		}		
 		return userType;
 	}
 	
@@ -233,6 +230,17 @@ public class DataPollster {
 	/*==============*
 	 * User Getters *
 	 *==============*/
+	
+	public User getUser(String theEmail) {
+		
+		List<User> userList = myUserList.getUserListCopy();
+		
+		for(User user : userList) {
+			if(user.getEmail().equals(theEmail)) return user;
+		}
+		
+		return null;
+	}
 	
 	/**
 	 * Given a volunteer's email, construct the Volunteer and return it.
