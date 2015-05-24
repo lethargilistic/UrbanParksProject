@@ -8,7 +8,7 @@ import java.util.List;
  * 
  * @author Mike Overby - initial implementation
  * @author Reid Thompson - added User functionality.
- * @author Taylor Gomran - Several new method and rewrites
+ * @author Taylor Gorman - Several new method and rewrites
  * @version 5.21.2015
  */
 public class DataPollster {
@@ -178,21 +178,6 @@ public class DataPollster {
 
 		return result;
 	}
-
-	/**
-	 * Return the user type associated with the e-mail as a String.
-	 * @author Taylor Gorman
-	 * @author Reid Thompson - added User functionality
-	 * @return Null if there is no user associated with this email in the system; "ParkManager", "Volunteer", or "Administrator" otherwise.
-	 */
-	public String getUserType(String theEmail) {
-		String userType = null;
-		
-		if(getUser(theEmail) != null) {
-			userType = getUser(theEmail).getUserType();
-		}		
-		return userType;
-	}
 	
 	/**
 	 * Return the work grade of a Volunteer for a given job.
@@ -256,7 +241,7 @@ public class DataPollster {
 	public Volunteer getVolunteer(String theEmail) { // Reid: Removed "default" volunteer from being returned.
 		User volunteer = getUser(theEmail);
 		
-		if(volunteer != null && volunteer.isVolunteer()) {
+		if(volunteer != null && volunteer instanceof Volunteer) {
 			return (Volunteer) volunteer;
 		} else {
 			return null;
@@ -272,7 +257,7 @@ public class DataPollster {
 	public ParkManager getParkManager(String theEmail) {		
 		User parkManager = getUser(theEmail);
 	
-		if(parkManager != null && parkManager.isParkManager()) {
+		if(parkManager != null && parkManager instanceof ParkManager) {
 			return (ParkManager) parkManager;
 		} else {
 			return null;
@@ -288,7 +273,7 @@ public class DataPollster {
 	public Administrator getAdministrator(String theEmail) {
 		User administrator = getUser(theEmail);
 		
-		if(administrator != null && administrator.isParkManager()) {
+		if(administrator != null && administrator instanceof Administrator) {
 			return (Administrator) administrator;
 		} else {
 			return null;

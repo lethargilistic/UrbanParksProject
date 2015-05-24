@@ -375,10 +375,9 @@ public class SaveLoad {
 		
 		for (User user : theUserList.getUserListCopy()) {
 			userInfo.add(user.getEmail());
-			userInfo.add(user.getUserType());
 			userInfo.add(user.getFirstName());
 			userInfo.add(user.getLastName());
-			if (user.getUserType().equals("ParkManager")) {
+			if (user instanceof ParkManager) {
 				//Load Parks.
 				for(String park : ((ParkManager) user).getManagedParks()) {
 					userInfo.add(park);

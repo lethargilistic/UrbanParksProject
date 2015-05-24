@@ -13,7 +13,6 @@ public class Volunteer extends User {
 
 	public Volunteer(String theEmail, String theFirstName, String theLastName) {
 		super(theFirstName, theLastName, theEmail);
-		super.setUserType("Volunteer");
 	}
 
 	@Override

@@ -1,9 +1,7 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
@@ -26,7 +24,6 @@ public class ParkManager extends User {
 	//Constructor
 	public ParkManager(String theEmail, String theFirstName, String theLastName, List<String> theParkList) {
 		super(theFirstName, theLastName, theEmail);
-		super.setUserType("ParkManager");
 		
 		//theParkList is an Unmodifiable List, so we cannot cast it to ArrayList. So we copy it over instead.
 		List<String> copiedParks = new ArrayList<String>();
