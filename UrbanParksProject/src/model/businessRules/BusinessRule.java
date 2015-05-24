@@ -14,7 +14,7 @@ public abstract class BusinessRule {
 	/**
 	 * Perform a check of the business rule.
 	 * 
-	 * @param one or more objects required for the test.
+	 * @param theTestedObjects one or more objects required for the test.
 	 * @return true if the business rule is satisfied, false otherwise.
 	 */
 	public boolean test(Object... theTestedObjects)

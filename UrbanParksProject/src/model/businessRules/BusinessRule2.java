@@ -14,8 +14,16 @@ import model.JobList;
  */
 public class BusinessRule2 extends BusinessRule {
 
+	/**
+	 * The amount of time that constitutes a week.
+	 */
 	public static final int LIMITING_DURATION = 7;
+	
+	/**
+	 * The maximum number of jobs in a week.
+	 */
 	public static final int MAX_JOBS_IN_WEEK = 5;
+	
 	/**
 	 * @param theTestedObjects a Job object.
 	 * {@inheritDoc}
@@ -70,6 +78,11 @@ public class BusinessRule2 extends BusinessRule {
 		return true;
 	}
 
+	/**
+	 * Convert milliseconds to days.
+	 * @param theMilli the number of milliseconds
+	 * @return the number of days
+	 */
 	private long convertMilliToDays(long theMilli)
 	{
 		return theMilli /= (3600*24*1000);
