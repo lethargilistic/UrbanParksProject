@@ -108,7 +108,7 @@ public class ParkManagerUI implements UI{
 	
 	public void viewJobVolunteers() {
 		int jobID = getJobID();
-		List<Volunteer> volunteerList = DataPollster.getInstance().getJobVolunteerList(jobID);
+		List<Volunteer> volunteerList = myManager.getJobVolunteerList(jobID);
 		displayVolunteers(volunteerList);
 	}
 	

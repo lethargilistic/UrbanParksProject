@@ -92,6 +92,15 @@ public class ParkManager extends User {
 		return myPollster.getManagerJobs(myEmail);
 	}
 	
+	public List<Volunteer> getJobVolunteerList(int theJobID) {
+		List<Volunteer> volunteerList = new ArrayList<Volunteer>();
+		
+		if(isManagerOfJob(theJobID)) {
+			volunteerList.addAll(myPollster.getJobVolunteerList(theJobID));
+		}		
+		return volunteerList;
+	}
+	
 	public Object[][] getJobArray() {
 		
 		ArrayList<Job> jobs = (ArrayList<Job>) myPollster.getManagerJobs(myEmail);
@@ -158,6 +167,15 @@ public class ParkManager extends User {
 		returnString += theCalendar.get(Calendar.YEAR);
 		
 		return returnString;
+	}
+	
+	public boolean isManagerOfJob(int theJobID) {
+		boolean containsJob = false;		
+		for(Job job : getJobs()) {
+			if(job.getJobID() == theJobID) containsJob = true;
+		}
+		
+		return containsJob;
 	}
 	
 }
