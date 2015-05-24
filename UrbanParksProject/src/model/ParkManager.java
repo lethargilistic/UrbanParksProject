@@ -20,11 +20,8 @@ public class ParkManager extends User {
 	//Class Variables
 	private Schedule mySchedule = Schedule.getInstance();
 	private DataPollster myPollster = DataPollster.getInstance();
-	private List<String> myManagedParks;
-	
+	private List<String> myManagedParks;	
 	private String myEmail = super.getEmail();
-	private String myFirstName = super.getFirstName();
-	private String myLastName = super.getLastName();
 
 	//Constructor
 	public ParkManager(String theEmail, String theFirstName, String theLastName, List<String> theParkList) {
@@ -39,141 +36,22 @@ public class ParkManager extends User {
 	
 	
 	
-	/*==============*
-	 * Job Creation *
-	 *==============*/
 	
-	public boolean createJob(String thePark, int theLightSlots, int theMediumSlots, int theHeavySlots,
-			GregorianCalendar theStartDate, GregorianCalendar theEndDate) {
-		
-		ArrayList<ArrayList<String>> volunteerList = new ArrayList<>();
-		int jobID = myPollster.getNextJobID();
-		String startDateString = calendarToArgument(theStartDate);
-		String endDateString = calendarToArgument(theEndDate);
-		
-		Job addJob = new Job(jobID, thePark, theLightSlots, theMediumSlots, theHeavySlots,
-				startDateString, endDateString, super.getEmail(), volunteerList);
-		
-		boolean lessThanTwoDays = getDays(theStartDate, theEndDate) < 2;		
-		boolean addedFlag = false;
-		
-		if(lessThanTwoDays) {
-			addedFlag = mySchedule.receiveJob(addJob);
-		}
-		
-		return addedFlag;
+	/*======*
+	 * Jobs *
+	 *======*/
+	
+	
+	public List<Job> getJobs() {
+		return myPollster.getManagerJobs(myEmail);
 	}
 	
 	public boolean addJob(Job theJob) {
 		return mySchedule.receiveJob(theJob);
 	}
 	
-	/**
-	 * Returns the number of days between two GregorianCalendars.
-	 */
-	private int getDays(GregorianCalendar theStartDate, GregorianCalendar theEndDate) {
-		long timeDifference = Math.abs(theEndDate.getTimeInMillis() - theStartDate.getTimeInMillis());
-		return (int) (timeDifference / 86400000l);
-	}
-	
-	
-	
-	/*=====================*
-	 * Getters and Setters *
-	 *=====================*/	
-	
-	public void setManagedParks(List<String> theManagedParks) {
-		this.myManagedParks = theManagedParks;
-		mySchedule.updateParkList(myEmail, theManagedParks);
-	}
-	
-	public List<String> getManagedParks() {
-		return Collections.unmodifiableList(myManagedParks);
-	}	
-	
-	public List<Job> getJobs() {
-		return myPollster.getManagerJobs(myEmail);
-	}
-	
-	public List<Volunteer> getJobVolunteerList(int theJobID) {
-		List<Volunteer> volunteerList = new ArrayList<Volunteer>();
-		
-		if(isManagerOfJob(theJobID)) {
-			volunteerList.addAll(myPollster.getJobVolunteerList(theJobID));
-		}		
-		return volunteerList;
-	}
-	
 	public int getNewJobID() {
 		return DataPollster.getInstance().getNextJobID();
-	}
-	
-	public Object[][] getJobArray() {
-		
-		ArrayList<Job> jobs = (ArrayList<Job>) myPollster.getManagerJobs(myEmail);
-		
-		Object[][] jobArray = new Object[jobs.size()][7];
-		int jobNumber = 0;
-		
-		for(Job thisJob : jobs) {
-			jobArray[jobNumber][0] = thisJob.getJobID();
-			jobArray[jobNumber][1] = thisJob.getPark();
-			jobArray[jobNumber][2] = thisJob.getLightCurrent() + "/" + thisJob.getLightMax();
-			jobArray[jobNumber][3] = thisJob.getMediumCurrent() + "/" + thisJob.getMediumMax();
-			jobArray[jobNumber][4] = thisJob.getHeavyCurrent() + "/" + thisJob.getHeavyMax();
-			jobArray[jobNumber][5] = calendarToString(thisJob.getStartDate());
-			jobArray[jobNumber][6] = calendarToString(thisJob.getEndDate());
-			
-			jobNumber++;
-		}
-		
-		return jobArray;
-	}
-	
-	public String getVolunteerString(int theJobID) {
-		String volunteerString = "";
-
-		List<Volunteer> volunteerList = myPollster.getJobVolunteerList(theJobID);
-		
-		for(Volunteer volunteer : volunteerList) {
-			volunteerString += volunteer.getFirstName() + " " + volunteer.getLastName() + "\n";
-			volunteerString += volunteer.getEmail() + "\n";
-			volunteerString += myPollster.getVolunteerGrade(theJobID, volunteer.getEmail()) + "\n\n";
-		}
-		
-		return volunteerString;
-	}
-	
-	
-	private String calendarToString(GregorianCalendar theCalendar) {
-		String returnString = "";
-		returnString += theCalendar.get(Calendar.MONTH) + "/";
-		returnString += theCalendar.get(Calendar.DAY_OF_MONTH) + "/";
-		returnString += theCalendar.get(Calendar.YEAR);
-
-		return returnString;
-	}
-	
-	/*
-	 * A slight variation on calendarToString. I am so sorry for doing something this stupid but it works.
-	 */
-	private String calendarToArgument(GregorianCalendar theCalendar) {
-		//TODO see if there's some more elegant way to do this with calendarToString or something.
-		String returnString = "";
-		
-		if(theCalendar.get(Calendar.MONTH) < 10) {
-			returnString += "0";
-		}		
-		returnString += theCalendar.get(Calendar.MONTH);
-		
-		if(theCalendar.get(Calendar.DAY_OF_MONTH) < 10) {
-			returnString += "0";
-		}
-		returnString += theCalendar.get(Calendar.DAY_OF_MONTH);
-		
-		returnString += theCalendar.get(Calendar.YEAR);
-		
-		return returnString;
 	}
 	
 	public boolean isManagerOfJob(int theJobID) {
@@ -183,6 +61,39 @@ public class ParkManager extends User {
 		}
 		
 		return containsJob;
+	}
+	
+	
+	
+	
+	/*=======*
+	 * Parks *
+	 *======*/
+	
+	
+	public List<String> getManagedParks() {
+		return Collections.unmodifiableList(myManagedParks);
+	}	
+	
+	public void setManagedParks(List<String> theManagedParks) {
+		this.myManagedParks = theManagedParks;
+		mySchedule.updateParkList(myEmail, theManagedParks);
+	}
+	
+	
+	
+	
+	/*============*
+	 * Volunteers *
+	 *============*/
+	
+	public List<Volunteer> getJobVolunteerList(int theJobID) {
+		List<Volunteer> volunteerList = new ArrayList<Volunteer>();
+		
+		if(isManagerOfJob(theJobID)) {
+			volunteerList.addAll(myPollster.getJobVolunteerList(theJobID));
+		}		
+		return volunteerList;
 	}
 	
 }

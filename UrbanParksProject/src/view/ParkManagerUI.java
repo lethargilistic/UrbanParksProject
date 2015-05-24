@@ -6,10 +6,8 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Scanner;
 
-import model.DataPollster;
 import model.Job;
 import model.ParkManager;
-import model.Schedule;
 import model.Volunteer;
 
 /**
