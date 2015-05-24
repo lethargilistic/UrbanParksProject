@@ -11,6 +11,9 @@ import java.io.Serializable;
  * @version 5.16.2015
  */
 public abstract class User implements Serializable {
+	
+	private static final long serialVersionUID = 6L;
+	
 	private String myFirstName;
 	private String myLastName;
 	private String myEmail;

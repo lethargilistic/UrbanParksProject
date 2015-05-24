@@ -10,8 +10,6 @@ import view.VolunteerUI;
 public class Main {
 	
 	public static MainUI UI;
-	private static DataPollster myPollster = DataPollster.getInstance();
-	private static Schedule mySchedule = Schedule.getInstance();
 	
 	public static void main(String[] args) {
 		
@@ -28,11 +26,11 @@ public class Main {
 			JobList jobList = saveManager.loadJobList();
 			UserList userList = saveManager.loadUserList();
 			
-			mySchedule.setJobList(jobList);
-			mySchedule.setUserList(userList);
+			Schedule.getInstance().setJobList(jobList);
+			Schedule.getInstance().setUserList(userList);
 			
-			myPollster.setJobList(jobList);
-			myPollster.setUserList(userList);
+			DataPollster.getInstance().setJobList(jobList);
+			DataPollster.getInstance().setUserList(userList);
 			
 			userInfo = directLogin();
 			
@@ -51,7 +49,7 @@ public class Main {
 			}
 			
 			if(userInfo[0].equals("register")) {
-				mySchedule.addUser(userInfo[1], userInfo[2], userInfo[3], userInfo[4]);
+				Schedule.getInstance().addUser(userInfo[1], userInfo[2], userInfo[3], userInfo[4]);
 				giveControl(userInfo[1]);
 			}
 			
@@ -87,7 +85,7 @@ public class Main {
 		String userEmail = UI.getReturnEmail();
 		String[] userInfo = null;
 		
-		if(myPollster.checkEmail(userEmail)) {
+		if(DataPollster.getInstance().checkEmail(userEmail)) {
 			userInfo = new String[2];
 			userInfo[0] = "login";
 			userInfo[1] = userEmail;
@@ -125,7 +123,7 @@ public class Main {
 	private static boolean checkDuplicate(String theEmail) {
 		boolean status = false;
 		
-		for (User user : myPollster.getAllUserList()) {
+		for (User user : DataPollster.getInstance().getAllUserList()) {
 			if (user.getEmail().equals(theEmail)) {
 				status = true;
 			}
@@ -139,23 +137,23 @@ public class Main {
 	 */
 	private static void giveControl(String theEmail) {
 		
-		User user = myPollster.getUser(theEmail);
+		User user = DataPollster.getInstance().getUser(theEmail);
 		
 		UI userUI = null;
 		
 		if(user instanceof ParkManager) {
-			ParkManager manager = myPollster.getParkManager(theEmail);
+			ParkManager manager = DataPollster.getInstance().getParkManager(theEmail);
 			userUI = new ParkManagerUI(manager);
 		}
 		
 		if(user instanceof Administrator) {
-			Administrator admin = myPollster.getAdministrator(theEmail);
+			Administrator admin = DataPollster.getInstance().getAdministrator(theEmail);
 			userUI = new AdministratorUI(admin);
 						
 		}
 		
 		if(user instanceof Volunteer) {
-			Volunteer volunteer = myPollster.getVolunteer(theEmail);
+			Volunteer volunteer = DataPollster.getInstance().getVolunteer(theEmail);
 			userUI = new VolunteerUI(volunteer);
 		}
 		

@@ -36,6 +36,7 @@ public class VolunteerUI implements UI {
 	 * Lists possible commands, prompts the user for one, and then acts on it.<br>
 	 * If the user chooses to quit, or inputs an invalid command, then the loop terminates.
 	 */
+	@Override
 	public void commandLoop() {
 		boolean stayLoggedIn = true;
 		

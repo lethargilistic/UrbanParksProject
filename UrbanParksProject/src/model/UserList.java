@@ -13,6 +13,8 @@ import java.util.List;
  */
 public class UserList implements Serializable {
 
+	private static final long serialVersionUID = 7L;
+	
 	private static final int MAX_NUM_USERS = 10000;
 	
 	//User Lists

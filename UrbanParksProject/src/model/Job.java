@@ -10,6 +10,8 @@ import java.util.GregorianCalendar;
  * @version May 1
  */
 public class Job implements Serializable {
+
+	private static final long serialVersionUID = 2L;
 	
 	/**
 	 * This value is the identification number of a job.

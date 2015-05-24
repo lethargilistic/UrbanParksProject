@@ -2,6 +2,7 @@
 package model;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 
 /**
@@ -13,6 +14,8 @@ import java.io.Serializable;
  */
 public class Volunteer extends User implements Serializable {
 
+	private static final long serialVersionUID = 8L;
+	
 	public Volunteer(String theEmail, String theFirstName, String theLastName) {
 		super(theFirstName, theLastName, theEmail);
 	}
@@ -34,6 +37,11 @@ public class Volunteer extends User implements Serializable {
 	public String toString()
 	{
 		return super.getFirstName() + " " + super.getLastName();
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(super.getFirstName(), super.getLastName(), super.getEmail());
 	}
 
 }

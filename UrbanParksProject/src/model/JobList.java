@@ -11,6 +11,8 @@ import java.util.List;
  *
  */
 public class JobList implements Serializable {
+
+	private static final long serialVersionUID = 3L;
 	
 	private static final int MAX_NUM_JOBS = 10000;
 	

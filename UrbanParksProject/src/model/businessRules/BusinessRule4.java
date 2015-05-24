@@ -10,12 +10,16 @@ import model.Job;
  */
 public class BusinessRule4 extends BusinessRule {
 	
+	/**
+	 * The maximum numbers of days a job can last.
+	 */
 	public static final int MAX_DURATION = 2;
 	
 	/**
 	 * @param theTestedObjects a Job object
 	 * {@inheritDoc}
 	 */
+	@Override
 	public boolean test(Object... theTestedObjects)
 	{
 		if (theTestedObjects.length > 1)

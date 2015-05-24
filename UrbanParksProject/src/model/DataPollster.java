@@ -14,6 +14,8 @@ import java.util.List;
  */
 public class DataPollster implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
 	//Class Variables
 	private static DataPollster dataPollster = new DataPollster();
 	private JobList myJobList;
@@ -244,9 +246,8 @@ public class DataPollster implements Serializable {
 		
 		if(volunteer != null && volunteer instanceof Volunteer) {
 			return (Volunteer) volunteer;
-		} else {
-			return null;
 		}
+		return null;
 	}
 	
 	/**
@@ -260,9 +261,8 @@ public class DataPollster implements Serializable {
 	
 		if(parkManager != null && parkManager instanceof ParkManager) {
 			return (ParkManager) parkManager;
-		} else {
-			return null;
 		}
+		return null;
 	}
 	
 	/**
@@ -276,9 +276,8 @@ public class DataPollster implements Serializable {
 		
 		if(administrator != null && administrator instanceof Administrator) {
 			return (Administrator) administrator;
-		} else {
-			return null;
 		}
+		return null;
 	}
 	
 	
