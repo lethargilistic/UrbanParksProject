@@ -14,13 +14,13 @@ public abstract class BusinessRule {
 	/**
 	 * Perform a check of the business rule.
 	 * 
+	 * @param one or more objects required for the test.
 	 * @return true if the business rule is satisfied, false otherwise.
 	 */
-	public boolean test(Object theTestedObject)
+	public boolean test(Object... theTestedObjects)
 	{
 		return false; //Default to false for unimplemented business rules.
 	}
 	
 	//In case we need to change this so there is more than one object brought in.
-	//public boolean test(Object... theTestedObject)
 }

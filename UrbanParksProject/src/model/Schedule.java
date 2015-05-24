@@ -6,6 +6,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 import model.businessRules.BusinessRule1;
+import model.businessRules.BusinessRule2;
 
 /**
  * Defines the Schedule object for an application.
@@ -50,15 +51,13 @@ public class Schedule {
 		boolean okToAdd = true;
 		
 		
-		//BIZ rule 1. A job may not be added if the total number of pending jobs is currently 30. 
-		BusinessRule1 br1 = new BusinessRule1();
-		
-		if (br1.test(myJobList)) { 
+		//BIZ rule 1. A job may not be added if the total number of pending jobs is currently 30. 		
+		if (!(new BusinessRule1().test(myJobList))) { 
 			okToAdd = false;
 		}
 		//BIZ rule 2. A job may not be added if the total number of pending jobs during that week 
 			//(3 days on either side of the job days) is currently 5.
-		else if (!checkThisWeek(theJob)) {
+		else if (!(new BusinessRule2().test(theJob, myJobList))) {
 			okToAdd = false; //this is entered if checkThisWeek() returns false;
 		} 
 		
@@ -129,48 +128,7 @@ public class Schedule {
 		}
 
 		return okToAdd;
-	}
-
-	/**
-	 * This method is made for business rule 2.
-	 * It checks either side of the jobs date and returns false if there are already
-	 * 5 jobs set up for that 7 day period.
-	 * @return true if this job is in the clear (there are less than 5 jobs in a 7 day period), false otherwise
-	 */
-	private boolean checkThisWeek(Job theJob) {
-		//count increases for every other job that is within 3 days before start and 3 days after end.
-		int count = 0;
-		
-		//3 days before start and 3 days after end
-		Calendar aStart = (Calendar) theJob.getStartDate().clone();
-		
-		aStart.add(Calendar.DAY_OF_MONTH, -3);
-
-		Calendar aEnd = (Calendar) theJob.getEndDate().clone();
-		aEnd.add(Calendar.DAY_OF_MONTH, 3);
-		
-		List<Job> aList = myJobList.getCopyList();
-		for (Job j: aList) {
-			
-			long difference =  j.getEndDate().getTimeInMillis() - aStart.getTimeInMillis();
-			difference /= (3600*24*1000); //change value to days instead of milliseconds
-			long difference2 =  aEnd.getTimeInMillis() - j.getStartDate().getTimeInMillis();
-			difference2 /= (3600*24*1000); //change value to days instead of milliseconds
-			
-			//if ending date of j is within 3 days before theJob, increment count
-			//if starting date of j is within 3 days after theJob, increment count
-			if ((difference <= 3 && difference >= 0)|| (difference2 <= 3 && difference2 >= 0)) {
-				count++;
-			}
-			//System.out.println("Count is " + count);
-			if (count >= 5) {
-				return false;
-			}
-		}
-		return true;
-	}
-
-	
+	}	
 	
 	/**
 	 * Adds a Volunteer to an existing Job if the given data is valid.

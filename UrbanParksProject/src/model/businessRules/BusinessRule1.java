@@ -11,18 +11,16 @@ import model.JobList;
 public class BusinessRule1 extends BusinessRule {
 
 	/**
-	 * @param theTestedObject a JobList object.
-	 * @see model.businessRules.BusinessRule#test()
+	 * @param theTestedObjects a JobList object.
+	 * {@inheritDoc}
 	 */
 	@Override
-	public boolean test(Object theTestedObject) {
-		if (theTestedObject instanceof JobList)
-		{
-			JobList jobs = (JobList) theTestedObject;
-			return jobs.getNumberOfJobs() >= 30;
-		}
-		else
+	public boolean test(Object... theTestedObjects) {
+		if (!(theTestedObjects[0] instanceof JobList))
 			throw new IllegalArgumentException("Did not pass a JobList.");
+
+		JobList theJobList = (JobList) theTestedObjects[0];
+		return theJobList.getNumberOfJobs() <= 30;
 	}
 
 }
