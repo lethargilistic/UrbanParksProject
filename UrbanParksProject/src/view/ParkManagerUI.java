@@ -143,8 +143,7 @@ public class ParkManagerUI implements UI{
 	 *==============*/
 	
 	public void createNewJob() {
-		List<String> managedParks = new ArrayList<>();
-		managedParks.addAll(DataPollster.getInstance().getParkList(myManager.getEmail()));
+		List<String> managedParks = myManager.getManagedParks();
 				
 		
 		displayParkNumberRequest();
@@ -154,10 +153,10 @@ public class ParkManagerUI implements UI{
 		if(parkNumber >= managedParks.size()) {
 			String newParkName = createNewPark();
 			managedParks.add(newParkName);
-			Schedule.getInstance().updateParkList(myManager.getEmail(), managedParks);
+			myManager.setManagedParks(managedParks);
 			createNewJob();
 		} else {
-			int jobID = DataPollster.getInstance().getNextJobID();
+			int jobID = myManager.getNewJobID();
 			String parkName = managedParks.get(parkNumber);
 			
 			int lightSlots = getLightSlots();
@@ -169,10 +168,10 @@ public class ParkManagerUI implements UI{
 			
 			ArrayList<ArrayList<String>> volunteerList = new ArrayList<ArrayList<String>>();
 			
-			Job addJob = new Job(jobID, parkName, lightSlots, mediumSlots, heavySlots, startDate,
+			Job newJob = new Job(jobID, parkName, lightSlots, mediumSlots, heavySlots, startDate,
 					endDate, myManager.getEmail(), volunteerList);
 			
-			boolean jobAdded = Schedule.getInstance().receiveJob(addJob);
+			boolean jobAdded = myManager.addJob(newJob);
 			
 			displayJobStatus(jobAdded);
 		}

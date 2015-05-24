@@ -62,8 +62,10 @@ public class ParkManager extends User {
 		}
 		
 		return addedFlag;
-		
-		
+	}
+	
+	public boolean addJob(Job theJob) {
+		return mySchedule.receiveJob(theJob);
 	}
 	
 	/**
@@ -82,6 +84,7 @@ public class ParkManager extends User {
 	
 	public void setManagedParks(List<String> theManagedParks) {
 		this.myManagedParks = theManagedParks;
+		mySchedule.updateParkList(myEmail, theManagedParks);
 	}
 	
 	public List<String> getManagedParks() {
@@ -99,6 +102,10 @@ public class ParkManager extends User {
 			volunteerList.addAll(myPollster.getJobVolunteerList(theJobID));
 		}		
 		return volunteerList;
+	}
+	
+	public int getNewJobID() {
+		return DataPollster.getInstance().getNextJobID();
 	}
 	
 	public Object[][] getJobArray() {
