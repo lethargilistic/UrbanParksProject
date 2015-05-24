@@ -8,7 +8,7 @@ import java.util.List;
  * 
  * @author Mike Overby - initial implementation
  * @author Reid Thompson - added User functionality.
- * @author Taylor Gomran - Several new method and rewrites
+ * @author Taylor Gorman - Several new method and rewrites
  * @version 5.21.2015
  */
 public class DataPollster {
