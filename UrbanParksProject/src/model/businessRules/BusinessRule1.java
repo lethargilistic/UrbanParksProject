@@ -3,6 +3,8 @@
  */
 package model.businessRules;
 
+import java.lang.reflect.MalformedParametersException;
+
 import model.JobList;
 
 /**
@@ -16,6 +18,8 @@ public class BusinessRule1 extends BusinessRule {
 	 */
 	@Override
 	public boolean test(Object... theTestedObjects) {
+		if (theTestedObjects.length > 1)
+			throw new MalformedParametersException("More than 1 argument.");
 		if (!(theTestedObjects[0] instanceof JobList))
 			throw new IllegalArgumentException("Did not pass a JobList.");
 

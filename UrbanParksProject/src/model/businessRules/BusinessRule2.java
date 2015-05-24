@@ -3,6 +3,7 @@
  */
 package model.businessRules;
 
+import java.lang.reflect.MalformedParametersException;
 import java.util.Calendar;
 import java.util.List;
 
@@ -24,7 +25,7 @@ public class BusinessRule2 extends BusinessRule {
 	public boolean test(Object... theTestedObjects)
 	{
 		if (theTestedObjects.length > 2)
-			throw new IllegalArgumentException("Too many arguments.");
+			throw new MalformedParametersException("More than 2 arguments.");
 		
 		if (!(theTestedObjects[0] instanceof Job))
 			throw new IllegalArgumentException("First arg was not Job.");
