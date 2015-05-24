@@ -23,7 +23,7 @@ public class Schedule implements Serializable {
 	private static final long serialVersionUID = 5L;
 	
 	private static Schedule schedule = new Schedule();	
-	private static final int MAX_TOTAL_NUM_JOBS = 10000;	
+	private static final int MAX_TOTAL_NUM_JOBS = Integer.MAX_VALUE;	
 	private JobList myJobList;	
 	private UserList myUserList;
 	
