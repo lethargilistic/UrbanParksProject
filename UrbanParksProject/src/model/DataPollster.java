@@ -42,34 +42,38 @@ public class DataPollster {
 	 * @author Mike Overby - initial implementation.
 	 * @author Taylor Gorman - refactor
 	 */
-	public List<Job> getPendingJobs(Volunteer theVolunteer) {
+	public List<Job> getPendingJobs(String theEmail) {
 		List<Job> visibleJobs = new ArrayList<>();
 		List<Job> allJobs = myJobList.getCopyList();
-		
+
 		//Check through myJobList and select all Jobs that the Volunteer can sign up ("visible").
-		for (Job j : allJobs) {
-			if(visibleToVolunteer(theVolunteer, j)) {
-				visibleJobs.add(j);
+		for (Job job : allJobs) {
+			if(visibleToVolunteer(theEmail, job)) {
+				visibleJobs.add(job);
 			}
-		}
+		}	
 		
-		return visibleJobs; //Return the list of visible Jobs.
+	return visibleJobs; //Return the list of visible Jobs.
 	}
 	
 
 	/**
 	 * Return a list of all jobs that the Volunteer is signed up for.
 	 */
-	public List<Job> getVolunteerJobs(Volunteer theVolunteer) {
+	public List<Job> getVolunteerJobs(String theEmail) {
+		Volunteer volunteer = getVolunteer(theEmail);
 		List<Job> volunteerJobs = new ArrayList<Job>();
 		
-		//Select all Jobs in JobList that the Volunteer is signed up for.
-		for (Job job : myJobList.getCopyList()) {
-			if (job.getVolunteerList().contains(theVolunteer)) {
-				volunteerJobs.add(job);
+		if(volunteer != null) {			
+			//Check every Job's Volunteer list for Volunteers that match the given email address.
+			for (Job job : myJobList.getCopyList()) {
+				for(List<String> jobVolunteer : job.getVolunteerList()) {
+					if(jobVolunteer.get(0).equals(theEmail)) {
+						volunteerJobs.add(job);
+					}
+				}
 			}
-		}
-
+		}		
 		return volunteerJobs;
 	}
 
@@ -77,21 +81,20 @@ public class DataPollster {
 	 * Return a list of all jobs associated with the ParkManager.
 	 * @author Taylor Gorman
 	 */
-	public List<Job> getManagerJobs(ParkManager theManager){		
+	public List<Job> getManagerJobs(String theEmail){		
+		ParkManager manager = getParkManager(theEmail);
 		List<Job> managerJobs = new ArrayList<Job>();
-		List<String> managedParks = theManager.getManagedParks();
-
-		//Select all Jobs in JobList with the same name as a Park that ParkManager manages.
-		for (Job job : myJobList.getCopyList())	{
-			String jobParkName = job.getPark();
-			
-			for(String park : managedParks) {			
-				if(jobParkName.equals(park)) {
+		
+		if(manager != null) {
+			//Select all Jobs in JobList with the same name as a Park that ParkManager manages.			
+			for (Job job : myJobList.getCopyList())	{		
+				
+				String jobParkName = job.getPark();				
+				if(manager.getManagedParks().contains(jobParkName)) {
 					managerJobs.add(job);
 				}
 			}
-		}
-
+		}		
 		return managerJobs;
 	}
 	
@@ -338,8 +341,8 @@ public class DataPollster {
 	/*
 	 * Return true if the job is visible to the volunteer; false otherwise.
 	 */
-	private boolean visibleToVolunteer(Volunteer theVolunteer, Job theJob) {
-		List<Job> volunteerJobs = getVolunteerJobs(theVolunteer);
+	private boolean visibleToVolunteer(String theEmail, Job theJob) {
+		List<Job> volunteerJobs = getVolunteerJobs(theEmail);
 		boolean isVisible = true;
 		
 		//Volunteer is already signed up for the job.

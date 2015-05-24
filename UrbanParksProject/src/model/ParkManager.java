@@ -21,6 +21,10 @@ public class ParkManager extends User {
 	private Schedule mySchedule = Schedule.getInstance();
 	private DataPollster myPollster = DataPollster.getInstance();
 	private List<String> myManagedParks;
+	
+	private String myEmail = super.getEmail();
+	private String myFirstName = super.getFirstName();
+	private String myLastName = super.getLastName();
 
 	//Constructor
 	public ParkManager(String theEmail, String theFirstName, String theLastName, List<String> theParkList) {
@@ -87,7 +91,7 @@ public class ParkManager extends User {
 	
 	public Object[][] getJobArray() {
 		
-		ArrayList<Job> jobs = (ArrayList<Job>) myPollster.getManagerJobs(this);
+		ArrayList<Job> jobs = (ArrayList<Job>) myPollster.getManagerJobs(myEmail);
 		
 		Object[][] jobArray = new Object[jobs.size()][7];
 		int jobNumber = 0;

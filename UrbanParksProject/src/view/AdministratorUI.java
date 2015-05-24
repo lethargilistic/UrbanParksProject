@@ -134,7 +134,7 @@ public class AdministratorUI implements UI{
 			final User v = theMatchingVols.get(i);
 			System.out.println(v.getFirstName() + " " + v.getLastName());
 			System.out.println("Email: " + v.getEmail());
-			List<Job> jobs = DataPollster.getInstance().getVolunteerJobs((Volunteer) v);
+			List<Job> jobs = DataPollster.getInstance().getVolunteerJobs(v.getEmail());
 			if (!jobs.isEmpty()) {
 				System.out.println("Jobs signed up for: ");
 				for (int j = 0; j < jobs.size(); j++) {
