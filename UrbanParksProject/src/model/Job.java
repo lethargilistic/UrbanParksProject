@@ -1,5 +1,6 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
@@ -8,7 +9,7 @@ import java.util.GregorianCalendar;
  * @author Arsh
  * @version May 1
  */
-public class Job {
+public class Job implements Serializable {
 	
 	/**
 	 * This value is the identification number of a job.

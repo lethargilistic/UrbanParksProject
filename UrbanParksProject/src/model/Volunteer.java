@@ -1,6 +1,8 @@
 
 package model;
 
+import java.io.Serializable;
+
 
 /**
  * This is a volunteer.
@@ -9,7 +11,7 @@ package model;
  * @author Arsh Singh
  * @version 5.10.2015
  */
-public class Volunteer extends User {
+public class Volunteer extends User implements Serializable {
 
 	public Volunteer(String theEmail, String theFirstName, String theLastName) {
 		super(theFirstName, theLastName, theEmail);

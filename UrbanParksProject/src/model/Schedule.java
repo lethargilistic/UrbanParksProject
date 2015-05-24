@@ -1,5 +1,6 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -17,7 +18,7 @@ import model.businessRules.BusinessRule4;
  * @author Reid Thompson
  * @version 5.3.2015
  */
-public class Schedule {
+public class Schedule implements Serializable {
 	
 	private static Schedule schedule = new Schedule();	
 	private static final int MAX_TOTAL_NUM_JOBS = 10000;	
@@ -147,7 +148,6 @@ public class Schedule {
 	 * @throws Exception 
 	 */ 
 	public boolean addVolunteerToJob(ArrayList<String> theVolunteer, int theJobID) throws Exception {
-		
 		//CHECK 1
 		boolean validID = checkJobValidity(theJobID); //Schedule will check to make sure the Job ID is valid
 		if (!validID){
@@ -159,20 +159,17 @@ public class Schedule {
 		if (thisJob == null) {
 			throw new Exception("Job does not exist");
 		}
-
 		//CHECK 3
 		boolean sameDate = checkDifDay(theVolunteer, thisJob);
 		if(sameDate) {
 			throw new IllegalArgumentException("Sorry, but you are already signed up "
 					+ "for a job that occurs the same date!");
 		}
-		
 		//CHECK 4
 		boolean inFuture = checkFutureValid(thisJob);
 		if (!inFuture) {
 			throw new IllegalArgumentException("Sorry, but this job has already completed.");
 		}
-	
 
 		//CHECK 5
 		boolean openGrade = checkGradeOpen(thisJob, theVolunteer.get(1));
@@ -180,7 +177,6 @@ public class Schedule {
 			throw new IllegalArgumentException("Sorry, but that grade in this job "
 					+ "is already full.");
 		}
-		
 
 		// If all the checks pass, we add the Volunteer to the Job's Volunteer List,
 		// Increment the grade slot, and return.

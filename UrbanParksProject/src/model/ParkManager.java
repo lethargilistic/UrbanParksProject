@@ -1,5 +1,6 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -13,11 +14,9 @@ import java.util.List;
  * @version 9 May 2015
  *
  */
-public class ParkManager extends User {
+public class ParkManager extends User implements Serializable {
 	
 	//Class Variables
-	private Schedule mySchedule = Schedule.getInstance();
-	private DataPollster myPollster = DataPollster.getInstance();
 	private List<String> myManagedParks;	
 	private String myEmail = super.getEmail();
 
@@ -40,15 +39,15 @@ public class ParkManager extends User {
 	
 	
 	public List<Job> getJobs() {
-		return myPollster.getManagerJobs(myEmail);
+		return DataPollster.getInstance().getManagerJobs(myEmail);
 	}
 	
 	public boolean addJob(Job theJob) {
-		return mySchedule.receiveJob(theJob);
+		return Schedule.getInstance().receiveJob(theJob);
 	}
 	
 	public int getNewJobID() {
-		return myPollster.getNextJobID();
+		return DataPollster.getInstance().getNextJobID();
 	}
 	
 	public boolean isManagerOfJob(int theJobID) {
@@ -87,7 +86,7 @@ public class ParkManager extends User {
 		List<Volunteer> volunteerList = new ArrayList<Volunteer>();
 		
 		if(isManagerOfJob(theJobID)) {
-			volunteerList.addAll(myPollster.getJobVolunteerList(theJobID));
+			volunteerList.addAll(DataPollster.getInstance().getJobVolunteerList(theJobID));
 		}		
 		return volunteerList;
 	}
