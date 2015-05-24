@@ -31,7 +31,7 @@ public class BusinessRule2 extends BusinessRule {
 			throw new IllegalArgumentException("First arg was not Job.");
 		
 		if (!(theTestedObjects[1] instanceof JobList))
-			throw new IllegalArgumentException("First arg was not JobList.");
+			throw new IllegalArgumentException("Second arg was not JobList.");
 		
 		Job theJob = (Job) theTestedObjects[0];
 		JobList theJobList = (JobList) theTestedObjects[1];
