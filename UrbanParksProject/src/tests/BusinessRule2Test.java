@@ -1,5 +1,6 @@
 package tests;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -132,6 +133,43 @@ public class BusinessRule2Test {
 													 "moverby@vivaldi.com", null));
 		myJobList.setJobList(jobs);
 		
+		assertFalse(myRule.test(myJob, myJobList));
+	}
+	
+	/**
+	 * Relies on 2 day job counting twice.
+	 */
+	@Test
+	public void testTestForFullWeekEarlySingleTwoDayJobs() {
+		List<Job> jobs = new ArrayList<>();
+		jobs.add(new Job(0, "Foo Park", 4, 4, 4, myWeek.get(0),
+												 myWeek.get(1),
+												 "moverby@vivaldi.com", null));
+		
+		for (int i = 0; i < BusinessRule2.MAX_JOBS_IN_WEEK-2; i++)
+			jobs.add(new Job(0, "Foo Park", 4, 4, 4, myWeek.get(0),
+													 myWeek.get(0),
+													 "moverby@vivaldi.com", null));
+		myJobList.setJobList(jobs);
+		
+		assertEquals(BusinessRule2.MAX_JOBS_IN_WEEK-1, myJobList.getNumberOfJobs());
+		assertFalse(myRule.test(myJob, myJobList));
+	}
+	
+	@Test
+	public void testTestForFullWeekLateSingleTwoDayJobs() {
+		List<Job> jobs = new ArrayList<>();
+		jobs.add(new Job(0, "Foo Park", 4, 4, 4, myWeek.get(BusinessRule2.LIMITING_DURATION/2-2),
+												 myWeek.get(BusinessRule2.LIMITING_DURATION/2-1),
+												 "moverby@vivaldi.com", null));
+		
+		for (int i = 0; i < BusinessRule2.MAX_JOBS_IN_WEEK-2; i++)
+			jobs.add(new Job(0, "Foo Park", 4, 4, 4, myWeek.get(BusinessRule2.LIMITING_DURATION/2-1),
+													 myWeek.get(BusinessRule2.LIMITING_DURATION/2-1),
+													 "moverby@vivaldi.com", null));
+		myJobList.setJobList(jobs);
+		
+		assertEquals(BusinessRule2.MAX_JOBS_IN_WEEK-1, myJobList.getNumberOfJobs());
 		assertFalse(myRule.test(myJob, myJobList));
 	}
 }
