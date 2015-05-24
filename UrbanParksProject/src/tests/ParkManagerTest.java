@@ -116,7 +116,6 @@ public class ParkManagerTest {
 		parkList.add("Constructor Test 2");		
 		ParkManager constructorManager = new ParkManager("construct@gmail.com", "Construct", "Manager", parkList);
 		
-		assertEquals(constructorManager.getUserType(), "ParkManager");
 		assertEquals(constructorManager.getEmail(), "construct@gmail.com");
 		assertEquals(constructorManager.getFirstName(), "Construct");
 		assertEquals(constructorManager.getLastName(), "Manager");
