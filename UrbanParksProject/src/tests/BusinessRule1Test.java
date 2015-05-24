@@ -23,7 +23,6 @@ import org.junit.Test;
  *
  */
 public class BusinessRule1Test {
-
 	BusinessRule1 myRule;
 	
 	JobList myJobList;
