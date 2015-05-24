@@ -36,7 +36,7 @@ public class JobList {
 		return myJobList;
     }
 	
-	public void setJobList(ArrayList<Job> theJobList) {
+	public void setJobList(List<Job> theJobList) {
 		this.myJobList = theJobList;
 	}
 	
