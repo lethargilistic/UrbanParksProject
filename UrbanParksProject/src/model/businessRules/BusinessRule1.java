@@ -9,6 +9,7 @@ import model.JobList;
  */
 public class BusinessRule1 extends BusinessRule {
 
+	public static final int MAX_JOBS = 30;
 	/**
 	 * @param theTestedObjects a JobList object.
 	 * {@inheritDoc}
@@ -21,7 +22,7 @@ public class BusinessRule1 extends BusinessRule {
 			throw new IllegalArgumentException("Did not pass a JobList.");
 
 		JobList theJobList = (JobList) theTestedObjects[0];
-		return theJobList.getNumberOfJobs() <= 30;
+		return theJobList.getNumberOfJobs() <= MAX_JOBS;
 	}
 
 }
