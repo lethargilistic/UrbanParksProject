@@ -1,5 +1,6 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -14,7 +15,7 @@ import java.util.List;
  * @author Taylor Gorman
  * @version 8 May 2015
  */
-public class Administrator extends User {
+public class Administrator extends User implements Serializable {
 
 	private DataPollster myPollster = DataPollster.getInstance();
 

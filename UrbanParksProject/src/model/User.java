@@ -1,5 +1,7 @@
 package model;
 
+import java.io.Serializable;
+
 /**
  * This is a general class for all Users of our Urban Parks program.
  * 
@@ -8,7 +10,7 @@ package model;
  * @author Reid Thompson - initial implementation
  * @version 5.16.2015
  */
-public abstract class User {
+public abstract class User implements Serializable {
 	private String myFirstName;
 	private String myLastName;
 	private String myEmail;

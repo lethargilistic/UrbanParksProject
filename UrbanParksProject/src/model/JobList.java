@@ -1,5 +1,6 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +10,7 @@ import java.util.List;
  * @version 1 May 2015
  *
  */
-public class JobList {
+public class JobList implements Serializable {
 	
 	private static final int MAX_NUM_JOBS = 10000;
 	

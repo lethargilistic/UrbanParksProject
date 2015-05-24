@@ -1,5 +1,6 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.List;
  * @version 9 May 2015
  *
  */
-public class ParkManager extends User {
+public class ParkManager extends User implements Serializable {
 	
 	//Class Variables
 	private Schedule mySchedule = Schedule.getInstance();

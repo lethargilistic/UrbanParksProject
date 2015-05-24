@@ -1,5 +1,6 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -17,7 +18,7 @@ import model.businessRules.BusinessRule4;
  * @author Reid Thompson
  * @version 5.3.2015
  */
-public class Schedule {
+public class Schedule implements Serializable {
 	
 	private static Schedule schedule = new Schedule();	
 	private static final int MAX_TOTAL_NUM_JOBS = 10000;	

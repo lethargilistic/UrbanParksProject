@@ -1,5 +1,6 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +11,7 @@ import java.util.List;
  * @version 8 May 2015
  *
  */
-public class UserList {
+public class UserList implements Serializable {
 
 	private static final int MAX_NUM_USERS = 10000;
 	
