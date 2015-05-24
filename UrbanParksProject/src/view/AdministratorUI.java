@@ -9,7 +9,6 @@ import model.Administrator;
 import model.DataPollster;
 import model.Job;
 import model.User;
-import model.Volunteer;
 
 /**
  * A class for the console user interface for Administrators.
