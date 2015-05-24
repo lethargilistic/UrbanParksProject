@@ -88,7 +88,7 @@ public class DataPollster implements Serializable {
 		
 		if(manager != null) {
 			//Select all Jobs in JobList with the same name as a Park that ParkManager manages.			
-			for (Job job : myJobList.getCopyList())	{		
+			for (Job job : getJobListCopy())	{
 				
 				String jobParkName = job.getPark();				
 				if(manager.getManagedParks().contains(jobParkName)) {

@@ -17,8 +17,6 @@ import java.util.List;
 public class ParkManager extends User implements Serializable {
 	
 	//Class Variables
-	private Schedule mySchedule = Schedule.getInstance();
-	private DataPollster myPollster = DataPollster.getInstance();
 	private List<String> myManagedParks;	
 	private String myEmail = super.getEmail();
 
@@ -41,15 +39,15 @@ public class ParkManager extends User implements Serializable {
 	
 	
 	public List<Job> getJobs() {
-		return myPollster.getManagerJobs(myEmail);
+		return DataPollster.getInstance().getManagerJobs(myEmail);
 	}
 	
 	public boolean addJob(Job theJob) {
-		return mySchedule.receiveJob(theJob);
+		return Schedule.getInstance().receiveJob(theJob);
 	}
 	
 	public int getNewJobID() {
-		return myPollster.getNextJobID();
+		return DataPollster.getInstance().getNextJobID();
 	}
 	
 	public boolean isManagerOfJob(int theJobID) {
@@ -88,7 +86,7 @@ public class ParkManager extends User implements Serializable {
 		List<Volunteer> volunteerList = new ArrayList<Volunteer>();
 		
 		if(isManagerOfJob(theJobID)) {
-			volunteerList.addAll(myPollster.getJobVolunteerList(theJobID));
+			volunteerList.addAll(DataPollster.getInstance().getJobVolunteerList(theJobID));
 		}		
 		return volunteerList;
 	}

@@ -23,9 +23,6 @@ public class VolunteerUI implements UI {
 	private Scanner myScanner;
 	private Volunteer myVol;
 	
-	private DataPollster myPollster = DataPollster.getInstance();
-	private Schedule mySchedule = Schedule.getInstance();
-	
 	/**
 	 * Constructor.
 	 * @param theVol is a volunteer.
@@ -136,7 +133,7 @@ public class VolunteerUI implements UI {
 			volArray.add(myVol.getEmail());
 			volArray.add(level);
 			
-			if(mySchedule.addVolunteerToJob(volArray, jobID)) {
+			if(Schedule.getInstance().addVolunteerToJob(volArray, jobID)) {
 				displaySuccessMessage();
 			}
 		} catch (Exception e) {
@@ -150,7 +147,7 @@ public class VolunteerUI implements UI {
 	 * The volunteer can view the jobs that he/she has signed up for.
 	 */
 	private void viewMyJobs() {
-		List<Job> jobList = mySchedule.getJobList().getCopyList(); //get the list of jobs so we can traverse it.
+		List<Job> jobList = Schedule.getInstance().getJobList().getCopyList(); //get the list of jobs so we can traverse it.
 		boolean jobFound = false;
 
 		//go through each job in the list and see if the volunteer has signed up for that job.
@@ -204,7 +201,7 @@ public class VolunteerUI implements UI {
 	 * the job is in the past.
 	 */
 	private List<Job> getTheJobs() {
-		List<Job> daJobs = myPollster.getJobListCopy();
+		List<Job> daJobs = DataPollster.getInstance().getJobListCopy();
 		Calendar currentDate = new GregorianCalendar();
 		
 		for (Job j: daJobs) { //go through each job and find out what job is in the past.

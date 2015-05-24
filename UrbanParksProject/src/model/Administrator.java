@@ -17,8 +17,6 @@ import java.util.List;
  */
 public class Administrator extends User implements Serializable {
 
-	private DataPollster myPollster = DataPollster.getInstance();
-
 	/**
 	 * Constructs an Administrator object.
 	 * 
@@ -44,7 +42,7 @@ public class Administrator extends User implements Serializable {
 	public List<User> getMatchingVolunteers(String theLastName) {
 		List<User> matchingVols = new ArrayList<>();
 
-		List<User> allVols = myPollster.getVolunteerListCopy();
+		List<User> allVols = DataPollster.getInstance().getVolunteerListCopy();
 
 		for (int i = 0; i < allVols.size(); i++) {
 			final User currVol = allVols.get(i);
@@ -57,7 +55,7 @@ public class Administrator extends User implements Serializable {
 	}
 
 	public List<User> getAllVolunteersByLNFN() {
-		List<User> allVols = myPollster.getVolunteerListCopy();
+		List<User> allVols = DataPollster.getInstance().getVolunteerListCopy();
 
 		Collections.sort(allVols, new Comparator<User>() {
 
