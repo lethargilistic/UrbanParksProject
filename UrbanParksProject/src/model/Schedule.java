@@ -19,6 +19,8 @@ import model.businessRules.BusinessRule4;
  * @version 5.3.2015
  */
 public class Schedule implements Serializable {
+
+	private static final long serialVersionUID = 5L;
 	
 	private static Schedule schedule = new Schedule();	
 	private static final int MAX_TOTAL_NUM_JOBS = 10000;	

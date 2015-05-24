@@ -17,6 +17,8 @@ import java.util.List;
  */
 public class Administrator extends User implements Serializable {
 
+	private static final long serialVersionUID = 0L;
+	
 	/**
 	 * Constructs an Administrator object.
 	 * 

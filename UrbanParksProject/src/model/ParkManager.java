@@ -15,6 +15,8 @@ import java.util.List;
  *
  */
 public class ParkManager extends User implements Serializable {
+
+	private static final long serialVersionUID = 4L;
 	
 	//Class Variables
 	private List<String> myManagedParks;	

@@ -13,6 +13,8 @@ import java.io.Serializable;
  */
 public class Volunteer extends User implements Serializable {
 
+	private static final long serialVersionUID = 8L;
+	
 	public Volunteer(String theEmail, String theFirstName, String theLastName) {
 		super(theFirstName, theLastName, theEmail);
 	}

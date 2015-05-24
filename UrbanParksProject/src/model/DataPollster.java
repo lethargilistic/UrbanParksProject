@@ -14,6 +14,8 @@ import java.util.List;
  */
 public class DataPollster implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
 	//Class Variables
 	private static DataPollster dataPollster = new DataPollster();
 	private JobList myJobList;
