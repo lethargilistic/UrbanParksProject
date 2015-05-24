@@ -16,6 +16,7 @@ public class BusinessRule4 extends BusinessRule {
 	 * @param theTestedObjects a Job object
 	 * {@inheritDoc}
 	 */
+	@Override
 	public boolean test(Object... theTestedObjects)
 	{
 		if (theTestedObjects.length > 1)
