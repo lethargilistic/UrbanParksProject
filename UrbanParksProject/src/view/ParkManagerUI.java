@@ -22,7 +22,10 @@ public class ParkManagerUI implements UI{
 	private Scanner myScanner;
 	private ParkManager myManager;
 	
-	//Constructor
+	/**
+	 * Construct the manager.
+	 * @param theManager the manager
+	 */
 	public ParkManagerUI(ParkManager theManager) {
 		myScanner = new Scanner(System.in);
 		this.myManager = theManager;
