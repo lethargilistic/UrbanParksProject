@@ -6,8 +6,8 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * ParkManager can add new jobs to the schedule, view all jobs for the parks they manage,
- * and view all volunteers for a given job.
+ * ParkManager can add new jobs to the schedule, view all jobs for the parks
+ * they manage, and view all volunteers for a given job.
  * 
  * @author Taylor Gorman
  * @author Reid Thompson
@@ -16,81 +16,74 @@ import java.util.List;
  */
 public class ParkManager extends User implements Serializable {
 
-	private static final long serialVersionUID = 4L;
-	
-	//Class Variables
-	private List<String> myManagedParks;	
-	private String myEmail = super.getEmail();
+    private static final long serialVersionUID = 4L;
 
-	//Constructor
-	public ParkManager(String theEmail, String theFirstName, String theLastName, List<String> theParkList) {
-		super(theFirstName, theLastName, theEmail);
-		
-		//theParkList is an Unmodifiable List, so we cannot cast it to ArrayList. So we copy it over instead.
-		List<String> copiedParks = new ArrayList<String>();
-		copiedParks.addAll(theParkList);
-		this.myManagedParks = copiedParks;
-	}
-	
-	
-	
-	
-	/*======*
-	 * Jobs *
-	 *======*/
-	
-	
-	public List<Job> getJobs() {
-		return DataPollster.getInstance().getManagerJobs(myEmail);
-	}
-	
-	public boolean addJob(Job theJob) {
-		return Schedule.getInstance().receiveJob(theJob);
-	}
-	
-	public int getNewJobID() {
-		return DataPollster.getInstance().getNextJobID();
-	}
-	
-	public boolean isManagerOfJob(int theJobID) {
-		boolean containsJob = false;		
-		for(Job job : getJobs()) {
-			if(job.getJobID() == theJobID) containsJob = true;
-		}
-		
-		return containsJob;
-	}
-	
-	
-	
-	
-	/*=======*
-	 * Parks *
-	 *======*/
-	
-	
-	public List<String> getManagedParks() {
-		return Collections.unmodifiableList(myManagedParks);
-	}	
-	
-	public void setManagedParks(List<String> theManagedParks) {
-		this.myManagedParks = theManagedParks;
-	}
-	
-	
-	
-	
-	/*============*
-	 * Volunteers *
-	 *============*/
-	
-	public List<Volunteer> getJobVolunteerList(int theJobID) {
-		List<Volunteer> volunteerList = new ArrayList<Volunteer>();
-		
-		if(isManagerOfJob(theJobID)) {
-			volunteerList.addAll(DataPollster.getInstance().getJobVolunteerList(theJobID));
-		}		
-		return volunteerList;
-	}
-	
+    // Class Variables
+    private List<String> myManagedParks;
+    private String myEmail = super.getEmail();
+
+    // Constructor
+    public ParkManager(String theEmail, String theFirstName, String theLastName,
+            List<String> theParkList) {
+        super(theFirstName, theLastName, theEmail);
+
+        // theParkList is an Unmodifiable List, so we cannot cast it to
+        // ArrayList. So we copy it over instead.
+        List<String> copiedParks = new ArrayList<String>();
+        copiedParks.addAll(theParkList);
+        this.myManagedParks = copiedParks;
+    }
+
+    /*
+     * ======* Jobs *======
+     */
+
+    public List<Job> getJobs() {
+        return DataPollster.getInstance().getManagerJobs(myEmail);
+    }
+
+    public boolean addJob(Job theJob) {
+        return Schedule.getInstance().receiveJob(theJob);
+    }
+
+    public int getNewJobID() {
+        return DataPollster.getInstance().getNextJobID();
+    }
+
+    public boolean isManagerOfJob(int theJobID) {
+        boolean containsJob = false;
+        for (Job job : getJobs()) {
+            if (job.getJobID() == theJobID)
+                containsJob = true;
+        }
+
+        return containsJob;
+    }
+
+    /*
+     * =======* Parks *======
+     */
+
+    public List<String> getManagedParks() {
+        return Collections.unmodifiableList(myManagedParks);
+    }
+
+    public void setManagedParks(List<String> theManagedParks) {
+        this.myManagedParks = theManagedParks;
+    }
+
+    /*
+     * ============* Volunteers *============
+     */
+
+    public List<Volunteer> getJobVolunteerList(int theJobID) {
+        List<Volunteer> volunteerList = new ArrayList<Volunteer>();
+
+        if (isManagerOfJob(theJobID)) {
+            volunteerList
+                    .addAll(DataPollster.getInstance().getJobVolunteerList(theJobID));
+        }
+        return volunteerList;
+    }
+
 }
