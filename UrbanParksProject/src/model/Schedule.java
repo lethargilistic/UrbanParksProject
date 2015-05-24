@@ -7,6 +7,7 @@ import java.util.List;
 
 import model.businessRules.BusinessRule1;
 import model.businessRules.BusinessRule2;
+import model.businessRules.BusinessRule4;
 
 /**
  * Defines the Schedule object for an application.
@@ -61,6 +62,10 @@ public class Schedule {
 			okToAdd = false; //this is entered if checkThisWeek() returns false;
 		} 
 		
+		//BIZ rule 4. A job may not be scheduled that lasts more than two days.
+		else if (!(new BusinessRule4().test(theJob))) {
+			okToAdd = false;
+		}
 		
 		//BIZ rule 5. A job may not be added that is in the past or more than three months in the future. 
 				//I am going to say that the manager can only create a job on a date after today.
@@ -121,7 +126,7 @@ public class Schedule {
 		
 		if (okToAdd) {
 			// To get the master job list which is editable
-			List<Job> editableJobList = myJobList.getJobList();
+			List<Job> editableJobList = myJobList..getJobList();
 			editableJobList.add(theJob); // add valid job to list
 		} else {
 			System.out.println("Error: job data is invalid and therefore was not added.");

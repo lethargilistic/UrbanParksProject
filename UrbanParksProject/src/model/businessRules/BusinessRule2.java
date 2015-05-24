@@ -1,6 +1,3 @@
-/**
- * 
- */
 package model.businessRules;
 
 import java.lang.reflect.MalformedParametersException;
