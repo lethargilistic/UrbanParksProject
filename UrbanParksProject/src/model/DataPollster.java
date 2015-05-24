@@ -246,9 +246,8 @@ public class DataPollster implements Serializable {
 		
 		if(volunteer != null && volunteer instanceof Volunteer) {
 			return (Volunteer) volunteer;
-		} else {
-			return null;
 		}
+		return null;
 	}
 	
 	/**
@@ -262,9 +261,8 @@ public class DataPollster implements Serializable {
 	
 		if(parkManager != null && parkManager instanceof ParkManager) {
 			return (ParkManager) parkManager;
-		} else {
-			return null;
 		}
+		return null;
 	}
 	
 	/**
@@ -278,9 +276,8 @@ public class DataPollster implements Serializable {
 		
 		if(administrator != null && administrator instanceof Administrator) {
 			return (Administrator) administrator;
-		} else {
-			return null;
 		}
+		return null;
 	}
 	
 	
