@@ -174,7 +174,7 @@ public class ScheduleTest {
 	 */
 	@Test
 	public void testForInvalidWorkGradeAddVolunteerToJob() {
-		boolean bool1 = true; //an error was showing up so I had to initialize this to false.
+		boolean bool1 = true;
 		ArrayList<String> temp = new ArrayList<>();
 		temp.add("moverby@gmail.com");
 		temp.add("Light");
