@@ -126,7 +126,7 @@ public class Schedule {
 		
 		if (okToAdd) {
 			// To get the master job list which is editable
-			List<Job> editableJobList = myJobList..getJobList();
+			List<Job> editableJobList = myJobList.getJobList();
 			editableJobList.add(theJob); // add valid job to list
 		} else {
 			System.out.println("Error: job data is invalid and therefore was not added.");
