@@ -1,17 +1,15 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
-import java.util.List;
 
 /**
  * This class is used to create an instance of a Job.
  * @author Arsh
  * @version May 1
  */
-public class Job {
-	
-	protected static int nextJobID = 0;
+public class Job implements Serializable {
 	
 	/**
 	 * This value is the identification number of a job.
@@ -19,7 +17,8 @@ public class Job {
 	private int myJobID;
 
 	/**
-	 * This is the list which holds the e-mail addresses of all volunteers that have signed up to participate in this job.
+	 * This is the list which holds the e-mail addresses of all volunteers 
+	 * that have signed up to participate in this job.
 	 */
     private ArrayList<ArrayList<String>> myVolunteerList;
 
@@ -55,18 +54,26 @@ public class Job {
     /**
      * This value holds the park that the job will be located at.
      */
-    private Park myPark;
+    private String myPark;
 
     /**
      * The email address of the Park Manager in charge of the job.
      */
     private String myManager;
     
+    
+    /**
+     * This field is used by volunteer class to determine if a job's start date is in the past
+     * (compared to the current time).
+     */
+    private boolean myPast = false;
+    
+    
     /**
      * Constructor for job, taking several arguments of integers, Calendar Strings, and e-mails.
      * @author Taylor Gorman
      */
-    public Job(int theJobID, Park thePark, int theLightMax, int theMediumMax, int theHeavyMax, String theStartDate,
+    public Job(int theJobID, String thePark, int theLightMax, int theMediumMax, int theHeavyMax, String theStartDate,
     		String theEndDate, String theManagerEmail, ArrayList<ArrayList<String>> theVolunteerList) {
     	
     	this.myJobID = theJobID;
@@ -81,25 +88,6 @@ public class Job {
     	
     	this.myStartDate = stringToCalendar(theStartDate);
     	this.myEndDate = stringToCalendar(theEndDate);
-    	
-    }
-    
-    public Job(Park thePark, int theLightMax, int theMediumMax, int theHeavyMax, 
-    		String theStartDate, String theEndDate, String theManagerEmail, 
-    		ArrayList<ArrayList<String>> theVolunteerList) {
-    	
-    	this.myJobID = nextJobID++;
-    	this.myPark = thePark;
-    	
-    	this.myLightMax = theLightMax;
-    	this.myMediumMax = theMediumMax;
-    	this.myHeavyMax = theHeavyMax;
-    	
-    	this.myStartDate = stringToCalendar(theStartDate);
-    	this.myEndDate = stringToCalendar(theEndDate);
-    	
-    	this.myManager = theManagerEmail;
-    	this.myVolunteerList = theVolunteerList;
     }
     
     /**
@@ -175,7 +163,7 @@ public class Job {
      */
     public boolean hasRoom()
     {
-    	return hasLightRoom() && hasMediumRoom() && hasHeavyRoom();
+    	return hasLightRoom() || hasMediumRoom() || hasHeavyRoom();
     }
     
     /**
@@ -183,7 +171,7 @@ public class Job {
      * @param theGradeType 0 for Light, 1 for Medium, 2 for Heavy
      * @return
      */
-    public int getNumberOfSlots(int theGradeType) {
+    private int getNumberOfSlots(int theGradeType) {
     	int numLight = 0;
     	int numMedium = 0;
     	int numHeavy = 0;
@@ -208,10 +196,6 @@ public class Job {
     		case 2: return numHeavy;
     		default: return 0;
     	}
-    }
-
-    public static void setNextJobID(int theID){
-    	nextJobID = theID;
     }
     
 	public int getJobID() {
@@ -246,7 +230,7 @@ public class Job {
 		return getNumberOfSlots(2);
 	}
 
-	public Park getPark() {
+	public String getPark() {
 		return myPark;
 	}
 	
@@ -254,9 +238,21 @@ public class Job {
 		return myManager;
 	}
 	
+	public void addVolunteer(ArrayList<String> theV) {
+		myVolunteerList.add(theV);
+	}
+	
 	@Override
 	public String toString()
 	{
 		return myPark.toString();
+	}
+
+	public boolean isInPast() {
+		return myPast;
+	}
+
+	public void setIfPast(boolean myPast) {
+		this.myPast = myPast;
 	}
 }

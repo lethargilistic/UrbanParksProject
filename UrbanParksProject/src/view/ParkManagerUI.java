@@ -1,4 +1,4 @@
-package model;
+package view;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -6,20 +6,43 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Scanner;
 
+import model.Job;
+import model.ParkManager;
+import model.Volunteer;
+
 /**
  * A console-based user interface for park managers to use.
  * @author Taylor Gorman
  * @author Reid Thompson
  * @version 6 May 2015
  */
-public class ParkManagerUI {
+public class ParkManagerUI implements UI{
 	
 	//Class Variables
 	private Scanner myScanner;
+	private ParkManager myManager;
 	
 	//Constructor
-	public ParkManagerUI() {
+	public ParkManagerUI(ParkManager theManager) {
 		myScanner = new Scanner(System.in);
+		this.myManager = theManager;
+	}
+	
+	
+	public void commandLoop() {
+		boolean stayLoggedIn = true;
+		
+		while (stayLoggedIn) {
+			listCommands();		
+			int command = getUserInt();
+			
+			switch(command) {
+			case 1: createNewJob(); break;
+			case 2: displayJobs(); break;
+			case 3: viewJobVolunteers(); break;
+			case 4: stayLoggedIn = false; break;
+			}
+		}
 	}
 	
 	
@@ -47,13 +70,15 @@ public class ParkManagerUI {
 	/**
 	 * Take an ArrayList of Jobs, parse them, and then display their information in the console.
 	 */
-	public void displayJobs(List<Job> theJobList) {
+	public void displayJobs() {
 		
-		if(theJobList.size() == 0) {
+		List<Job> jobList = myManager.getJobs();
+		
+		if(jobList.size() == 0) {
 			System.out.println("\nYou do not have any upcoming jobs to display.");
 		}
 		
-		for(Job job : theJobList) {
+		for(Job job : jobList) {
 			String startDate = calendarToString(job.getStartDate());
 			String endDate = calendarToString(job.getEndDate());
 			
@@ -79,6 +104,12 @@ public class ParkManagerUI {
 	 * View Job Volunteers *
 	 *=====================*/
 	
+	public void viewJobVolunteers() {
+		int jobID = getJobID();
+		List<Volunteer> volunteerList = myManager.getJobVolunteerList(jobID);
+		displayVolunteers(volunteerList);
+	}
+	
 	/**
 	 * Prompt the user to enter the ID of a Job, and then return it.
 	 */
@@ -86,8 +117,8 @@ public class ParkManagerUI {
 		System.out.println("------------------------------------------\n\n"
 				+ "Please input the ID of the job whose volunteers you would"
 				+ " like to view.");
-		int myJobID = getUserInt();
-		return myJobID;
+		int jobID = getUserInt();
+		return jobID;
 	}
 	
 	/**
@@ -108,6 +139,70 @@ public class ParkManagerUI {
 	/*==============*
 	 * Job Creation *
 	 *==============*/
+	
+	public void createNewJob() {
+		List<String> managedParks = new ArrayList<String>();
+		managedParks.addAll(myManager.getManagedParks());
+				
+		
+		displayParkNumberRequest();
+		displayParks(managedParks);
+		int parkNumber = getUserInt();
+		
+		if(parkNumber >= managedParks.size()) {
+			String newParkName = createNewPark();
+			managedParks.add(newParkName);
+			myManager.setManagedParks(managedParks);
+			createNewJob();
+		} else {
+			int jobID = myManager.getNewJobID();
+			String parkName = managedParks.get(parkNumber);
+			
+			int lightSlots = getLightSlots();
+			int mediumSlots = getMediumSlots();
+			int heavySlots = getHeavySlots();
+			
+			String startDate = getStartDate();
+			String endDate = getEndDate();
+			
+			ArrayList<ArrayList<String>> volunteerList = new ArrayList<ArrayList<String>>();
+			
+			Job newJob = new Job(jobID, parkName, lightSlots, mediumSlots, heavySlots, startDate,
+					endDate, myManager.getEmail(), volunteerList);
+			
+			boolean jobAdded = myManager.addJob(newJob);
+			
+			displayJobStatus(jobAdded);
+		}
+	}
+	
+	/**
+	 * Request the user to select the appropriate park number.
+	 */
+	public void displayParkNumberRequest() {
+		System.out.println("\n------------------------------------------\n"
+				+ "Please select the number preceding the park where the job is located.");
+	}
+	
+	/**
+	 * Display all of the parks that the Park Manager manages in the console.
+	 */
+	public void displayParks(List<String> myManagedParks) {
+		int i;
+		for(i = 0; i < myManagedParks.size(); i++) {
+			System.out.println(i + ") " + myManagedParks.get(i));
+		}		
+		System.out.println(i + ") Add New Park...");
+	}
+	
+	public String createNewPark() {
+		System.out.println("\n------------------------------------------");
+		
+		System.out.println("What is the name of the park?");
+		String parkName = getUserString();
+		
+		return parkName;
+	}
 	
 	/**
 	 * Prompt the user to enter how many volunteers they want for light grade work, then
@@ -171,43 +266,7 @@ public class ParkManagerUI {
 		} else {
 			System.out.println("Sorry, but the job could not be added.");
 		}
-	}
-	
-	/**
-	 * Request the user to select the appropriate park number.
-	 */
-	public void displayParkNumberRequest() {
-		System.out.println("\n------------------------------------------\n"
-				+ "Please select the number preceding the park where the job is located.");
-	}
-	
-	/**
-	 * Display all of the parks that the Park Manager manages in the console.
-	 */
-	public void displayParks(List<Park> myManagedParks) {
-		int i;
-		for(i = 0; i < myManagedParks.size(); i++) {
-			System.out.println(i + ") " + myManagedParks.get(i).getName());
-		}		
-		System.out.println(i + ") Add New Park...");
-	}
-	
-	public Park createNewPark() {
-		System.out.println("\n------------------------------------------");
-		
-		System.out.println("What is the name of the park?");
-		String parkName = getUserString();
-		
-		System.out.println("\nIn what city is the park located?");		
-		String cityName = getUserString();
-		
-		System.out.println("\nWhat is the zipcode of the city?");
-		int zipCode = getUserInt();
-		
-		return new Park(parkName, cityName, zipCode);
-	}
-
-	
+	}	
 	
 	
 
@@ -234,16 +293,6 @@ public class ParkManagerUI {
 	 */
 	public void displayTwoDayError() {
 		System.out.println("\nSorry, but your job lasts more than two days, and could not be scheduled.");
-	}
-	
-	
-	/**
-	 * Prompt the user for a park number, and return that value.
-	 */
-	public int selectParkNum() {
-		
-		int myParkNum = getUserInt();
-		return myParkNum;
 	}
 	
 

@@ -1,5 +1,6 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,12 +10,14 @@ import java.util.List;
  * @version 1 May 2015
  *
  */
-public class JobList {
+public class JobList implements Serializable {
+	
+	private static final int MAX_NUM_JOBS = 10000;
 	
 	private List<Job> myJobList;
 	
 	public JobList() {
-		myJobList = new ArrayList<Job>();		
+		myJobList = new ArrayList<Job>(MAX_NUM_JOBS);		
 	}
 	
 	/**
@@ -34,14 +37,14 @@ public class JobList {
 		return myJobList;
     }
 	
-	public void setJobList(ArrayList<Job> theJobList) {
+	public void setJobList(List<Job> theJobList) {
 		this.myJobList = theJobList;
 	}
 	
 	/**
 	 * Return the number of jobs contained within JobList.
 	 */
-	public int getNumberJobs() {
+	public int getNumberOfJobs() {
 		return myJobList.size();
 	}
 	

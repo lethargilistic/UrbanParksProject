@@ -1,4 +1,4 @@
-package model.test;
+package tests;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -10,7 +10,6 @@ import java.util.List;
 import model.DataPollster;
 import model.Job;
 import model.JobList;
-import model.Park;
 import model.ParkManager;
 import model.Schedule;
 import model.UserList;
@@ -34,11 +33,6 @@ public class ScheduleTest {
 	private Schedule mySchedule;
 	
 	/**
-	 * Park object for testing.
-	 */
-	private Park myPark;
-	
-	/**
 	 * Job object for testing.
 	 */
 	private Job myJob;
@@ -57,15 +51,14 @@ public class ScheduleTest {
 	 */
 	@Before
 	public void setUp() {
+		mySchedule = Schedule.getInstance();
+		
 		JobList myJoblist = new JobList();
 		UserList myUserList = new UserList();
-		List<Park> pList = new ArrayList<Park>();
-		pList.add(myPark);
-		mySchedule = new Schedule(myJoblist, myUserList);
-		DataPollster dp = new DataPollster(myJoblist, myUserList);
-	    myParkManager = new ParkManager(mySchedule, dp, pList, "tjsg1992@gmail.com");
-		myPark = new Park("Wright Park", "Tacoma", 98403);
-		myJob = new Job(myPark, 10, 10,10,
+		List<String> pList = new ArrayList<>();
+		pList.add("Foo Park");
+	    myParkManager = new ParkManager("tjsg1992@gmail.com", "Taylor", "Gorman", pList);
+		myJob = new Job(55, "Foo Park", 10, 10,10,
 						"06172015",
 						"06172015", 
 						"tjsg1992@gmail.com",
@@ -90,11 +83,11 @@ public class ScheduleTest {
 	 */
 	@Test
 	public void testForInvalidDatesReceiveJob() {
-		Job badDates = new Job(myPark, 10, 10, 10,
-						"06172015",
-						"06152015", 
-						"tjsg1992@gmail.com",
-						new ArrayList<ArrayList<String>>());
+		Job badDates = new Job(0, "Foo Park", 10, 10, 10,
+								"06172015",
+								"06152015", 
+								"tjsg1992@gmail.com",
+								new ArrayList<ArrayList<String>>());
 		boolean bool1 = mySchedule.receiveJob(badDates);
 		assertFalse(bool1);
 	}
@@ -121,7 +114,7 @@ public class ScheduleTest {
 	 */
 	@Test
 	public void testForNoWorkersReceiveJob() {
-		Job noSpace  =  new Job(myPark, 0, 0, 0,
+		Job noSpace  =  new Job(55, "Foo Park", 0, 0, 0,
 								"06172015",
 								"06172015", 
 								"tjsg1992@gmail.com",
@@ -135,7 +128,7 @@ public class ScheduleTest {
 	 */
 	@Test
 	public void testForNullParkReceiveJob() {
-		Job nullPark =  new Job(myPark, 2, 2, 2,
+		Job nullPark =  new Job(55, "Foo Park", 2, 2, 2,
 								"06172015",
 								"06172015", 
 								"tjsg1992@gmail.com",
@@ -144,13 +137,12 @@ public class ScheduleTest {
 		assertFalse(bool6);
 	}
 	
-	//Park Manager is retrieved from park, so this test is unnecessary. TODO: Discuss removal
 	/**
 	 * Testing with a Job with a null ParkManager.
 	 */
 	@Test
 	public void testForNullParkManagerReceiveJob() {
-		Job nullMngr =  new Job(myPark, 2, 2, 2,
+		Job nullMngr =  new Job(55, "Foo Park", 2, 2, 2,
 								"06172015",
 								"06172015", 
 								null,
@@ -182,7 +174,7 @@ public class ScheduleTest {
 	 */
 	@Test
 	public void testForInvalidWorkGradeAddVolunteerToJob() {
-		boolean bool1 = false; //an error was showing up so I had to initialize this to false.
+		boolean bool1 = true;
 		ArrayList<String> temp = new ArrayList<>();
 		temp.add("moverby@gmail.com");
 		temp.add("Light");
@@ -195,9 +187,10 @@ public class ScheduleTest {
 		assertFalse(bool1);
 	}
 	
+	// Reid: removed this method call b/c I didn't know if it was necessary.
 	@After
 	public void tearDown()
 	{
-		Job.setNextJobID(0);
+//		Job.setNextJobID(0);
 	}
 }
