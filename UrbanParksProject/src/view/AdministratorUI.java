@@ -140,6 +140,7 @@ public class AdministratorUI implements UI{
 	
 	/**
 	 * 
+	 * @return the int entered by a user.
 	 */
 	public int getUserInt() {
 		int userInput = 0;
