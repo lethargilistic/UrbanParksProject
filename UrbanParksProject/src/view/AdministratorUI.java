@@ -27,6 +27,7 @@ public class AdministratorUI implements UI{
 	
 	/**
 	 * Constructs an AdministratorUI object.
+	 * @param theAdmin the administrator
 	 */
 	public AdministratorUI(Administrator theAdmin) {
 		myIn = new Scanner(System.in);
@@ -95,26 +96,14 @@ public class AdministratorUI implements UI{
 		
 		// get and output list of Volunteers with matching last names
 		List<User> matchingVols = myAdmin.getMatchingVolunteers(lastName);
-		if (!matchingVols.isEmpty()) {
-			Collections.sort(matchingVols, new Comparator<User>() {
-
-				// to sort Volunteers in ascending order based on first name
-				@Override
-				public int compare(final User theVol1, final User theVol2) {
-					return theVol1.getFirstName().compareTo(
-							theVol2.getFirstName());
-				}
-
-			});
 
 			System.out.println("Here is every Volunteer with the last name "
 							+ lastName +":");
 							
 			displayVolunteers(matchingVols);
-		} 
-		else {
-			System.out
-					.println("There were no Volunteers matching the last name "
+			
+		if (matchingVols.isEmpty()) {
+			System.out.println("There were no Volunteers matching the last name "
 							+ lastName);
 		}
 
@@ -168,7 +157,7 @@ public class AdministratorUI implements UI{
 	
 	/**
 	 * 
-	 * @return
+	 * @return the String entered by a user.
 	 */
 	public String getUserString() {		
 		String userInput = myIn.nextLine();
@@ -202,24 +191,4 @@ public class AdministratorUI implements UI{
 		
 		return lastName;
 	}
-	
-	// access Vol list thru DataPollster thru UserList methods
-	
-//	/**
-//	 * Returns a list of relevant Volunteers based on the last name entered.
-//	 * 
-//	 * @param theLastName is the last name of the Volunteer to search for.
-//	 */
-//	public List<Volunteer> getMatchingVolunteers(String theLastName) {
-//		return null;
-//	}
-	
-//	/**
-//	 *  Would receive a list of relevant Volunteers.
-//	 */
-//	public void displayMatchingVolunteers(List<Volunteer> theMatchingVols) {
-//		//TODO
-//		//VolunteerList = Administrator.searchVolunteers()
-//		//Print out list
-//	}
 }

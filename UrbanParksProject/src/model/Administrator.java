@@ -48,14 +48,33 @@ public class Administrator extends User implements Serializable {
 
 		for (int i = 0; i < allVols.size(); i++) {
 			final User currVol = allVols.get(i);
+
 			if (currVol.getLastName().equals(theLastName)) {
 				matchingVols.add(currVol);
 			}
 		}
 
+		//Sort by last name
+		if (!matchingVols.isEmpty()) {
+			Collections.sort(matchingVols, new Comparator<User>() {
+
+				// to sort Volunteers in ascending order based on first name
+				@Override
+				public int compare(final User theVol1, final User theVol2) {
+					return theVol1.getFirstName().compareTo(
+							theVol2.getFirstName());
+				}
+
+			});
+		}
+		
 		return matchingVols;
 	}
 
+	/**
+	 * Get a list of all volunteers, sorted by last name then first name.
+	 * @return a list of all volunteers
+	 */
 	public List<User> getAllVolunteersByLNFN() {
 		List<User> allVols = DataPollster.getInstance().getVolunteerListCopy();
 
