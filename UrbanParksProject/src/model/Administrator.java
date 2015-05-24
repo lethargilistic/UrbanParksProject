@@ -31,7 +31,6 @@ public class Administrator extends User {
 	public Administrator(String theFirstName, String theLastName,
 							String theEmail) {
 		super(theFirstName, theLastName, theEmail);
-		super.setUserType("Administrator");
 	}
 
 	/**

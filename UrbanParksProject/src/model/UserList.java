@@ -58,7 +58,7 @@ public class UserList {
 		if (theVolunteer != null) {
 			for (int i = 0; i < myUserList.size(); i++) {
 				final User currUser = myUserList.get(i);
-				if (currUser.getUserType() == "Volunteer") {
+				if (currUser instanceof Volunteer) {
 					alreadyExists = currUser.getEmail().equals(theVolunteer.getEmail());
 				}
 			}
@@ -84,7 +84,7 @@ public class UserList {
 		if (theAdministrator != null) {
 			for (int i = 0; i < myUserList.size(); i++) {
 				final User currUser = myUserList.get(i);
-				if (currUser.getUserType() == "Administrator") {
+				if (currUser instanceof Administrator) {
 					alreadyExists = currUser.getEmail().equals(theAdministrator.getEmail());
 				}
 			}
@@ -109,7 +109,7 @@ public class UserList {
 		if (theParkManager != null) {
 			for (int i = 0; i < myUserList.size(); i++) {
 				final User currUser = myUserList.get(i);
-				if (currUser.getUserType() == "ParkManager") {
+				if (currUser instanceof ParkManager) {
 					alreadyExists = currUser.getEmail().equals(theParkManager.getEmail());
 				}
 			}
@@ -132,7 +132,7 @@ public class UserList {
 		
 		for (int i = 0; i < myUserList.size(); i++) {
 			final User currUser = myUserList.get(i);
-			if (currUser.getUserType().equals("Volunteer")) {
+			if (currUser instanceof Volunteer) {
 				vols.add(currUser);
 			}
 		}
@@ -149,7 +149,7 @@ public class UserList {
 		
 		for (int i = 0; i < myUserList.size(); i++) {
 			final User currUser = myUserList.get(i);
-			if (currUser.getUserType().equals("Administrator")) {
+			if (currUser instanceof Administrator) {
 				admins.add(currUser);
 			}
 		}
@@ -166,7 +166,7 @@ public class UserList {
 		
 		for (int i = 0; i < myUserList.size(); i++) {
 			final User currUser = myUserList.get(i);
-			if (currUser.getUserType().equals("ParkManager")) {
+			if (currUser instanceof ParkManager) {
 				parkMngrs.add(currUser);
 			}
 		}

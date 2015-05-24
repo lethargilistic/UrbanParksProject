@@ -12,7 +12,6 @@ public abstract class User {
 	private String myFirstName;
 	private String myLastName;
 	private String myEmail;
-	private String myUserType;
 	
 	public User(String theFirstName, String theLastName, String theEmail) {
 		myFirstName = theFirstName;
@@ -32,14 +31,6 @@ public abstract class User {
 		return myEmail;
 	}
 	
-	protected void setUserType(String theUserType) {
-		myUserType = theUserType;
-	}
-	
-	public String getUserType() {
-		return myUserType;
-	}
-	
 	// Reid: first and foremost, do we even need setters? All fields should be initially set in the constructor,
 	// Reid: and none of the user stories specify that we have to allow users to change their data in the system.
 	// Reid: b/c of this fact, I'm opting NOT to give access to a "setUserType()" method b/c that data shouldn't change.
@@ -56,17 +47,5 @@ public abstract class User {
 	
 	public void setEmail(String theEmail) {
 		myEmail = theEmail;
-	}
-	
-	public boolean isVolunteer() {
-		return myUserType.equals("Volunteer");
-	}
-	
-	public boolean isParkManager() {
-		return myUserType.equals("ParkManager");
-	}
-	
-	public boolean isAdministrator() {
-		return myUserType.equals("Administrator");
 	}
 }

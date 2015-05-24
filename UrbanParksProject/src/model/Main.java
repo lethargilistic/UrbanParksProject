@@ -143,25 +143,24 @@ public class Main {
 		
 		UI userUI = null;
 		
-		
-		
-		if(user.isParkManager()) {
+		if(user instanceof ParkManager) {
 			ParkManager manager = myPollster.getParkManager(theEmail);
 			userUI = new ParkManagerUI(manager);
 		}
 		
-		if(user.isAdministrator()) {
+		if(user instanceof Administrator) {
 			Administrator admin = myPollster.getAdministrator(theEmail);
 			userUI = new AdministratorUI(admin);
 						
 		}
 		
-		if(user.isVolunteer()) {
+		if(user instanceof Volunteer) {
 			Volunteer volunteer = myPollster.getVolunteer(theEmail);
 			userUI = new VolunteerUI(volunteer);
 		}
 		
-		if(userUI != null) userUI.commandLoop();
+		if(userUI != null) 
+			userUI.commandLoop();
 	}
 	
 	/**

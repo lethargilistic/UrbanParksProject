@@ -26,7 +26,6 @@ public class ParkManager extends User {
 	//Constructor
 	public ParkManager(String theEmail, String theFirstName, String theLastName, List<String> theParkList) {
 		super(theFirstName, theLastName, theEmail);
-		super.setUserType("ParkManager");
 		
 		//theParkList is an Unmodifiable List, so we cannot cast it to ArrayList. So we copy it over instead.
 		List<String> copiedParks = new ArrayList<String>();
