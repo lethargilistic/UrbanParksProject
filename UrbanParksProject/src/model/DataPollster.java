@@ -178,21 +178,6 @@ public class DataPollster {
 
 		return result;
 	}
-
-	/**
-	 * Return the user type associated with the e-mail as a String.
-	 * @author Taylor Gorman
-	 * @author Reid Thompson - added User functionality
-	 * @return Null if there is no user associated with this email in the system; "ParkManager", "Volunteer", or "Administrator" otherwise.
-	 */
-	public Class<? extends User> getUserType(String theEmail) {
-		Class<? extends User> userType = null;
-		
-		if(getUser(theEmail) != null) {
-			userType = getUser(theEmail).getClass();
-		}		
-		return userType;
-	}
 	
 	/**
 	 * Return the work grade of a Volunteer for a given job.
