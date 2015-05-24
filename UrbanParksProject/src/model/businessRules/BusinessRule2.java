@@ -14,6 +14,8 @@ import model.JobList;
  */
 public class BusinessRule2 extends BusinessRule {
 
+	public static final int LIMITING_DURATION = 7;
+	public static final int MAX_JOBS_IN_WEEK = 5;
 	/**
 	 * @param theTestedObjects a Job object.
 	 * {@inheritDoc}
@@ -23,6 +25,9 @@ public class BusinessRule2 extends BusinessRule {
 	{
 		if (theTestedObjects.length > 2)
 			throw new MalformedParametersException("More than 2 arguments.");
+		
+		if (theTestedObjects.length < 2)
+			throw new MalformedParametersException("Less than 2 arguments.");
 		
 		if (!(theTestedObjects[0] instanceof Job))
 			throw new IllegalArgumentException("First arg was not Job.");
@@ -39,30 +44,34 @@ public class BusinessRule2 extends BusinessRule {
 		//3 days before start and 3 days after end
 		Calendar aStart = (Calendar) theJob.getStartDate().clone();
 		
-		aStart.add(Calendar.DAY_OF_MONTH, -3);
+		aStart.add(Calendar.DAY_OF_MONTH, -1*LIMITING_DURATION/2);
 
 		Calendar aEnd = (Calendar) theJob.getEndDate().clone();
-		aEnd.add(Calendar.DAY_OF_MONTH, 3);
+		aEnd.add(Calendar.DAY_OF_MONTH, LIMITING_DURATION/2);
 		
 		List<Job> aList = theJobList.getCopyList();
 		for (Job j: aList) {
 			
 			long difference =  j.getEndDate().getTimeInMillis() - aStart.getTimeInMillis();
-			difference /= (3600*24*1000); //change value to days instead of milliseconds
+			difference = convertMilliToDays(difference);
 			long difference2 =  aEnd.getTimeInMillis() - j.getStartDate().getTimeInMillis();
-			difference2 /= (3600*24*1000); //change value to days instead of milliseconds
+			difference2 = convertMilliToDays(difference2);
 			
 			//if ending date of j is within 3 days before theJob, increment count
 			//if starting date of j is within 3 days after theJob, increment count
-			if ((difference <= 3 && difference >= 0)|| (difference2 <= 3 && difference2 >= 0)) {
+			if ((difference <= LIMITING_DURATION/2 && difference >= 0)|| (difference2 <= LIMITING_DURATION/2 && difference2 >= 0)) {
 				count++;
 			}
 			//System.out.println("Count is " + count);
-			if (count >= 5) {
+			if (count >= MAX_JOBS_IN_WEEK) {
 				return false;
 			}
 		}
 		return true;
 	}
 
+	private long convertMilliToDays(long theMilli)
+	{
+		return theMilli /= (3600*24*1000);
+	}
 }

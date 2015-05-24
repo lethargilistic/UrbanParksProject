@@ -17,6 +17,9 @@ public class BusinessRule4 extends BusinessRule {
 	{
 		if (theTestedObjects.length > 2)
 			throw new MalformedParametersException("More than 1 argument.");
+
+		if (theTestedObjects.length < 2)
+			throw new MalformedParametersException("Less than 2 arguments.");
 		
 		if (!(theTestedObjects[0] instanceof Job))
 			throw new IllegalArgumentException("First arg was not Job.");
