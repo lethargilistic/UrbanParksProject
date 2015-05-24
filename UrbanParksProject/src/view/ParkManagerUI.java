@@ -141,7 +141,8 @@ public class ParkManagerUI implements UI{
 	 *==============*/
 	
 	public void createNewJob() {
-		List<String> managedParks = myManager.getManagedParks();
+		List<String> managedParks = new ArrayList<String>();
+		managedParks.addAll(myManager.getManagedParks());
 				
 		
 		displayParkNumberRequest();
