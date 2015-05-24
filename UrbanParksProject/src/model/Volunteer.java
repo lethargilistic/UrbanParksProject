@@ -2,6 +2,7 @@
 package model;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 
 /**
@@ -36,6 +37,11 @@ public class Volunteer extends User implements Serializable {
 	public String toString()
 	{
 		return super.getFirstName() + " " + super.getLastName();
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(super.getFirstName(), super.getLastName(), super.getEmail());
 	}
 
 }
