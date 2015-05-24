@@ -51,7 +51,7 @@ public class ParkManager extends User {
 	}
 	
 	public int getNewJobID() {
-		return DataPollster.getInstance().getNextJobID();
+		return myPollster.getNextJobID();
 	}
 	
 	public boolean isManagerOfJob(int theJobID) {
@@ -77,7 +77,6 @@ public class ParkManager extends User {
 	
 	public void setManagedParks(List<String> theManagedParks) {
 		this.myManagedParks = theManagedParks;
-		mySchedule.updateParkList(myEmail, theManagedParks);
 	}
 	
 	
