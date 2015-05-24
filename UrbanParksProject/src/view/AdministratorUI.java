@@ -97,12 +97,13 @@ public class AdministratorUI implements UI{
 		// get and output list of Volunteers with matching last names
 		List<User> matchingVols = myAdmin.getMatchingVolunteers(lastName);
 
+		if (!matchingVols.isEmpty()) {
 			System.out.println("Here is every Volunteer with the last name "
 							+ lastName +":");
 							
 			displayVolunteers(matchingVols);
-			
-		if (matchingVols.isEmpty()) {
+		}
+		else {
 			System.out.println("There were no Volunteers matching the last name "
 							+ lastName);
 		}
