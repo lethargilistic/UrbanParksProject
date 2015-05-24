@@ -74,7 +74,7 @@ public class ParkManagerUI implements UI{
 	 */
 	public void displayJobs() {
 		
-		List<Job> jobList = DataPollster.getInstance().getManagerJobs(myManager.getEmail());
+		List<Job> jobList = myManager.getJobs();
 		
 		if(jobList.size() == 0) {
 			System.out.println("\nYou do not have any upcoming jobs to display.");

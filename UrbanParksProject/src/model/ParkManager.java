@@ -88,6 +88,9 @@ public class ParkManager extends User {
 		return Collections.unmodifiableList(myManagedParks);
 	}	
 	
+	public List<Job> getJobs() {
+		return myPollster.getManagerJobs(myEmail);
+	}
 	
 	public Object[][] getJobArray() {
 		
