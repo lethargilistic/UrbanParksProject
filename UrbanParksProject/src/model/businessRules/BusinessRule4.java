@@ -10,25 +10,25 @@ import model.Job;
  */
 public class BusinessRule4 extends BusinessRule {
 	
+	public static final int MAX_DURATION = 2;
+	
 	/**
+	 * @param theTestedObjects a Job object
 	 * {@inheritDoc}
 	 */
 	public boolean test(Object... theTestedObjects)
 	{
-		if (theTestedObjects.length > 2)
+		if (theTestedObjects.length > 1)
 			throw new MalformedParametersException("More than 1 argument.");
 
-		if (theTestedObjects.length < 2)
-			throw new MalformedParametersException("Less than 2 arguments.");
-		
 		if (!(theTestedObjects[0] instanceof Job))
 			throw new IllegalArgumentException("First arg was not Job.");
 		
 		Job theJob = (Job) theTestedObjects[0];
 		
-		GregorianCalendar nextDay = (GregorianCalendar)  theJob.getStartDate().clone();
-		nextDay.add(GregorianCalendar.DATE, 1);
+		GregorianCalendar tooLong = (GregorianCalendar)  theJob.getStartDate().clone();
+		tooLong.add(GregorianCalendar.DATE, MAX_DURATION);
 		
-		return theJob.getEndDate().after(nextDay);
+		return theJob.getEndDate().before(tooLong);
 	}
 }
