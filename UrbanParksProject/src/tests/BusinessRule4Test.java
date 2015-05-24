@@ -1,7 +1,7 @@
 /**
  * 
  */
-package model.businessRules;
+package tests;
 
 import static org.junit.Assert.*;
 
@@ -10,6 +10,7 @@ import java.util.GregorianCalendar;
 
 import model.Job;
 import model.JobList;
+import model.businessRules.BusinessRule4;
 
 import org.junit.Before;
 import org.junit.Test;
