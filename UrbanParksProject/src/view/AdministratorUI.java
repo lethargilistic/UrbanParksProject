@@ -33,6 +33,7 @@ public class AdministratorUI implements UI{
 		myAdmin = theAdmin;
 	}
 	
+	@Override
 	public void commandLoop()
 	{
 		boolean stayLoggedIn = true;
