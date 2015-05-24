@@ -1,6 +1,3 @@
-/**
- * 
- */
 package tests;
 
 import static org.junit.Assert.assertFalse;
@@ -18,10 +15,6 @@ import model.businessRules.BusinessRule1;
 import org.junit.Before;
 import org.junit.Test;
 
-/**
- * @author Mike
- *
- */
 public class BusinessRule1Test {
 	BusinessRule1 myRule;
 	
