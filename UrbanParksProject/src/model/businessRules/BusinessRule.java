@@ -21,6 +21,4 @@ public abstract class BusinessRule {
 	{
 		return false; //Default to false for unimplemented business rules.
 	}
-	
-	//In case we need to change this so there is more than one object brought in.
 }
