@@ -334,7 +334,7 @@ public class Schedule implements Serializable {
     }
 
     public void addUser(String theEmail, String theFirstName, String theLastName,
-            String theUserType) {
+                        String theUserType) {
 
         switch (theUserType) {
             case "Administrator":
