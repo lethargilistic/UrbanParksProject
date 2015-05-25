@@ -325,8 +325,12 @@ public class Schedule implements Serializable {
         return false;
     }
 
-    public JobList getJobList() {
-        return myJobList;
+    /**
+     * Get a copy of the list of jobs.
+     * @return a copy of the list in myJobList
+     */
+    public List<Job> getJobList() {
+        return myJobList.getCopyList();
     }
 
     public void addUser(String theEmail, String theFirstName, String theLastName,

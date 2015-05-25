@@ -148,7 +148,7 @@ public class VolunteerUI implements UI {
 	 * The volunteer can view the jobs that he/she has signed up for.
 	 */
 	private void viewMyJobs() {
-		List<Job> jobList = Schedule.getInstance().getJobList().getCopyList(); //get the list of jobs so we can traverse it.
+		List<Job> jobList = Schedule.getInstance().getJobList(); //get the list of jobs so we can traverse it.
 		boolean jobFound = false;
 
 		//go through each job in the list and see if the volunteer has signed up for that job.
@@ -231,13 +231,6 @@ public class VolunteerUI implements UI {
 		//GregorianCalendar currentDate = new GregorianCalendar();
 		
 		for(Job job : theJobList) {
-			
-		//	if(currentDate.getTimeInMillis() + 2670040009l > job.getStartDate().getTimeInMillis()) {
-		//		continue;
-		//	} //TODO look at this "continue" here, what does it do?
-				//Can I first call getTheJobs() method and then pass it into this method?...
-				//...if so, then I dont need to be checking for the past jobs here.
-			
 			
 			String startDate = calendarToString(job.getStartDate());
 			String endDate = calendarToString(job.getEndDate());
