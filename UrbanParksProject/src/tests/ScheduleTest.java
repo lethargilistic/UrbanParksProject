@@ -68,7 +68,6 @@ public class ScheduleTest {
     @Test
     public void testForValidReceiveJob() {
         mySchedule.receiveJob(myJob);
-        // TODO: that duplication definitely needs to be removed from the API
         assertFalse("No job was added.", mySchedule.getJobList().isEmpty());
         assertEquals("The incorrect job was added.", "[Wright Park]", 
                     mySchedule.getJobList().toString());
