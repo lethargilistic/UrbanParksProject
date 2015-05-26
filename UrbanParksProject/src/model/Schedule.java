@@ -139,7 +139,7 @@ public class Schedule implements Serializable {
             editableJobList.add(theJob); // add valid job to list
         }
         else {
-            System.out.println("Error: job data is invalid and therefore was not added.");
+            throw new IllegalArgumentException("Error: job data is invalid and therefore was not added.");
         }
 
         return okToAdd;
@@ -156,10 +156,10 @@ public class Schedule implements Serializable {
      *            the ID number for the Job to which the Volunteer will be added.
      *            I'm assuming this value would be 1 = light, 2 = medium, or 3 = heavy.
      * @return true if the Volunteer was added to the Job and false otherwise.
-     * @throws Exception
+     * @throws IllegalArgumentException if one of the arguments has an illegal value
      */
     public boolean addVolunteerToJob(ArrayList<String> theVolunteer, int theJobID)
-            throws Exception {
+            throws IllegalArgumentException {
         // CHECK 1
         boolean validID = checkJobValidity(theJobID); // Schedule will check to make sure
                                                       // the Job ID is valid
@@ -170,7 +170,7 @@ public class Schedule implements Serializable {
         // CHECK 2
         Job thisJob = findJob(theJobID);
         if (thisJob == null) {
-            throw new Exception("Job does not exist");
+            throw new IllegalArgumentException("Job does not exist");
         }
         // CHECK 3
         boolean sameDate = checkDifDay(theVolunteer, thisJob);

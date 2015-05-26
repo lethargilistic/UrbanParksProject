@@ -50,9 +50,11 @@ public class ScheduleTest {
     @Before
     public void setUp() {
         mySchedule = Schedule.getInstance();
-
-        JobList myJoblist = new JobList();
+        JobList myJobList = new JobList();
         UserList myUserList = new UserList();
+        mySchedule.setJobList(myJobList);
+        mySchedule.setUserList(myUserList);
+        
         List<String> pList = new ArrayList<>();
         pList.add("Foo Park");
         myParkManager = new ParkManager("tjsg1992@gmail.com", "Taylor", "Gorman", pList);
@@ -69,25 +71,24 @@ public class ScheduleTest {
     public void testForValidReceiveJob() {
         mySchedule.receiveJob(myJob);
         assertFalse("No job was added.", mySchedule.getJobList().isEmpty());
-        assertEquals("The incorrect job was added.", "[Wright Park]", 
+        assertEquals("The incorrect job was added.", "[Foo Park]", 
                     mySchedule.getJobList().toString());
     }
 
     /**
      * Testing with a Job having invalid dates.
      */
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void testForInvalidDatesReceiveJob() {
         Job badDates = new Job(0, "Foo Park", 10, 10, 10, "06172015", "06152015",
                                 "tjsg1992@gmail.com", new ArrayList<ArrayList<String>>());
-        boolean bool1 = mySchedule.receiveJob(badDates);
-        assertFalse(bool1);
+        mySchedule.receiveJob(badDates);
     }
 
     /**
      * Testing with a Job that doesn't have an empty Volunteer list.
      */
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void testForEmptyVolListReceiveJob() {
         ArrayList<String> temp = new ArrayList<>();
         temp.add(myVolEmail);
@@ -96,86 +97,59 @@ public class ScheduleTest {
         temp2.add(temp);
 
         myJob.getVolunteerList().add(temp);
-        boolean bool3 = mySchedule.receiveJob(myJob);
-        assertFalse(bool3);
+        mySchedule.receiveJob(myJob);
     }
 
     /**
      * Testing with a Job with all zeroes for light, medium, and heavy
      * work grade amounts.
      */
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void testForNoWorkersReceiveJob() {
         Job noSpace = new Job(55, "Foo Park", 0, 0, 0, "06172015", "06172015",
                                 "tjsg1992@gmail.com", new ArrayList<ArrayList<String>>());
-        boolean bool5 = mySchedule.receiveJob(noSpace);
-        assertFalse(bool5);
+        mySchedule.receiveJob(noSpace);
     }
 
     /**
      * Testing with a Job with a null Park.
      */
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void testForNullParkReceiveJob() {
         Job nullPark = new Job(55, "Foo Park", 2, 2, 2, "06172015", "06172015",
                                 "tjsg1992@gmail.com", null);
-        boolean bool6 = mySchedule.receiveJob(nullPark);
-        assertFalse(bool6);
+        mySchedule.receiveJob(nullPark);
     }
 
     /**
      * Testing with a Job with a null ParkManager.
      */
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void testForNullParkManagerReceiveJob() {
         Job nullMngr = new Job(55, "Foo Park", 2, 2, 2, "06172015", "06172015", null,
                                 new ArrayList<ArrayList<String>>());
-        boolean bool7 = mySchedule.receiveJob(nullMngr);
-        assertFalse(bool7);
+        mySchedule.receiveJob(nullMngr);
     }
 
     /**
      * Testing with a negative job id number.
      */
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void testForAddNegJobIDVolunteerToJob() {
-        boolean bool9 = false; // an error was showing up so I had to initialize this to
-                               // false.
         ArrayList<String> temp = new ArrayList<>();
         temp.add("moverby@gmail.com");
         temp.add("Light");
-        try { // I added exceptions to addVolunteer so I put this into a try catch block.
-            bool9 = mySchedule.addVolunteerToJob(temp, -10);
-        }
-        catch (Exception e) {
-
-            // e.printStackTrace();
-        }
-        assertFalse(bool9);
+        mySchedule.addVolunteerToJob(temp, -10);
     }
 
     /**
-     * Testing with an invalid work grade number.
+     * Testing with an invalid work grade.
      */
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void testForInvalidWorkGradeAddVolunteerToJob() {
-        boolean bool1 = true;
         ArrayList<String> temp = new ArrayList<>();
         temp.add("moverby@gmail.com");
-        temp.add("Light");
-        try { // I added exceptions to addVolunteer so I put this into a try catch block.
-            bool1 = mySchedule.addVolunteerToJob(temp, 10);
-        }
-        catch (Exception e) {
-
-            e.printStackTrace();
-        }
-        assertFalse(bool1);
-    }
-
-    // Reid: removed this method call b/c I didn't know if it was necessary.
-    @After
-    public void tearDown() {
-        // Job.setNextJobID(0);
+        temp.add("Quasi-Light");
+        mySchedule.addVolunteerToJob(temp, 10);
     }
 }
