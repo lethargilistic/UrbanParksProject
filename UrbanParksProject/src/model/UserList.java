@@ -22,10 +22,6 @@ public class UserList implements Serializable {
     // User Lists
     private List<User> myUserList;
 
-    // private List<Volunteer> myVolunteerList;
-    // private List<ParkManager> myParkManagerList;
-    // private List<Administrator> myAdministratorList;
-
     public UserList() {
         myUserList = new ArrayList<User>(MAX_NUM_USERS);
     }
