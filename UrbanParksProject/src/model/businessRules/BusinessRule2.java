@@ -62,21 +62,43 @@ public class BusinessRule2 extends BusinessRule {
         List<Job> aList = theJobList.getCopyList();
         for (Job j : aList) {
 
-            long difference = j.getEndDate().getTimeInMillis() - aStart.getTimeInMillis();
-            difference = convertMilliToDays(difference);
-            long difference2 = aEnd.getTimeInMillis()
-                    - j.getStartDate().getTimeInMillis();
-            difference2 = convertMilliToDays(difference2);
 
+            long startDifference = j.getStartDate().getTimeInMillis() - aStart.getTimeInMillis();
+            startDifference = convertMilliToDays(startDifference);
+            long startDifference2 = aEnd.getTimeInMillis() - j.getStartDate().getTimeInMillis();
+            startDifference2 = convertMilliToDays(startDifference2);
+            
             // if ending date of j is within 3 days before theJob, increment count
             // if starting date of j is within 3 days after theJob, increment count
-            if ((difference <= LIMITING_DURATION / 2 && difference >= 0)
-                    || (difference2 <= LIMITING_DURATION / 2 && difference2 >= 0)) {
+            if ((startDifference <= LIMITING_DURATION / 2 && startDifference >= 0)
+                    || (startDifference2 <= LIMITING_DURATION / 2 && startDifference2 >= 0)) {
                 count++;
             }
-            // System.out.println("Count is " + count);
-            if (count >= MAX_JOBS_IN_WEEK) {
-                return false;
+            
+            if (j.getEndDate().equals(j.getStartDate()))
+            {   
+                // System.out.println("Count is " + count);
+                if (count >= MAX_JOBS_IN_WEEK) {
+                    return false;
+                }
+            }
+            else
+            {
+                long endDifference = j.getEndDate().getTimeInMillis() - aStart.getTimeInMillis();
+                endDifference = convertMilliToDays(endDifference);
+                long endDifference2 = aEnd.getTimeInMillis() - j.getEndDate().getTimeInMillis();
+                endDifference2 = convertMilliToDays(endDifference2);                
+                
+                // if ending date of j is within 3 days before theJob, increment count
+                // if starting date of j is within 3 days after theJob, increment count
+                // System.out.println("Count is " + count);
+                if ((endDifference <= LIMITING_DURATION / 2 && endDifference >= 0)
+                        || (endDifference2 <= LIMITING_DURATION / 2 && endDifference2 >= 0)) {
+                    count++;
+                }
+                if (count >= MAX_JOBS_IN_WEEK) {
+                    return false;
+                }
             }
         }
         return true;
