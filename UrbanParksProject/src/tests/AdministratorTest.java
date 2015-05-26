@@ -24,13 +24,13 @@ public class AdministratorTest {
         myAdmin = new Administrator("Tom", "Petty", "americangirl@heartbreakers.net");
 
         myUserList = new UserList();
-        myUserList.addNewVolunteer(new Volunteer("thenews@ifthisis.it", "Huey", "Lewis"));
-        myUserList.addNewVolunteer(new Volunteer("awesome@goodwill.org", 
+        myUserList.addNewUser(new Volunteer("thenews@ifthisis.it", "Huey", "Lewis"));
+        myUserList.addNewUser(new Volunteer("awesome@goodwill.org", 
                                                  "Ryan", "Lewis"));
-        myUserList.addNewVolunteer(new Volunteer("cocoon@arrows.co.uk", 
+        myUserList.addNewUser(new Volunteer("cocoon@arrows.co.uk", 
                                                  "Polly", "Scattergood"));
-        myUserList.addNewVolunteer(new Volunteer("takealook@me.now", "Phil", "Collins"));
-        myUserList.addNewVolunteer(new Volunteer("pedestrian@best.net", 
+        myUserList.addNewUser(new Volunteer("takealook@me.now", "Phil", "Collins"));
+        myUserList.addNewUser(new Volunteer("pedestrian@best.net", 
                                                  "Courtney", "Barnett"));
         DataPollster.getInstance().setUserList(myUserList);
     }

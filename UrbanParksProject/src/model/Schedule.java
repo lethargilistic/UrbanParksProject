@@ -336,24 +336,23 @@ public class Schedule implements Serializable {
     public void addUser(String theEmail, String theFirstName, String theLastName,
                         String theUserType) {
 
+        User u = null;
         switch (theUserType) {
+            
+            case "Volunteer":
             case "Administrator":
-                Administrator a = new Administrator(theFirstName, theLastName, theEmail);
-                myUserList.addNewAdministrator(a);
+                u = new Administrator(theFirstName, theLastName, theEmail);
                 break;
 
             case "ParkManager":
-                ParkManager pm = new ParkManager(theEmail, theFirstName, theLastName,
+                u = new ParkManager(theEmail, theFirstName, theLastName,
                         new ArrayList<String>());
-                myUserList.addNewParkManager(pm);
-                break;
-
-            case "Volunteer":
-                Volunteer v = new Volunteer(theEmail, theFirstName, theLastName);
-                myUserList.addNewVolunteer(v);
                 break;
         }
-
+        if (u != null)
+            myUserList.addNewUser(u);
+        else
+            throw new IllegalArgumentException("Not a valid user type.");
     }
 
     /**

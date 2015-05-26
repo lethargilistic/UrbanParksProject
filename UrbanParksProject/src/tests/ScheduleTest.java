@@ -152,4 +152,12 @@ public class ScheduleTest {
         temp.add("Quasi-Light");
         mySchedule.addVolunteerToJob(temp, 10);
     }
+    
+//    @Test
+//    public void testAddUser() {
+//        ArrayList<String> temp = new ArrayList<>();
+//        temp.add("moverby@gmail.com");
+//        temp.add("Light");
+//        mySchedule.addVolunteerToJob(temp, 10);
+//    }
 }
