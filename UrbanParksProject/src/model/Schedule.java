@@ -340,6 +340,9 @@ public class Schedule implements Serializable {
         switch (theUserType) {
             
             case "Volunteer":
+                u = new Volunteer(theFirstName, theLastName, theEmail);
+                break;
+                
             case "Administrator":
                 u = new Administrator(theFirstName, theLastName, theEmail);
                 break;
@@ -348,11 +351,10 @@ public class Schedule implements Serializable {
                 u = new ParkManager(theEmail, theFirstName, theLastName,
                         new ArrayList<String>());
                 break;
+            default:
+                throw new IllegalArgumentException("Not a valid user type.");
         }
-        if (u != null)
-            myUserList.addNewUser(u);
-        else
-            throw new IllegalArgumentException("Not a valid user type.");
+        myUserList.addNewUser(u);
     }
 
     /**
