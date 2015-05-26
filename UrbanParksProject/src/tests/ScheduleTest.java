@@ -177,7 +177,7 @@ public class ScheduleTest {
         
         ArrayList<String> temp = new ArrayList<>();
         temp.add("moverby@gmail.com");
-        temp.add("Quasi-Light");
+        temp.add("Light");
         mySchedule.addVolunteerToJob(temp, someJob.getJobID());
         
         Job sameDate = new Job(100, "Foo Park", 3,3,3, "06172015", "06172015", "manager2@job.net",
@@ -190,16 +190,55 @@ public class ScheduleTest {
      */
     @Test(expected = IllegalArgumentException.class)
     public void testAddVolunteerToJobForPastJob() {
-        //something in the 90s
-        fail("Not Implemented");
+        Job pastJob = new Job(55, "Foo Park", 2, 2, 2, "08061994", "08061994", "manager@job.net",
+                new ArrayList<ArrayList<String>>());
+        
+        ArrayList<String> temp = new ArrayList<>();
+        temp.add("moverby@gmail.com");
+        temp.add("Light");
+        mySchedule.addVolunteerToJob(temp, pastJob.getJobID());
     }
     
     /**
-     * Testing with a job that has already completed.
+     * Testing with a job that has a full light work grade.
      */
     @Test(expected = IllegalArgumentException.class)
-    public void testAddVolunteerToJobForClosedGrade() {
-        fail("Not Implemented");
+    public void testAddVolunteerToJobForClosedLightGrade() {
+        Job jobWithNoLight = new Job(55, "Foo Park", 0, 1, 0, "06172015", "06172015", "manager@job.net",
+                new ArrayList<ArrayList<String>>());
+        
+        ArrayList<String> temp = new ArrayList<>();
+        temp.add("moverby@gmail.com");
+        temp.add("Light");
+        mySchedule.addVolunteerToJob(temp, jobWithNoLight.getJobID());
+    }
+
+    /**
+     * Testing with a job that has a full Medium work grade.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void testAddVolunteerToJobForClosedMediumGrade() {
+        Job jobWithNoMedium = new Job(55, "Foo Park", 1, 0, 0, "06172015", "06172015", "manager@job.net",
+                new ArrayList<ArrayList<String>>());
+        
+        ArrayList<String> temp = new ArrayList<>();
+        temp.add("moverby@gmail.com");
+        temp.add("Medium");
+        mySchedule.addVolunteerToJob(temp, jobWithNoMedium.getJobID());
+    }
+
+    /**
+     * Testing with a job that has a full Heavy work grade.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void testAddVolunteerToJobForClosedHeavyGrade() {
+        Job jobWithNoHeavy = new Job(55, "Foo Park", 1, 0, 0, "06172015", "06172015", "manager@job.net",
+                new ArrayList<ArrayList<String>>());
+        
+        ArrayList<String> temp = new ArrayList<>();
+        temp.add("moverby@gmail.com");
+        temp.add("Heavy");
+        mySchedule.addVolunteerToJob(temp, jobWithNoHeavy.getJobID());
     }
     
     /**
@@ -209,7 +248,7 @@ public class ScheduleTest {
     public void testAddVolunteerToJobForInvalidWorkGrade() {
         ArrayList<String> temp = new ArrayList<>();
         temp.add("moverby@gmail.com");
-        temp.add("Quasi-Light");
+        temp.add("Light");
         mySchedule.addVolunteerToJob(temp, 10);
     }
 
@@ -225,7 +264,7 @@ public class ScheduleTest {
     
     @Test
     public void testAddUserForVolunteer() {
-        mySchedule.addUser("SpiritBomb@sm4sh.net", "Goku", "Son", "Administrator");
+        mySchedule.addUser("SpiritBomb@sm4sh.net", "Goku", "Son", "Volunteer");
     }
     
     @Test

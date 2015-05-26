@@ -333,6 +333,13 @@ public class Schedule implements Serializable {
         return myJobList.getCopyList();
     }
 
+    /**
+     * Create a User and add it to the UserList
+     * @param theEmail the email
+     * @param theFirstName the first name
+     * @param theLastName the last name
+     * @param theUserType the user type
+     */
     public void addUser(String theEmail, String theFirstName, String theLastName,
                         String theUserType) {
 
