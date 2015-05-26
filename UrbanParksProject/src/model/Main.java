@@ -36,7 +36,7 @@ public class Main {
 
             // If the command or information entered was invalid, we try again.
             if (userInfo == null) {
-                directLogin();
+                continue;
             }
 
             try {
@@ -45,9 +45,8 @@ public class Main {
                 }
             }
             catch (NullPointerException e) {
-                System.out
-                        .println("\nWe ran into a problem while logging you in. Please try again.");
-                directLogin();
+                System.out.println("\nWe ran into a problem while logging you in. Please try again.");
+                continue;
             }
 
             if (userInfo[0].equals("register")) {
@@ -155,7 +154,6 @@ public class Main {
     private static void giveControl(String theEmail) {
 
         User user = DataPollster.getInstance().getUser(theEmail);
-
         UI userUI = null;
 
         if (user instanceof ParkManager) {
