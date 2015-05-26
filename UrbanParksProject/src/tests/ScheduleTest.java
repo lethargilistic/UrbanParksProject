@@ -2,18 +2,20 @@ package tests;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import model.Administrator;
 import model.Job;
 import model.JobList;
 import model.ParkManager;
 import model.Schedule;
+import model.User;
 import model.UserList;
 import model.Volunteer;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -24,7 +26,7 @@ import org.junit.Test;
  * @date 5.3.2015
  */
 public class ScheduleTest {
-
+    
     /**
      * Schedule object for testing.
      */
@@ -132,6 +134,18 @@ public class ScheduleTest {
     }
 
     /**
+     * Testing if a valid user can be added.
+     */
+    @Test
+    public void testAddVolunteerToJobForValid() {
+        mySchedule.receiveJob(myJob);
+        ArrayList<String> temp = new ArrayList<>();
+        temp.add("moverby@gmail.com");
+        temp.add("Light");
+        mySchedule.addVolunteerToJob(temp, myJob.getJobID());
+    }
+    
+    /**
      * Testing with a negative job id number.
      */
     @Test(expected = IllegalArgumentException.class)
@@ -141,7 +155,53 @@ public class ScheduleTest {
         temp.add("Light");
         mySchedule.addVolunteerToJob(temp, -10);
     }
+    
+    /**
+     * Testing with a nonexistant job.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void testAddVolunteerToJobForNonexistantJob() {
+        ArrayList<String> temp = new ArrayList<>();
+        temp.add("moverby@gmail.com");
+        temp.add("Light");
+        mySchedule.addVolunteerToJob(temp, 100);
+    }
+    
+    /**
+     * Testing with a volunteer signed up for job on same date.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void testAddVolunteerToJobForSameDateVolunteer() {
+        Job someJob = new Job(55, "Foo Park", 2, 2, 2, "06172015", "06172015", "manager@job.net",
+                new ArrayList<ArrayList<String>>());
+        
+        ArrayList<String> temp = new ArrayList<>();
+        temp.add("moverby@gmail.com");
+        temp.add("Quasi-Light");
+        mySchedule.addVolunteerToJob(temp, someJob.getJobID());
+        
+        Job sameDate = new Job(100, "Foo Park", 3,3,3, "06172015", "06172015", "manager2@job.net",
+                                new ArrayList<ArrayList<String>>());
+        mySchedule.addVolunteerToJob(temp, sameDate.getJobID());
+    }
 
+    /**
+     * Testing with a job that has already completed.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void testAddVolunteerToJobForPastJob() {
+        //something in the 90s
+        fail("Not Implemented");
+    }
+    
+    /**
+     * Testing with a job that has already completed.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void testAddVolunteerToJobForClosedGrade() {
+        fail("Not Implemented");
+    }
+    
     /**
      * Testing with an invalid work grade.
      */
@@ -152,12 +212,24 @@ public class ScheduleTest {
         temp.add("Quasi-Light");
         mySchedule.addVolunteerToJob(temp, 10);
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testAddUserForInvalidUserType() {
+        mySchedule.addUser("turtlehermit@kame.house", "Master", "Roshi", "Hermit");
+    }
     
-//    @Test
-//    public void testAddUser() {
-//        ArrayList<String> temp = new ArrayList<>();
-//        temp.add("moverby@gmail.com");
-//        temp.add("Light");
-//        mySchedule.addVolunteerToJob(temp, 10);
-//    }
+    @Test
+    public void testAddUserForAdministrator() {
+        mySchedule.addUser("ceo@capsulecorp.net", "Bulma", "Brief", "Administrator");
+    }
+    
+    @Test
+    public void testAddUserForVolunteer() {
+        mySchedule.addUser("SpiritBomb@sm4sh.net", "Goku", "Son", "Administrator");
+    }
+    
+    @Test
+    public void testAddUserForParkManager() {
+        mySchedule.addUser("android17@future.net", "Android", "17", "ParkManager");
+    }
 }
