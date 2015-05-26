@@ -35,26 +35,4 @@ public abstract class User implements Serializable {
     public String getEmail() {
         return myEmail;
     }
-
-    // Reid: first and foremost, do we even need setters? All fields should be initially
-    // set in the constructor,
-    // Reid: and none of the user stories specify that we have to allow users to change
-    // their data in the system.
-    // Reid: b/c of this fact, I'm opting NOT to give access to a "setUserType()" method
-    // b/c that data shouldn't change.
-    // Reid: if we keep these setters, maybe we could return a boolean indicating status
-    // of set operation.
-    // Reid: ie. if the caller passes in an empty string/null, etc. etc.
-
-    public void setFirstName(String theFirstName) {
-        myFirstName = theFirstName;
-    }
-
-    public void setLastName(String theLastName) {
-        myLastName = theLastName;
-    }
-
-    public void setEmail(String theEmail) {
-        myEmail = theEmail;
-    }
 }
