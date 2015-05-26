@@ -368,6 +368,7 @@ public class Schedule implements Serializable {
         for (User manager : myManagerList) {
             if (manager.getEmail().equals(theEmail)) {
                 ((ParkManager) manager).setManagedParks(theManagedParks);
+                return; //end when a manager is found
             }
         }
 
